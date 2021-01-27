@@ -21,4 +21,4 @@ const getListing = restApiUrl + "aa";
 
 /// -- user register -- ///
 
-const userRegister = restApiUrl + "aa";
+const createUserEndpoint = restApiUrl + "aa";
