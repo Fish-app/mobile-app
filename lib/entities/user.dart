@@ -6,7 +6,7 @@ part 'user.g.dart';
 class User {
   num id;
   String name;
-  String username;
+  String username; //TODO: finnes ikke på backend, burde fjernes
   String email;
 
   User({this.id, this.name, this.username, this.email});
