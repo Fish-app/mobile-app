@@ -18,3 +18,7 @@ const getListing = restApiUrl + "aa";
 /// -- user auth -- ///
 
 // needs login //
+
+/// -- user register -- ///
+
+const userRegister = restApiUrl + "aa";
