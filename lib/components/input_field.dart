@@ -2,9 +2,7 @@
 
 import 'dart:math';
 
-import 'package:App/components/form/form_validators.dart';
-import 'package:App/data_classes/recipe.dart';
-import 'package:App/theme/themes.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -75,7 +73,7 @@ Widget inputField(BuildContext context,
           )));
 }
 
-Container newMealInputBox(BuildContext context,
+/*Container newMealInputBox(BuildContext context,
     {String label,
       String initVal,
       FormFieldSetter<String> onSave,
@@ -393,4 +391,4 @@ class _DrinksSelectorState extends State<DrinksSelector> {
       ],
     );
   }
-}
+}*/

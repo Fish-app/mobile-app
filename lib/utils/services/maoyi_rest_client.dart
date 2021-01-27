@@ -2,7 +2,19 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class MaoyiRestClient {
+abstract class Http {
+  Future<http.Response> get(dynamic url, {Map<String, String> headers});
+
+  Future<http.Response> post(dynamic url,
+      {Map<String, String> headers, dynamic body, Encoding encoding});
+
+  Future<http.Response> put(dynamic url,
+      {Map<String, String> headers, dynamic body, Encoding encoding});
+
+  Future<http.Response> delete(dynamic url, {Map<String, String> headers});
+}
+
+class MaoyiRestClient implements Http {
   var _client = http.Client();
 
   Future<Map<String, String>> _addAuthToHeaders(Map<String, String> headers) async {
