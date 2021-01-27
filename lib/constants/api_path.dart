@@ -4,11 +4,14 @@ const restApiUrl = "aa";
 
 // needs login //
 
-/// -- user auth -- ///
+/// -- Commodity -- ///
 
+const getCommodity = restApiUrl + "aa";
 // needs login //
 
-/// -- user auth -- ///
+/// -- Listing -- ///
+
+const getListing = restApiUrl + "aa";
 
 // needs login //
 
