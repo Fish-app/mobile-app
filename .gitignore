@@ -43,4 +43,4 @@ app.*.map.json
 lib/generated/*
 
 *.g.dart
-pubspec.lock
+./pubspec.lock
