@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:***REMOVED***/entities/user.dart';
 
 import 'config/routes/routes.dart' as routes;
 import 'config/routes/router.dart';
+import 'config/themes/theme_config.dart';
+import 'entities/commodity.dart';
+import 'entities/listing.dart';
+import 'widgets/floating_nav_bar.dart';
+import 'generated/l10n.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,6 +19,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        localizationsDelegates: [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        //theme: ***REMOVED***LightTheme,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
