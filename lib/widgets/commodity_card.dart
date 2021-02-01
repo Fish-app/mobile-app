@@ -62,7 +62,7 @@ class CommodityCard extends StatelessWidget {
                                   "fra X kr/kg",
                                   style: Theme.of(context)
                                       .primaryTextTheme
-                                      .subtitle1,
+                                      .headline5,
                                 ),
                               ],
                             )
