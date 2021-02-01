@@ -1,7 +1,7 @@
 {
   "@@locale": "no",
-  "pris": "Pris",
+  "pris": "Pris:",
   "@pris": {},
-  "tilgjengelighet": "Tilgjengelighet_aaaa",
+  "tilgjengelighet": "Tilgjengelighet:",
   "@tilgjengelighet": {}
 }
