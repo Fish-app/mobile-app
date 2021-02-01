@@ -1,3 +1,6 @@
+import 'package:***REMOVED***/pages/home/home_page.dart';
+import 'package:***REMOVED***/pages/login/login_page.dart';
+
 import 'routes.dart' as routes;
 
 import 'package:flutter/material.dart';
@@ -8,11 +11,18 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
   Widget page;
   switch (path) {
     case routes.Home:
+      page = HomePage();
       break;
 
     case routes.UserInfo:
       break;
     case routes.UserNew:
+      break;
+    case routes.RouteAuthLogin:
+      page = LoginPage();
+      break;
+
+    default:
       break;
   }
 
