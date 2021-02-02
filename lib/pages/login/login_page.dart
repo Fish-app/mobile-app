@@ -18,9 +18,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /// Nessecary to lock background # ref. stackoverflow
+      /// https://stackoverflow.com/a/65624909
+      resizeToAvoidBottomInset: false,
       body: StackBlurredBackground(
         AssetImage('assets/images/background-oceanview.jpg'),
         Container(
+          /// Nessecary to resize container contents based on
+          /// display size - ref line 23
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
           child: SafeArea(
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -35,11 +43,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 // Spacing between header and login fields
                 SizedBox(height: 148.0),
-                FormFieldAuth("email", "hint",false,
+                FormFieldAuth("email", "hint",
                   validationMsg: "The email is invalid",
                 ),
                 SizedBox(height: 8.0),
-                FormFieldAuth("passord", "safdasd", true,
+                FormFieldAuth("passord", "safdasd",
+                  isObscured: true,
                   validationMsg: "The password is invalid",
                 ),
                 SizedBox(height: 48.0),
