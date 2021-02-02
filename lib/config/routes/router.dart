@@ -1,5 +1,6 @@
-import 'package:maoyi/pages/chat/chat_page.dart';
 import 'package:maoyi/pages/home/home_page.dart';
+import 'package:maoyi/pages/login/login_page.dart';
+import 'package:maoyi/pages/chat/chat_page.dart';
 import 'package:maoyi/pages/user/user_info.dart';
 
 import '../../main.dart';
@@ -24,7 +25,9 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
     case routes.UserNew:
       page = RegisterUserPage();
       break;
-
+    case routes.RouteAuthLogin:
+      page = LoginPage();
+      break;
     case routes.chat:
       page = ChatPage();
       break;
