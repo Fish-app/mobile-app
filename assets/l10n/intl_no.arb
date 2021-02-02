@@ -3,5 +3,7 @@
   "pris": "Pris:",
   "@pris": {},
   "tilgjengelighet": "Tilgjengelighet:",
-  "@tilgjengelighet": {}
+  "@tilgjengelighet": {},
+  "fra": "fra",
+  "@fra":{}
 }
