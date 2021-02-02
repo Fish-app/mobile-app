@@ -43,11 +43,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 // Spacing between header and login fields
                 SizedBox(height: 148.0),
-                FormFieldAuth("email", "hint",
+                FormFieldAuth("E-mail", "someone@example.com",
                   validationMsg: "The email is invalid",
                 ),
                 SizedBox(height: 8.0),
-                FormFieldAuth("passord", "safdasd",
+                FormFieldAuth("Password", "Enter your password here",
                   isObscured: true,
                   validationMsg: "The password is invalid",
                 ),
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () {
                         //TODO: Implement new user
-                        Navigator.pushNamed(context, routes.RouteAuthLogin);
+                        Navigator.pushNamed(context, routes.UserNew);
                       },
                     ),
                   ],
