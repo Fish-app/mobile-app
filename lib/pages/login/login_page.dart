@@ -55,18 +55,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     // Spacing between header and login fields
                     SizedBox(height: 148.0),
-                    FormFieldAuth(
-                        title: "E-mail",
-                        hint: "ola@dunk.com",
+                    FormFieldAuth("email", "hint",false,
                         validationMsg: "The email is invalid",
-                        isObscured: false
                     ),
                     SizedBox(height: 8.0),
-                    FormFieldAuth(
-                        title: "Password",
-                        hint: "your password",
+                    FormFieldAuth("passord", "safdasd", true,
                         validationMsg: "The password is invalid",
-                        isObscured: true),
+                    ),
                     SizedBox(height: 48.0),
                     Column(
                       mainAxisSize: MainAxisSize.min,
