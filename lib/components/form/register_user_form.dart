@@ -21,14 +21,15 @@ Widget build(BuildContext context) {
         //padding: EdgeInsets.symmetric(horizontal: 20.0),
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            FormFieldAuth("Full Name", "Enter your full name", false,
+            FormFieldAuth("Full Name", "Enter your full name",
               keyboardType: TextInputType.name,
             ),
-            FormFieldAuth("Email", "Enter your email", false,
+            FormFieldAuth("Email", "Enter your email",
               keyboardType: TextInputType.emailAddress,
             ),
-            FormFieldAuth("Password", "Enter your password", false,
+            FormFieldAuth("Password", "Enter your password",
               keyboardType: TextInputType.text,
+              isObscured: true,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
