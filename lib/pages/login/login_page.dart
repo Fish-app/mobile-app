@@ -18,9 +18,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /// Nessecary to lock background # ref. stackoverflow
+      /// https://stackoverflow.com/a/65624909
+      resizeToAvoidBottomInset: false,
       body: StackBlurredBackground(
         AssetImage('assets/images/background-oceanview.jpg'),
         Container(
+          /// Nessecary to resize container contents based on
+          /// display size - ref line 23
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
           child: SafeArea(
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
