@@ -10,8 +10,7 @@ import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:flutter/rendering.dart';
 import 'package:***REMOVED***/widgets/logo.dart';
-
-import 'new_user_form_data.dart';
+import 'package:***REMOVED***/widgets/stack_blurredbackground.dart';
 
 class RegisterUserPage extends StatefulWidget {
   RegisterUserPage({Key key}) : super(key: key);
@@ -28,42 +27,35 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-        ],
+      resizeToAvoidBottomInset: false,
+      body: StackBlurredBackground(
+        AssetImage('assets/images/background-oceanview.jpg'),
+        Container(
+          //Solution for scrolling fields while background is locked
+          //Found on https://stackoverflow.com/questions/65622166/background-image-is-moving-when-keyboards-appears-flutter
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: SafeArea(
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              children: <Widget>[
+                SizedBox(
+                  height: 52.0,
+                ),
+                Column(
+                  children: [
+                    Logo(),
+                  ],
+                ),
+                RegisterUserForm(),
+              ],
+            ),
+          ),
+        )
       ),
-      /*body: const SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(16.0, 50.0, 16.0, 8.0),
-          child: RegisterUserForm(),
-        ),
-      ),*/
     );
   }
-
-/*  void _handleRegister() async {
-    final FormState formState = _formKey.currentState;
-    setState(() {
-      _errorMessage = "";
-    });
-    formState.save();
-    if (formState.validate()) {
-      try {
-        await widget.authService.createUser(_newUserFormDate);
-        Navigator.pushReplacementNamed(context, routeUserLogin);
-      } on HttpException catch (e) {
-        setState(() {
-          _errorMessage = e.message;
-        });
-      }  on CreateUserException catch (e) {
-        setState(() {
-          _errorMessage = e.message;
-        });
-      }
-    }
-  }*/
-
-
 }
 
 
