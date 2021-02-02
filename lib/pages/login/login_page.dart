@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:maoyi/config/routes/routes.dart' as routes;
+import 'package:maoyi/generated/fonts.gen.dart';
+import 'package:maoyi/widgets/formfield_auth.dart';
 
 //TODO: Discuss if navstack shall be cleared when entering login page ?
 
@@ -53,9 +55,18 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     // Spacing between header and login fields
                     SizedBox(height: 148.0),
-                    FormFieldAuth(title: "E-mail", hint: "ola@dunk.com", isObscured: false),
+                    FormFieldAuth(
+                        title: "E-mail",
+                        hint: "ola@dunk.com",
+                        validationMsg: "The email is invalid",
+                        isObscured: false
+                    ),
                     SizedBox(height: 8.0),
-                    FormFieldAuth(title: "Password", hint: "your password", isObscured: true),
+                    FormFieldAuth(
+                        title: "Password",
+                        hint: "your password",
+                        validationMsg: "The password is invalid",
+                        isObscured: true),
                     SizedBox(height: 48.0),
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -92,54 +103,3 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-/// Build a widget with a title and email
-class FormFieldAuth extends StatefulWidget {
-  final String title;
-  final String hint;
-  final bool isObscured;
-
-  const FormFieldAuth({
-    Key key, this.title, this.hint, this.isObscured,
-  }) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() {
-    return _FormFieldAuthState();
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
-}
-  class _FormFieldAuthState extends State<FormFieldAuth> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        //FIXME: doesnt work
-        // maxWidth: MediaQuery.of(context).size.width * 0.45,
-        maxWidth: 10.0,
-      ),
-      decoration: BoxDecoration(
-          border: Border.all(width: 2.0, color: Colors.black)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Text(
-              widget.title,
-              style: TextStyle(fontSize: 24.0),
-            ),
-          ),
-          TextField(
-            decoration: InputDecoration(
-                filled: true,
-                labelText: widget.hint),
-            obscureText: widget.isObscured,
-          ),
-        ],
-      ),
-    );
-  }
-
-}
