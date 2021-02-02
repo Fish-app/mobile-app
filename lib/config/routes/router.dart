@@ -25,7 +25,7 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
     case routes.UserNew:
       page = RegisterUserPage();
       break;
-    case routes.RouteAuthLogin:
+    case routes.UserLogin:
       page = LoginPage();
       break;
     case routes.chat:
