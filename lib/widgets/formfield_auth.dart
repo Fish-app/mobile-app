@@ -57,8 +57,7 @@ class _FormFieldAuthState extends State<FormFieldAuth> {
           TextFormField(
             decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                contentPadding: EdgeInsets.
-                all(10),
+                contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0)
                 ),

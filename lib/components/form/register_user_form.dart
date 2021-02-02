@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maoyi/generated/fonts.gen.dart';
+import 'package:maoyi/widgets/formfield_auth.dart';
 
 class RegisterUserForm extends StatefulWidget {
   const RegisterUserForm({Key key}) : super(key: key);
@@ -17,47 +18,27 @@ Widget build(BuildContext context) {
   return Form(
       key: _formKey,
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        //padding: EdgeInsets.symmetric(horizontal: 20.0),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(0),
-              child: Text(
-                'Full Name',
-                style: TextStyle(fontFamily: FontFamily.playfairDisplay),
-              ),
-            ),
-            TextFormField(
+            FormFieldAuth(
+              title: "Full Name",
+              hint: "Enter your full name",
               keyboardType: TextInputType.name,
-              decoration: CommonStyle.textFieldStyle(labelTextStr: "Full Name", hintTextStr: "Enter your full name"),
-              validator: (String value) {
-                if ( value.trim().isEmpty) {
-                  return 'Full name is required';
-                }
-              },
+              isObscured: false,
             ),
-            const SizedBox(height: 16.0),
-            TextFormField(
+            FormFieldAuth(
+              title: "Email",
+              hint: "Enter your email",
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-              ),
-              validator: (String value) {
-                if (value.trim().isEmpty) {
-                  return 'Email is required';
-                }
-              },
+              isObscured: false,
             ),
-            /*TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              validator: (String value) {
-                if (value.trim().isEmpty) {
-                  return 'Password is required';
-                }
-              },
-              obscureText: true,
-            ),*/
+            FormFieldAuth(
+              title: "Password",
+              hint: "Enter your password",
+              keyboardType: TextInputType.text,
+              isObscured: true,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Row(
@@ -104,16 +85,4 @@ void _setAgreedToTOS(bool newValue) {
     _agreedToTOS = newValue;
   });
 }
-}
-
-class CommonStyle{
-  static InputDecoration textFieldStyle({String labelTextStr="",String hintTextStr=""}) {return InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(10.0, 2.0, 16.0, 2.0),
-    labelText: labelTextStr,
-    hintText:hintTextStr,
-    floatingLabelBehavior: FloatingLabelBehavior.never,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-  );}
 }
