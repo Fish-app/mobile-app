@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:maoyi/entities/commodity.dart';
@@ -12,12 +14,20 @@ class Listing {
   User creator;
   String endDate;
   Commodity commodity;
-  int price; // todo: kansje bytte til et price objekt så pris e bunne til currency
+  int price;
   bool isOpen;
 
-  Listing({@required this.id, this.dateCreated, this.creator, this.endDate, this.commodity, this.price, this.isOpen});
+  Listing(
+      {@required this.id,
+      this.dateCreated,
+      this.creator,
+      this.endDate,
+      this.commodity,
+      this.price,
+      this.isOpen});
 
-  factory Listing.fromJson(Map<String, dynamic> json) => _$ListingFromJson(json);
+  factory Listing.fromJson(Map<String, dynamic> json) =>
+      _$ListingFromJson(json);
   Map<String, dynamic> toJson() => _$ListingToJson(this);
 }
 
@@ -36,8 +46,20 @@ class OfferListing extends Listing {
       bool isOpen,
       @required this.maxAmount,
       @required this.amountLeft})
-      : super(id: id, dateCreated: dateCreated, creator: creator, endDate: endDate, commodity: commodity, price: price, isOpen: isOpen);
+      : super(
+            id: id,
+            dateCreated: dateCreated,
+            creator: creator,
+            endDate: endDate,
+            commodity: commodity,
+            price: price,
+            isOpen: isOpen);
 
-  factory OfferListing.fromJson(Map<String, dynamic> json) => _$OfferListingFromJson(json);
+  double getDistanceTo() {
+    return 3;
+  }
+
+  factory OfferListing.fromJson(Map<String, dynamic> json) =>
+      _$OfferListingFromJson(json);
   Map<String, dynamic> toJson() => _$OfferListingToJson(this);
 }
