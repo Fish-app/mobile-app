@@ -31,7 +31,7 @@ class RegisterUserPageState extends State<RegisterUserPage> {
     _newUserFormDate = NewUserFormDate();
   }
 
-  void _handleRegister() async {
+/*  void _handleRegister() async {
     final FormState formState = _formKey.currentState;
     setState(() {
       _errorMessage = "";
@@ -51,7 +51,7 @@ class RegisterUserPageState extends State<RegisterUserPage> {
         });
       }
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
