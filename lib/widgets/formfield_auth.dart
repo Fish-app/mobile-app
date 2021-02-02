@@ -10,12 +10,9 @@ class FormFieldAuth extends StatefulWidget {
   final TextInputType keyboardType;
   final String validatorObject; //FIXME: Set to validator type
 
-  const FormFieldAuth({
+  const FormFieldAuth(this.title,this.hint,this.isObscured,{
     Key key,
-    this.title,
-    this.hint,
     this.validationMsg,
-    this.isObscured,
     this.keyboardType,
     this.validatorObject,
   }) : super(key: key);
