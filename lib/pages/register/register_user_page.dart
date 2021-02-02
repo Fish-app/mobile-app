@@ -1,15 +1,15 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:***REMOVED***/components/form/register_user_form.dart';
 
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
 import 'package:***REMOVED***/config/routes/router.dart';
-import 'package:***REMOVED***/components/input_field.dart';
-import 'package:***REMOVED***/components/form/form_validators.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:flutter/rendering.dart';
+import 'package:***REMOVED***/widgets/logo.dart';
 
 import 'new_user_form_data.dart';
 
@@ -28,12 +28,16 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SingleChildScrollView(
+      body: Stack(
+        children: <Widget>[
+        ],
+      ),
+      /*body: const SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.fromLTRB(16.0, 50.0, 16.0, 8.0),
           child: RegisterUserForm(),
         ),
-      ),
+      ),*/
     );
   }
 
