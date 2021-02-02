@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:maoyi/config/themes/theme_config.dart';
 import 'package:maoyi/entities/commodity.dart';
+import 'package:maoyi/generated/l10n.dart';
 
 class CommodityCard extends StatelessWidget {
   final Commodity commodity;
@@ -59,7 +60,7 @@ class CommodityCard extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  "fra X kr/kg",
+                                  S.of(context).fra + " X kr/kg",
                                   style: Theme.of(context)
                                       .primaryTextTheme
                                       .headline5,

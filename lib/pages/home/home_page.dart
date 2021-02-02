@@ -137,7 +137,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
               children: [
                 AnimatedSize(
                   vsync: this,
-                  curve: Curves.easeIn,
+                  curve: Curves.linear,
                   duration: Duration(milliseconds: 200),
                   child: Container(
                     padding: EdgeInsets.only(top: 500),
@@ -149,7 +149,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
                 ),
                 AnimatedSize(
                   vsync: this,
-                  curve: Curves.easeIn,
+                  curve: Curves.linear,
                   duration: Duration(milliseconds: 200),
                   child: Container(
                     height: _heightUsedInAnime,
