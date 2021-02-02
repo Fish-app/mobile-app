@@ -1,3 +1,4 @@
+/*
 //Taken from https://github.com/recipe-heaven/App
 
 import 'dart:math';
@@ -73,6 +74,7 @@ Widget inputField(BuildContext context,
           )));
 }
 
+*/
 /*Container newMealInputBox(BuildContext context,
     {String label,
       String initVal,
@@ -391,4 +393,5 @@ class _DrinksSelectorState extends State<DrinksSelector> {
       ],
     );
   }
-}*/
+}*//*
+

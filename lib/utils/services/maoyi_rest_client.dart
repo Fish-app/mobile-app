@@ -14,7 +14,7 @@ abstract class Http {
   Future<http.Response> delete(dynamic url, {Map<String, String> headers});
 }
 
-class ***REMOVED***RestClient implements Http {
+class ***REMOVED***RestClient {
   var _client = http.Client();
 
   Future<Map<String, String>> _addAuthToHeaders(Map<String, String> headers) async {
