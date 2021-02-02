@@ -8,8 +8,9 @@ class User {
   String name;
   String username; //TODO: finnes ikke på backend, burde fjernes
   String email;
+  double rating;
 
-  User({this.id, this.name, this.username, this.email});
+  User({this.id, this.name, this.username, this.email, this.rating});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
@@ -20,8 +21,20 @@ class Seller extends User {
   String bankAccountNumber;
   String regNumber;
 
-  Seller({num id, String name, String username, String email, this.bankAccountNumber, this.regNumber})
-      : super(id: id, name: name, username: username, email: email);
+  Seller(
+      {num id,
+      String name,
+      String username,
+      String email,
+      double rating,
+      this.bankAccountNumber,
+      this.regNumber})
+      : super(
+            id: id,
+            name: name,
+            username: username,
+            email: email,
+            rating: rating);
 
   factory Seller.fromJson(Map<String, dynamic> json) => _$SellerFromJson(json);
   Map<String, dynamic> toJson() => _$SellerToJson(this);

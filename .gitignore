@@ -42,4 +42,7 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-lib/generated/
+lib/generated/*
+
+*.g.dart
+./pubspec.lock
