@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
 import 'package:***REMOVED***/generated/fonts.gen.dart';
 import 'package:***REMOVED***/widgets/formfield_auth.dart';
+import 'package:***REMOVED***/widgets/logo.dart';
+import 'package:***REMOVED***/widgets/stack_blurredbackground.dart';
 
 //TODO: Discuss if navstack shall be cleared when entering login page ?
 
@@ -16,9 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlurBackgroundStack(
-        // Source on how to add image:
-        // https://stackoverflow.com/a/44183373
+      body: StackBlurredBackground(
+        AssetImage('assets/images/background-oceanview.jpg'),
         Container(
           child: SafeArea(
             child: ListView(
@@ -29,13 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                 ), // Spacing between top and header
                 Column(
                   children: [
-                    Text(
-                      "Mayoi",
-                      style: TextStyle(
-                        fontSize: 48.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
+                    Logo(),
                   ],
                 ),
                 // Spacing between header and login fields
@@ -82,33 +77,4 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class BlurBackgroundStack extends StatelessWidget {
-  final Container container;
-  const BlurBackgroundStack(this.container,{
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          constraints: BoxConstraints.expand(),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage('assets/images/background-oceanview.jpg'),
-            fit: BoxFit.cover,
-          )),
-        ),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: Container(
-            color: Colors.black12.withOpacity(0.2),
-          ),
-        ),
-        this.container,
-      ],
-    );
-  }
-}
 
