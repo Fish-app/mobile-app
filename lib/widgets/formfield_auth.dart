@@ -10,8 +10,9 @@ class FormFieldAuth extends StatefulWidget {
   final TextInputType keyboardType;
   final String validatorObject; //FIXME: Set to validator type
 
-  const FormFieldAuth(this.title,this.hint,this.isObscured,{
+  const FormFieldAuth(this.title,this.hint,{
     Key key,
+    this.isObscured,
     this.validationMsg,
     this.keyboardType,
     this.validatorObject,
@@ -70,7 +71,7 @@ class _FormFieldAuthState extends State<FormFieldAuth> {
                     color: Colors.black
                 )
             ),
-            obscureText: widget.isObscured,
+            obscureText: widget.isObscured ?? false,
           ),
         ],
       ),
