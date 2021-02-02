@@ -53,56 +53,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     // Spacing between header and login fields
                     SizedBox(height: 148.0),
-                    Container(
-                      constraints: BoxConstraints(
-                        //FIXME: doesnt work
-                        // maxWidth: MediaQuery.of(context).size.width * 0.45,
-                        maxWidth: 10.0,
-                      ),
-                      width: 100.0, // FIXME: Doesnt work
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 2.0, color: Colors.black)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'Email',
-                              style: TextStyle(fontSize: 24.0),
-                            ),
-                          ),
-                          TextField(
-                            decoration: InputDecoration(
-                                filled: true,
-                                labelText: 'dwight@shrutefarms.com'),
-                          ),
-                        ],
-                      ),
-                    ),
+                    FormFieldAuth(title: "E-mail", hint: "ola@dunk.com", isObscured: false),
                     SizedBox(height: 8.0),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 2.0, color: Colors.black),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'Password',
-                              style: TextStyle(fontSize: 24.0),
-                            ),
-                          ),
-                          TextField(
-                            decoration: InputDecoration(
-                                filled: true, labelText: 'your password here'),
-                            obscureText: true,
-                          ),
-                        ],
-                      ),
-                    ),
+                    FormFieldAuth(title: "Password", hint: "your password", isObscured: true),
                     SizedBox(height: 48.0),
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -137,4 +90,56 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+}
+
+/// Build a widget with a title and email
+class FormFieldAuth extends StatefulWidget {
+  final String title;
+  final String hint;
+  final bool isObscured;
+
+  const FormFieldAuth({
+    Key key, this.title, this.hint, this.isObscured,
+  }) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _FormFieldAuthState();
+    // TODO: implement createState
+    throw UnimplementedError();
+  }
+}
+  class _FormFieldAuthState extends State<FormFieldAuth> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(
+        //FIXME: doesnt work
+        // maxWidth: MediaQuery.of(context).size.width * 0.45,
+        maxWidth: 10.0,
+      ),
+      decoration: BoxDecoration(
+          border: Border.all(width: 2.0, color: Colors.black)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              widget.title,
+              style: TextStyle(fontSize: 24.0),
+            ),
+          ),
+          TextField(
+            decoration: InputDecoration(
+                filled: true,
+                labelText: widget.hint),
+            obscureText: widget.isObscured,
+          ),
+        ],
+      ),
+    );
+  }
+
 }
