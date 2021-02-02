@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: routes.Home,
+        initialRoute: routes.UserNew,
         onGenerateRoute: (settings) => router(context, settings));
   }
 }

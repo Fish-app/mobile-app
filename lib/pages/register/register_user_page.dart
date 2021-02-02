@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:maoyi/components/form/register_user_form.dart';
 
 import 'package:maoyi/config/routes/routes.dart' as routes;
 import 'package:maoyi/config/routes/router.dart';
@@ -17,18 +18,28 @@ class RegisterUserPage extends StatefulWidget {
   final authService = AuthService(MaoyiRestClient());
 
   @override
-  RegisterUserPageState createState() => RegisterUserPageState();
+  _RegisterUserPageState createState() => _RegisterUserPageState();
 }
 
-class RegisterUserPageState extends State<RegisterUserPage> {
-  final _formKey = GlobalKey<FormState>();
-  NewUserFormDate _newUserFormDate;
+class _RegisterUserPageState extends State<RegisterUserPage> {
+  //NewUserFormDate _newUserFormDate;
   String _errorMessage = "";
 
   @override
-  void initState() {
-    super.initState();
-    _newUserFormDate = NewUserFormDate();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Register'),
+        centerTitle: true,
+        elevation: 0.0,
+      ),
+      body: const SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+          child: RegisterUserForm(),
+        ),
+      ),
+    );
   }
 
 /*  void _handleRegister() async {
@@ -53,16 +64,9 @@ class RegisterUserPageState extends State<RegisterUserPage> {
     }
   }*/
 
-  @override
-  Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
-    return Form(
-        key: _formKey,
-        child: Column(
-            children: <Widget>[
-              // Add TextFormFields and ElevatedButton here.
-            ]
-        )
-    );
-  }
+
 }
+
+
+
+
