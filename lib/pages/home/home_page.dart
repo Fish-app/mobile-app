@@ -25,21 +25,12 @@ class HomePageState extends State<HomePage> {
       onTap: () => {
         Navigator.of(context).push(PageRouteBuilder(
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = Offset(0.0, 1.0);
-            var end = Offset.zero;
-            var curve = Curves.ease;
-
-            var tween = Tween(begin: begin, end: end);
-            var curvedAnimation = CurvedAnimation(
-              parent: animation,
-              curve: curve,
-            );
-
-            return SlideTransition(
-              position: tween.animate(curvedAnimation),
+            return FadeTransition(
+              opacity: animation,
               child: child,
             );
           },
+          transitionDuration: Duration(milliseconds: 200),
           barrierDismissible: true,
           opaque: false,
           pageBuilder: (context, animation, secondaryAnimation) =>
@@ -146,6 +137,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
               children: [
                 AnimatedSize(
                   vsync: this,
+                  curve: Curves.easeIn,
                   duration: Duration(milliseconds: 200),
                   child: Container(
                     padding: EdgeInsets.only(top: 500),
@@ -157,6 +149,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
                 ),
                 AnimatedSize(
                   vsync: this,
+                  curve: Curves.easeIn,
                   duration: Duration(milliseconds: 200),
                   child: Container(
                     height: _heightUsedInAnime,
