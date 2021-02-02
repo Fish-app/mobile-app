@@ -28,14 +28,9 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register'),
-        centerTitle: true,
-        elevation: 0.0,
-      ),
       body: const SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+          padding: EdgeInsets.fromLTRB(16.0, 50.0, 16.0, 8.0),
           child: RegisterUserForm(),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:***REMOVED***/generated/fonts.gen.dart';
 
 class RegisterUserForm extends StatefulWidget {
   const RegisterUserForm({Key key}) : super(key: key);
@@ -22,7 +23,7 @@ Widget build(BuildContext context) {
               padding: EdgeInsets.all(0),
               child: Text(
                 'Full Name',
-                style: TextStyle(fontFamily: 'PlayFair'),
+                style: TextStyle(fontFamily: FontFamily.playfairDisplay),
               ),
             ),
             TextFormField(
@@ -46,7 +47,7 @@ Widget build(BuildContext context) {
                 }
               },
             ),
-            TextFormField(
+            /*TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Password',
               ),
@@ -56,7 +57,7 @@ Widget build(BuildContext context) {
                 }
               },
               obscureText: true,
-            ),
+            ),*/
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Row(
@@ -107,12 +108,12 @@ void _setAgreedToTOS(bool newValue) {
 
 class CommonStyle{
   static InputDecoration textFieldStyle({String labelTextStr="",String hintTextStr=""}) {return InputDecoration(
-    contentPadding: EdgeInsets.all(12),
+    contentPadding: EdgeInsets.fromLTRB(10.0, 2.0, 16.0, 2.0),
     labelText: labelTextStr,
     hintText:hintTextStr,
     floatingLabelBehavior: FloatingLabelBehavior.never,
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(20),
     ),
   );}
 }
