@@ -47,11 +47,11 @@ class OfferListingCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    S.of(context).pris,
+                    S.of(context).price,
                     style: Theme.of(context).primaryTextTheme.headline5,
                   ),
                   Text(
-                    S.of(context).tilgjengelighet,
+                    S.of(context).availability,
                     style: Theme.of(context).primaryTextTheme.headline6,
                   )
                 ],
