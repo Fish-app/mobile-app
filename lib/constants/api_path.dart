@@ -1,4 +1,4 @@
-const restApiUrl = "aa";
+const restApiUrl = "http://172.30.117.10:8080/api";
 
 /// -- user auth -- ///
 
@@ -21,4 +21,4 @@ const getListing = restApiUrl + "aa";
 
 /// -- user register -- ///
 
-const createUserEndpoint = restApiUrl + "aa";
+const createUserEndpoint = restApiUrl + "/authentication/create";
