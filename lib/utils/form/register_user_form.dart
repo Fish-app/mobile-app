@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:maoyi/config/routes/routes.dart';
+import 'package:maoyi/config/routes/routes.dart' as routes;
 import 'package:maoyi/generated/fonts.gen.dart';
 import 'package:maoyi/pages/register/new_user_form_data.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
@@ -39,7 +39,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
     if (formState.validate()) {
       try {
         await widget.authService.createUser(_newUserFormData);
-        Navigator.pushReplacementNamed(context, RouteAuthLogin);
+        Navigator.pushReplacementNamed(context, routes.UserLogin);
       } on CreateUserException catch (e) {
         setState(() {
           _errorMessage = e.message;
