@@ -60,7 +60,9 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
           //padding: EdgeInsets.symmetric(horizontal: 20.0),
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              FormFieldAuth("Full Name", "Enter your full name",
+              FormFieldAuth(
+                title: "Full Name",
+                hint: "Enter your full name",
                 keyboardType: TextInputType.name,
                 onSaved: (newValue) =>
                 {_newUserFormData.name = newValue},
@@ -68,7 +70,9 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
                   return validateNotEmptyInput(value);
                 },
               ),
-              FormFieldAuth("Email", "Enter your email",
+              FormFieldAuth(
+                title: "Email",
+                hint: "Enter your email",
                 keyboardType: TextInputType.emailAddress,
                 onSaved: (newValue) =>
                 {_newUserFormData.email = newValue},
@@ -76,7 +80,9 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
                   return validateEmail(value);
                 },
               ),
-              FormFieldAuth("Password", "Enter your password",
+              FormFieldAuth(
+                title: "Password",
+                hint: "Enter your password",
                 keyboardType: TextInputType.text,
                 onSaved: (newValue) =>
                 {_newUserFormData.password = newValue},
@@ -85,7 +91,9 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
                 },
                 isObscured: true,
               ),
-              FormFieldAuth("Confirm Password", "Enter your password again",
+              FormFieldAuth(
+                title: "Confirm Password",
+                hint: "Enter your password again",
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   return validateEquality(

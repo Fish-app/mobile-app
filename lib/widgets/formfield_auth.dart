@@ -11,8 +11,10 @@ class FormFieldAuth extends StatefulWidget {
   final FormFieldValidator<String> validator;
   final FormFieldSetter<String> onSaved;
 
-  const FormFieldAuth(this.title,this.hint,{
+  const FormFieldAuth({
     Key key,
+    @required this.title,
+    @required this.hint,
     this.isObscured,
     this.validationMsg,
     this.keyboardType,
