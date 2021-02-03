@@ -1,4 +1,4 @@
-class NewUserFormDate {
+class NewUserFormData {
   String name;
   String password;
   String email;
