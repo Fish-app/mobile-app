@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
-  "price:": "Pris:",
-  "@pris": {},
+  "price": "Pris:",
+  "@price": {},
   "availability": "Availability:",
   "@availability": {},
   "from": "from",
