@@ -1,28 +1,18 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/components/form/register_user_form.dart';
-
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
-import 'package:***REMOVED***/config/routes/router.dart';
-import 'package:***REMOVED***/utils/services/auth_service.dart';
-import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:flutter/rendering.dart';
+import 'package:***REMOVED***/utils/form/register_user_form.dart';
 import 'package:***REMOVED***/widgets/logo.dart';
 import 'package:***REMOVED***/widgets/stack_blurredbackground.dart';
 
 class RegisterUserPage extends StatefulWidget {
   RegisterUserPage({Key key}) : super(key: key);
-  final authService = AuthService(***REMOVED***RestClient());
+
 
   @override
   _RegisterUserPageState createState() => _RegisterUserPageState();
 }
 
 class _RegisterUserPageState extends State<RegisterUserPage> {
-  //NewUserFormDate _newUserFormDate;
-  String _errorMessage = "";
 
   @override
   Widget build(BuildContext context) {
