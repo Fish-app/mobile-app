@@ -1,4 +1,9 @@
 {
   "@@locale": "en",
-  "fra": "to"
+  "price:": "Pris:",
+  "@pris": {},
+  "availability": "Availability:",
+  "@availability": {},
+  "from": "from",
+  "@from":{}
 }
