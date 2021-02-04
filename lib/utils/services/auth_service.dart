@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:maoyi/pages/login/login_formdata.dart';
 import 'package:maoyi/pages/register/new_user_form_data.dart';
 import 'package:maoyi/utils/services/maoyi_rest_client.dart';
 import 'package:maoyi/constants/api_path.dart';
@@ -28,4 +29,28 @@ class AuthService {
       throw HttpException("Service unavailable");
     }
   }
+
+  Future<void> doLoginUser(LoginUserFormData loginDetails) async {
+    try {
+      var response = await maoyiRestClient.post(loginUserEndpoint,
+      headers: loginDetails.toMap());
+      switch (response.statusCode) {
+        case 200:
+          print('Login OK');
+          break;
+        case 401:
+          print('Unauthorized');
+          break;
+        case 500:
+          print('Server error');
+          break;
+        default:
+          print('Unknown response');
+          break;
+      }
+    } on IOException {
+      throw HttpException("Network unavailable");
+    }
+  }
+
 }
