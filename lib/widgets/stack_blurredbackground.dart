@@ -19,8 +19,6 @@ class StackBlurredBackground extends StatelessWidget {
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
               image: DecorationImage(
-                // Source on how to add image:
-                // https://stackoverflow.com/a/44183373
                 image: this.backgroundImage,
                 fit: BoxFit.cover,
               )),
