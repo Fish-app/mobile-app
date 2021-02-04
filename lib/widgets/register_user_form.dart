@@ -1,14 +1,15 @@
 import 'dart:io';
+import 'package:strings/strings.dart';
 
 import 'package:flutter/material.dart';
 import 'package:maoyi/config/routes/routes.dart' as routes;
-import 'package:maoyi/generated/fonts.gen.dart';
+import 'package:maoyi/generated/l10n.dart';
 import 'package:maoyi/pages/register/new_user_form_data.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
 import 'package:maoyi/utils/services/maoyi_rest_client.dart';
 import 'package:maoyi/widgets/formfield_auth.dart';
 import 'package:maoyi/utils/form/form_validators.dart';
-import 'package:maoyi/config/themes/theme_config.dart';
+import 'package:maoyi/widgets/standard_button.dart';
 
 class RegisterUserForm extends StatefulWidget {
   RegisterUserForm({Key key}) : super(key: key);
@@ -20,7 +21,7 @@ class RegisterUserForm extends StatefulWidget {
 
 class _RegisterUserFormState extends State<RegisterUserForm> {
   final _formKey = GlobalKey<FormState>();
-  bool _agreedToTOS = true;
+  bool _agreedToTOS = false;
   NewUserFormData _newUserFormData;
   String _errorMessage = "";
 
@@ -57,62 +58,61 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
     return Form(
         key: _formKey,
         child: Column(
-          //padding: EdgeInsets.symmetric(horizontal: 20.0),
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+            children: [
               FormFieldAuth(
-                title: "Full Name",
-                hint: "Enter your full name",
+                title: S.of(context).name,
+                hint: S.of(context).fullName,
                 keyboardType: TextInputType.name,
                 onSaved: (newValue) =>
                 {_newUserFormData.name = newValue},
                 validator: (value) {
-                  return validateNotEmptyInput(value);
+                  return validateNotEmptyInput(value, context);
                 },
               ),
               FormFieldAuth(
-                title: "Email",
-                hint: "Enter your email",
+                title: capitalize(S.of(context).email),
+                hint: S.of(context).emailHint,
                 keyboardType: TextInputType.emailAddress,
                 onSaved: (newValue) =>
                 {_newUserFormData.email = newValue},
                 validator: (value) {
-                  return validateEmail(value);
+                  return validateEmail(value, context);
                 },
               ),
               FormFieldAuth(
-                title: "Password",
-                hint: "Enter your password",
+                title: capitalize(S.of(context).password),
+                hint: S.of(context).passwordHint,
                 keyboardType: TextInputType.text,
                 onSaved: (newValue) =>
                 {_newUserFormData.password = newValue},
                 validator: (value) {
-                  return validateLength(value, min: 8);
+                  return validateLength(value, context, min: 8);
                 },
                 isObscured: true,
               ),
               FormFieldAuth(
-                title: "Confirm Password",
-                hint: "Enter your password again",
+                title: S.of(context).confirmPassword,
+                hint: S.of(context).confirmPasswordHint,
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   return validateEquality(
-                      value, _newUserFormData.password, "password");
+                      value, _newUserFormData.password, S.of(context).password, context);
                 },
                 isObscured: true,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Row(
-                  children: <Widget>[
+                  children: [
                     Checkbox(
                         value: _agreedToTOS,
                         onChanged: _setAgreedToTOS
                     ),
                     GestureDetector(
                       onTap: () => _setAgreedToTOS(!_agreedToTOS),
-                      child: const Text(
-                          'I agree to the Terms of Services and Privacy Policy',
+                      child: Text(
+                          S.of(context).tos,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -122,17 +122,11 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
                 ),
               ),
               Row(
-                children: <Widget>[
+                children: [
                   const Spacer(),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.amber)
-                      ),
-                      onPressed: _submittable() ? _handleRegister : null,
-                      child: Text(
-                        'CREATE USER',
-                        style: Theme.of(context).primaryTextTheme.headline5,
-                      )
+                  StandardButton(
+                    buttonText: S.of(context).createUser.toUpperCase(),
+                    onPressed:  _submittable() ? _handleRegister : null,
                   )
                 ],
               ),
