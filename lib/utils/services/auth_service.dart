@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:***REMOVED***/pages/login/login_formdata.dart';
 import 'package:***REMOVED***/pages/register/new_user_form_data.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:***REMOVED***/constants/api_path.dart';
@@ -28,4 +29,28 @@ class AuthService {
       throw HttpException("Service unavailable");
     }
   }
+
+  Future<void> doLoginUser(LoginUserFormData loginDetails) async {
+    try {
+      var response = await ***REMOVED***RestClient.post(loginUserEndpoint,
+      headers: loginDetails.toMap());
+      switch (response.statusCode) {
+        case 200:
+          print('Login OK');
+          break;
+        case 401:
+          print('Unauthorized');
+          break;
+        case 500:
+          print('Server error');
+          break;
+        default:
+          print('Unknown response');
+          break;
+      }
+    } on IOException {
+      throw HttpException("Network unavailable");
+    }
+  }
+
 }

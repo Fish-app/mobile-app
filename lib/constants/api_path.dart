@@ -1,4 +1,4 @@
-const restApiUrl = "http://172.30.117.10:8080/api";
+const restApiUrl = "http://localhost:8080/api";
 
 /// -- user auth -- ///
 
@@ -17,7 +17,7 @@ const getListing = restApiUrl + "aa";
 
 /// -- user auth -- ///
 
-// needs login //
+const loginUserEndpoint = restApiUrl + "/authentication/login";
 
 /// -- user register -- ///
 
