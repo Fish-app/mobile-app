@@ -24,8 +24,6 @@ class _LoginPageState extends State<LoginPage> {
       body: StackBlurredBackground(
         AssetImage('assets/images/background-oceanview.jpg'),
         Container(
-          /// Nessecary to resize container contents based on
-          /// display size - ref line 23
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
@@ -89,5 +87,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 
