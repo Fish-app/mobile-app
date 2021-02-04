@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:***REMOVED***/utils/form/register_user_form.dart';
+import 'package:***REMOVED***/widgets/register_user_form.dart';
 import 'package:***REMOVED***/widgets/logo.dart';
 import 'package:***REMOVED***/widgets/stack_blurredbackground.dart';
 
@@ -18,9 +18,9 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: StackBlurredBackground(
-        AssetImage('assets/images/background-oceanview.jpg'),
-        Container(
+      body: BlurredBackgroundWidget(
+        backgroundImage: AssetImage('assets/images/background-oceanview.jpg'),
+        container: Container(
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
@@ -31,11 +31,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                 SizedBox(
                   height: 52.0,
                 ),
-                Column(
-                  children: [
-                    Logo(),
-                  ],
-                ),
+                Align(alignment: Alignment.center, child: Logo()),
                 RegisterUserForm(),
               ],
             ),

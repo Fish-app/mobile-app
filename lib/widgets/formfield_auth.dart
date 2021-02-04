@@ -31,11 +31,6 @@ class _FormFieldAuthState extends State<FormFieldAuth> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
-        //FIXME: doesnt work
-        // maxWidth: MediaQuery.of(context).size.width * 0.45,
-        maxWidth: 10.0,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -52,22 +47,8 @@ class _FormFieldAuthState extends State<FormFieldAuth> {
           ),
           TextFormField(
             decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                contentPadding: EdgeInsets.all(10),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0)
-                ),
-                filled: true,
-                fillColor: Colors.white,
-                labelText: widget.hint,
-                labelStyle: TextStyle(
-                    fontFamily: FontFamily.dosis,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    color: Colors.black
-                )
-            ),
+                hintText: widget.hint,
+            ).applyDefaults(Theme.of(context).inputDecorationTheme),
             onSaved: widget.onSaved,
             validator: widget.validator,
             obscureText: widget.isObscured ?? false,

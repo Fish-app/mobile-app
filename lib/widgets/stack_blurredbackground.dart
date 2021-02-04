@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class BlurredBackgroundWidget extends StatelessWidget {
   final Container container;
   final AssetImage backgroundImage;
-  const StackBlurredBackground({
+  const BlurredBackgroundWidget({
     Key key,
     this.backgroundImage,
     this.container,
