@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 class StackBlurredBackground extends StatelessWidget {
   final Container container;
   final AssetImage backgroundImage;
-  const StackBlurredBackground(this.backgroundImage, this.container , {
+  const StackBlurredBackground({
     Key key,
+    this.backgroundImage,
+    this.container,
   }) : super(key: key);
 
   @override
