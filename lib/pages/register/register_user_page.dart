@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:***REMOVED***/utils/form/register_user_form.dart';
+import 'package:***REMOVED***/widgets/register_user_form.dart';
 import 'package:***REMOVED***/widgets/logo.dart';
 import 'package:***REMOVED***/widgets/stack_blurredbackground.dart';
 
@@ -18,26 +18,20 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: StackBlurredBackground(
-        AssetImage('assets/images/background-oceanview.jpg'),
-        Container(
-          //Solution for scrolling fields while background is locked
-          //Found on https://stackoverflow.com/questions/65622166/background-image-is-moving-when-keyboards-appears-flutter
+      body: BlurredBackgroundWidget(
+        backgroundImage: AssetImage('assets/images/background-oceanview.jpg'),
+        container: Container(
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: SafeArea(
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
-              children: <Widget>[
+              children: [
                 SizedBox(
                   height: 52.0,
                 ),
-                Column(
-                  children: [
-                    Logo(),
-                  ],
-                ),
+                Align(alignment: Alignment.center, child: Logo()),
                 RegisterUserForm(),
               ],
             ),
@@ -47,7 +41,6 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
     );
   }
 }
-
 
 
 

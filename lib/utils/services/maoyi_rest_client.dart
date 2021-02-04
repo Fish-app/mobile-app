@@ -2,18 +2,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-abstract class Http {
-  Future<http.Response> get(dynamic url, {Map<String, String> headers});
-
-  Future<http.Response> post(dynamic url,
-      {Map<String, String> headers, dynamic body, Encoding encoding});
-
-  Future<http.Response> put(dynamic url,
-      {Map<String, String> headers, dynamic body, Encoding encoding});
-
-  Future<http.Response> delete(dynamic url, {Map<String, String> headers});
-}
-
 class ***REMOVED***RestClient {
   var _client = http.Client();
 
