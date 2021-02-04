@@ -34,11 +34,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 52.0,
                 ), // Spacing between top and header
-                Column(
-                  children: [
-                    Logo(),
-                  ],
-                ),
+                Align(alignment: Alignment.center, child: Logo()),
                 // Spacing between header and login fields
                 SizedBox(height: 148.0),
                 FormFieldAuth(
@@ -87,4 +83,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
