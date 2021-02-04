@@ -27,7 +27,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
           child: SafeArea(
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
-              children: <Widget>[
+              children: [
                 SizedBox(
                   height: 52.0,
                 ),
