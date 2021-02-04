@@ -21,8 +21,6 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
       body: StackBlurredBackground(
         AssetImage('assets/images/background-oceanview.jpg'),
         Container(
-          //Solution for scrolling fields while background is locked
-          //Found on https://stackoverflow.com/questions/65622166/background-image-is-moving-when-keyboards-appears-flutter
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
@@ -47,7 +45,6 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
     );
   }
 }
-
 
 
 
