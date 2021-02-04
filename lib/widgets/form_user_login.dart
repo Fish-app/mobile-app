@@ -125,7 +125,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                 children: [
               FlatButton(
                 child: Text(
-                  'Login',
+                  S.of(context).loginUser,
                   style: TextStyle(
                     fontSize: 48.0,
                     color: Colors.white,
