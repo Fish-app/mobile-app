@@ -26,27 +26,9 @@
   "notATag": "Tagger må starte med # og bare inneholde alfanumeriske tegn",
 
   "msgErrorNetworkFail": "Fikk ikke kontakt med serveren, sjekk at du er tilkoblet Internett",
-  "@msgErrorNetworkFail":{
-    "description": ""
-  },
   "msgErrorServerFail": "Det oppstod en serverfeil, prøv igjen om en liten stund",
-  "@msgErrorServerFail": {
-    "description": ""
-  },
   "msgErrorClientSerializationFail": "Det skjedde en feil, vennligst start appen på nytt",
-  "@msgErrorClientSerializationFail":  {
-    "description": ""
-  },
   "msgErrorLoginRejected": "Fikk ikke til å logge på, vennligst sjekk ditt brukernavn/passord",
-  "@msgErrorLoginRejected":  {
-    "description": ""
-  },
   "msgAwaitResponse": "Vennligst vent....",
-  "@msgAwaitResponse": {
-    "description": "Kan vises imens en venter på et nettverkskall"
-  },
-  "msgSuccessfulLogin": "Velkommen {name}! ",
-  "@msgSuccessfulLogin": {
-    "description": ""
-  }
+  "msgSuccessfulLogin": "Velkommen {name}! "
 }

@@ -41,29 +41,24 @@ class _LoginUserFormState extends State<LoginUserForm> {
     formState.save();
     if (formState.validate()) {
       try {
-        await widget.authService
-            .doLoginUser(_loginUserFormData)
-            .then((user) {
-              //TODO: HANDLE/DESERIALIZE  USER IN ANOTHER PULL REQUEST
-              print(user ?? "UNABLE TO PARSE USER");
-            });
+        await widget.authService.doLoginUser(_loginUserFormData).then((user) {
+          //TODO: HANDLE/DESERIALIZE  USER IN ANOTHER PULL REQUEST
+          print(user ?? "UNABLE TO PARSE USER");
+        });
       } on HttpException catch (e) {
         setState(() {
           _errorMessage = e.message;
           switch (e.message) {
             case "401":
-              /// GOT LOGIN ERROR
               _errorMessage = S.of(context).msgErrorLoginRejected;
               break;
             default:
-            /// GOT OTHER SERVER ERROR
               _errorMessage = S.of(context).msgErrorServerFail;
               break;
           }
         });
       } on IOException {
         setState(() {
-          /// GOT NETWORK/ IO ERROR
           _errorMessage = S.of(context).msgErrorNetworkFail;
         });
       }
@@ -103,57 +98,62 @@ class _LoginUserFormState extends State<LoginUserForm> {
                 return validateNotEmptyInput(value, context);
               },
             ),
-            Visibility(
-              // FIXME: This block currently holds text, but in future
-              // FIXME: we can implement a waiting animation or other widget
-              child: Center(
-                  child: Text(S.of(context).msgAwaitResponse,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.white,
-                  fontFamily: FontFamily.playfairDisplay,
-                ),
-              )),
-              visible: _displayAwaitHolder,
-            ),
-            Text(
-              _errorMessage,
-              style: TextStyle(color: Theme.of(context).errorColor),
-            ),
-            Column(
-                mainAxisSize: MainAxisSize.min,
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-              FlatButton(
-                child: Text(
-                  S.of(context).loginUser,
-                  style: TextStyle(
-                    fontSize: 48.0,
-                    color: Colors.white,
-                    fontFamily: FontFamily.playfairDisplay,
+                  /// LOADING PLACEHOLDER TODO: IN future add loading anim
+                  Visibility(
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          S.of(context).msgAwaitResponse,
+                          style: Theme.of(context).accentTextTheme.bodyText1,
+                        )),
+                    visible: _displayAwaitHolder,
                   ),
-                ),
-                onPressed: () {
-                  /// Validate form, if OK send await
-                  if (_formKey.currentState.validate()) {
-                    _handleLoginRequest();
-                  }
-                },
-              ),
-              SizedBox(height: 32.0),
-              FlatButton(
-                child: Text(S.of(context).createUser,
-                  style: TextStyle(
-                    fontSize: 36.0,
-                    color: Colors.white,
-                    fontFamily: FontFamily.playfairDisplay,
+
+                  /// ERROR MESSAGE
+                  Align(
+                    //FIXME: not centered (!?)
+                    alignment: Alignment.center,
+                    child: Text(
+                      _errorMessage,
+                      style: Theme.of(context).accentTextTheme.bodyText2,
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, routes.UserNew);
-                },
+
+                  /// BUTTONS
+                  Column(mainAxisSize: MainAxisSize.min, children: [
+                    FlatButton(
+                      child: Text(
+                        S.of(context).loginUser,
+                        style: Theme.of(context).accentTextTheme.headline1,
+                      ),
+                      onPressed: () {
+                        /// Validate form, if OK send await
+                        if (_formKey.currentState.validate()) {
+                          _handleLoginRequest();
+                        }
+                      },
+                    ),
+                    SizedBox(height: 24.0,),
+                    FlatButton(
+                      child: Text(
+                        S.of(context).createUser,
+                        style: Theme.of(context).accentTextTheme.headline2,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, routes.UserNew);
+                      },
+                    ),
+                  ]),
+                ],
               ),
-            ]),
+            ),
           ],
-        ));
+        )
+    );
   }
 }
