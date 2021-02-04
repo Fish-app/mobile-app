@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 /// The BlurBackgroundStack takes a Widget, and
 /// places it on top of a image and a blurred background
-class StackBlurredBackground extends StatelessWidget {
+class BlurredBackgroundWidget extends StatelessWidget {
   final Container container;
   final AssetImage backgroundImage;
   const StackBlurredBackground({
