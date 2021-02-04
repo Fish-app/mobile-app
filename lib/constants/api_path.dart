@@ -1,4 +1,4 @@
-const restApiUrl = "http://localhost:8080/api";
+const restApiUrl = "http://nilsjarle-home.bogata.lan:8080/api";
 
 /// -- user auth -- ///
 

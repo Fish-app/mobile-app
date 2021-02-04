@@ -44,6 +44,7 @@ class AuthService {
           user = decoderOutput["data"];
           if (user != null) {
             log('OK GOT-USER');
+            //TODO: HANDLE TOKEN IN SEPERASTE PULL REQUEST
             String token = response.headers["authorization"];
             return user;
           } else {
@@ -58,6 +59,7 @@ class AuthService {
           throw HttpException(HttpStatus.internalServerError.toString());
           break;
         default:
+          /// Should never happen, most possible malformed repsonse
           log("Unknown response");
           return null;
           break;

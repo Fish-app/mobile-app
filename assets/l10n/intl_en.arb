@@ -26,6 +26,7 @@
   "@tos": {},
   "createUser": "create user",
   "@createUser": {},
+  "loginUser" : "login",
   "notEmpty": "Can not be empty",
   "@notEmpty": {},
   "validEmail": "Please enter a valid email address",
@@ -45,5 +46,13 @@
   "notANumber": "Must be a number",
   "@notANumber": {},
   "notATag": "Tags must start with # and only contain alphanumeric characters",
-  "@notATag": {}
+  "@notATag": {},
+
+
+  "msgErrorNetworkFail": "Unable to connect, please verify that you are connected to the Internet",
+  "msgErrorServerFail": "A server error occured, please try again later",
+  "msgErrorClientSerializationFail": "An error occcured, please restart the app",
+  "msgErrorLoginRejected": "Unable to log in, please enter the correct username/password",
+  "msgAwaitResponse": "Please wait..",
+  "msgSuccessfulLogin": "Welcome {name}! "
 }
