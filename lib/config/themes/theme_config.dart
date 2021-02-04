@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:***REMOVED***/generated/fonts.gen.dart';
 
 final themeStarColor = Colors.yellow;
 
@@ -48,27 +49,50 @@ final ***REMOVED***LightTheme = ThemeData(
 
     /// -- Standard Button -- ///
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.orange)
-      )
-    ),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.orange))),
 
     /// -- TextFormField -- ///
     inputDecorationTheme: InputDecorationTheme(
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        contentPadding: EdgeInsets.all(10),
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0)
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      contentPadding: EdgeInsets.all(10),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+      filled: true,
+      fillColor: Colors.white,
+      hintStyle: TextStyle(
+          fontFamily: "Dosis",
+          fontStyle: FontStyle.italic,
+          fontWeight: FontWeight.w500,
+          fontSize: 18,
+          color: Colors.black),
+    ),
+
+      ///-- Accent Text Theme (on-non-white) --///
+      accentTextTheme: TextTheme(
+        headline1: TextStyle(
+          fontSize: 48.0,
+          color: Colors.white,
+          fontFamily: FontFamily.playfairDisplay,
         ),
-        filled: true,
-        fillColor: Colors.white,
-        hintStyle: TextStyle(
-            fontFamily: "Dosis",
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.w500,
-            fontSize: 18,
-            color: Colors.black
-        )
-    ));
+        headline2: TextStyle(
+          fontSize: 36.0,
+          color: Colors.white,
+          fontFamily: FontFamily.playfairDisplay,
+        ),
 
+        // Normal white text on accent body
+        bodyText1: TextStyle(
+          fontSize: 20.0,
+          color: Colors.white,
+          fontFamily: FontFamily.playfairDisplay,
+        ),
 
+        // Alternate red body text on accent body
+        bodyText2: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.amberAccent,
+          fontFamily: FontFamily.playfairDisplay,
+        ),
+      ),
+    );
