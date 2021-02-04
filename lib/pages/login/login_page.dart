@@ -53,14 +53,13 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    RaisedButton(
-                      child: Text(
-                        'Login',
-                        style: TextStyle(fontSize: 32.0),
-                      ),
-                      onPressed: () {
-                        //TODO: Implement login call and clear nav stack ?
-                      },
+                    FlatButton(
+                      onPressed: () {},
+                      child: Text('Login',
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .headline3
+                              .copyWith(color: Colors.white)),
                     ),
                     SizedBox(height: 48.0),
                     FlatButton(
