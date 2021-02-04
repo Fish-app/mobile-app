@@ -61,8 +61,8 @@ class _LoginPageState extends State<LoginPage> {
                               .headline3
                               .copyWith(color: Colors.white)),
                     ),
-                    SizedBox(height: 48.0),
                     FlatButton(
+                      padding: const EdgeInsets.only(top: 48),
                       child: Text(
                         'Create new user',
                         style: TextStyle(fontSize: 24.0),
