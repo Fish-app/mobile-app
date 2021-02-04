@@ -1,16 +1,16 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:maoyi/utils/form/login_user_form.dart';
+import 'package:maoyi/widgets/form_user_login.dart';
 import 'package:maoyi/widgets/logo.dart';
 import 'package:maoyi/widgets/stack_blurredbackground.dart';
 
 class LoginPage extends StatefulWidget {
+  LoginPage({Key key}) : super(key: key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,6 @@ class _LoginPageState extends State<LoginPage> {
         backgroundImage: AssetImage('assets/images/background-oceanview.jpg'),
         container: Container(
           padding: EdgeInsets.only(
-            /// https://stackoverflow.com/a/65624909
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: SafeArea(
