@@ -23,11 +23,8 @@ class FormFieldAuth extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _FormFieldAuthState();
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
+  State<StatefulWidget> createState()  =>  _FormFieldAuthState();
+  
 }
 class _FormFieldAuthState extends State<FormFieldAuth> {
 
