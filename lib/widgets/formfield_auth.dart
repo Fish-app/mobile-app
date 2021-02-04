@@ -39,9 +39,6 @@ class _FormFieldAuthState extends State<FormFieldAuth> {
         // maxWidth: MediaQuery.of(context).size.width * 0.45,
         maxWidth: 10.0,
       ),
-      decoration: BoxDecoration(
-        //border: Border.all(width: 2.0, color: Colors.black)
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
