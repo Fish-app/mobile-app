@@ -44,4 +44,31 @@ final maoyiLightTheme = ThemeData(
         selectedIconTheme: IconThemeData(color: Colors.orange),
         selectedItemColor: const Color(0xFF555555),
         unselectedIconTheme: IconThemeData(color: Colors.white),
-        unselectedItemColor: Colors.black));
+        unselectedItemColor: Colors.black),
+
+    /// -- Standard Button -- ///
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.orange)
+      )
+    ),
+
+    /// -- TextFormField -- ///
+    inputDecorationTheme: InputDecorationTheme(
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        contentPadding: EdgeInsets.all(10),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0)
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        hintStyle: TextStyle(
+            fontFamily: "Dosis",
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            color: Colors.black
+        )
+    ));
+
+

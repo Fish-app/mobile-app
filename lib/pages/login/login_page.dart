@@ -15,12 +15,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: StackBlurredBackground(
-        AssetImage('assets/images/background-oceanview.jpg'),
-        Container(
-          /// Hack on how to float elements with viewport
-          /// https://stackoverflow.com/a/65624909
+      body: BlurredBackgroundWidget(
+        backgroundImage: AssetImage('assets/images/background-oceanview.jpg'),
+        container: Container(
           padding: EdgeInsets.only(
+            /// https://stackoverflow.com/a/65624909
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: SafeArea(
@@ -32,11 +31,11 @@ class _LoginPageState extends State<LoginPage> {
                 ), // Spacing between top and header
                 Align(alignment: Alignment.center, child: Logo()),
                 LoginUserForm(),
-                  ],
-                ),
+              ],
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 }

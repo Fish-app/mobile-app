@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 
 /// The BlurBackgroundStack takes a Widget, and
 /// places it on top of a image and a blurred background
-class StackBlurredBackground extends StatelessWidget {
+class BlurredBackgroundWidget extends StatelessWidget {
   final Container container;
   final AssetImage backgroundImage;
-  const StackBlurredBackground(this.backgroundImage, this.container , {
+  const BlurredBackgroundWidget({
     Key key,
+    this.backgroundImage,
+    this.container,
   }) : super(key: key);
 
   @override
@@ -19,8 +21,6 @@ class StackBlurredBackground extends StatelessWidget {
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
               image: DecorationImage(
-                // Source on how to add image:
-                // https://stackoverflow.com/a/44183373
                 image: this.backgroundImage,
                 fit: BoxFit.cover,
               )),

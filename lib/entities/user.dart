@@ -6,11 +6,10 @@ part 'user.g.dart';
 class User {
   num id;
   String name;
-  String username; //TODO: finnes ikke på backend, burde fjernes
   String email;
   double rating;
 
-  User({this.id, this.name, this.username, this.email, this.rating});
+  User({this.id, this.name, this.email, this.rating});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
@@ -24,7 +23,6 @@ class Seller extends User {
   Seller(
       {num id,
       String name,
-      String username,
       String email,
       double rating,
       this.bankAccountNumber,
@@ -32,7 +30,6 @@ class Seller extends User {
       : super(
             id: id,
             name: name,
-            username: username,
             email: email,
             rating: rating);
 

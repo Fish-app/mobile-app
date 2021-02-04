@@ -42,7 +42,7 @@ var testSeller = Seller(
     id: 22,
     regNumber: "2312",
     rating: 3.6,
-    username: "fisker bob");
+    );
 var testOfferListing = OfferListing(
     id: 111,
     maxAmount: 22,
