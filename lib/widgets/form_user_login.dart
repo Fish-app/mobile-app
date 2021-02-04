@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -46,6 +44,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
         await widget.authService
             .doLoginUser(_loginUserFormData)
             .then((user) {
+              //TODO: HANDLE/DESERIALIZE  USER IN ANOTHER PULL REQUEST
               print(user ?? "UNABLE TO PARSE USER");
             });
       } on HttpException catch (e) {
@@ -53,16 +52,19 @@ class _LoginUserFormState extends State<LoginUserForm> {
           _errorMessage = e.message;
           switch (e.message) {
             case "401":
-              _errorMessage = "Unauthorized";
+              /// GOT LOGIN ERROR
+              _errorMessage = S.of(context).msgErrorLoginRejected;
               break;
             default:
-              _errorMessage = "Server error";
+            /// GOT OTHER SERVER ERROR
+              _errorMessage = S.of(context).msgErrorServerFail;
               break;
           }
         });
       } on IOException {
         setState(() {
-          _errorMessage = "Network error";
+          /// GOT NETWORK/ IO ERROR
+          _errorMessage = S.of(context).msgErrorNetworkFail;
         });
       }
 
@@ -101,13 +103,13 @@ class _LoginUserFormState extends State<LoginUserForm> {
                 return validateNotEmptyInput(value, context);
               },
             ),
-            SizedBox(height: 48.0),
             Visibility(
+              // FIXME: This block currently holds text, but in future
+              // FIXME: we can implement a waiting animation or other widget
               child: Center(
-                  child: Text(
-                "Please wait",
+                  child: Text(S.of(context).msgAwaitResponse,
                 style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 18.0,
                   color: Colors.white,
                   fontFamily: FontFamily.playfairDisplay,
                 ),
@@ -118,7 +120,9 @@ class _LoginUserFormState extends State<LoginUserForm> {
               _errorMessage,
               style: TextStyle(color: Theme.of(context).errorColor),
             ),
-            Column(mainAxisSize: MainAxisSize.min, children: [
+            Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
               FlatButton(
                 child: Text(
                   'Login',
@@ -132,15 +136,12 @@ class _LoginUserFormState extends State<LoginUserForm> {
                   /// Validate form, if OK send await
                   if (_formKey.currentState.validate()) {
                     _handleLoginRequest();
-                  } else {
-                    print('INVALID FORMES');
                   }
                 },
               ),
               SizedBox(height: 32.0),
               FlatButton(
-                child: Text(
-                  'Create new user',
+                child: Text(S.of(context).createUser,
                   style: TextStyle(
                     fontSize: 36.0,
                     color: Colors.white,
@@ -148,7 +149,6 @@ class _LoginUserFormState extends State<LoginUserForm> {
                   ),
                 ),
                 onPressed: () {
-                  //TODO: Implement new user
                   Navigator.pushNamed(context, routes.UserNew);
                 },
               ),
