@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:***REMOVED***/entities/user.dart';
 import 'package:***REMOVED***/pages/login/login_formdata.dart';
 import 'package:***REMOVED***/pages/register/new_user_form_data.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
@@ -20,7 +23,7 @@ class AuthService {
     try {
       var response = await ***REMOVED***RestClient.post(createUserEndpoint,
           headers: userDetails.toMap());
-       if (response.statusCode == 409) {
+      if (response.statusCode == 409) {
         throw CreateUserException("Email already exists");
       } else {
         throw HttpException("Error creating user");
@@ -30,27 +33,38 @@ class AuthService {
     }
   }
 
-  Future<void> doLoginUser(LoginUserFormData loginDetails) async {
+  Future<User> doLoginUser(LoginUserFormData loginDetails) async {
+    User user;
     try {
       var response = await ***REMOVED***RestClient.post(loginUserEndpoint,
-      headers: loginDetails.toMap());
+          headers: loginDetails.toMap()).timeout(Duration(seconds: 7));
       switch (response.statusCode) {
         case 200:
-          print('Login OK');
+          var decoderOutput = jsonDecode(response.body);
+          user = decoderOutput["data"];
+          if (user != null) {
+            log('OK GOT-USER');
+            String token = response.headers["authorization"];
+            return user;
+          } else {
+            log('OK NO-USER');
+            return null;
+          }
           break;
         case 401:
-          print('Unauthorized');
+          throw HttpException(HttpStatus.unauthorized.toString());
           break;
         case 500:
-          print('Server error');
+          throw HttpException(HttpStatus.internalServerError.toString());
           break;
         default:
-          print('Unknown response');
+          log("Unknown response");
+          return null;
           break;
       }
-    } on IOException {
-      throw HttpException("Network unavailable");
+    } on IOException catch (e) {
+      log("IO failure " + e.toString());
+      throw e;
     }
   }
-
 }

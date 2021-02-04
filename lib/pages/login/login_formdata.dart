@@ -5,7 +5,7 @@ class LoginUserFormData {
   toMap() {
     return {
       "email" : this.email,
-      "password" : this.password
+      "password" : this.password,
     };
   }
 }

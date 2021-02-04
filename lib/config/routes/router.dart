@@ -31,6 +31,10 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
     case routes.chat:
       page = ChatPage();
       break;
+
+    default:
+      page = HomePage();
+      break;
   }
 
   return MaterialPageRoute(builder: (context) => page);
