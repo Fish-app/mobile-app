@@ -60,7 +60,7 @@ class CommodityCard extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  S.of(context).fra + " X kr/kg",
+                                  S.of(context).from + " X kr/kg",
                                   style: Theme.of(context)
                                       .primaryTextTheme
                                       .headline5,
