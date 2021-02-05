@@ -1,4 +1,5 @@
 import 'package:***REMOVED***/pages/home/home_page.dart';
+import 'package:***REMOVED***/pages/listing_info_page.dart';
 import 'package:***REMOVED***/pages/login/login_page.dart';
 import 'package:***REMOVED***/pages/chat/chat_page.dart';
 import 'package:***REMOVED***/pages/user/user_info.dart';
@@ -30,6 +31,9 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       break;
     case routes.chat:
       page = ChatPage();
+      break;
+    case routes.ListingInfo:
+      page = ListingInfoPage();
       break;
 
     default:

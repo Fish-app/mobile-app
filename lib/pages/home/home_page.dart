@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:***REMOVED***/entities/commodity.dart';
+import 'package:***REMOVED***/entities/listing.dart';
 import 'package:***REMOVED***/main.dart';
+import 'package:***REMOVED***/pages/listing_info_page.dart';
 import 'package:***REMOVED***/widgets/buy_filter.dart';
 import 'package:***REMOVED***/widgets/commodity_card.dart';
 import 'package:***REMOVED***/widgets/floating_nav_bar.dart';
@@ -113,6 +115,23 @@ class CommodityListingPageState extends State<CommodityListingPage>
     );
   }
 
+   /*
+   When tapping a listing card you get taken to the information
+   page for that listing.
+    */
+  Widget _goToListing(OfferListing offerListing) {
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context) => ListingInfoPage(offerListing: offerListing),
+            ),
+        ),
+      },
+      child: OfferListingCard(cardListing: offerListing),
+    );
+  }
+
   double _heightUsedInAnime = 0;
   @override
   Widget build(BuildContext context) {
@@ -161,10 +180,8 @@ class CommodityListingPageState extends State<CommodityListingPage>
                           for (var n = 0; n < 10; n++)
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 3),
-                              child: OfferListingCard(
-                                cardListing: testOfferListing,
+                              child: _goToListing(testOfferListing)
                               ),
-                            ),
                         ],
                       ),
                     ),
