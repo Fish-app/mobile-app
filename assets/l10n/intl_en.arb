@@ -26,6 +26,10 @@
   "@tos": {},
   "createUser": "create user",
   "@createUser": {},
+  "loginUser" : "login",
+  "@loginUser": {
+    "description": ""
+  },
   "notEmpty": "Can not be empty",
   "@notEmpty": {},
   "validEmail": "Please enter a valid email address",
@@ -45,5 +49,31 @@
   "notANumber": "Must be a number",
   "@notANumber": {},
   "notATag": "Tags must start with # and only contain alphanumeric characters",
-  "@notATag": {}
+  "@notATag": {},
+
+
+  "msgErrorNetworkFail": "Unable to connect, please verify that you are connected to the Internet",
+  "@msgErrorNetworkFail":{
+    "description": ""
+  },
+  "msgErrorServerFail": "A server error occured, please try again later",
+  "@msgErrorServerFail": {
+    "description": ""
+  },
+  "msgErrorClientSerializationFail": "An error occcured, please restart the app",
+  "@msgErrorClientSerializationFail":  {
+    "description": ""
+  },
+  "msgErrorLoginRejected": "Unable to log in, please enter the correct username/password",
+  "@msgErrorLoginRejected":  {
+    "description": ""
+  },
+  "msgAwaitResponse": "Please wait..",
+  "@msgAwaitResponse": {
+    "description": "Kan vises imens en venter på et nettverkskall"
+  },
+  "msgSuccessfulLogin": "Welcome {name}! ",
+  "@msgSuccessfulLogin": {
+    "description": ""
+  }
 }

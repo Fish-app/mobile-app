@@ -13,6 +13,7 @@
   "confirmPasswordHint": "Skriv passordet igjen",
   "tos": "Jeg godtar Vilkår for Bruk og Personvernsreglene",
   "createUser": "opprett bruker",
+  "loginUser": "logg på",
   "notEmpty": "Kan ikke være tom",
   "validEmail": "Vennligst skriv inn en gyldig e-post adresse",
   "betweenMinMax": "Må være mellom",
@@ -22,5 +23,12 @@
   "and": "og",
   "notEqual": "Er ikke lik",
   "notAnumber": "Må være et tall",
-  "notATag": "Tagger må starte med # og bare inneholde alfanumeriske tegn"
+  "notATag": "Tagger må starte med # og bare inneholde alfanumeriske tegn",
+
+  "msgErrorNetworkFail": "Fikk ikke kontakt med serveren, sjekk at du er tilkoblet Internett",
+  "msgErrorServerFail": "Det oppstod en serverfeil, prøv igjen om en liten stund",
+  "msgErrorClientSerializationFail": "Det skjedde en feil, vennligst start appen på nytt",
+  "msgErrorLoginRejected": "Fikk ikke til å logge på, vennligst sjekk ditt brukernavn/passord",
+  "msgAwaitResponse": "Vennligst vent....",
+  "msgSuccessfulLogin": "Velkommen {name}! "
 }
