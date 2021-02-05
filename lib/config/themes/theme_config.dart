@@ -18,8 +18,12 @@ final ***REMOVED***LightTheme = ThemeData(
 
   /// -- bottom bar -- ///
   primaryTextTheme: TextTheme(
+    headline1: TextStyle(
+        fontFamily: "Playfair_Display", color: Colors.black, fontSize: 48),
     headline3: TextStyle(
         fontFamily: "Playfair_Display", color: Colors.black, fontSize: 33),
+    headline4: TextStyle(
+        fontFamily: "Playfair_Display", color: Colors.black, fontSize: 24),
     headline5: TextStyle(
         fontFamily: "Playfair_Display", color: Colors.black, fontSize: 20),
     headline6: TextStyle(

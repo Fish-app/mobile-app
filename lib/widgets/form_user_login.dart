@@ -109,9 +109,8 @@ class _LoginUserFormState extends State<LoginUserForm> {
                         alignment: Alignment.center,
                         child: Text(
                           S.of(context).msgAwaitResponse,
-                          style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+                          style: Theme.of(context).primaryTextTheme.headline4.copyWith(
                             color: Colors.white,
-                            fontSize: 24.0,
                           )
                         )),
                     visible: _displayAwaitHolder,
@@ -121,10 +120,9 @@ class _LoginUserFormState extends State<LoginUserForm> {
                     Text(
                       _errorMessage,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+                      style: Theme.of(context).primaryTextTheme.headline5.copyWith(
                         color: Colors.amberAccent,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
                       ),
                     ),
 
@@ -133,8 +131,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                     FlatButton(
                       child: Text(
                         S.of(context).loginUser,
-                        style: Theme.of(context).primaryTextTheme.headline3.copyWith(
-                          fontSize: 48.0,
+                        style: Theme.of(context).primaryTextTheme.headline1.copyWith(
                           color: Colors.white,
                         ),
                       ),
@@ -151,7 +148,6 @@ class _LoginUserFormState extends State<LoginUserForm> {
                         S.of(context).createUser,
                         style: Theme.of(context).primaryTextTheme.headline3.copyWith(
                           color: Colors.white,
-                          fontSize: 36.0,
                         ),
                       ),
                       onPressed: () {
