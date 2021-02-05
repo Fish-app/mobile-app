@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: S.delegate.supportedLocales,
         theme: maoyiLightTheme,
         title: 'Flutter Demo',
-        initialRoute: routes.UserLogin,
+        initialRoute: routes.Home,
         onGenerateRoute: (settings) => router(context, settings));
   }
 }

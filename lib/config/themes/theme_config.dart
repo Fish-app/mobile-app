@@ -37,6 +37,7 @@ final maoyiLightTheme = ThemeData(
   cardTheme: CardTheme(
     elevation: 10,
     clipBehavior: Clip.hardEdge,
+    color: Colors.white,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(appBorderRadius),
     ),
