@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:maoyi/widgets/register_user_form.dart';
+import 'package:maoyi/widgets/form_register_user.dart';
 import 'package:maoyi/widgets/logo.dart';
 import 'package:maoyi/widgets/stack_blurredbackground.dart';
 

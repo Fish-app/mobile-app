@@ -115,14 +115,11 @@ class _LoginUserFormState extends State<LoginUserForm> {
                   ),
 
                   /// ERROR MESSAGE
-                  Align(
-                    //FIXME: not centered (!?)
-                    alignment: Alignment.center,
-                    child: Text(
+                    Text(
                       _errorMessage,
+                      textAlign: TextAlign.center,
                       style: Theme.of(context).accentTextTheme.bodyText2,
                     ),
-                  ),
 
                   /// BUTTONS
                   Column(mainAxisSize: MainAxisSize.min, children: [
