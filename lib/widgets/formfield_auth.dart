@@ -38,9 +38,8 @@ class _FormFieldAuthState extends State<FormFieldAuth> {
             padding: EdgeInsets.all(10),
             child: Text(
               widget.title,
-              style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+              style: Theme.of(context).primaryTextTheme.headline4.copyWith(
                 color: Colors.white,
-                fontSize: 24.0,
               ),
             ),
           ),
