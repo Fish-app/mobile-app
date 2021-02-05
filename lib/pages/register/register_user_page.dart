@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:***REMOVED***/widgets/register_user_form.dart';
+import 'package:***REMOVED***/widgets/form_register_user.dart';
 import 'package:***REMOVED***/widgets/logo.dart';
 import 'package:***REMOVED***/widgets/stack_blurredbackground.dart';
 
