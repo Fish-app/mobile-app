@@ -109,7 +109,10 @@ class _LoginUserFormState extends State<LoginUserForm> {
                         alignment: Alignment.center,
                         child: Text(
                           S.of(context).msgAwaitResponse,
-                          style: Theme.of(context).accentTextTheme.bodyText1,
+                          style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+                            color: Colors.white,
+                            fontSize: 24.0,
+                          )
                         )),
                     visible: _displayAwaitHolder,
                   ),
@@ -118,7 +121,11 @@ class _LoginUserFormState extends State<LoginUserForm> {
                     Text(
                       _errorMessage,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).accentTextTheme.bodyText2,
+                      style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+                        color: Colors.amberAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                      ),
                     ),
 
                   /// BUTTONS
@@ -126,7 +133,10 @@ class _LoginUserFormState extends State<LoginUserForm> {
                     FlatButton(
                       child: Text(
                         S.of(context).loginUser,
-                        style: Theme.of(context).accentTextTheme.headline1,
+                        style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+                          fontSize: 48.0,
+                          color: Colors.white,
+                        ),
                       ),
                       onPressed: () {
                         /// Validate form, if OK send await
@@ -135,11 +145,14 @@ class _LoginUserFormState extends State<LoginUserForm> {
                         }
                       },
                     ),
-                    SizedBox(height: 24.0,),
+                    SizedBox(height: 24.0),
                     FlatButton(
                       child: Text(
                         S.of(context).createUser,
-                        style: Theme.of(context).accentTextTheme.headline2,
+                        style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+                          color: Colors.white,
+                          fontSize: 36.0,
+                        ),
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, routes.UserNew);
