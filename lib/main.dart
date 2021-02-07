@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:***REMOVED***/entities/user.dart';
+import 'package:***REMOVED***/utils/services/secure_storage.dart';
 
 import 'config/routes/routes.dart' as routes;
 import 'config/routes/router.dart';
@@ -16,6 +17,9 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  final SecureStorage secureStorage = SecureStorage();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
