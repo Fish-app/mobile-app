@@ -43,7 +43,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
       try {
         await widget.authService.doLoginUser(_loginUserFormData).then((user) {
           //TODO: HANDLE/DESERIALIZE  USER IN ANOTHER PULL REQUEST
-          print(user ?? "UNABLE TO PARSE USER");
+          print(user.email.toString() ?? "UNABLE TO PARSE USER");
         });
       } on HttpException catch (e) {
         setState(() {

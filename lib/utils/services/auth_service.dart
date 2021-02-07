@@ -42,13 +42,18 @@ class AuthService {
           headers: loginDetails.toMap()).timeout(Duration(seconds: 7));
       switch (response.statusCode) {
         case 200:
-          var decoderOutput = jsonDecode(response.body);
-          user = decoderOutput["data"];
+          Map decoderOutput = jsonDecode(response.body);
+          print("body:" + response.body);
+          var user = User.fromJson(decoderOutput);
+          print(decoderOutput);
           if (user != null) {
             log('OK GOT-USER');
             //TODO: HANDLE TOKEN IN SEPERASTE PULL REQUEST
             String token = response.headers["authorization"];
-            secureStorage.writeSecure(token, token);
+            secureStorage.writeSecure("token", token);
+            String token2 = await secureStorage.readSecure("token");
+            print("TESTING TOKEN OUTPUT:" + token2);
+            secureStorage.clearAllSecure();
             return user;
           } else {
             log('OK NO-USER');
