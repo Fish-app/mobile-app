@@ -4,10 +4,12 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:***REMOVED***/entities/user.dart';
+import 'package:***REMOVED***/main.dart';
 import 'package:***REMOVED***/pages/login/login_formdata.dart';
 import 'package:***REMOVED***/pages/register/new_user_form_data.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:***REMOVED***/constants/api_path.dart';
+import 'package:***REMOVED***/utils/services/secure_storage.dart';
 
 class CreateUserException implements Exception {
   String message;
@@ -16,7 +18,7 @@ class CreateUserException implements Exception {
 
 class AuthService {
   final ***REMOVED***RestClient ***REMOVED***RestClient;
-
+  final SecureStorage secureStorage = SecureStorage();
   AuthService(this.***REMOVED***RestClient);
 
   Future<void> createUser(NewUserFormData userDetails) async {
@@ -46,6 +48,7 @@ class AuthService {
             log('OK GOT-USER');
             //TODO: HANDLE TOKEN IN SEPERASTE PULL REQUEST
             String token = response.headers["authorization"];
+            secureStorage.writeSecure(token, token);
             return user;
           } else {
             log('OK NO-USER');
