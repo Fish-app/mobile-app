@@ -4,10 +4,12 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:maoyi/entities/user.dart';
+import 'package:maoyi/main.dart';
 import 'package:maoyi/pages/login/login_formdata.dart';
 import 'package:maoyi/pages/register/new_user_form_data.dart';
 import 'package:maoyi/utils/services/maoyi_rest_client.dart';
 import 'package:maoyi/constants/api_path.dart';
+import 'package:maoyi/utils/services/secure_storage.dart';
 
 class CreateUserException implements Exception {
   String message;
@@ -16,7 +18,7 @@ class CreateUserException implements Exception {
 
 class AuthService {
   final MaoyiRestClient maoyiRestClient;
-
+  final SecureStorage secureStorage = SecureStorage();
   AuthService(this.maoyiRestClient);
 
   Future<void> createUser(NewUserFormData userDetails) async {
@@ -46,6 +48,7 @@ class AuthService {
             log('OK GOT-USER');
             //TODO: HANDLE TOKEN IN SEPERASTE PULL REQUEST
             String token = response.headers["authorization"];
+            secureStorage.writeSecure(token, token);
             return user;
           } else {
             log('OK NO-USER');
