@@ -32,6 +32,9 @@ class _LoginUserFormState extends State<LoginUserForm> {
     _loginUserFormData = LoginUserFormData();
   }
 
+  /// This function ask auth_service to do a login request,
+  /// if successful we navigate to the home page. If failure occur,
+  /// it is handled and displayed in a friendly manner to the user
   void _handleLoginRequest() async {
     final FormState formState = _formKey.currentState;
     setState(() {
@@ -42,10 +45,21 @@ class _LoginUserFormState extends State<LoginUserForm> {
     if (formState.validate()) {
       try {
         await widget.authService.doLoginUser(_loginUserFormData).then((user) {
-          //TODO: HANDLE/DESERIALIZE  USER IN ANOTHER PULL REQUEST
-          print(user.email.toString() ?? "UNABLE TO PARSE USER");
+          if(user != null) {
+            // TODO: DECIDE HOW TO STORE USER STATE (IF NESSECARY?)
+            // LOGIN OK
+            print('FORMLOGIN: OK: "' + user.email + '"');
+            Navigator.pushNamed(context, routes.Home);
+          } else {
+            // JSON ERROR HANDELING
+            print("FORMLOGIN: PARSE ERROR");
+            setState(() {
+              _errorMessage = S.of(context).msgErrorClientSerializationFail;
+            });
+          }
         });
       } on HttpException catch (e) {
+        // SERVER ERROR CODE HANDELING
         setState(() {
           _errorMessage = e.message;
           switch (e.message) {
@@ -58,6 +72,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
           }
         });
       } on IOException {
+        // SOCKET/IO TRANSPORT ERROR HANDELING
         setState(() {
           _errorMessage = S.of(context).msgErrorNetworkFail;
         });
