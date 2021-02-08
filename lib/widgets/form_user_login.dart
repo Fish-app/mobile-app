@@ -7,7 +7,6 @@ import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:***REMOVED***/widgets/formfield_auth.dart';
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
-import 'package:***REMOVED***/generated/fonts.gen.dart';
 import 'package:***REMOVED***/utils/form/form_validators.dart';
 
 import 'package:strings/strings.dart';
@@ -46,7 +45,6 @@ class _LoginUserFormState extends State<LoginUserForm> {
       try {
         await widget.authService.doLoginUser(_loginUserFormData).then((user) {
           if(user != null) {
-            // TODO: DECIDE HOW TO STORE USER STATE (IF NESSECARY?)
             // LOGIN OK
             print('FORMLOGIN: OK: "' + user.email + '"');
             Navigator.pushNamed(context, routes.Home);
