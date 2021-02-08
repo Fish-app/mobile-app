@@ -50,6 +50,12 @@
   "@notANumber": {},
   "notATag": "Tags must start with # and only contain alphanumeric characters",
   "@notATag": {},
+  "listing": "Listing",
+  "@listing": {},
+  "quantityAvailable": "quantity available:",
+  "@quantityAvailable": {},
+  "buyDirectly": "buy directly",
+  "@buyDirectly": {},
 
 
   "msgErrorNetworkFail": "Unable to connect, please verify that you are connected to the Internet",

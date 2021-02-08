@@ -6,8 +6,11 @@ class StandardButton extends StatelessWidget {
   final String buttonText;
   final Function onPressed;
 
-  const StandardButton(
-  {Key key, this.buttonText, this.onPressed}) : super(key: key);
+  const StandardButton({
+    Key key,
+    @required this.buttonText,
+    @required this.onPressed
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
