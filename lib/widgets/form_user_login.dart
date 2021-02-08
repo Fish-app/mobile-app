@@ -7,7 +7,6 @@ import 'package:maoyi/utils/services/auth_service.dart';
 import 'package:maoyi/utils/services/maoyi_rest_client.dart';
 import 'package:maoyi/widgets/formfield_auth.dart';
 import 'package:maoyi/config/routes/routes.dart' as routes;
-import 'package:maoyi/generated/fonts.gen.dart';
 import 'package:maoyi/utils/form/form_validators.dart';
 
 import 'package:strings/strings.dart';
@@ -46,7 +45,6 @@ class _LoginUserFormState extends State<LoginUserForm> {
       try {
         await widget.authService.doLoginUser(_loginUserFormData).then((user) {
           if(user != null) {
-            // TODO: DECIDE HOW TO STORE USER STATE (IF NESSECARY?)
             // LOGIN OK
             print('FORMLOGIN: OK: "' + user.email + '"');
             Navigator.pushNamed(context, routes.Home);

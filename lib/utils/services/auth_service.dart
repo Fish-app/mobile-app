@@ -10,6 +10,7 @@ import 'package:maoyi/pages/register/new_user_form_data.dart';
 import 'package:maoyi/utils/services/maoyi_rest_client.dart';
 import 'package:maoyi/constants/api_path.dart';
 import 'package:maoyi/utils/services/secure_storage.dart';
+import 'package:maoyi/utils/services/shared_storage.dart';
 
 class CreateUserException implements Exception {
   String message;
@@ -43,13 +44,14 @@ class AuthService {
         case 200:
           Map decoderOutput = jsonDecode(response.body);
           print("body:" + response.body);
-          var user = User.fromJson(decoderOutput);
+          User user = User.fromJson(decoderOutput);
           print(decoderOutput);
           if (user != null) {
             log('OK GOT-USER');
             String token = response.headers["authorization"];
-            secureStorage.writeSecure("token", token);
-            return user;
+            //secureStorage.writeSecure("token", token);
+            //return user;
+            return persistLoginResponse(user, token);
           } else {
             log('OK NO-USER');
             return null;
@@ -72,4 +74,32 @@ class AuthService {
       throw e;
     }
   }
+
+
+  /// This function takes a User object and a Authorization token,
+  /// and saves the user details to normal storage, while saving the
+  /// JWT to an encrypted vault. If the operation successeds, we return
+  /// the user, so the App can continue as usual. If a failure occur,
+  /// we return null to indicate a failure
+  Future<User> persistLoginResponse(User user, String token) async {
+    bool userOK = false;
+    bool tokenOK = false;
+    SharedStorage _prefs = SharedStorage();
+    SecureStorage _secureStore = SecureStorage();
+    if((user != null && token != null)) {
+      // Verify that we have a token and user to save, if not fail with null
+      await _secureStore.writeSecure("token", token);
+      userOK = await _prefs.saveUser(user);
+      await _secureStore.readSecure("token") != null ? tokenOK = true : tokenOK = false;
+    }
+    return (tokenOK == true && userOK == true) ? user : null;
+  }
+
+
+  /// This function returns the JWT token, if present in secure storage
+  Future<String> getPersistedToken() async {
+    SecureStorage _secureStore = SecureStorage();
+    return await _secureStore.readSecure("token");
+  }
+
 }
