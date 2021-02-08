@@ -49,8 +49,6 @@ class AuthService {
           if (user != null) {
             log('OK GOT-USER');
             String token = response.headers["authorization"];
-            //secureStorage.writeSecure("token", token);
-            //return user;
             return persistLoginResponse(user, token);
           } else {
             log('OK NO-USER');
