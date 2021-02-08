@@ -36,7 +36,6 @@ class AuthService {
   }
 
   Future<User> doLoginUser(LoginUserFormData loginDetails) async {
-    User user;
     try {
       var response = await maoyiRestClient.post(loginUserEndpoint,
           headers: loginDetails.toMap()).timeout(Duration(seconds: 7));
@@ -48,12 +47,8 @@ class AuthService {
           print(decoderOutput);
           if (user != null) {
             log('OK GOT-USER');
-            //TODO: HANDLE TOKEN IN SEPERASTE PULL REQUEST
             String token = response.headers["authorization"];
             secureStorage.writeSecure("token", token);
-            String token2 = await secureStorage.readSecure("token");
-            print("TESTING TOKEN OUTPUT:" + token2);
-            secureStorage.clearAllSecure();
             return user;
           } else {
             log('OK NO-USER');
