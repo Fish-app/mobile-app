@@ -4,10 +4,13 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:***REMOVED***/entities/user.dart';
+import 'package:***REMOVED***/main.dart';
 import 'package:***REMOVED***/pages/login/login_formdata.dart';
 import 'package:***REMOVED***/pages/register/new_user_form_data.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:***REMOVED***/constants/api_path.dart';
+import 'package:***REMOVED***/utils/services/secure_storage.dart';
+import 'package:***REMOVED***/utils/services/shared_storage.dart';
 
 class CreateUserException implements Exception {
   String message;
@@ -16,7 +19,7 @@ class CreateUserException implements Exception {
 
 class AuthService {
   final ***REMOVED***RestClient ***REMOVED***RestClient;
-
+  final SecureStorage secureStorage = SecureStorage();
   AuthService(this.***REMOVED***RestClient);
 
   Future<void> createUser(NewUserFormData userDetails) async {
@@ -34,19 +37,19 @@ class AuthService {
   }
 
   Future<User> doLoginUser(LoginUserFormData loginDetails) async {
-    User user;
     try {
       var response = await ***REMOVED***RestClient.post(loginUserEndpoint,
           headers: loginDetails.toMap()).timeout(Duration(seconds: 7));
       switch (response.statusCode) {
         case 200:
-          var decoderOutput = jsonDecode(response.body);
-          user = decoderOutput["data"];
+          Map decoderOutput = jsonDecode(response.body);
+          print("body:" + response.body);
+          User user = User.fromJson(decoderOutput);
+          print(decoderOutput);
           if (user != null) {
             log('OK GOT-USER');
-            //TODO: HANDLE TOKEN IN SEPERASTE PULL REQUEST
             String token = response.headers["authorization"];
-            return user;
+            return persistLoginResponse(user, token);
           } else {
             log('OK NO-USER');
             return null;
@@ -69,4 +72,32 @@ class AuthService {
       throw e;
     }
   }
+
+
+  /// This function takes a User object and a Authorization token,
+  /// and saves the user details to normal storage, while saving the
+  /// JWT to an encrypted vault. If the operation successeds, we return
+  /// the user, so the App can continue as usual. If a failure occur,
+  /// we return null to indicate a failure
+  Future<User> persistLoginResponse(User user, String token) async {
+    bool userOK = false;
+    bool tokenOK = false;
+    SharedStorage _prefs = SharedStorage();
+    SecureStorage _secureStore = SecureStorage();
+    if((user != null && token != null)) {
+      // Verify that we have a token and user to save, if not fail with null
+      await _secureStore.writeSecure("token", token);
+      userOK = await _prefs.saveUser(user);
+      await _secureStore.readSecure("token") != null ? tokenOK = true : tokenOK = false;
+    }
+    return (tokenOK == true && userOK == true) ? user : null;
+  }
+
+
+  /// This function returns the JWT token, if present in secure storage
+  Future<String> getPersistedToken() async {
+    SecureStorage _secureStore = SecureStorage();
+    return await _secureStore.readSecure("token");
+  }
+
 }
