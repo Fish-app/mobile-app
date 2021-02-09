@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:maoyi/entities/commodity.dart';
 import 'package:maoyi/entities/user.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 part 'listing.g.dart';
 
@@ -35,6 +36,8 @@ class Listing {
 class OfferListing extends Listing {
   int maxAmount;
   int amountLeft;
+  //Coordinates for pickup.
+  Coords coords;
 
   OfferListing(
       {@required num id,
@@ -45,7 +48,8 @@ class OfferListing extends Listing {
       int price,
       bool isOpen,
       @required this.maxAmount,
-      @required this.amountLeft})
+      @required this.amountLeft,
+      this.coords})
       : super(
             id: id,
             dateCreated: dateCreated,

@@ -6,6 +6,7 @@ import 'package:maoyi/entities/listing.dart';
 import 'package:maoyi/generated/l10n.dart';
 import 'package:maoyi/widgets/display_text_field.dart';
 import 'package:maoyi/widgets/floating_nav_bar.dart';
+import 'package:maoyi/widgets/map_widget.dart';
 import 'package:maoyi/widgets/rating_stars.dart';
 import 'package:maoyi/widgets/standard_button.dart';
 
@@ -78,7 +79,6 @@ class ListingInfoPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
@@ -88,9 +88,7 @@ class ListingInfoPage extends StatelessWidget {
                             width: 150,
                             height: 200,
                           ),
-                          Text(
-                            "KART"
-                          )
+                          MapWidget(offerListing: offerListing,)
                         ],
                       )
                     ],
