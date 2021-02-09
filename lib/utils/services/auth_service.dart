@@ -100,4 +100,19 @@ class AuthService {
     return await _secureStore.readSecure("token");
   }
 
+  Future<bool> isPersistedTokenValid() async {
+    String token = await getPersistedToken();
+    if (token == null || token.isEmpty) {
+      return false;
+    } else {
+      //TODO: Implement validity checking of token
+      return true;
+    }
+  }
+
+  Future<bool> isUserAuthenticated() async {
+    //TODO: Fix this
+    return true;
+  }
+
 }

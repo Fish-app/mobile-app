@@ -13,16 +13,16 @@ class UserInfoPageState extends State<UserInfoPage> {
       bottomNavigationBar: ***REMOVED***NavBar(
         currentActiveButton: navButtonUser,
       ),
-      body: Container(
-        color: Colors.white,
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("UserInfo Page"),
-            ],
-          ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            ListView(
+
+            ),
+            AppBar(
+             backgroundColor: Theme.of(context).backgroundColor,
+            )
+          ],
         ),
       ),
     );
