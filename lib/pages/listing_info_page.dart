@@ -6,6 +6,7 @@ import 'package:***REMOVED***/entities/listing.dart';
 import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/widgets/display_text_field.dart';
 import 'package:***REMOVED***/widgets/floating_nav_bar.dart';
+import 'package:***REMOVED***/widgets/map_widget.dart';
 import 'package:***REMOVED***/widgets/rating_stars.dart';
 import 'package:***REMOVED***/widgets/standard_button.dart';
 
@@ -78,7 +79,6 @@ class ListingInfoPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
@@ -88,9 +88,7 @@ class ListingInfoPage extends StatelessWidget {
                             width: 150,
                             height: 200,
                           ),
-                          Text(
-                            "KART"
-                          )
+                          MapWidget(offerListing: offerListing,)
                         ],
                       )
                     ],
