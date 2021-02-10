@@ -5,7 +5,7 @@
   "availability": "Availability:",
   "@availability": {},
   "from": "from",
-  "@from":{},
+  "@from": {},
   "name": "Full Name",
   "@name": {},
   "fullName": "Enter your full name",
@@ -26,7 +26,7 @@
   "@tos": {},
   "createUser": "create user",
   "@createUser": {},
-  "loginUser" : "login",
+  "loginUser": "login",
   "@loginUser": {
     "description": ""
   },
@@ -50,10 +50,8 @@
   "@notANumber": {},
   "notATag": "Tags must start with # and only contain alphanumeric characters",
   "@notATag": {},
-
-
   "msgErrorNetworkFail": "Unable to connect, please verify that you are connected to the Internet",
-  "@msgErrorNetworkFail":{
+  "@msgErrorNetworkFail": {
     "description": ""
   },
   "msgErrorServerFail": "A server error occured, please try again later",
@@ -61,11 +59,11 @@
     "description": ""
   },
   "msgErrorClientSerializationFail": "An error occcured, please restart the app",
-  "@msgErrorClientSerializationFail":  {
+  "@msgErrorClientSerializationFail": {
     "description": ""
   },
   "msgErrorLoginRejected": "Unable to log in, please enter the correct username/password",
-  "@msgErrorLoginRejected":  {
+  "@msgErrorLoginRejected": {
     "description": ""
   },
   "msgAwaitResponse": "Please wait..",
@@ -74,6 +72,22 @@
   },
   "msgSuccessfulLogin": "Welcome {name}! ",
   "@msgSuccessfulLogin": {
+    "description": ""
+  },
+  "newPasswordHint": "please enter the new password",
+  "@newPasswordHint": {
+    "description": ""
+  },
+  "oldPasswordLabel": "old password",
+  "@oldPasswordLabel": {
+    "description": ""
+  },
+  "oldPasswordHint": "please enter your current password",
+  "@oldPasswordHint": {
+    "description": ""
+  },
+  "newPasswordLabel": "new password",
+  "@newPasswordLabel": {
     "description": ""
   }
 }
