@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:***REMOVED***/entities/user.dart';
 import 'package:***REMOVED***/main.dart';
 import 'package:***REMOVED***/pages/login/login_formdata.dart';
@@ -95,24 +96,26 @@ class AuthService {
 
 
   /// This function returns the JWT token, if present in secure storage
-  Future<String> getPersistedToken() async {
+  static Future<String> getPersistedToken() async {
     SecureStorage _secureStore = SecureStorage();
     return await _secureStore.readSecure("token");
   }
 
-  Future<bool> isPersistedTokenValid() async {
+  static Future<bool> isPersistedTokenValid() async {
     String token = await getPersistedToken();
     if (token == null || token.isEmpty) {
       return false;
     } else {
-      //TODO: Implement validity checking of token
-      return true;
+      return !(JwtDecoder.isExpired(token));
     }
   }
 
   Future<bool> isUserAuthenticated() async {
-    //TODO: Fix this
-    return true;
+    String token = await getPersistedToken();
+    if (token != null) {
+    } else {
+      return false;
+    }
   }
 
 }

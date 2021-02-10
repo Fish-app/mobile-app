@@ -30,5 +30,10 @@
   "msgErrorClientSerializationFail": "Det skjedde en feil, vennligst start appen på nytt",
   "msgErrorLoginRejected": "Fikk ikke til å logge på, vennligst sjekk ditt brukernavn/passord",
   "msgAwaitResponse": "Vennligst vent....",
-  "msgSuccessfulLogin": "Velkommen {name}! "
+  "msgSuccessfulLogin": "Velkommen {name}! ",
+
+  "newPasswordHint": "skriv inn nytt passord",
+  "oldPasswordLabel": "nåværende passord",
+  "oldPasswordHint": "skriv inn ditt gjeldende passord",
+  "newPasswordLabel": "nytt passord"
 }
