@@ -5,10 +5,28 @@ import 'package:maoyi/entities/listing.dart';
 import 'package:maoyi/widgets/rating_stars.dart';
 import 'package:maoyi/generated/l10n.dart';
 
-class OfferListingCard extends StatelessWidget {
+class OfferListingCard extends StatefulWidget {
   final OfferListing cardListing;
 
   const OfferListingCard({Key key, this.cardListing}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => OfferListingCardState();
+}
+
+class OfferListingCardState extends State<OfferListingCard> {
+  var _distance = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.cardListing.getDistanceTo().then((value) {
+      setState(() {
+        _distance = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,7 +35,7 @@ class OfferListingCard extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            cardListing.creator.name,
+            widget.cardListing.creator.name,
             style: Theme.of(context).primaryTextTheme.headline5,
           ),
           Row(
@@ -35,7 +53,7 @@ class OfferListingCard extends StatelessWidget {
                     children: [
                       Icon(Icons.location_on),
                       Text(
-                        cardListing.getDistanceTo().toString() + "Km",
+                        _distance.toString() + "Km",
                         style: Theme.of(context).primaryTextTheme.headline6,
                       ),
                     ],
@@ -62,11 +80,11 @@ class OfferListingCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    cardListing.price.toString() + "kr/Kg",
+                    widget.cardListing.price.toString() + "kr/Kg",
                     style: Theme.of(context).primaryTextTheme.headline5,
                   ),
                   Text(
-                    cardListing.amountLeft.toString() + "Kg",
+                    widget.cardListing.amountLeft.toString() + "Kg",
                     style: Theme.of(context).primaryTextTheme.headline6,
                   )
                 ],

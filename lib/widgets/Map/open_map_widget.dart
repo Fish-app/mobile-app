@@ -1,25 +1,29 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maoyi/entities/listing.dart';
-import 'package:maoyi/widgets/standard_button.dart';
+import 'package:maoyi/generated/l10n.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:strings/strings.dart';
 
-/*
-This widget looks for installed map applications on the phone and gives the
-option of opening one of them at the given coordinates.
- */
-class MapWidget extends StatelessWidget {
 
-  final OfferListing offerListing;
+/// This widget looks for installed map applications on the phone and gives the
+/// option of opening one of them at the given coordinates.
+class MapWidget {
 
-  const MapWidget({Key key, this.offerListing}) : super(key: key);
+  final double latitude;
+  final double longitude;
+
+  const MapWidget({
+    Key key,
+    @required this.latitude,
+    @required this.longitude
+  });
 
  openMapSheet(context) async {
    try {
-     final coords = this.offerListing.coords ?? Coords(0, 0);
      final availableMaps = await MapLauncher.installedMaps;
-
      showModalBottomSheet(
          context: context,
          builder: (BuildContext context) {
@@ -31,8 +35,8 @@ class MapWidget extends StatelessWidget {
                        for (var map in availableMaps)
                          ListTile(
                            onTap: () => map.showMarker(
-                               coords: coords,
-                               title: "Listing"
+                               coords: Coords(latitude, longitude),
+                               title: capitalize(S.of(context).pos),
                            ),
                            title: Text(map.mapName),
                            leading: SvgPicture.asset(
@@ -49,16 +53,7 @@ class MapWidget extends StatelessWidget {
          }
      );
    } catch (e) {
-     print(e); //TODO: Must be done another way
+     log("Error displaying map applications", error: e, time: DateTime.now());
    }
  }
-
- //TODO: will be replaced with an image displaying the destination
-  @override
-  Widget build(BuildContext context) {
-   return StandardButton(
-       buttonText: "Open Map",
-       onPressed: () => openMapSheet(context)
-   );
-  }
 }

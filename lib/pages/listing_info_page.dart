@@ -1,26 +1,41 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:maoyi/entities/listing.dart';
 import 'package:maoyi/generated/l10n.dart';
+import 'package:maoyi/widgets/Map/map_image.dart';
 import 'package:maoyi/widgets/display_text_field.dart';
-import 'package:maoyi/widgets/floating_nav_bar.dart';
-import 'package:maoyi/widgets/map_widget.dart';
 import 'package:maoyi/widgets/rating_stars.dart';
 import 'package:maoyi/widgets/standard_button.dart';
 
-class ListingInfoPage extends StatelessWidget {
+class ListingInfoPage extends StatefulWidget {
   final OfferListing offerListing;
 
   const ListingInfoPage({Key key, this.offerListing}) : super(key: key);
 
   @override
+  State<StatefulWidget> createState() => ListingPageInfoState();
+
+}
+
+class ListingPageInfoState extends State<ListingInfoPage> {
+  var _distance = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.offerListing.getDistanceTo().then((value) {
+      setState(() {
+        _distance = value;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, //TODO: Skjekk om det kan gjøres med theme
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        //TODO: Theme driten funke ikkje
         elevation: Theme.of(context).appBarTheme.elevation,
         title: Text(
           S.of(context).listing,
@@ -28,7 +43,7 @@ class ListingInfoPage extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).appBarTheme.color,
         iconTheme: IconThemeData(
-          color: Colors.black
+            color: Colors.black
         ),
       ),
       body: Stack(
@@ -41,13 +56,13 @@ class ListingInfoPage extends StatelessWidget {
                   elevation: Theme.of(context).cardTheme.elevation,
                   color: Theme.of(context).cardTheme.color,
                   shape: Theme.of(context).cardTheme.shape,
-                  clipBehavior: Clip.none,
+                  clipBehavior: Clip.hardEdge,
                   child: Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 10.0
+                            horizontal: 15.0,
+                            vertical: 10.0
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,11 +72,11 @@ class ListingInfoPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  offerListing.creator.name,
+                                  widget.offerListing.creator.name,
                                   style: Theme.of(context).primaryTextTheme.headline4,
                                 ),
                                 RatingStars(
-                                  rating: offerListing.creator.rating,
+                                  rating: widget.offerListing.creator.rating,
                                 )
                               ],
                             ),
@@ -72,7 +87,7 @@ class ListingInfoPage extends StatelessWidget {
                                   children: [
                                     Icon(Icons.location_on),
                                     Text(
-                                      offerListing.getDistanceTo().toString() + "Km",
+                                      _distance.toString() + "Km",
                                       style: Theme.of(context).primaryTextTheme.headline6,
                                     )
                                   ],
@@ -83,63 +98,59 @@ class ListingInfoPage extends StatelessWidget {
                         ),
                       ),
                       Row(
+                        //mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(
-                            width: 150,
-                            height: 200,
+                          Expanded(
+                            child: MapImage(
+                              latitude: widget.offerListing.latitude,
+                              longitude: widget.offerListing.longitude,
+                            ),
                           ),
-                          MapWidget(offerListing: offerListing,)
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
                 Card(
-                  elevation: Theme.of(context).cardTheme.elevation,
-                  color: Theme.of(context).cardTheme.color,
-                  shape: Theme.of(context).cardTheme.shape,
-                  clipBehavior: Clip.none,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 15.0,
-                        vertical: 10.0
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DisplayTextField(
-                          description: S.of(context).price.toUpperCase(),
-                          content: offerListing.price.toString() + " kr/Kg"
-                        ),
-                        DisplayTextField(
-                            description: S.of(context).quantityAvailable.toUpperCase(),
-                            content: offerListing.amountLeft.toString() + " Kg"
-                        ),
-                        StandardButton(
-                          buttonText: "START CHAT",
-                          onPressed: () {
-                            print("Pressed");
-                          }, //TODO: legg til åpning av chat
-                        ),
-                        StandardButton(
-                          buttonText: S.of(context).buyDirectly.toUpperCase(),
-                          onPressed: () {
-                            print("Pressed2");
-                          }, //TODO: legg til direkte kjøp
-                        )
-                      ],
-                    ),
-                  )
+                    elevation: Theme.of(context).cardTheme.elevation,
+                    color: Theme.of(context).cardTheme.color,
+                    shape: Theme.of(context).cardTheme.shape,
+                    clipBehavior: Clip.none,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 15.0,
+                          vertical: 10.0
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DisplayTextField(
+                              description: S.of(context).price.toUpperCase(),
+                              content: widget.offerListing.price.toString() + " kr/Kg"
+                          ),
+                          DisplayTextField(
+                              description: S.of(context).quantityAvailable.toUpperCase(),
+                              content: widget.offerListing.amountLeft.toString() + " Kg"
+                          ),
+                          StandardButton(
+                            buttonText: "START CHAT",
+                            onPressed: () {
+                              print("Pressed");
+                            }, //TODO: legg til åpning av chat
+                          ),
+                          StandardButton(
+                            buttonText: S.of(context).buyDirectly.toUpperCase(),
+                            onPressed: () {
+                              print("Pressed2");
+                            }, //TODO: legg til direkte kjøp
+                          )
+                        ],
+                      ),
+                    )
                 )
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: MaoyiNavBar(
-              currentActiveButton: navButtonShop,
-            ),
-          )
         ],
       ),
     );

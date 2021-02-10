@@ -91,5 +91,7 @@ final maoyiLightTheme = ThemeData(
       headline4: TextStyle(
           fontFamily: "Playfair_Display", color: Colors.black, fontSize: 24),
     )
-  )
+  ),
+
+  scaffoldBackgroundColor: Colors.white,
 );
