@@ -10,6 +10,7 @@ class FormFieldAuth extends StatefulWidget {
   final TextInputType keyboardType;
   final FormFieldValidator<String> validator;
   final FormFieldSetter<String> onSaved;
+  final Color labelColor;
 
   const FormFieldAuth({
     Key key,
@@ -20,6 +21,7 @@ class FormFieldAuth extends StatefulWidget {
     this.keyboardType,
     this.validator,
     this.onSaved,
+    this.labelColor,
   }) : super(key: key);
 
   @override
@@ -39,7 +41,7 @@ class _FormFieldAuthState extends State<FormFieldAuth> {
             child: Text(
               widget.title,
               style: Theme.of(context).primaryTextTheme.headline4.copyWith(
-                color: Colors.white,
+                color: widget.labelColor ?? Colors.white,
               ),
             ),
           ),

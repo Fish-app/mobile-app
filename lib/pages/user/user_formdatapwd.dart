@@ -11,4 +11,10 @@ class ResetPasswordFormData {
       "oldpwd" : this.oldpwd
     };
   }
+
+  clearData() {
+    this.newpwd = "";
+    this.email = "";
+    this.oldpwd = "";
+  }
 }
