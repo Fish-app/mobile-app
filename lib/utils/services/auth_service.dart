@@ -50,7 +50,7 @@ class AuthService {
           if (user != null) {
             log('OK GOT-USER');
             String token = response.headers["authorization"];
-            return persistLoginResponse(user, token);
+            return saveUserAndToken(user, token);
           } else {
             log('OK NO-USER');
             return null;
@@ -80,7 +80,7 @@ class AuthService {
   /// JWT to an encrypted vault. If the operation successeds, we return
   /// the user, so the App can continue as usual. If a failure occur,
   /// we return null to indicate a failure
-  Future<User> persistLoginResponse(User user, String token) async {
+  Future<User> saveUserAndToken(User user, String token) async {
     bool userOK = false;
     bool tokenOK = false;
     SharedStorage _prefs = SharedStorage();
@@ -95,14 +95,30 @@ class AuthService {
   }
 
 
+  static Future<bool> isUserLoggedIn() async {
+    bool userOK = await getUserFromStorage() != null;
+    bool tokenOK = await isPersistedTokenValid();
+    if (tokenOK == true && userOK == true) {
+      return true;
+    } else {
+      logout();
+      return false;
+    }
+  }
+
   /// This function returns the JWT token, if present in secure storage
-  static Future<String> getPersistedToken() async {
+  static Future<String> getTokenFromStorage() async {
     SecureStorage _secureStore = SecureStorage();
     return await _secureStore.readSecure("token");
   }
 
+  static Future<User> getUserFromStorage() async {
+    SharedStorage _prefs  = SharedStorage();
+    return await _prefs.loadUser();
+  }
+  
   static Future<bool> isPersistedTokenValid() async {
-    String token = await getPersistedToken();
+    String token = await getTokenFromStorage();
     if (token == null || token.isEmpty) {
       return false;
     } else {
@@ -110,12 +126,12 @@ class AuthService {
     }
   }
 
-  Future<bool> isUserAuthenticated() async {
-    String token = await getPersistedToken();
-    if (token != null) {
-    } else {
-      return false;
-    }
+  static Future<void> logout() async {
+    SecureStorage _vault = SecureStorage();
+    SharedStorage _prefs = SharedStorage();
+    await _vault.deleteSecure("token");
+    await _prefs.removeUser();
+    return;
   }
 
 }
