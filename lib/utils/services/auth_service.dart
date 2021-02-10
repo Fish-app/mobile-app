@@ -136,4 +136,9 @@ class AuthService {
     return;
   }
 
+  //TODO: GET SELLER / MA83
+static Future<bool> isUserAlreadySeller() async {
+    return false;
+}
+
 }

@@ -89,5 +89,17 @@
   "newPasswordLabel": "new password",
   "@newPasswordLabel": {
     "description": ""
+  },
+  "changePassword": "change password",
+  "@changePassword": {
+    "description": ""
+  },
+  "becomeSeller": "Become seller",
+  "@becomeSeller": {
+    "description": ""
+  },
+  "deleteUser": "Delete user",
+  "@deleteUser": {
+    "description": ""
   }
 }

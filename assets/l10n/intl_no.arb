@@ -35,5 +35,8 @@
   "newPasswordHint": "skriv inn nytt passord",
   "oldPasswordLabel": "nåværende passord",
   "oldPasswordHint": "skriv inn ditt gjeldende passord",
-  "newPasswordLabel": "nytt passord"
+  "newPasswordLabel": "nytt passord",
+  "changePassword": "endre password",
+  "becomeSeller": "Bli selger",
+  "deleteUser": "Slett brukeren"
 }
