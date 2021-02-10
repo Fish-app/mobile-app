@@ -15,8 +15,8 @@ class ResetPasswordForm extends StatefulWidget {
 
 class _ResetPasswordFormState extends State<ResetPasswordForm> {
   final _formKey = GlobalKey<FormState>();
-  String _email = "";
   String _token = "";
+  String _email = "";
 
   ResetPasswordFormData _resetPasswordFormData;
   String _errorMesg = "";
@@ -88,6 +88,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   context),
               labelColor: Colors.black,
             ),
+            SizedBox(height: 12.0),
+            Text(this._email), // TODO: REMOVE /TESTING
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Row(

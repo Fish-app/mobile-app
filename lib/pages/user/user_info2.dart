@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:***REMOVED***/entities/user.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/widgets/floating_nav_bar.dart';
@@ -31,13 +32,14 @@ class _UserPageState extends State<UserPage> {
 
   void _setUserDetails() async {
     User user = await AuthService.isUserLoggedIn();
-    String token = await AuthService.getTokenFromStorage();
-    if (user == null) {
+    String jwtFromAuth = await AuthService.getTokenFromStorage();
+    if (user == null || jwtFromAuth == null) {
       Navigator.of(context).pushNamed(routes.UserLogin);
     } else {
       setState(() {
         this.email = user.email;
         this.fullname = user.name;
+        this._token = jwtFromAuth;
       });
     }
   }
@@ -53,6 +55,7 @@ class _UserPageState extends State<UserPage> {
   bool isSeller = false;
   String email = "";
   String fullname = "";
+  String _token = "";
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +72,11 @@ class _UserPageState extends State<UserPage> {
             children: [
 
               // TOP ROW
-              TopBarRow(title: "User",),
+              TopBarRow(title: "User"),
 
               // MAIN WINDOW
               Container(
-                color: Colors.black38,
+               // color: Colors.black38,
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
@@ -84,6 +87,9 @@ class _UserPageState extends State<UserPage> {
                       // USER INFO
                       UserInfoField(label: S.of(context).name, data: fullname),
                       UserInfoField(label: S.of(context).email, data: email),
+                      UserInfoField(
+                          label: "session valid until",
+                          data: JwtDecoder.getExpirationDate(_token).toString()),
                       // BUTTONS
                       RaisedButton(
                         onPressed: () {
