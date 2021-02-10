@@ -7,7 +7,6 @@ import 'config/routes/router.dart';
 import 'config/themes/theme_config.dart';
 import 'entities/commodity.dart';
 import 'entities/listing.dart';
-import 'widgets/floating_nav_bar.dart';
 import 'generated/l10n.dart';
 
 void main() {
@@ -50,4 +49,6 @@ var testOfferListing = OfferListing(
     commodity: testCommodity,
     creator: testSeller,
     isOpen: true,
-    price: 20);
+    latitude: 69.224890,
+    longitude: 18.303778,
+    price: 20,);

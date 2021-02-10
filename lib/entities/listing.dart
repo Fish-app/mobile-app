@@ -1,10 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:***REMOVED***/entities/commodity.dart';
 import 'package:***REMOVED***/entities/user.dart';
-import 'package:map_launcher/map_launcher.dart';
+import 'package:***REMOVED***/utils/distance_calculator.dart';
 
 part 'listing.g.dart';
 
@@ -37,7 +35,8 @@ class OfferListing extends Listing {
   int maxAmount;
   int amountLeft;
   //Coordinates for pickup.
-  Coords coords;
+  double latitude;
+  double longitude;
 
   OfferListing(
       {@required num id,
@@ -49,7 +48,9 @@ class OfferListing extends Listing {
       bool isOpen,
       @required this.maxAmount,
       @required this.amountLeft,
-      this.coords})
+      @required this.latitude,
+      @required this.longitude
+      })
       : super(
             id: id,
             dateCreated: dateCreated,
@@ -59,8 +60,9 @@ class OfferListing extends Listing {
             price: price,
             isOpen: isOpen);
 
-  double getDistanceTo() {
-    return 3;
+  Future<double> getDistanceTo() {
+    Future<double>  dis = calculateDistance(latitude, longitude);
+    return dis;
   }
 
   factory OfferListing.fromJson(Map<String, dynamic> json) =>
