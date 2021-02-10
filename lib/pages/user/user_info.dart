@@ -6,7 +6,8 @@ import 'package:maoyi/widgets/form_user_resetpwd.dart';
 import 'package:maoyi/widgets/standard_button.dart';
 
 class UserInfoPage extends StatefulWidget {
-  var _spacing = 24.0;
+  final _spacing = 24.0;
+  final _buttonColor = Colors.amber;
   @override
   State<StatefulWidget> createState() => UserInfoPageState();
 }
@@ -25,6 +26,10 @@ class UserInfoPageState extends State<UserInfoPage> {
             children: [
               AppBar(
                 title: Text("User"),
+                textTheme: Theme.of(context).primaryTextTheme.copyWith(
+                  bodyText1: TextStyle(
+                  )
+                ),
                 backgroundColor: Colors.red,
               ),
               Padding(
@@ -40,8 +45,10 @@ class UserInfoPageState extends State<UserInfoPage> {
                       UserAttributteDisplay(
                           title: "Email", data: "asdasd@asdasd.ds"),
                       SizedBox(height: widget._spacing),
-                      StandardButton(
-                        buttonText: "Change password",
+                      RaisedButton(
+                        onPressed: () {},
+                        color: widget._buttonColor,
+                        child: const Text("Change password"),
                       ),
                       Visibility(
                         //FIXME: check seller, maybe statefuell ?
@@ -50,14 +57,18 @@ class UserInfoPageState extends State<UserInfoPage> {
                           padding: EdgeInsets.fromLTRB(
                             0, widget._spacing, 0, 0,
                           ),
-                          child: StandardButton(
-                          buttonText: "Become seller",
+                          child: RaisedButton(
+                            onPressed: () {},
+                            color: widget._buttonColor,
+                            child: const Text("Become seller"),
                           ),
                         ),
                       ),
                       SizedBox(height: widget._spacing),
-                      StandardButton(
-                        buttonText: "Delete user",
+                      RaisedButton(
+                        onPressed: () {},
+                        color: widget._buttonColor,
+                        child: const Text("Delete user"),
                       ),
                     ],
                   ),
