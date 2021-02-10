@@ -95,14 +95,16 @@ class AuthService {
   }
 
 
-  static Future<bool> isUserLoggedIn() async {
-    bool userOK = await getUserFromStorage() != null;
+  static Future<User> isUserLoggedIn() async {
+    User userOK = await _getUserFromStorage();
     bool tokenOK = await isPersistedTokenValid();
-    if (tokenOK == true && userOK == true) {
-      return true;
+    if (tokenOK == true && userOK != null) {
+      print('AUTH: USER LOGGED IN OK');
+      return userOK;
     } else {
       logout();
-      return false;
+      print('AUTH: USER NOT LOGGED IN');
+      return null;
     }
   }
 
@@ -112,7 +114,7 @@ class AuthService {
     return await _secureStore.readSecure("token");
   }
 
-  static Future<User> getUserFromStorage() async {
+  static Future<User> _getUserFromStorage() async {
     SharedStorage _prefs  = SharedStorage();
     return await _prefs.loadUser();
   }
