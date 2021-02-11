@@ -3,7 +3,6 @@ import 'package:maoyi/pages/login/login_page.dart';
 import 'package:maoyi/pages/chat/chat_page.dart';
 import 'package:maoyi/pages/user/user_changepwd.dart';
 import 'package:maoyi/pages/user/user_info.dart';
-import 'package:maoyi/pages/user/user_info2.dart';
 
 import '../../main.dart';
 import 'package:maoyi/pages/register/register_user_page.dart';
