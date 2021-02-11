@@ -3,7 +3,6 @@ import 'package:***REMOVED***/pages/login/login_page.dart';
 import 'package:***REMOVED***/pages/chat/chat_page.dart';
 import 'package:***REMOVED***/pages/user/user_changepwd.dart';
 import 'package:***REMOVED***/pages/user/user_info.dart';
-import 'package:***REMOVED***/pages/user/user_info2.dart';
 
 import '../../main.dart';
 import 'package:***REMOVED***/pages/register/register_user_page.dart';

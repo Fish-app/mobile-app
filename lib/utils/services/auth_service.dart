@@ -8,6 +8,7 @@ import 'package:***REMOVED***/entities/user.dart';
 import 'package:***REMOVED***/main.dart';
 import 'package:***REMOVED***/pages/login/login_formdata.dart';
 import 'package:***REMOVED***/pages/register/new_user_form_data.dart';
+import 'package:***REMOVED***/pages/user/user_resetpwd_formdata.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:***REMOVED***/constants/api_path.dart';
 import 'package:***REMOVED***/utils/services/secure_storage.dart';
@@ -37,10 +38,34 @@ class AuthService {
     }
   }
 
-  Future<User> doLoginUser(LoginUserFormData loginDetails) async {
+  Future<void> changePassword(ResetPasswordFormData formData) async {
     try {
-      var response = await ***REMOVED***RestClient.post(loginUserEndpoint,
-          headers: loginDetails.toMap()).timeout(Duration(seconds: 7));
+      var response = await ***REMOVED***RestClient.put(changePasswordEndpoint,
+          headers: formData.toMap(), addAuth: true);
+      switch (response.statusCode) {
+        case 200:
+          break;
+        case 401:
+          throw HttpException(HttpStatus.unauthorized.toString());
+          break;
+        case 403:
+          throw HttpException(HttpStatus.forbidden.toString());
+        case 500:
+        default:
+        throw HttpException(HttpStatus.internalServerError.toString());
+        break;
+      }
+    } on IOException catch (e) {
+      log("IO failure " + e.toString());
+      throw e;
+    }
+  }
+
+  Future<User> loginUser(LoginUserFormData loginDetails) async {
+    try {
+      var response = await ***REMOVED***RestClient
+          .post(loginUserEndpoint, headers: loginDetails.toMap())
+          .timeout(Duration(seconds: 7));
       switch (response.statusCode) {
         case 200:
           Map decoderOutput = jsonDecode(response.body);
@@ -63,6 +88,7 @@ class AuthService {
           throw HttpException(HttpStatus.internalServerError.toString());
           break;
         default:
+
           /// Should never happen, most possible malformed repsonse
           log("Unknown response");
           return null;
@@ -74,7 +100,6 @@ class AuthService {
     }
   }
 
-
   /// This function takes a User object and a Authorization token,
   /// and saves the user details to normal storage, while saving the
   /// JWT to an encrypted vault. If the operation successeds, we return
@@ -85,15 +110,16 @@ class AuthService {
     bool tokenOK = false;
     SharedStorage _prefs = SharedStorage();
     SecureStorage _secureStore = SecureStorage();
-    if((user != null && token != null)) {
+    if ((user != null && token != null)) {
       // Verify that we have a token and user to save, if not fail with null
       await _secureStore.writeSecure("token", token);
       userOK = await _prefs.saveUser(user);
-      await _secureStore.readSecure("token") != null ? tokenOK = true : tokenOK = false;
+      await _secureStore.readSecure("token") != null
+          ? tokenOK = true
+          : tokenOK = false;
     }
     return (tokenOK == true && userOK == true) ? user : null;
   }
-
 
   static Future<User> isUserLoggedIn() async {
     User userOK = await _getUserFromStorage();
@@ -115,10 +141,10 @@ class AuthService {
   }
 
   static Future<User> _getUserFromStorage() async {
-    SharedStorage _prefs  = SharedStorage();
+    SharedStorage _prefs = SharedStorage();
     return await _prefs.loadUser();
   }
-  
+
   static Future<bool> isPersistedTokenValid() async {
     String token = await getTokenFromStorage();
     if (token == null || token.isEmpty) {
@@ -137,8 +163,7 @@ class AuthService {
   }
 
   //TODO: GET SELLER / MA83
-static Future<bool> isUserAlreadySeller() async {
+  static Future<bool> isUserAlreadySeller() async {
     return false;
-}
-
+  }
 }

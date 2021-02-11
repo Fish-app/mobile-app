@@ -1,49 +1,117 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:***REMOVED***/entities/user.dart';
-import 'package:***REMOVED***/pages/user/user_formdatapwd.dart';
+import 'package:***REMOVED***/pages/user/user_resetpwd_formdata.dart';
 import 'package:***REMOVED***/utils/form/form_validators.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
+import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:***REMOVED***/widgets/formfield_auth.dart';
 import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
-import 'package:***REMOVED***/widgets/standard_button.dart';
 
 class ResetPasswordForm extends StatefulWidget {
+  final _buttonColor = Colors.amber;
+  final authService = AuthService(***REMOVED***RestClient());
+
   @override
   _ResetPasswordFormState createState() => _ResetPasswordFormState();
 }
 
 class _ResetPasswordFormState extends State<ResetPasswordForm> {
   final _formKey = GlobalKey<FormState>();
-  String _token = "";
   String _email = "";
 
-  ResetPasswordFormData _resetPasswordFormData;
-  String _errorMesg = "";
+  ResetPasswordFormData _resetPwdFormData;
+  String _errorMessage = "";
   bool _displayAwaitHolder = false;
 
   @override
   void initState() {
     super.initState();
-    _resetPasswordFormData = ResetPasswordFormData();
+    _resetPwdFormData = ResetPasswordFormData();
     _setUserDetails();
   }
 
   void _setUserDetails() async {
     User user = await AuthService.isUserLoggedIn();
-    String token = await AuthService.getTokenFromStorage();
-    if (user == null || token == null) {
-      Navigator.of(context).pushNamed(routes.UserLogin);
-    } else {
+    if (user != null) {
       setState(() {
         this._email = user.email;
-        this._token = token;
       });
+    } else {
+      Navigator.of(context).pushNamed(routes.UserLogin);
     }
   }
 
   void _handlePasswordResetRequest() async {
     //TODO: Handle password reset with formdata & mail + token
+    final FormState formState = _formKey.currentState;
+    setState(() {
+      _errorMessage = "";
+    });
+    formState.save();
+    if (formState.validate()) {
+      try {
+        await widget.authService
+            .changePassword(_resetPwdFormData)
+            .then((value) {
+              // LOGOUT USER AND SHOW DIALOG
+          AuthService.logout();
+          _showPasswordChangedDialog();
+        });
+      } on HttpException catch (e) {
+        setState(() {
+          _errorMessage = e.message;
+          switch (e.message) {
+            case "401":
+              _errorMessage =
+                  "Fikk ikke til å endre passord, start appen på nytt";
+              break;
+            case "403":
+              _errorMessage = "Sjekk att gammelt passord er korrekt";
+              break;
+            default:
+              _errorMessage = S.of(context).msgErrorServerFail;
+              break;
+          }
+        });
+      } on IOException {
+        // SOCKET/IO TRANSPORT ERROR HANDELING
+        setState(() {
+          _errorMessage = S.of(context).msgErrorNetworkFail;
+        });
+      }
+    }
+  }
+
+  Future<void> _showPasswordChangedDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Passordet ble endret"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text("Din forespørsel om å endre passord er utført."),
+                Text("Du må nå logge inn på nytt med ditt nye passord."),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(routes.UserLogin,
+                          (route) => false);
+                },
+                child: Text("Ta meg til innloggingssiden"))
+          ],
+        );
+      }
+    );
   }
 
   @override
@@ -60,8 +128,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               hint: S.of(context).oldPasswordHint,
               keyboardType: TextInputType.text,
               isObscured: true,
-              onSaved: (oldPassword) =>
-                  _resetPasswordFormData.oldpwd = oldPassword,
+              onSaved: (oldPassword) => _resetPwdFormData.oldpwd = oldPassword,
               validator: (oldPassword) =>
                   validateLength(oldPassword, context, min: 8),
               labelColor: Colors.black,
@@ -71,9 +138,10 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               hint: S.of(context).newPasswordHint,
               keyboardType: TextInputType.text,
               isObscured: true,
-              onSaved: (newPassword) =>
-                  _resetPasswordFormData.newpwd = newPassword,
-              validator: (newPassword) => validateLength(newPassword, context, min: 8),
+              onSaved: (newPassword) => _resetPwdFormData.newpwd = newPassword,
+              validator: (newPassword) {
+                return validateLength(newPassword, context, min: 8);
+              },
               labelColor: Colors.black,
             ),
             FormFieldAuth(
@@ -81,11 +149,13 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               hint: S.of(context).confirmPasswordHint,
               keyboardType: TextInputType.text,
               isObscured: true,
-              validator: (confirmPassword) => validateEquality(
-                  _resetPasswordFormData.newpwd,
-                  confirmPassword,
-                  S.of(context).newPasswordLabel,
-                  context),
+              validator: (confirmPassword) {
+                return validateEquality(
+                    confirmPassword,
+                    _resetPwdFormData.newpwd,
+                    S.of(context).newPasswordLabel,
+                    context);
+              },
               labelColor: Colors.black,
             ),
             SizedBox(height: 12.0),
@@ -97,24 +167,27 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 children: [
                   RaisedButton(
                     child: Text("Clear form"),
+                    color: widget._buttonColor,
                     onPressed: () {
-                      _resetPasswordFormData.clearData();
-                      setState(() {
-                        //FIXME: doent work
-                      });
+                      _resetPwdFormData.clearData();
+                      _formKey.currentState.reset();
                     },
                   ),
                   SizedBox(width: 12.0),
                   RaisedButton(
+                    color: widget._buttonColor,
                     child: Text("Reset password"),
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        _handlePasswordResetRequest();
-                      }
+                      _resetPwdFormData.email = this._email;
+                      _handlePasswordResetRequest();
                     },
                   ),
                 ],
               ),
+            ),
+            Text(
+              _errorMessage,
+              style: TextStyle(color: Theme.of(context).errorColor),
             )
           ],
         ),
