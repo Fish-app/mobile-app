@@ -10,6 +10,7 @@ class FormFieldAuth extends StatelessWidget {
   final TextInputType keyboardType;
   final FormFieldValidator<String> validator;
   final FormFieldSetter<String> onSaved;
+  final Color labelColor;
 
   const FormFieldAuth({
     Key key,
@@ -19,7 +20,7 @@ class FormFieldAuth extends StatelessWidget {
     this.validationMsg,
     this.keyboardType,
     this.validator,
-    this.onSaved,
+    this.onSaved, this.labelColor,
   }) : super(key: key);
 
   @override
@@ -31,10 +32,10 @@ class FormFieldAuth extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(10, 15, 0, 5),
             child: Text(
-              title,
-              style: Theme.of(context).primaryTextTheme.headline3.copyWith(
-                    color: Colors.white,
-                  ),
+              this.title,
+              style: Theme.of(context).primaryTextTheme.headline4.copyWith(
+                color: this.labelColor ?? Colors.white,
+              ),
             ),
           ),
           TextFormField(
