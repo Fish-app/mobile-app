@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maoyi/generated/fonts.gen.dart';
+import 'package:maoyi/config/themes/theme_config.dart';
 
 /// Build a widget with a title and email
-class FormFieldAuth extends StatefulWidget {
+class FormFieldAuth extends StatelessWidget {
   final String title;
   final String hint;
   final String validationMsg;
@@ -10,7 +10,6 @@ class FormFieldAuth extends StatefulWidget {
   final TextInputType keyboardType;
   final FormFieldValidator<String> validator;
   final FormFieldSetter<String> onSaved;
-  final Color labelColor;
 
   const FormFieldAuth({
     Key key,
@@ -21,14 +20,7 @@ class FormFieldAuth extends StatefulWidget {
     this.keyboardType,
     this.validator,
     this.onSaved,
-    this.labelColor,
   }) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState()  =>  _FormFieldAuthState();
-  
-}
-class _FormFieldAuthState extends State<FormFieldAuth> {
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +29,22 @@ class _FormFieldAuthState extends State<FormFieldAuth> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.fromLTRB(10, 15, 0, 5),
             child: Text(
-              widget.title,
-              style: Theme.of(context).primaryTextTheme.headline4.copyWith(
-                color: widget.labelColor ?? Colors.white,
-              ),
+              title,
+              style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+                    color: Colors.white,
+                  ),
             ),
           ),
           TextFormField(
             decoration: InputDecoration(
-                hintText: widget.hint,
+              hintText: hint,
             ).applyDefaults(Theme.of(context).inputDecorationTheme),
-            onSaved: widget.onSaved,
-            validator: widget.validator,
-            obscureText: widget.isObscured ?? false,
+            style: inputTextStyle,
+            onSaved: onSaved,
+            validator: validator,
+            obscureText: isObscured ?? false,
           ),
         ],
       ),

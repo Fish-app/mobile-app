@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,11 +5,9 @@ class StandardButton extends StatelessWidget {
   final String buttonText;
   final Function onPressed;
 
-  const StandardButton({
-    Key key,
-    @required this.buttonText,
-    @required this.onPressed
-  }) : super(key: key);
+  const StandardButton(
+      {Key key, @required this.buttonText, @required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +16,7 @@ class StandardButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonText,
-          style: Theme.of(context).primaryTextTheme.headline5,
-        )
-    );
+          style: Theme.of(context).textTheme.button,
+        ));
   }
 }

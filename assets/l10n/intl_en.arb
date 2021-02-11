@@ -5,7 +5,7 @@
   "availability": "Availability:",
   "@availability": {},
   "from": "from",
-  "@from": {},
+  "@from":{},
   "name": "Full Name",
   "@name": {},
   "fullName": "Enter your full name",
@@ -22,11 +22,11 @@
   "@confirmPassword": {},
   "confirmPasswordHint": "Enter your password again",
   "@confirmPasswordHint": {},
-  "tos": "I agree to the Terms of Services and Privacy Policy",
+  "tos": "I agree to the Terms of Services\n and Privacy Policy",
   "@tos": {},
   "createUser": "create user",
   "@createUser": {},
-  "loginUser": "login",
+  "loginUser" : "Login",
   "@loginUser": {
     "description": ""
   },

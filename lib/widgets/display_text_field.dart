@@ -2,11 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DisplayTextField extends StatelessWidget {
-  const DisplayTextField({
-    Key key,
-    @required this.description,
-    @required this.content
-  }) : super(key: key);
+  const DisplayTextField(
+      {Key key, @required this.description, @required this.content})
+      : super(key: key);
 
   final String description;
   final String content;
@@ -21,14 +19,15 @@ class DisplayTextField extends StatelessWidget {
           children: [
             Text(
               description,
-              style: Theme.of(context).primaryTextTheme.bodyText2.copyWith(fontSize: 12),
+              style: Theme.of(context).textTheme.overline,
             ),
             Text(
               content,
-              style: Theme.of(context).primaryTextTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             Divider(
-              color: Colors.grey[800],
+              thickness: Theme.of(context).dividerTheme.thickness,
+              color: Theme.of(context).dividerTheme.color,
             )
           ],
         ),
