@@ -28,13 +28,19 @@ class AuthService {
     try {
       var response = await ***REMOVED***RestClient.post(createUserEndpoint,
           headers: userDetails.toMap(), addAuth: false);
-      if (response.statusCode == 409) {
-        throw CreateUserException("Email already exists");
-      } else {
-        throw HttpException("Error creating user");
+      switch (response.statusCode) {
+        case 200:
+          break;
+        case 409:
+          throw CreateUserException("Email already exists");
+          break;
+        case 500:
+        default:
+          throw HttpException(HttpStatus.internalServerError.toString());
+          break;
       }
     } on IOException catch (e) {
-      print(e);
+      log("IO failure " + e.toString(), time: DateTime.now());
       throw HttpException("Service unavailable");
     }
   }
