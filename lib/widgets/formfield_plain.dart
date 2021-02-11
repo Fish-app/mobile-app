@@ -28,33 +28,31 @@ class FormFieldPlain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      // FIXME: GET MATERIAL THEME
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(10, 15, 0, 5),
-              child: Text(
-                this.title,
-                style: Theme.of(context).primaryTextTheme.headline4.copyWith(
-                      color: this.labelColor ?? Colors.white,
-                    ),
-              ),
+    //FIXME : FIX FORM FIELDS TO LOOK BETTER
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, 15, 0, 5),
+            child: Text(
+              this.title,
+              style: Theme.of(context).primaryTextTheme.headline4.copyWith(
+                    color: this.labelColor ?? Colors.white,
+                  ),
             ),
-            TextFormField(
-              initialValue: initialValue,
-              decoration: InputDecoration(
-                hintText: hint,
-              ).applyDefaults(Theme.of(context).inputDecorationTheme),
-              style: inputTextStyle,
-              onSaved: onSaved,
-              validator: validator,
-              obscureText: isObscured ?? false,
-            ),
-          ],
-        ),
+          ),
+          TextFormField(
+            initialValue: initialValue,
+            decoration: InputDecoration(
+              hintText: hint,
+            ).applyDefaults(Theme.of(context).inputDecorationTheme),
+            style: inputTextStyle,
+            onSaved: onSaved,
+            validator: validator,
+            obscureText: isObscured ?? false,
+          ),
+        ],
       ),
     );
   }
