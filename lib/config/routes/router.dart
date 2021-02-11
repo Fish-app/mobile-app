@@ -2,7 +2,7 @@ import 'package:maoyi/pages/home/home_page.dart';
 import 'package:maoyi/pages/listing_info_page.dart';
 import 'package:maoyi/pages/login/login_page.dart';
 import 'package:maoyi/pages/chat/chat_page.dart';
-import 'package:maoyi/pages/user/user_changepwd.dart';
+import 'package:maoyi/pages/user/user_resetpwd_page.dart';
 import 'package:maoyi/pages/user/user_info.dart';
 
 import '../../main.dart';

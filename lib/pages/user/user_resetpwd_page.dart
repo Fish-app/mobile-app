@@ -25,9 +25,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: MaoyiNavBar(
-        currentActiveButton: navButtonUser,
-      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.only(
