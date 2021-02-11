@@ -7,11 +7,14 @@ import 'package:maoyi/widgets/display_text_field.dart';
 import 'package:maoyi/widgets/floating_nav_bar.dart';
 import 'package:maoyi/config/routes/routes.dart' as routes;
 import 'package:maoyi/generated/l10n.dart';
+import 'package:maoyi/widgets/nav_widgets/common_nav.dart';
 import 'package:maoyi/widgets/row_topbar_return.dart';
+import 'package:maoyi/widgets/standard_button.dart';
 import 'package:strings/strings.dart';
 
 class UserPage extends StatefulWidget {
   final _buttonColor = Colors.amber;
+  final _buttonPadding = 10.0;
   final String email;
   final String fullname;
   final bool isSeller;
@@ -35,8 +38,7 @@ class _UserPageState extends State<UserPage> {
     User user = await AuthService.isUserLoggedIn();
     String jwtFromAuth = await AuthService.getTokenFromStorage();
     if (user == null || jwtFromAuth == null) {
-      Navigator.of(context)
-          .popAndPushNamed(routes.UserLogin);
+      Navigator.of(context).popAndPushNamed(routes.UserLogin);
     } else {
       setState(() {
         this.email = user.email;
@@ -61,21 +63,16 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: MaoyiNavBar(
-        currentActiveButton: navButtonUser,
-      ),
-      body: SafeArea(
+    return getMaoyiDefaultScaffold(
+      context,
+      useNavBar: navButtonUser,
+      child: SafeArea(
         child: Container(
           child: Column(
             children: [
-
-              // TOP ROW
-              TopBarRow(title: "User"),
-
               // MAIN WINDOW
               Container(
-               // color: Colors.black38,
+                // color: Colors.black38,
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
@@ -83,42 +80,73 @@ class _UserPageState extends State<UserPage> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      Container(
+                        padding: EdgeInsets.only(bottom: 29),
+                        child: Text(
+                          "User info",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              .copyWith(fontSize: 24.0),
+                        ),
+                      ),
                       // USER INFO
-                      DisplayTextField(description: S.of(context).name.toUpperCase(), content: fullname),
-                      DisplayTextField(description: S.of(context).email.toUpperCase(), content: email),
+                      DisplayTextField(
+                          description: S.of(context).name.toUpperCase(),
+                          content: fullname),
+                      DisplayTextField(
+                          description: S.of(context).email.toUpperCase(),
+                          content: email),
                       DisplayTextField(
                           description: "session valid until".toUpperCase(),
-                          content: JwtDecoder.getExpirationDate(_token).toString()),
+                          content:
+                              JwtDecoder.getExpirationDate(_token).toString()),
                       // BUTTONS
-                      RaisedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(routes.UserResetPwd);
-                        },
-                        color: widget._buttonColor,
-                        child: Text(capitalize(S.of(context).changePassword)),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: widget._buttonPadding),
+                        child: StandardButton(
+                          buttonText: capitalize(S.of(context).changePassword),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(routes.UserResetPwd);
+                          },
+                        ),
                       ),
                       Visibility(
                         //TODO: IMPLEMENT SELLER IN OTHER PULL REQ
                         visible: true,
-                        child: RaisedButton(
-                          onPressed: () {},
-                          color: widget._buttonColor,
-                          child: Text(capitalize(S.of(context).becomeSeller)),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: widget._buttonPadding),
+                          child: StandardButton(
+                            buttonText: capitalize(S.of(context).becomeSeller),
+                            onPressed: () {},
+                          ),
                         ),
                       ),
-                      RaisedButton(
-                        onPressed: () {
-                          AuthService.logout();
-                          Navigator.of(context)
-                              .popAndPushNamed(routes.UserLogin);
-                        },
-                        color: widget._buttonColor,
-                        child: const Text("Logout"),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: widget._buttonPadding),
+                        child: StandardButton(
+                          buttonText: capitalize("Logout"),
+                          onPressed: () {
+                            AuthService.logout();
+                            Navigator.of(context)
+                                .popAndPushNamed(routes.UserLogin);
+                          },
+                        ),
                       ),
-                      RaisedButton(
-                        //onPressed: () {},
-                        color: widget._buttonColor,
-                        child: Text(capitalize(S.of(context).deleteUser)),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: widget._buttonPadding),
+                        child: StandardButton(
+                          buttonText: capitalize(S.of(context).deleteUser),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(routes.UserResetPwd);
+                          },
+                        ),
                       ),
                     ],
                   ),
