@@ -133,5 +133,13 @@
   "dialogActionDoLater": "Later",
   "@dialogActionDoLater": {
     "description": ""
+  },
+  "clearForm": "Clear form",
+  "@clearForm": {
+    "description": ""
+  },
+  "resetPassword": "Reset password",
+  "@resetPassword": {
+    "description": ""
   }
 }

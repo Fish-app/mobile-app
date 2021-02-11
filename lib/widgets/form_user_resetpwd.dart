@@ -11,6 +11,8 @@ import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
 import 'package:strings/strings.dart';
 
+import 'formfield_plain.dart';
+
 class ResetPasswordForm extends StatefulWidget {
   final _buttonColor = Colors.amber;
   final authService = AuthService(***REMOVED***RestClient());
@@ -127,7 +129,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            FormFieldAuth(
+            FormFieldPlain(
               title: S.of(context).oldPasswordLabel,
               hint: S.of(context).oldPasswordHint,
               keyboardType: TextInputType.text,
@@ -137,7 +139,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   validateLength(oldPassword, context, min: 8),
               labelColor: Colors.black,
             ),
-            FormFieldAuth(
+            FormFieldPlain(
               title: S.of(context).newPasswordLabel,
               hint: S.of(context).newPasswordHint,
               keyboardType: TextInputType.text,
@@ -148,7 +150,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               },
               labelColor: Colors.black,
             ),
-            FormFieldAuth(
+            FormFieldPlain(
               title: S.of(context).confirmPassword,
               hint: S.of(context).confirmPasswordHint,
               keyboardType: TextInputType.text,
@@ -170,7 +172,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RaisedButton(
-                    child: Text("Clear form"),
+                    child: Text(S.of(context).clearForm),
                     color: widget._buttonColor,
                     onPressed: () {
                       _resetPwdFormData.clearData();
@@ -180,7 +182,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   SizedBox(width: 12.0),
                   RaisedButton(
                     color: widget._buttonColor,
-                    child: Text("Reset password"),
+                    child: Text(S.of(context).resetPassword),
                     onPressed: () {
                       _resetPwdFormData.email = this._email;
                       _handlePasswordResetRequest();
