@@ -8,6 +8,7 @@ import 'config/routes/router.dart';
 import 'config/themes/theme_config.dart';
 import 'entities/commodity.dart';
 import 'entities/listing.dart';
+import 'entities/seller.dart';
 import 'generated/l10n.dart';
 
 void main() {
@@ -37,11 +38,14 @@ class MyApp extends StatelessWidget {
 var testCommodity = Commodity(commodityImage: null, name: "ALLLA");
 var testCommodity2 = Commodity(commodityImage: null, name: "lakdsfjlk");
 var testCommodity3 = Commodity(commodityImage: null, name: "lelele");
-var testSeller = Seller(
-    name: "bob",
-    bankAccountNumber: "123",
-    email: "bip@bop.com",
+var testUserBob = User(
+  id: 22,
+  name: "bob",
+  email: "bob@bob.com",
+);
+var testSellerBob = Seller(
     id: 22,
+    user: testUserBob,
     regNumber: "2312",
     rating: 3.6,
     );
@@ -50,7 +54,7 @@ var testOfferListing = OfferListing(
     maxAmount: 22,
     amountLeft: 22,
     commodity: testCommodity,
-    creator: testSeller,
+    creator: testSellerBob,
     isOpen: true,
     latitude: 69.224890,
     longitude: 18.303778,
