@@ -43,7 +43,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
     formState.save();
     if (formState.validate()) {
       try {
-        await widget.authService.doLoginUser(_loginUserFormData).then((user) {
+        await widget.authService.loginUser(_loginUserFormData).then((user) {
           if(user != null) {
             // LOGIN OK
             print('FORMLOGIN: OK: "' + user.email + '"');
