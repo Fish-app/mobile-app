@@ -11,17 +11,20 @@ class FormFieldAuth extends StatelessWidget {
   final FormFieldValidator<String> validator;
   final FormFieldSetter<String> onSaved;
   final Color labelColor;
+  final String initialValue;
 
-  const FormFieldAuth({
-    Key key,
-    @required this.title,
-    @required this.hint,
-    this.isObscured,
-    this.validationMsg,
-    this.keyboardType,
-    this.validator,
-    this.onSaved, this.labelColor,
-  }) : super(key: key);
+  const FormFieldAuth(
+      {Key key,
+      @required this.title,
+      @required this.hint,
+      this.isObscured,
+      this.validationMsg,
+      this.keyboardType,
+      this.validator,
+      this.onSaved,
+      this.labelColor,
+      this.initialValue})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +37,12 @@ class FormFieldAuth extends StatelessWidget {
             child: Text(
               this.title,
               style: Theme.of(context).primaryTextTheme.headline4.copyWith(
-                color: this.labelColor ?? Colors.white,
-              ),
+                    color: this.labelColor ?? Colors.white,
+                  ),
             ),
           ),
           TextFormField(
+            initialValue: initialValue,
             decoration: InputDecoration(
               hintText: hint,
             ).applyDefaults(Theme.of(context).inputDecorationTheme),
@@ -51,5 +55,4 @@ class FormFieldAuth extends StatelessWidget {
       ),
     );
   }
-
 }
