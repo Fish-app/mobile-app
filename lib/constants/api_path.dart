@@ -1,4 +1,4 @@
-const restApiUrl = "http://nilsjarle-home.bogata.lan:8080/api";
+const restApiUrl = "http://10.0.2.2:8080/api";
 
 /// -- user auth -- ///
 
@@ -21,7 +21,7 @@ const loginUserEndpoint = restApiUrl + "/authentication/login";
 
 /// -- user register -- ///
 
-const createUserEndpoint = restApiUrl + "/authentication/create";
+const createUserEndpoint = restApiUrl + "/user/create";
 
 /// -- user reset password ///
 
