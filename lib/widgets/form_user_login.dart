@@ -93,6 +93,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               FormFieldAuth(
+                initialValue: "oluf@example.com",
                 title: capitalize(S.of(context).email),
                 hint: S.of(context).emailHint,
                 keyboardType: TextInputType.emailAddress,
@@ -102,6 +103,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                 },
               ),
               FormFieldAuth(
+                initialValue: "Passord123",
                 title: capitalize(S.of(context).password),
                 hint: capitalize(S.of(context).passwordHint),
                 isObscured: true,
