@@ -10,6 +10,7 @@ import 'package:***REMOVED***/widgets/commodity_card.dart';
 import 'package:***REMOVED***/widgets/floating_nav_bar.dart';
 import 'package:***REMOVED***/widgets/listing_card.dart';
 import 'package:***REMOVED***/widgets/logo.dart';
+import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -47,10 +48,9 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-      children: [
-        Column(
+    return get***REMOVED***DefaultScaffold(context,
+        useNavBar: navButtonShop,
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,15 +74,7 @@ class HomePageState extends State<HomePage> {
               ),
             )
           ],
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: ***REMOVED***NavBar(
-            currentActiveButton: navButtonShop,
-          ),
-        ),
-      ],
-    ));
+        ));
   }
 }
 
@@ -115,17 +107,18 @@ class CommodityListingPageState extends State<CommodityListingPage>
     );
   }
 
-   /*
+  /*
    When tapping a listing card you get taken to the information
    page for that listing.
     */
   Widget _goToListing(OfferListing offerListing) {
     return GestureDetector(
       onTap: () => {
-        Navigator.push(context,
-            MaterialPageRoute(
-                builder: (context) => ListingInfoPage(offerListing: offerListing),
-            ),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ListingInfoPage(offerListing: offerListing),
+          ),
         ),
       },
       child: OfferListingCard(cardListing: offerListing),
@@ -179,9 +172,9 @@ class CommodityListingPageState extends State<CommodityListingPage>
                           _makeSortByWidget(),
                           for (var n = 0; n < 10; n++)
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 3),
-                              child: _goToListing(testOfferListing)
-                              ),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 3),
+                                child: _goToListing(testOfferListing)),
                         ],
                       ),
                     ),

@@ -20,9 +20,9 @@ class SimpleShadowWidget extends StatelessWidget {
       {Key key,
       this.iconData,
       this.iconColor,
-      this.shadowColor = Colors.black54,
-      this.fromTop = 0.4,
-      this.fromLeft = 0.3,
+      this.shadowColor = const Color(0x33000000),
+      this.fromTop = 0.25,
+      this.fromLeft = 0.2,
       this.size = 32,
       this.blur = 1})
       : super(key: key);
