@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:maoyi/entities/commodity.dart';
 import 'package:maoyi/entities/user.dart';
+import 'package:maoyi/utils/distance_calculator.dart';
 
 part 'listing.g.dart';
 
@@ -35,6 +34,9 @@ class Listing {
 class OfferListing extends Listing {
   int maxAmount;
   int amountLeft;
+  //Coordinates for pickup.
+  double latitude;
+  double longitude;
 
   OfferListing(
       {@required num id,
@@ -45,7 +47,10 @@ class OfferListing extends Listing {
       int price,
       bool isOpen,
       @required this.maxAmount,
-      @required this.amountLeft})
+      @required this.amountLeft,
+      @required this.latitude,
+      @required this.longitude
+      })
       : super(
             id: id,
             dateCreated: dateCreated,
@@ -55,8 +60,9 @@ class OfferListing extends Listing {
             price: price,
             isOpen: isOpen);
 
-  double getDistanceTo() {
-    return 3;
+  Future<double> getDistanceTo() {
+    Future<double>  dis = calculateDistance(latitude, longitude);
+    return dis;
   }
 
   factory OfferListing.fromJson(Map<String, dynamic> json) =>

@@ -1,4 +1,5 @@
 import 'package:maoyi/pages/home/home_page.dart';
+import 'package:maoyi/pages/listing_info_page.dart';
 import 'package:maoyi/pages/login/login_page.dart';
 import 'package:maoyi/pages/chat/chat_page.dart';
 import 'package:maoyi/pages/user/user_changepwd.dart';
@@ -35,6 +36,9 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       break;
     case routes.chat:
       page = ChatPage();
+      break;
+    case routes.ListingInfo:
+      page = ListingInfoPage();
       break;
 
     default:
