@@ -71,7 +71,7 @@ class AuthService {
   Future<User> loginUser(LoginUserFormData loginDetails) async {
     try {
       var response = await ***REMOVED***RestClient
-          .post(loginUserEndpoint, headers: loginDetails.toMap())
+          .post(loginUserEndpoint, headers: loginDetails.toMap(), addAuth: false)
           .timeout(Duration(seconds: 7));
       switch (response.statusCode) {
         case 200:
