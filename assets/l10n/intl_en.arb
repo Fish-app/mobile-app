@@ -111,23 +111,23 @@
     "description": ""
   },
   "msgErrorPasswdChgGeneralFailure": "Unable to change password, please restart the app",
-  "@deleteUser": {
+  "@msgErrorPasswdChgGeneralFailure": {
     "description": ""
   },
   "msgErrorPasswdChgVerificationFailure": "Unable to change password, please correct your current password",
-  "@deleteUser": {
+  "@msgErrorPasswdChgVerificationFailure": {
     "description": ""
   },
   "msgPasswdChangeOk": "The password has been changed",
-  "@deleteUser": {
+    "@msgPasswdChangeOk": {
     "description": ""
   },
   "dialogMsgPasswdChangeOk": "Your request was successfully executed. For security reasons you have now been logged out. Do you want to login now?",
-  "@deleteUser": {
+  "@dialogMsgPasswdChangeOk": {
     "description": ""
   },
   "dialogActionGotoLoginPage": "Yes, take me to the login page",
-  "@deleteUser": {
+  "@dialogActionGotoLoginPage": {
     "description": ""
   },
   "dialogActionDoLater": "Later",
