@@ -34,7 +34,9 @@ class _UserPageState extends State<UserPage> {
     User user = await AuthService.isUserLoggedIn();
     String jwtFromAuth = await AuthService.getTokenFromStorage();
     if (user == null || jwtFromAuth == null) {
-      Navigator.of(context).pushNamed(routes.UserLogin);
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(routes.UserLogin,
+              (route) => false);
     } else {
       setState(() {
         this.email = user.email;

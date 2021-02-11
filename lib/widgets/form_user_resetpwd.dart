@@ -107,7 +107,14 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                       .pushNamedAndRemoveUntil(routes.UserLogin,
                           (route) => false);
                 },
-                child: Text("Ta meg til innloggingssiden"))
+                child: Text("Ta meg til innloggingssiden")),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(routes.Home,
+                          (route) => false);
+                },
+                child: Text("Senere"))
           ],
         );
       }
