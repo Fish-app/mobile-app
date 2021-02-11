@@ -58,10 +58,8 @@
   "@buyDirectly": {},
   "pos": "point of sale",
   "@pos": {},
-
-
   "msgErrorNetworkFail": "Unable to connect, please verify that you are connected to the Internet",
-  "@msgErrorNetworkFail":{
+  "@msgErrorNetworkFail": {
     "description": ""
   },
   "msgErrorServerFail": "A server error occured, please try again later",
@@ -69,11 +67,11 @@
     "description": ""
   },
   "msgErrorClientSerializationFail": "An error occcured, please restart the app",
-  "@msgErrorClientSerializationFail":  {
+  "@msgErrorClientSerializationFail": {
     "description": ""
   },
   "msgErrorLoginRejected": "Unable to log in, please enter the correct username/password",
-  "@msgErrorLoginRejected":  {
+  "@msgErrorLoginRejected": {
     "description": ""
   },
   "msgAwaitResponse": "Please wait..",
@@ -82,6 +80,58 @@
   },
   "msgSuccessfulLogin": "Welcome {name}! ",
   "@msgSuccessfulLogin": {
+    "description": ""
+  },
+  "newPasswordHint": "please enter the new password",
+  "@newPasswordHint": {
+    "description": ""
+  },
+  "oldPasswordLabel": "old password",
+  "@oldPasswordLabel": {
+    "description": ""
+  },
+  "oldPasswordHint": "please enter your current password",
+  "@oldPasswordHint": {
+    "description": ""
+  },
+  "newPasswordLabel": "new password",
+  "@newPasswordLabel": {
+    "description": ""
+  },
+  "changePassword": "change password",
+  "@changePassword": {
+    "description": ""
+  },
+  "becomeSeller": "Become seller",
+  "@becomeSeller": {
+    "description": ""
+  },
+  "deleteUser": "Delete user",
+  "@deleteUser": {
+    "description": ""
+  },
+  "msgErrorPasswdChgGeneralFailure": "Unable to change password, please restart the app",
+  "@msgErrorPasswdChgGeneralFailure": {
+    "description": ""
+  },
+  "msgErrorPasswdChgVerificationFailure": "Unable to change password, please correct your current password",
+  "@msgErrorPasswdChgVerificationFailure": {
+    "description": ""
+  },
+  "msgPasswdChangeOk": "The password has been changed",
+    "@msgPasswdChangeOk": {
+    "description": ""
+  },
+  "dialogMsgPasswdChangeOk": "Your request was successfully executed. For security reasons you have now been logged out. Do you want to login now?",
+  "@dialogMsgPasswdChangeOk": {
+    "description": ""
+  },
+  "dialogActionGotoLoginPage": "Yes, take me to the login page",
+  "@dialogActionGotoLoginPage": {
+    "description": ""
+  },
+  "dialogActionDoLater": "Later",
+  "@dialogActionDoLater": {
     "description": ""
   }
 }

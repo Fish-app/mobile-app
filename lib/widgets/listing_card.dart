@@ -35,7 +35,7 @@ class OfferListingCardState extends State<OfferListingCard> {
       child: Column(
         children: [
           Text(
-            widget.cardListing.creator.name,
+            widget.cardListing.creator.user.name,
             style: Theme.of(context).primaryTextTheme.headline5,
           ),
           Row(

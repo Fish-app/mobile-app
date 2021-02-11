@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
 import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/pages/login/login_formdata.dart';
-import 'package:***REMOVED***/utils/form/form_validators.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:***REMOVED***/widgets/formfield_auth.dart';
+import 'package:***REMOVED***/config/routes/routes.dart' as routes;
+import 'package:***REMOVED***/utils/form/form_validators.dart';
+
 import 'package:strings/strings.dart';
 
 class LoginUserForm extends StatefulWidget {
@@ -42,8 +43,8 @@ class _LoginUserFormState extends State<LoginUserForm> {
     formState.save();
     if (formState.validate()) {
       try {
-        await widget.authService.doLoginUser(_loginUserFormData).then((user) {
-          if (user != null) {
+        await widget.authService.loginUser(_loginUserFormData).then((user) {
+          if(user != null) {
             // LOGIN OK
             print('FORMLOGIN: OK: "' + user.email + '"');
             Navigator.pushNamed(context, routes.Home);
