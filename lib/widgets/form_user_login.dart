@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:maoyi/config/routes/routes.dart' as routes;
 import 'package:maoyi/generated/l10n.dart';
 import 'package:maoyi/pages/login/login_formdata.dart';
-import 'package:maoyi/utils/form/form_validators.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
 import 'package:maoyi/utils/services/maoyi_rest_client.dart';
 import 'package:maoyi/widgets/formfield_auth.dart';
+import 'package:maoyi/config/routes/routes.dart' as routes;
+import 'package:maoyi/utils/form/form_validators.dart';
+
 import 'package:strings/strings.dart';
 
 class LoginUserForm extends StatefulWidget {
@@ -42,8 +43,8 @@ class _LoginUserFormState extends State<LoginUserForm> {
     formState.save();
     if (formState.validate()) {
       try {
-        await widget.authService.doLoginUser(_loginUserFormData).then((user) {
-          if (user != null) {
+        await widget.authService.loginUser(_loginUserFormData).then((user) {
+          if(user != null) {
             // LOGIN OK
             print('FORMLOGIN: OK: "' + user.email + '"');
             Navigator.pushNamed(context, routes.Home);
