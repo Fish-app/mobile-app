@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:***REMOVED***/entities/commodity.dart';
+import 'package:***REMOVED***/entities/seller.dart';
 import 'package:***REMOVED***/entities/user.dart';
 import 'package:***REMOVED***/utils/distance_calculator.dart';
 
@@ -10,7 +11,7 @@ part 'listing.g.dart';
 class Listing {
   num id;
   String dateCreated; // todo: finn ut hvilket dato format vi ender med
-  User creator;
+  Seller creator;
   String endDate;
   Commodity commodity;
   int price;
@@ -41,7 +42,7 @@ class OfferListing extends Listing {
   OfferListing(
       {@required num id,
       String dateCreated,
-      User creator,
+      Seller creator,
       String endDate,
       Commodity commodity,
       int price,

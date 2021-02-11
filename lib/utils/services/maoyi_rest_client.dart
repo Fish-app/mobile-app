@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:***REMOVED***/utils/services/auth_service.dart';
 
 class ***REMOVED***RestClient {
   var _client = http.Client();
 
   Future<Map<String, String>> _addAuthToHeaders(Map<String, String> headers) async {
-    final token = null; // TODO: get token here
+    final token = await AuthService.getTokenFromStorage();
     headers ??= new Map<String, String>();
     return headers..addAll({"Authorization": token});
   }

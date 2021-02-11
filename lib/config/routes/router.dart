@@ -2,6 +2,7 @@ import 'package:***REMOVED***/pages/home/home_page.dart';
 import 'package:***REMOVED***/pages/listing_info_page.dart';
 import 'package:***REMOVED***/pages/login/login_page.dart';
 import 'package:***REMOVED***/pages/chat/chat_page.dart';
+import 'package:***REMOVED***/pages/user/user_resetpwd_page.dart';
 import 'package:***REMOVED***/pages/user/user_info.dart';
 
 import '../../main.dart';
@@ -21,8 +22,12 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       break;
 
     case routes.UserInfo:
-      page = UserInfoPage();
+      page = UserPage();
       break;
+    case routes.UserResetPwd:
+      page = ChangePasswordPage();
+      break;
+
     case routes.UserNew:
       page = RegisterUserPage();
       break;

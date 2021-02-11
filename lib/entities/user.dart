@@ -27,26 +27,3 @@ class User {
 
 }
 
-
-
-@JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Seller extends User {
-  String bankAccountNumber;
-  String regNumber;
-
-  Seller(
-      {num id,
-      String name,
-      String email,
-      double rating,
-      this.bankAccountNumber,
-      this.regNumber})
-      : super(
-            id: id,
-            name: name,
-            email: email,
-            rating: rating);
-
-  factory Seller.fromJson(Map<String, dynamic> json) => _$SellerFromJson(json);
-  Map<String, dynamic> toJson() => _$SellerToJson(this);
-}
