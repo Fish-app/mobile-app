@@ -22,6 +22,9 @@ final backgroundActiveMenuButton = Color(0xff262626);
 final starColor = Color(0xffFFC400);
 final backgroundColor = Color(0xfffbfbfb);
 
+final searchBarColor = Color(0x1e000000);
+final searchBarBorderColor = Color(0xff707070);
+
 final inputFealdbgColor = Color(0xccffffff);
 
 final softBlack = Color(0xff292929);

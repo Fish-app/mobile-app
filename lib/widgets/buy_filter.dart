@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:***REMOVED***/config/themes/theme_config.dart';
 
 class _BuyFilterItem {
   final String filterTitle;
@@ -29,12 +30,13 @@ class BuyFilterWidgetState extends State<BuyFilterWidget> {
         TextField(
           decoration: InputDecoration(
               border: new OutlineInputBorder(
+                borderSide: BorderSide.none,
                 borderRadius: const BorderRadius.all(
                   const Radius.circular(
                       20.0), // dobbel defined also in input_fealds
                 ),
               ),
-              fillColor: Colors.grey,
+              fillColor: searchBarColor,
               filled: true,
               isDense: true,
               contentPadding: EdgeInsets.symmetric(vertical: 5),
@@ -56,9 +58,7 @@ class BuyFilterWidgetState extends State<BuyFilterWidget> {
               label: Text(
                 filterItem.filterTitle,
                 style: TextStyle(
-                    color: filterItem.isActive
-                        ? Theme.of(context).accentColor
-                        : Colors.black),
+                    color: filterItem.isActive ? emphasis2Color : Colors.black),
               ),
               onSelected: (value) {
                 print("filter " + filterItem.filterTitle + " is active");
