@@ -113,7 +113,7 @@ class _UserPageState extends State<UserPage> {
                               .popAndPushNamed(routes.UserLogin);
                         },
                         color: widget._buttonColor,
-                        child: const Text("Logout test"),
+                        child: const Text("Logout"),
                       ),
                       RaisedButton(
                         //onPressed: () {},
