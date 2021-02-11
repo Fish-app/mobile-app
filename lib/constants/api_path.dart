@@ -21,7 +21,7 @@ const loginUserEndpoint = restApiUrl + "/authentication/login";
 
 /// -- user register -- ///
 
-const createUserEndpoint = restApiUrl + "/authentication/create";
+const createUserEndpoint = restApiUrl + "/user/create";
 
 /// -- user reset password ///
 
