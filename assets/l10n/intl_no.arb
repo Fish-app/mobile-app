@@ -42,5 +42,11 @@
   "newPasswordLabel": "nytt passord",
   "changePassword": "endre password",
   "becomeSeller": "Bli selger",
-  "deleteUser": "Slett brukeren"
+  "deleteUser": "Slett brukeren",
+  "msgErrorPasswdChgGeneralFailure": "Fikk ikke til å endre passord, start appen på nytt",
+  "msgErrorPasswdChgVerificationFailure": "Sjekk at gammelt passord er korrekt",
+  "msgPasswdChangeOk": "passordet ble endret",
+  "dialogMsgPasswdChangeOk": "Din forespørsel om å endre passord er utført.",
+  "dialogActionGotoLoginPage": "Ta meg til innloggingssiden",
+  "dialogActionDoLater": "Senere"
 }

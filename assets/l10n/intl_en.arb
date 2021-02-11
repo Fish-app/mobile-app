@@ -58,8 +58,6 @@
   "@buyDirectly": {},
   "pos": "point of sale",
   "@pos": {},
-
-
   "msgErrorNetworkFail": "Unable to connect, please verify that you are connected to the Internet",
   "@msgErrorNetworkFail": {
     "description": ""
@@ -110,6 +108,30 @@
   },
   "deleteUser": "Delete user",
   "@deleteUser": {
+    "description": ""
+  },
+  "msgErrorPasswdChgGeneralFailure": "Unable to change password, please restart the app",
+  "@deleteUser": {
+    "description": ""
+  },
+  "msgErrorPasswdChgVerificationFailure": "Unable to change password, please correct your current password",
+  "@deleteUser": {
+    "description": ""
+  },
+  "msgPasswdChangeOk": "The password has been changed",
+  "@deleteUser": {
+    "description": ""
+  },
+  "dialogMsgPasswdChangeOk": "Your request was successfully executed. For security reasons you have now been logged out. Do you want to login now?",
+  "@deleteUser": {
+    "description": ""
+  },
+  "dialogActionGotoLoginPage": "Yes, take me to the login page",
+  "@deleteUser": {
+    "description": ""
+  },
+  "dialogActionDoLater": "Later",
+  "@dialogActionDoLater": {
     "description": ""
   }
 }

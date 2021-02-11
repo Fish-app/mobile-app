@@ -9,6 +9,7 @@ import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:***REMOVED***/widgets/formfield_auth.dart';
 import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
+import 'package:strings/strings.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   final _buttonColor = Colors.amber;
@@ -56,7 +57,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
         await widget.authService
             .changePassword(_resetPwdFormData)
             .then((value) {
-              // LOGOUT USER AND SHOW DIALOG
+          // LOGOUT USER AND SHOW DIALOG
           AuthService.logout();
           _showPasswordChangedDialog();
         });
@@ -66,10 +67,10 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           switch (e.message) {
             case "401":
               _errorMessage =
-                  "Fikk ikke til å endre passord, start appen på nytt";
+                  S.of(context).msgErrorPasswdChgGeneralFailure;
               break;
             case "403":
-              _errorMessage = "Sjekk att gammelt passord er korrekt";
+              _errorMessage = S.of(context).msgErrorPasswdChgVerificationFailure;
               break;
             default:
               _errorMessage = S.of(context).msgErrorServerFail;
@@ -87,38 +88,34 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
   Future<void> _showPasswordChangedDialog() async {
     return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Passordet ble endret"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                Text("Din forespørsel om å endre passord er utført."),
-                Text("Du må nå logge inn på nytt med ditt nye passord."),
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            // Prohibit user to pop back when dialog is open
+            onWillPop: () async => false,
+            child: AlertDialog(
+              title: Text(capitalize(S.of(context).msgPasswdChangeOk)),
+              content: Text(
+                  S.of(context).dialogMsgPasswdChangeOk
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          routes.UserLogin, (route) => false);
+                    },
+                    child: Text(S.of(context).dialogActionGotoLoginPage)),
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil(routes.Home, (route) => false);
+                    },
+                    child: Text(S.of(context).dialogActionDoLater))
               ],
             ),
-          ),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(routes.UserLogin,
-                          (route) => false);
-                },
-                child: Text("Ta meg til innloggingssiden")),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(routes.Home,
-                          (route) => false);
-                },
-                child: Text("Senere"))
-          ],
-        );
-      }
-    );
+          );
+        });
   }
 
   @override

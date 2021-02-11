@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:***REMOVED***/entities/user.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
+import 'package:***REMOVED***/widgets/display_text_field.dart';
 import 'package:***REMOVED***/widgets/floating_nav_bar.dart';
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
 import 'package:***REMOVED***/generated/l10n.dart';
@@ -35,8 +36,7 @@ class _UserPageState extends State<UserPage> {
     String jwtFromAuth = await AuthService.getTokenFromStorage();
     if (user == null || jwtFromAuth == null) {
       Navigator.of(context)
-          .pushNamedAndRemoveUntil(routes.UserLogin,
-              (route) => false);
+          .popAndPushNamed(routes.UserLogin);
     } else {
       setState(() {
         this.email = user.email;
@@ -68,9 +68,6 @@ class _UserPageState extends State<UserPage> {
       body: SafeArea(
         child: Container(
           child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.start,
-            //mainAxisSize: MainAxisSize.min,
-            //mainAxisAlignment: MainAxisAlignment.end,
             children: [
 
               // TOP ROW
@@ -87,24 +84,21 @@ class _UserPageState extends State<UserPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       // USER INFO
-                      UserInfoField(label: S.of(context).name, data: fullname),
-                      UserInfoField(label: S.of(context).email, data: email),
-                      UserInfoField(
-                          label: "session valid until",
-                          data: JwtDecoder.getExpirationDate(_token).toString()),
+                      DisplayTextField(description: S.of(context).name.toUpperCase(), content: fullname),
+                      DisplayTextField(description: S.of(context).email.toUpperCase(), content: email),
+                      DisplayTextField(
+                          description: "session valid until".toUpperCase(),
+                          content: JwtDecoder.getExpirationDate(_token).toString()),
                       // BUTTONS
                       RaisedButton(
                         onPressed: () {
-                          //TODO: IMPLEMENT CHANGE PASSWORD PAGE
-                          // change password
-                          // call logout of OK
                           Navigator.of(context).pushNamed(routes.UserResetPwd);
                         },
                         color: widget._buttonColor,
                         child: Text(capitalize(S.of(context).changePassword)),
                       ),
                       Visibility(
-                        //TODO: IMPLEMENT SELLER PRIVILIGELES CHECKS
+                        //TODO: IMPLEMENT SELLER IN OTHER PULL REQ
                         visible: true,
                         child: RaisedButton(
                           onPressed: () {},
@@ -115,7 +109,8 @@ class _UserPageState extends State<UserPage> {
                       RaisedButton(
                         onPressed: () {
                           AuthService.logout();
-                          Navigator.pushNamedAndRemoveUntil(context, routes.Home, (r) => false);
+                          Navigator.of(context)
+                              .popAndPushNamed(routes.UserLogin);
                         },
                         color: widget._buttonColor,
                         child: const Text("Logout test"),
@@ -132,37 +127,6 @@ class _UserPageState extends State<UserPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-
-class UserInfoField extends StatelessWidget {
-  const UserInfoField({
-    Key key,
-    @required this.label,
-    @required this.data,
-  }) : super(key: key);
-
-  final String label;
-  final String data;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 12.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label.toUpperCase()),
-          SizedBox(height: 6.0),
-          Text(capitalize(data)),
-          Divider(
-            color: Colors.black45,
-          ),
-        ],
       ),
     );
   }
