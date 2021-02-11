@@ -22,7 +22,7 @@ String validateFloatInput(String value, BuildContext context) {
   if (value.contains(floatRegex)) {
     return null;
   }
-  return S.of(context).notAnumber;
+  return S.of(context).notANumber;
 }
 
 String validateNotEmptyInput(String value, BuildContext context) {

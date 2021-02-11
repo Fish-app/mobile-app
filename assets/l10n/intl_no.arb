@@ -22,8 +22,12 @@
   "characters": "tegn",
   "and": "og",
   "notEqual": "Er ikke lik",
-  "notAnumber": "Må være et tall",
+  "notANumber": "Må være et tall",
   "notATag": "Tagger må starte med # og bare inneholde alfanumeriske tegn",
+  "listing": "Oppføring",
+  "quantityAvailable": "mengde tilgjengelig:",
+  "buyDirectly": "kjøp direkte",
+  "pos": "utsalgssted",
 
   "msgErrorNetworkFail": "Fikk ikke kontakt med serveren, sjekk at du er tilkoblet Internett",
   "msgErrorServerFail": "Det oppstod en serverfeil, prøv igjen om en liten stund",
