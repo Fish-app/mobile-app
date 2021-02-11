@@ -33,10 +33,19 @@ final ***REMOVED***LightTheme = ThemeData(
       color: Colors.black,
       fontSize: 20,
     ),
+    bodyText2: TextStyle(
+        fontFamily: "Roboto",
+        fontSize: 20,
+        color: Colors.black
+    ),
+
   ),
+
+  /// -- CardTheme -- ///
   cardTheme: CardTheme(
     elevation: 10,
     clipBehavior: Clip.hardEdge,
+    color: Colors.white,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(appBorderRadius),
     ),
@@ -54,7 +63,7 @@ final ***REMOVED***LightTheme = ThemeData(
   /// -- Standard Button -- ///
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.orange))),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.yellow[600]))),
 
   /// -- TextFormField -- ///
   inputDecorationTheme: InputDecorationTheme(
@@ -70,4 +79,19 @@ final ***REMOVED***LightTheme = ThemeData(
         fontSize: 18,
         color: Colors.black),
   ),
+
+  /// -- AppBar -- ///
+  appBarTheme: AppBarTheme(
+    elevation: 0.0,
+    color: Colors.white,
+    iconTheme: IconThemeData(
+      color: Colors.black
+    ),
+    textTheme: TextTheme(
+      headline4: TextStyle(
+          fontFamily: "Playfair_Display", color: Colors.black, fontSize: 24),
+    )
+  ),
+
+  scaffoldBackgroundColor: Colors.white,
 );
