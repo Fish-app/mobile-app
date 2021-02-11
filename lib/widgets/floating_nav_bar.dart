@@ -49,6 +49,9 @@ class FloatingNavBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: buttons.map((navButton) {
           var isActive = navButton.navDest == currentActiveButton.navDest;
+          var iconTheme = isActive
+              ? Theme.of(context).bottomNavigationBarTheme.selectedIconTheme
+              : Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme;
           return Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 11),
@@ -57,18 +60,17 @@ class FloatingNavBar extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                         color: isActive
-                            ? _buttonActiveBgColor
-                            : _buttonInActiveBgColor,
+                            ? Theme.of(context)
+                                .bottomNavigationBarTheme
+                                .selectedItemColor
+                            : Theme.of(context)
+                                .bottomNavigationBarTheme
+                                .unselectedItemColor,
                         shape: BoxShape.circle),
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          navButton.iconData,
-                          size: _buttonIconSize,
-                          color: isActive
-                              ? _buttonActiveIconColor
-                              : _buttonInActiveIconColor,
-                        )
+                        child: Icon(navButton.iconData,
+                            size: iconTheme.size, color: iconTheme.color)
 
                         // ),
                         ),
