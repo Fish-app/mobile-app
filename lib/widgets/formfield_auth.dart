@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/generated/fonts.gen.dart';
+import 'package:***REMOVED***/config/themes/theme_config.dart';
 
 /// Build a widget with a title and email
-class FormFieldAuth extends StatefulWidget {
+class FormFieldAuth extends StatelessWidget {
   final String title;
   final String hint;
   final String validationMsg;
@@ -23,37 +23,31 @@ class FormFieldAuth extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState()  =>  _FormFieldAuthState();
-  
-}
-class _FormFieldAuthState extends State<FormFieldAuth> {
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.fromLTRB(10, 15, 0, 5),
             child: Text(
-              widget.title,
-              style: Theme.of(context).primaryTextTheme.headline4.copyWith(
-                color: Colors.white,
-              ),
+              title,
+              style: Theme.of(context).primaryTextTheme.headline3.copyWith(
+                    color: Colors.white,
+                  ),
             ),
           ),
           TextFormField(
             decoration: InputDecoration(
-                hintText: widget.hint,
+              hintText: hint,
             ).applyDefaults(Theme.of(context).inputDecorationTheme),
-            onSaved: widget.onSaved,
-            validator: widget.validator,
-            obscureText: widget.isObscured ?? false,
+            style: inputTextStyle,
+            onSaved: onSaved,
+            validator: validator,
+            obscureText: isObscured ?? false,
           ),
         ],
       ),
     );
   }
-
 }

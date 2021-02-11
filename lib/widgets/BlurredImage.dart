@@ -35,7 +35,6 @@ class BlurredImage extends StatelessWidget {
             color: blurColor ?? Colors.black12.withOpacity(0.2),
           ),
         ),
-
       ],
     );
   }
