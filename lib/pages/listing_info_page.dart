@@ -72,7 +72,7 @@ class ListingPageInfoState extends State<ListingInfoPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.offerListing.creator.name,
+                                  widget.offerListing.creator.user.name,
                                   style: Theme.of(context).primaryTextTheme.headline4,
                                 ),
                                 RatingStars(

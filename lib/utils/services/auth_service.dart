@@ -27,13 +27,14 @@ class AuthService {
   Future<void> createUser(NewUserFormData userDetails) async {
     try {
       var response = await ***REMOVED***RestClient.post(createUserEndpoint,
-          headers: userDetails.toMap());
+          headers: userDetails.toMap(), addAuth: false);
       if (response.statusCode == 409) {
         throw CreateUserException("Email already exists");
       } else {
         throw HttpException("Error creating user");
       }
-    } on IOException {
+    } on IOException catch (e) {
+      print(e);
       throw HttpException("Service unavailable");
     }
   }
