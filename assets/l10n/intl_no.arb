@@ -48,5 +48,7 @@
   "msgPasswdChangeOk": "passordet ble endret",
   "dialogMsgPasswdChangeOk": "Din forespørsel om å endre passord er utført.",
   "dialogActionGotoLoginPage": "Ta meg til innloggingssiden",
-  "dialogActionDoLater": "Senere"
+  "dialogActionDoLater": "Senere",
+  "clearForm": "Tøm skjema",
+  "resetPassword": "Nullstill password"
 }
