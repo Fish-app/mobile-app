@@ -5,9 +5,10 @@ import 'package:maoyi/entities/commodity.dart';
 import 'package:maoyi/entities/listing.dart';
 import 'package:maoyi/main.dart';
 import 'package:maoyi/pages/listing_info_page.dart';
+import 'package:maoyi/utils/services/auth_service.dart';
 import 'package:maoyi/widgets/buy_filter.dart';
 import 'package:maoyi/widgets/commodity_card.dart';
-import 'package:maoyi/widgets/floating_nav_bar.dart';
+import 'package:maoyi/widgets/nav_widgets/floating_nav_bar.dart';
 import 'package:maoyi/widgets/listing_card.dart';
 import 'package:maoyi/widgets/logo.dart';
 import 'package:maoyi/widgets/nav_widgets/common_nav.dart';
@@ -21,8 +22,6 @@ const double _topPadding = 25.0;
 const double _bottomPadding = _topPadding + 10;
 
 class HomePageState extends State<HomePage> {
-  void _onTapComodity(Commodity commodity) {}
-
   Widget _makeComodityCard(Commodity commodity) {
     return GestureDetector(
       onTap: () => {

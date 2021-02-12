@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../floating_nav_bar.dart';
+import 'floating_nav_bar.dart';
 
 AppBar getMaoyiTopBar(BuildContext context, String barText) {
   return AppBar(

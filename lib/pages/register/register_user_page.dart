@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:maoyi/config/themes/theme_config.dart';
 import 'package:maoyi/widgets/BlurredImage.dart';
-import 'package:maoyi/widgets/form_register_user.dart';
+import 'package:maoyi/pages/register/form_register_user.dart';
 import 'package:maoyi/widgets/nav_widgets/common_nav.dart';
 
 class RegisterUserPage extends StatefulWidget {

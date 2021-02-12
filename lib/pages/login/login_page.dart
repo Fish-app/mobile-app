@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maoyi/config/themes/theme_config.dart';
 import 'package:maoyi/widgets/BlurredImage.dart';
-import 'package:maoyi/widgets/form_user_login.dart';
+import 'package:maoyi/pages/login/form_user_login.dart';
 import 'package:maoyi/widgets/logo.dart';
 import 'package:maoyi/widgets/nav_widgets/common_nav.dart';
 

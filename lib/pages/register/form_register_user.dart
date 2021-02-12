@@ -7,7 +7,7 @@ import 'package:maoyi/pages/register/new_user_form_data.dart';
 import 'package:maoyi/utils/form/form_validators.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
 import 'package:maoyi/utils/services/maoyi_rest_client.dart';
-import 'package:maoyi/widgets/formfield_auth.dart';
+import 'package:maoyi/widgets/form/formfield_auth.dart';
 import 'package:strings/strings.dart';
 
 class RegisterUserForm extends StatefulWidget {

@@ -59,8 +59,8 @@ class AuthService {
           throw HttpException(HttpStatus.forbidden.toString());
         case 500:
         default:
-        throw HttpException(HttpStatus.internalServerError.toString());
-        break;
+          throw HttpException(HttpStatus.internalServerError.toString());
+          break;
       }
     } on IOException catch (e) {
       log("IO failure " + e.toString());
@@ -71,8 +71,10 @@ class AuthService {
   Future<User> loginUser(LoginUserFormData loginDetails) async {
     try {
       var response = await maoyiRestClient
-          .post(loginUserEndpoint, headers: loginDetails.toMap(), addAuth: false)
+          .post(loginUserEndpoint,
+              headers: loginDetails.toMap(), addAuth: false)
           .timeout(Duration(seconds: 7));
+      //print(response.body);
       switch (response.statusCode) {
         case 200:
           Map decoderOutput = jsonDecode(response.body);

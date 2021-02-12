@@ -6,12 +6,12 @@ import 'package:maoyi/pages/user/user_resetpwd_formdata.dart';
 import 'package:maoyi/utils/form/form_validators.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
 import 'package:maoyi/utils/services/maoyi_rest_client.dart';
-import 'package:maoyi/widgets/formfield_auth.dart';
+import 'package:maoyi/widgets/form/formfield_auth.dart';
 import 'package:maoyi/generated/l10n.dart';
 import 'package:maoyi/config/routes/routes.dart' as routes;
 import 'package:strings/strings.dart';
 
-import 'formfield_plain.dart';
+import '../../widgets/form/formfield_plain.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   final _buttonColor = Colors.amber;
@@ -68,11 +68,11 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           _errorMessage = e.message;
           switch (e.message) {
             case "401":
-              _errorMessage =
-                  S.of(context).msgErrorPasswdChgGeneralFailure;
+              _errorMessage = S.of(context).msgErrorPasswdChgGeneralFailure;
               break;
             case "403":
-              _errorMessage = S.of(context).msgErrorPasswdChgVerificationFailure;
+              _errorMessage =
+                  S.of(context).msgErrorPasswdChgVerificationFailure;
               break;
             default:
               _errorMessage = S.of(context).msgErrorServerFail;
@@ -98,9 +98,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             onWillPop: () async => false,
             child: AlertDialog(
               title: Text(capitalize(S.of(context).msgPasswdChangeOk)),
-              content: Text(
-                  S.of(context).dialogMsgPasswdChangeOk
-              ),
+              content: Text(S.of(context).dialogMsgPasswdChangeOk),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -110,8 +108,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                     child: Text(S.of(context).dialogActionGotoLoginPage)),
                 TextButton(
                     onPressed: () {
-                      Navigator.of(context)
-                          .pushNamedAndRemoveUntil(routes.Home, (route) => false);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          routes.Home, (route) => false);
                     },
                     child: Text(S.of(context).dialogActionDoLater))
               ],

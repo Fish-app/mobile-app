@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maoyi/widgets/floating_nav_bar.dart';
+import 'package:maoyi/widgets/nav_widgets/floating_nav_bar.dart';
 
 class ChatPage extends StatefulWidget {
   @override

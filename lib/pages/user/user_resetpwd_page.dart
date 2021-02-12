@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:maoyi/entities/user.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
-import 'package:maoyi/widgets/floating_nav_bar.dart';
-import 'package:maoyi/widgets/form_user_resetpwd.dart';
+import 'package:maoyi/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:maoyi/pages/user/form_user_resetpwd.dart';
 import 'package:maoyi/config/routes/routes.dart' as routes;
-import 'package:maoyi/widgets/row_topbar_return.dart';
+import 'package:maoyi/widgets/nav_widgets/row_topbar_return.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   final _buttonColor = Colors.amber;
