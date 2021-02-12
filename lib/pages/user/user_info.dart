@@ -4,11 +4,11 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:***REMOVED***/entities/user.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/widgets/display_text_field.dart';
-import 'package:***REMOVED***/widgets/floating_nav_bar.dart';
+import 'package:***REMOVED***/widgets/nav_widgets/floating_nav_bar.dart';
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
 import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
-import 'package:***REMOVED***/widgets/row_topbar_return.dart';
+import 'package:***REMOVED***/widgets/nav_widgets/row_topbar_return.dart';
 import 'package:***REMOVED***/widgets/standard_button.dart';
 import 'package:strings/strings.dart';
 

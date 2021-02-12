@@ -7,7 +7,7 @@ import 'package:***REMOVED***/pages/register/new_user_form_data.dart';
 import 'package:***REMOVED***/utils/form/form_validators.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
-import 'package:***REMOVED***/widgets/formfield_auth.dart';
+import 'package:***REMOVED***/widgets/form/formfield_auth.dart';
 import 'package:strings/strings.dart';
 
 class RegisterUserForm extends StatefulWidget {

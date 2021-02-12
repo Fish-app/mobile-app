@@ -5,9 +5,10 @@ import 'package:***REMOVED***/entities/commodity.dart';
 import 'package:***REMOVED***/entities/listing.dart';
 import 'package:***REMOVED***/main.dart';
 import 'package:***REMOVED***/pages/listing_info_page.dart';
+import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/widgets/buy_filter.dart';
 import 'package:***REMOVED***/widgets/commodity_card.dart';
-import 'package:***REMOVED***/widgets/floating_nav_bar.dart';
+import 'package:***REMOVED***/widgets/nav_widgets/floating_nav_bar.dart';
 import 'package:***REMOVED***/widgets/listing_card.dart';
 import 'package:***REMOVED***/widgets/logo.dart';
 import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
@@ -21,8 +22,6 @@ const double _topPadding = 25.0;
 const double _bottomPadding = _topPadding + 10;
 
 class HomePageState extends State<HomePage> {
-  void _onTapComodity(Commodity commodity) {}
-
   Widget _makeComodityCard(Commodity commodity) {
     return GestureDetector(
       onTap: () => {

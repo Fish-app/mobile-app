@@ -5,7 +5,7 @@ import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/pages/login/login_formdata.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
-import 'package:***REMOVED***/widgets/formfield_auth.dart';
+import 'package:***REMOVED***/widgets/form/formfield_auth.dart';
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
 import 'package:***REMOVED***/utils/form/form_validators.dart';
 
@@ -44,7 +44,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
     if (formState.validate()) {
       try {
         await widget.authService.loginUser(_loginUserFormData).then((user) {
-          if(user != null) {
+          if (user != null) {
             // LOGIN OK
             print('FORMLOGIN: OK: "' + user.email + '"');
             Navigator.pushNamed(context, routes.Home);

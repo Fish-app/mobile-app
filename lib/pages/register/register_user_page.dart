@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:***REMOVED***/config/themes/theme_config.dart';
 import 'package:***REMOVED***/widgets/BlurredImage.dart';
-import 'package:***REMOVED***/widgets/form_register_user.dart';
+import 'package:***REMOVED***/pages/register/form_register_user.dart';
 import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
 
 class RegisterUserPage extends StatefulWidget {

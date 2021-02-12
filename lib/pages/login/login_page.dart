@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:***REMOVED***/config/themes/theme_config.dart';
 import 'package:***REMOVED***/widgets/BlurredImage.dart';
-import 'package:***REMOVED***/widgets/form_user_login.dart';
+import 'package:***REMOVED***/pages/login/form_user_login.dart';
 import 'package:***REMOVED***/widgets/logo.dart';
 import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
 
