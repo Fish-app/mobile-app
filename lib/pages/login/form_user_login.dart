@@ -13,7 +13,7 @@ import 'package:strings/strings.dart';
 
 class LoginUserForm extends StatefulWidget {
   LoginUserForm({Key key}) : super(key: key);
-  final authService = AuthService(MaoyiRestClient());
+  final authService = AuthService();
 
   @override
   _LoginUserFormState createState() => _LoginUserFormState();
@@ -21,41 +21,37 @@ class LoginUserForm extends StatefulWidget {
 
 class _LoginUserFormState extends State<LoginUserForm> {
   final _formKey = GlobalKey<FormState>();
-  LoginUserFormData _loginUserFormData;
+  LoginUserFormData _loginUserFormData = LoginUserFormData();
   String _errorMessage = "";
   bool _displayAwaitHolder = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _loginUserFormData = LoginUserFormData();
-  }
 
   /// This function ask auth_service to do a login request,
   /// if successful we navigate to the home page. If failure occur,
   /// it is handled and displayed in a friendly manner to the user
-  void _handleLoginRequest() async {
+  void _handleLoginRequest(BuildContext context) async {
     final FormState formState = _formKey.currentState;
     setState(() {
       _errorMessage = "";
       _displayAwaitHolder = true;
     });
+
     formState.save();
     if (formState.validate()) {
       try {
-        await widget.authService.loginUser(_loginUserFormData).then((user) {
-          if (user != null) {
-            // LOGIN OK
-            print('FORMLOGIN: OK: "' + user.email + '"');
-            Navigator.pushNamed(context, routes.Home);
-          } else {
-            // JSON ERROR HANDELING
-            print("FORMLOGIN: PARSE ERROR");
-            setState(() {
-              _errorMessage = S.of(context).msgErrorClientSerializationFail;
-            });
-          }
-        });
+        var sucsess =
+            await widget.authService.loginUser(context, _loginUserFormData);
+        if (sucsess) {
+          // LOGIN OK
+          Navigator.pushNamed(context, routes.Home);
+        } else {
+          // TODO: Når kan det her egentlig skje, vil det ikke ver en fuckup på serveren i såfall
+
+          // JSON ERROR HANDELING
+          print("FORMLOGIN: PARSE ERROR");
+          setState(() {
+            _errorMessage = S.of(context).msgErrorClientSerializationFail;
+          });
+        }
       } on HttpException catch (e) {
         // SERVER ERROR CODE HANDELING
         setState(() {
@@ -159,7 +155,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                         onPressed: () {
                           /// Validate form, if OK send await
                           if (_formKey.currentState.validate()) {
-                            _handleLoginRequest();
+                            _handleLoginRequest(context);
                           }
                         },
                       ),
