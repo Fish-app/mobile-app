@@ -2,30 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:maoyi/entities/listing.dart';
+import 'package:maoyi/widgets/distance_to_widget.dart';
 import 'package:maoyi/widgets/rating_stars.dart';
 import 'package:maoyi/generated/l10n.dart';
 
-class OfferListingCard extends StatefulWidget {
+class OfferListingCard extends StatelessWidget {
   final OfferListing cardListing;
 
   const OfferListingCard({Key key, this.cardListing}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => OfferListingCardState();
-}
-
-class OfferListingCardState extends State<OfferListingCard> {
-  var _distance = 0.0;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.cardListing.getDistanceTo().then((value) {
-      setState(() {
-        _distance = value;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +19,7 @@ class OfferListingCardState extends State<OfferListingCard> {
       child: Column(
         children: [
           Text(
-            widget.cardListing.creator.user.name,
+            cardListing.creator.user.name,
             style: Theme.of(context).primaryTextTheme.headline5,
           ),
           Row(
@@ -49,15 +33,7 @@ class OfferListingCardState extends State<OfferListingCard> {
                   RatingStars(
                     rating: 4.8,
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.location_on),
-                      Text(
-                        _distance.toString() + "Km",
-                        style: Theme.of(context).primaryTextTheme.headline6,
-                      ),
-                    ],
-                  )
+                  DistanceToWidget(cardListing: cardListing),
                 ],
               ),
               Column(
@@ -80,11 +56,11 @@ class OfferListingCardState extends State<OfferListingCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.cardListing.price.toString() + "kr/Kg",
+                    cardListing.price.toString() + "kr/Kg",
                     style: Theme.of(context).primaryTextTheme.headline5,
                   ),
                   Text(
-                    widget.cardListing.amountLeft.toString() + "Kg",
+                    cardListing.amountLeft.toString() + "Kg",
                     style: Theme.of(context).primaryTextTheme.headline6,
                   )
                 ],
