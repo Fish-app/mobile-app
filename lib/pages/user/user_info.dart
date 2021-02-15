@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:maoyi/entities/user.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
+import 'package:maoyi/utils/state/appstate.dart';
 import 'package:maoyi/widgets/display_text_field.dart';
 import 'package:maoyi/widgets/nav_widgets/floating_nav_bar.dart';
 import 'package:maoyi/config/routes/routes.dart' as routes;
@@ -10,6 +10,7 @@ import 'package:maoyi/generated/l10n.dart';
 import 'package:maoyi/widgets/nav_widgets/common_nav.dart';
 import 'package:maoyi/widgets/nav_widgets/row_topbar_return.dart';
 import 'package:maoyi/widgets/standard_button.dart';
+import 'package:provider/provider.dart';
 import 'package:strings/strings.dart';
 
 class UserPage extends StatefulWidget {
@@ -27,40 +28,6 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  @override
-  void initState() {
-    super.initState();
-    _setUserDetails();
-    _setIsSeller();
-  }
-
-  void _setUserDetails() async {
-    User user = await AuthService.isUserLoggedIn();
-    String jwtFromAuth = await AuthService.getTokenFromStorage();
-    if (user == null || jwtFromAuth == null) {
-      Navigator.of(context).popAndPushNamed(routes.UserLogin);
-    } else {
-      setState(() {
-        this.email = user.email;
-        this.fullname = user.name;
-        this._token = jwtFromAuth;
-      });
-    }
-  }
-
-  void _setIsSeller() async {
-    // todo: the fetching and check for is seller here
-    await Future.delayed(Duration(milliseconds: 30));
-    setState(() {
-      this.isSeller = true;
-    });
-  }
-
-  bool isSeller = false;
-  String email = "";
-  String fullname = "";
-  String _token = "";
-
   @override
   Widget build(BuildContext context) {
     return getMaoyiDefaultScaffold(
@@ -91,16 +58,21 @@ class _UserPageState extends State<UserPage> {
                         ),
                       ),
                       // USER INFO
-                      DisplayTextField(
-                          description: S.of(context).name.toUpperCase(),
-                          content: fullname),
-                      DisplayTextField(
-                          description: S.of(context).email.toUpperCase(),
-                          content: email),
-                      DisplayTextField(
-                          description: "session valid until".toUpperCase(),
-                          content:
-                              JwtDecoder.getExpirationDate(_token).toString()),
+                      Consumer<AppState>(builder: (context, value, child) {
+                        return Column(children: [
+                          DisplayTextField(
+                              description: S.of(context).name.toUpperCase(),
+                              content: value.user?.name ?? ""),
+                          DisplayTextField(
+                              description: S.of(context).email.toUpperCase(),
+                              content: value.user?.email ?? ""),
+                          DisplayTextField(
+                              description: "session valid until".toUpperCase(),
+                              content:
+                                  value.jwtTokenData?.expiresAt.toString() ??
+                                      ""),
+                        ]);
+                      }),
                       // BUTTONS
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -131,7 +103,7 @@ class _UserPageState extends State<UserPage> {
                         child: StandardButton(
                           buttonText: capitalize("Logout"),
                           onPressed: () {
-                            AuthService.logout();
+                            AuthService.logout(context);
                             Navigator.of(context)
                                 .popAndPushNamed(routes.UserLogin);
                           },
