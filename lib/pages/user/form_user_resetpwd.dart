@@ -15,7 +15,7 @@ import '../../widgets/form/formfield_plain.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   final _buttonColor = Colors.amber;
-  final authService = AuthService(***REMOVED***RestClient());
+  final authService = AuthService();
 
   @override
   _ResetPasswordFormState createState() => _ResetPasswordFormState();
@@ -25,29 +25,11 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   final _formKey = GlobalKey<FormState>();
   String _email = "";
 
-  ResetPasswordFormData _resetPwdFormData;
+  ResetPasswordFormData _resetPwdFormData = ResetPasswordFormData();
   String _errorMessage = "";
   bool _displayAwaitHolder = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _resetPwdFormData = ResetPasswordFormData();
-    _setUserDetails();
-  }
-
-  void _setUserDetails() async {
-    User user = await AuthService.isUserLoggedIn();
-    if (user != null) {
-      setState(() {
-        this._email = user.email;
-      });
-    } else {
-      Navigator.of(context).pushNamed(routes.UserLogin);
-    }
-  }
-
-  void _handlePasswordResetRequest() async {
+  void _handlePasswordResetRequest(BuildContext context) async {
     //TODO: Handle password reset with formdata & mail + token
     final FormState formState = _formKey.currentState;
     setState(() {
@@ -57,10 +39,10 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
     if (formState.validate()) {
       try {
         await widget.authService
-            .changePassword(_resetPwdFormData)
+            .changePassword(context, _resetPwdFormData)
             .then((value) {
           // LOGOUT USER AND SHOW DIALOG
-          AuthService.logout();
+          AuthService.logout(context);
           _showPasswordChangedDialog();
         });
       } on HttpException catch (e) {
@@ -182,8 +164,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                     color: widget._buttonColor,
                     child: Text(S.of(context).resetPassword),
                     onPressed: () {
-                      _resetPwdFormData.email = this._email;
-                      _handlePasswordResetRequest();
+                      _handlePasswordResetRequest(context);
                     },
                   ),
                 ],

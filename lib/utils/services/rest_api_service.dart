@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:***REMOVED***/constants/api_path.dart' as apiPaths;
 import 'package:***REMOVED***/entities/commodity.dart';
@@ -9,12 +10,9 @@ import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 class CommodityService {
   final ***REMOVED***RestClient _client = ***REMOVED***RestClient();
 
-  Future<Commodity> getCommodity(num id) {
-    var response = _client.get(apiPaths.getCommodity);
-    return response.then((value) => _getCommodityResultHandler(value));
-  }
+  Future<Commodity> getCommodity(BuildContext context, num id) async {
+    var response = await _client.get(context, apiPaths.getCommodity);
 
-  Commodity _getCommodityResultHandler(Response response) {
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
       if (body["data"] != null) {
@@ -28,12 +26,9 @@ class CommodityService {
 class ListingService {
   final ***REMOVED***RestClient _client = ***REMOVED***RestClient();
 
-  Future<Listing> getCommodity(num id) {
-    var response = _client.get(apiPaths.getListing);
-    return response.then((value) => _getListingResultHandler(value));
-  }
+  Future<Listing> getCommodity(BuildContext context, num id) async {
+    var response = await _client.get(context, apiPaths.getListing);
 
-  Listing _getListingResultHandler(Response response) {
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
       if (body["data"] != null) {
