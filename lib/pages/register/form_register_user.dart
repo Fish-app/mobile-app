@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:maoyi/config/routes/route_data.dart';
+import 'package:maoyi/config/routes/router.dart';
 import 'package:maoyi/config/routes/routes.dart' as routes;
 import 'package:maoyi/generated/l10n.dart';
 import 'package:maoyi/pages/register/new_user_form_data.dart';
@@ -11,8 +13,9 @@ import 'package:maoyi/widgets/form/formfield_auth.dart';
 import 'package:strings/strings.dart';
 
 class RegisterUserForm extends StatefulWidget {
-  RegisterUserForm({Key key}) : super(key: key);
+  RegisterUserForm({Key key, this.returnRoute}) : super(key: key);
   final authService = AuthService();
+  final LoginReturnRouteData returnRoute;
 
   @override
   _RegisterUserFormState createState() => _RegisterUserFormState();
@@ -31,6 +34,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
   }
 
   void _handleRegister(BuildContext context) async {
+    print(widget.returnRoute?.path);
     final FormState formState = _formKey.currentState;
     setState(() {
       _errorMessage = "";
@@ -39,7 +43,14 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
     if (formState.validate()) {
       try {
         await widget.authService.createUser(context, _newUserFormData);
-        Navigator.pushReplacementNamed(context, routes.UserLogin);
+        bool suc =
+            await widget.authService.loginUser(context, _newUserFormData);
+        if (suc) {
+          Navigator.removeRouteBelow(context, ModalRoute.of(context));
+          Navigator.popAndPushNamed(
+              context, widget.returnRoute?.path ?? routes.Home,
+              arguments: widget.returnRoute?.pathParams);
+        }
       } on CreateUserException catch (e) {
         setState(() {
           _errorMessage = e.message;

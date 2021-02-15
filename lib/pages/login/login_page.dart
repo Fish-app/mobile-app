@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:maoyi/config/routes/route_data.dart';
+import 'package:maoyi/config/routes/router.dart';
 import 'package:maoyi/config/themes/theme_config.dart';
 import 'package:maoyi/widgets/BlurredImage.dart';
 import 'package:maoyi/pages/login/form_user_login.dart';
@@ -6,7 +8,8 @@ import 'package:maoyi/widgets/logo.dart';
 import 'package:maoyi/widgets/nav_widgets/common_nav.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  final LoginReturnRouteData loginReturnRouteData;
+  LoginPage({Key key, this.loginReturnRouteData}) : super(key: key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -36,7 +39,9 @@ class _LoginPageState extends State<LoginPage> {
                       height: 52.0,
                     ), // Spacing between top and header
                     Align(alignment: Alignment.center, child: Logo()),
-                    LoginUserForm(),
+                    LoginUserForm(
+                      returnPath: widget.loginReturnRouteData,
+                    ),
                   ],
                 ),
               ),

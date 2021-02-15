@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maoyi/config/routes/route_data.dart';
 import 'package:maoyi/entities/listing.dart';
 import 'package:maoyi/generated/l10n.dart';
+import 'package:maoyi/main.dart';
 import 'package:maoyi/widgets/Map/map_image.dart';
 import 'package:maoyi/widgets/display_text_field.dart';
 import 'package:maoyi/widgets/distance_to_widget.dart';
@@ -10,9 +12,13 @@ import 'package:maoyi/widgets/rating_stars.dart';
 import 'package:maoyi/widgets/standard_button.dart';
 
 class ListingInfoPage extends StatelessWidget {
-  final OfferListing offerListing;
+  final GenericRouteData routeData;
+  OfferListing offerListing;
 
-  const ListingInfoPage({Key key, this.offerListing}) : super(key: key);
+  ListingInfoPage({Key key, this.routeData}) : super(key: key) {
+    print("playfetch listing with id ${routeData.id}");
+    this.offerListing = testOfferListing;
+  }
 
   @override
   Widget build(BuildContext context) {
