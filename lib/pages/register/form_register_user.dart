@@ -12,7 +12,7 @@ import 'package:strings/strings.dart';
 
 class RegisterUserForm extends StatefulWidget {
   RegisterUserForm({Key key}) : super(key: key);
-  final authService = AuthService(***REMOVED***RestClient());
+  final authService = AuthService();
 
   @override
   _RegisterUserFormState createState() => _RegisterUserFormState();
@@ -30,7 +30,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
     _newUserFormData = NewUserFormData();
   }
 
-  void _handleRegister() async {
+  void _handleRegister(BuildContext context) async {
     final FormState formState = _formKey.currentState;
     setState(() {
       _errorMessage = "";
@@ -38,7 +38,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
     formState.save();
     if (formState.validate()) {
       try {
-        await widget.authService.createUser(_newUserFormData);
+        await widget.authService.createUser(context, _newUserFormData);
         Navigator.pushReplacementNamed(context, routes.UserLogin);
       } on CreateUserException catch (e) {
         setState(() {
@@ -120,7 +120,11 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
                   style: Theme.of(context).elevatedButtonTheme.style.copyWith(
                       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                           EdgeInsets.symmetric(horizontal: 25, vertical: 10))),
-                  onPressed: _submittable() ? _handleRegister : null,
+                  onPressed: () {
+                    if (_agreedToTOS) {
+                      _handleRegister(context);
+                    }
+                  },
                   child: Text(
                     S.of(context).createUser.toUpperCase(),
                     style: Theme.of(context).primaryTextTheme.headline5,
@@ -132,10 +136,6 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
             )
           ]),
         ));
-  }
-
-  bool _submittable() {
-    return _agreedToTOS;
   }
 
   void _setAgreedToTOS(bool newValue) {
