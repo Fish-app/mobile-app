@@ -4,31 +4,15 @@ import 'package:***REMOVED***/entities/listing.dart';
 import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/widgets/Map/map_image.dart';
 import 'package:***REMOVED***/widgets/display_text_field.dart';
+import 'package:***REMOVED***/widgets/distance_to_widget.dart';
 import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
 import 'package:***REMOVED***/widgets/rating_stars.dart';
 import 'package:***REMOVED***/widgets/standard_button.dart';
 
-class ListingInfoPage extends StatefulWidget {
+class ListingInfoPage extends StatelessWidget {
   final OfferListing offerListing;
 
   const ListingInfoPage({Key key, this.offerListing}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => ListingPageInfoState();
-}
-
-class ListingPageInfoState extends State<ListingInfoPage> {
-  var _distance = 0.0;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.offerListing.getDistanceTo().then((value) {
-      setState(() {
-        _distance = value;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,31 +41,18 @@ class ListingPageInfoState extends State<ListingInfoPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.offerListing.creator.user.name,
+                              offerListing.creator.user.name,
                               style:
                                   Theme.of(context).primaryTextTheme.headline4,
                             ),
                             RatingStars(
-                              rating: widget.offerListing.creator.rating,
+                              rating: offerListing.creator.rating,
                             )
                           ],
                         ),
-                        Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(Icons.location_on),
-                                Text(
-                                  _distance.toString() + "Km",
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline6,
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+                        DistanceToWidget(
+                          cardListing: offerListing,
+                        )
                       ],
                     ),
                   ),
@@ -90,8 +61,8 @@ class ListingPageInfoState extends State<ListingInfoPage> {
                     children: [
                       Expanded(
                         child: MapImage(
-                          latitude: widget.offerListing.latitude,
-                          longitude: widget.offerListing.longitude,
+                          latitude: offerListing.latitude,
+                          longitude: offerListing.longitude,
                         ),
                       ),
                     ],
@@ -112,13 +83,11 @@ class ListingPageInfoState extends State<ListingInfoPage> {
                     children: [
                       DisplayTextField(
                           description: S.of(context).price.toUpperCase(),
-                          content:
-                              widget.offerListing.price.toString() + " kr/Kg"),
+                          content: offerListing.price.toString() + " kr/Kg"),
                       DisplayTextField(
                           description:
                               S.of(context).quantityAvailable.toUpperCase(),
-                          content: widget.offerListing.amountLeft.toString() +
-                              " Kg"),
+                          content: offerListing.amountLeft.toString() + " Kg"),
                       StandardButton(
                         buttonText: "START CHAT",
                         onPressed: () {
