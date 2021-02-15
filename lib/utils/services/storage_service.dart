@@ -76,7 +76,7 @@ class SecureStorage {
     return _readSecure(_tokenKey);
   }
 
-  Future<String> removeTokenString() {
-    return _deleteSecure(_tokenKey);
+  Future<void> removeTokenString() {
+    _deleteSecure(_tokenKey);
   }
 }
