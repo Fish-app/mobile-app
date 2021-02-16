@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:***REMOVED***/config/routes/route_data.dart';
 import 'package:***REMOVED***/config/themes/theme_config.dart';
 import 'package:***REMOVED***/widgets/BlurredImage.dart';
 import 'package:***REMOVED***/pages/register/form_register_user.dart';
 import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
 
 class RegisterUserPage extends StatefulWidget {
-  RegisterUserPage({Key key}) : super(key: key);
+  final LoginReturnRouteData returnRouteData;
+  RegisterUserPage({Key key, this.returnRouteData}) : super(key: key);
 
   @override
   _RegisterUserPageState createState() => _RegisterUserPageState();
@@ -41,7 +43,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                           "Create User",
                           style: Theme.of(context).primaryTextTheme.headline1,
                         )),
-                    RegisterUserForm(),
+                    RegisterUserForm(returnRoute: widget.returnRouteData),
                   ],
                 ),
               ),

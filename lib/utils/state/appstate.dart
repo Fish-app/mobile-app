@@ -38,8 +38,10 @@ class AppState extends ChangeNotifier {
   }
 
   void loggOut() {
-    SecureStorage().readTokenString();
+    SecureStorage().removeTokenString();
     SharedStorage().removeUser();
+    this.user = null;
+    this.jwtTokenData = null;
     notifyListeners();
   }
 }

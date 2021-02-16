@@ -1,7 +1,7 @@
-class NewUserFormData {
+import 'package:***REMOVED***/pages/login/login_formdata.dart';
+
+class NewUserFormData extends LoginUserFormData {
   String name;
-  String password;
-  String email;
 
   toMap() {
     return {

@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:***REMOVED***/config/routes/route_data.dart';
+import 'package:***REMOVED***/config/routes/router.dart';
 import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/pages/login/login_formdata.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
@@ -12,8 +14,9 @@ import 'package:***REMOVED***/utils/form/form_validators.dart';
 import 'package:strings/strings.dart';
 
 class LoginUserForm extends StatefulWidget {
-  LoginUserForm({Key key}) : super(key: key);
+  LoginUserForm({Key key, this.returnPath}) : super(key: key);
   final authService = AuthService();
+  final LoginReturnRouteData returnPath;
 
   @override
   _LoginUserFormState createState() => _LoginUserFormState();
@@ -42,7 +45,9 @@ class _LoginUserFormState extends State<LoginUserForm> {
             await widget.authService.loginUser(context, _loginUserFormData);
         if (sucsess) {
           // LOGIN OK
-          Navigator.pushNamed(context, routes.Home);
+          Navigator.popAndPushNamed(
+              context, widget.returnPath?.path ?? routes.Home,
+              arguments: widget.returnPath?.pathParams);
         } else {
           // TODO: Når kan det her egentlig skje, vil det ikke ver en fuckup på serveren i såfall
 
@@ -170,7 +175,8 @@ class _LoginUserFormState extends State<LoginUserForm> {
                               ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, routes.UserNew);
+                          Navigator.pushNamed(context, routes.UserNew,
+                              arguments: widget.returnPath);
                         },
                       ),
                     ]),
