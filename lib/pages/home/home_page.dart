@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:maoyi/config/routes/route_data.dart';
+import 'package:maoyi/config/routes/routes.dart';
 import 'package:maoyi/entities/commodity.dart';
 import 'package:maoyi/entities/listing.dart';
 import 'package:maoyi/main.dart';
@@ -12,6 +14,8 @@ import 'package:maoyi/widgets/nav_widgets/floating_nav_bar.dart';
 import 'package:maoyi/widgets/listing_card.dart';
 import 'package:maoyi/widgets/logo.dart';
 import 'package:maoyi/widgets/nav_widgets/common_nav.dart';
+
+import 'package:maoyi/config/routes/routes.dart' as routes;
 
 class HomePage extends StatefulWidget {
   @override
@@ -113,12 +117,8 @@ class CommodityListingPageState extends State<CommodityListingPage>
   Widget _goToListing(OfferListing offerListing) {
     return GestureDetector(
       onTap: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ListingInfoPage(offerListing: offerListing),
-          ),
-        ),
+        Navigator.pushNamed(context, routes.ListingInfo,
+            arguments: GenericRouteData(id: offerListing.id))
       },
       child: OfferListingCard(cardListing: offerListing),
     );
