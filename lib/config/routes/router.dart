@@ -1,6 +1,7 @@
 import 'package:maoyi/config/routes/route_data.dart';
+import 'package:maoyi/pages/listing/listing_info_page.dart';
+import 'package:maoyi/pages/listing/new_listing_page.dart';
 import 'package:maoyi/pages/home/home_page.dart';
-import 'package:maoyi/pages/listing_info_page.dart';
 import 'package:maoyi/pages/login/login_page.dart';
 import 'package:maoyi/pages/chat/chat_page.dart';
 import 'package:maoyi/pages/user/user_resetpwd_page.dart';
@@ -54,6 +55,9 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         );
       }
       break;
+    case routes.NewListing:
+      page = NewListingPage();
+      break;
 
     ///  --  Needs login below  -- ///
     case routes.UserInfo:
@@ -71,6 +75,11 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         return ChatPage();
       });
       break;
+    // case routes.NewListing:
+    //   page = reqireLogin(() {
+    //     return NewListingPage();
+    //   });
+    //   break;
 
     default:
       page = Path404Page();

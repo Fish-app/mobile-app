@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:maoyi/config/routes/route_data.dart';
-import 'package:maoyi/config/routes/router.dart';
 import 'package:maoyi/config/routes/routes.dart' as routes;
 import 'package:maoyi/generated/l10n.dart';
 import 'package:maoyi/pages/register/new_user_form_data.dart';
 import 'package:maoyi/utils/form/form_validators.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
-import 'package:maoyi/utils/services/maoyi_rest_client.dart';
 import 'package:maoyi/widgets/form/formfield_auth.dart';
 import 'package:strings/strings.dart';
 

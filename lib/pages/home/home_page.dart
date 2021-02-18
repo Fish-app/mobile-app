@@ -6,7 +6,7 @@ import 'package:maoyi/config/routes/routes.dart';
 import 'package:maoyi/entities/commodity.dart';
 import 'package:maoyi/entities/listing.dart';
 import 'package:maoyi/main.dart';
-import 'package:maoyi/pages/listing_info_page.dart';
+import 'package:maoyi/pages/listing/listing_info_page.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
 import 'package:maoyi/widgets/buy_filter.dart';
 import 'package:maoyi/widgets/commodity_card.dart';
