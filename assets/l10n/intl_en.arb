@@ -141,5 +141,14 @@
   "resetPassword": "Reset password",
   "@resetPassword": {
     "description": ""
-  }
+  },
+
+  "amount": "Amount",
+  "@amount": {},
+  "pickupDate": "Pickup date",
+  "@pickupDate": {},
+  "additionalInfo": "Additional info",
+  "@additionalInfo": {},
+  "newListing": "New listing offer",
+  "@newListing": {}
 }

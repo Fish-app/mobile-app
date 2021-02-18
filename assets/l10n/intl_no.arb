@@ -50,5 +50,10 @@
   "dialogActionGotoLoginPage": "Ta meg til innloggingssiden",
   "dialogActionDoLater": "Senere",
   "clearForm": "Tøm skjema",
-  "resetPassword": "Nullstill password"
+  "resetPassword": "Nullstill password",
+
+  "amount": "Mengde",
+  "pickupDate": "Hente dato",
+  "additionalInfo": "Tilleggsinformasjon",
+  "newListing": "Ny noteringstilbud"
 }

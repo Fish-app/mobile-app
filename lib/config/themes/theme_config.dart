@@ -157,3 +157,18 @@ final ***REMOVED***LightTheme = ThemeData(
 
   scaffoldBackgroundColor: backgroundColor,
 );
+
+final InputDecorationTheme normalFormFieldTheme = InputDecorationTheme (
+  floatingLabelBehavior: FloatingLabelBehavior.always,
+  contentPadding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+  border: UnderlineInputBorder(),
+  filled: true,
+  fillColor: inputFealdbgColor,
+  hintStyle: inputHintStyle,
+);
+
+final TextStyle listingInputStyle = TextStyle(
+    fontFamily: "Roboto",
+    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    color: Colors.black);

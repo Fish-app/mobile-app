@@ -12,7 +12,7 @@ AppBar get***REMOVED***TopBar(BuildContext context, String barText) {
     elevation: Theme.of(context).appBarTheme.elevation,
     title: Text(
       barText,
-      style: Theme.of(context).primaryTextTheme.headline4,
+      style: Theme.of(context).textTheme.headline4,
     ),
     backgroundColor: Theme.of(context).appBarTheme.color,
     iconTheme: IconThemeData(color: Colors.black),
