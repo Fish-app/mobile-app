@@ -20,4 +20,24 @@ class Commodity {
   factory Commodity.fromJson(Map<String, dynamic> json) =>
       _$CommodityFromJson(json);
   Map<String, dynamic> toJson() => _$CommodityToJson(this);
+
+  static fromJsonList(List list) {
+    if (list == null) return null;
+    return list.map((e) => Commodity.fromJson(e)).toList();
+  }
+
+  String commodityAsString() {
+    return '#${this.id} ${this.name}';
+  }
+
+  bool isEqual(Commodity commodity) {
+    return this?.id == commodity?.id;
+  }
+
+  bool filterByName(String filter) {
+    return this?.name?.toLowerCase()?.contains(filter);
+  }
+
+  @override
+  String toString() => name;
 }

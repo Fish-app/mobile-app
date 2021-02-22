@@ -55,5 +55,9 @@
   "amount": "Mengde",
   "pickupDate": "Hente dato",
   "additionalInfo": "Tilleggsinformasjon",
-  "newListing": "Ny noteringstilbud"
+  "newListing": "Ny noteringstilbud",
+  "fish": "Fisk",
+  "shellfish": "Skalldyr",
+  "commodity": "Handelsvare",
+  "search": "Søk"
 }

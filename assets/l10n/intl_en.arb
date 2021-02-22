@@ -150,5 +150,13 @@
   "additionalInfo": "Additional info",
   "@additionalInfo": {},
   "newListing": "New listing offer",
-  "@newListing": {}
+  "@newListing": {},
+  "fish": "Fish",
+  "@fish": {},
+  "shellfish": "Shellfish",
+  "@shellfish": {},
+  "commodity": "Commodity",
+  "@commodity": {},
+  "search": "Search",
+  "@search": {}
 }

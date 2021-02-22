@@ -7,6 +7,7 @@ const restApiUrl = "http://10.0.2.2:8080/api";
 /// -- Commodity -- ///
 
 const getCommodity = restApiUrl + "aa";
+const getAllCommodity = restApiUrl + "/commodity/all";
 // needs login //
 
 /// -- Listing -- ///
