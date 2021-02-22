@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
@@ -20,6 +21,29 @@ class CommodityService {
       }
     }
     return null;
+  }
+
+  Future<List<Commodity>> getAllCommodities(BuildContext context) async {
+    var response = await _client.get(context, apiPaths.getAllCommodity, addAuth: false);
+    List returnList;
+
+    switch (response.statusCode) {
+      case 200:
+        //TODO: might need some sort of check for if body is empty
+        var body = jsonDecode(response.body);
+        returnList = Commodity.fromJsonList(body);
+        break;
+      case 401:
+        throw HttpException(HttpStatus.unauthorized.toString());
+        break;
+      case 500:
+        throw HttpException(HttpStatus.internalServerError.toString());
+        break;
+      default:
+        returnList = List();
+        break;
+    }
+    return returnList;
   }
 }
 

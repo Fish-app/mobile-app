@@ -2,15 +2,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maoyi/config/routes/route_data.dart';
+import 'package:maoyi/entities/commodity.dart';
 import 'package:maoyi/generated/l10n.dart';
 import 'package:maoyi/pages/Listing/listing_formdata.dart';
 import 'package:maoyi/utils/form/form_validators.dart';
 import 'package:maoyi/utils/services/auth_service.dart';
+import 'package:maoyi/utils/services/rest_api_service.dart';
+import 'package:maoyi/widgets/dropdown_menu.dart';
+import 'package:maoyi/widgets/dropdown_type.dart';
 import 'package:maoyi/widgets/form/formfield_normal.dart';
 
 class NewListingForm extends StatefulWidget {
   final GenericRouteData routeData;
   final authService = AuthService();
+  final service = CommodityService();
   NewListingForm({Key key, this.routeData}) : super(key: key);
 
   @override
@@ -25,6 +30,7 @@ class _NewListingFormState extends State<NewListingForm> {
   final _firstDate = DateTime(1900);
   final _lastDate = DateTime(2100);
   final _dateController = TextEditingController();
+  Commodity pickedFish;
 
   @override
   void initState() {
@@ -47,9 +53,21 @@ class _NewListingFormState extends State<NewListingForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            //DropdownType(dropdownTypeCallback),
+            Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+            DropdownMenu(
+                showSearchBox: true,
+                showClearButton: true,
+                label: S.of(context).commodity,
+                searchBoxHint: S.of(context).search,
+                customFilter: (commodity, filter) => commodity.filterByName(filter),
+                onFind: (String filter) => widget.service.getAllCommodities(context),
+                callback: dropdownSelectedCallback
+            ),
             FormFieldNormal(
               title: S.of(context).amount.toUpperCase(),
               keyboardType: TextInputType.number,
+              //onSaved: (newValue) => {_listingFormData.maxAmount = newValue},
               validator: (value) {
                 return validateFloatInput(value, context);
               },
@@ -82,4 +100,17 @@ class _NewListingFormState extends State<NewListingForm> {
       ),
     );
   }
+
+  // dropdownTypeCallback(newValue) {
+  //   setState(() {
+  //     dropdownType = newValue;
+  //   });
+  // }
+
+  dropdownSelectedCallback(newValue) {
+    setState(() {
+      pickedFish = newValue;
+    });
+  }
+
 }
