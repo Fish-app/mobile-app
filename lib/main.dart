@@ -68,7 +68,7 @@ class _App extends State<App> with WidgetsBindingObserver {
         supportedLocales: S.delegate.supportedLocales,
         theme: ***REMOVED***LightTheme,
         title: 'Flutter Demo',
-        initialRoute: routes.Home,
+        initialRoute: routes.NewListing,
         onGenerateRoute: (settings) => router(context, settings));
   }
 }

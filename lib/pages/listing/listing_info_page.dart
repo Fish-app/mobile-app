@@ -5,6 +5,7 @@ import 'package:***REMOVED***/entities/listing.dart';
 import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/main.dart';
 import 'package:***REMOVED***/widgets/Map/map_image.dart';
+import 'package:***REMOVED***/widgets/Map/open_map_widget.dart';
 import 'package:***REMOVED***/widgets/display_text_field.dart';
 import 'package:***REMOVED***/widgets/distance_to_widget.dart';
 import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
@@ -16,7 +17,6 @@ class ListingInfoPage extends StatelessWidget {
   OfferListing offerListing;
 
   ListingInfoPage({Key key, this.routeData}) : super(key: key) {
-    print("playfetch listing with id ${routeData.id}");
     this.offerListing = testOfferListing;
   }
 
@@ -63,12 +63,17 @@ class ListingInfoPage extends StatelessWidget {
                     ),
                   ),
                   Row(
-                    //mainAxisSize: MainAxisSize.min,
                     children: [
                       Expanded(
                         child: MapImage(
+                          height: MediaQuery.of(context).size.height / 2.2,
                           latitude: offerListing.latitude,
                           longitude: offerListing.longitude,
+                          onTap: (abc) {
+                            MapWidget(
+                                latitude: offerListing.latitude,
+                                longitude: offerListing.longitude).openMapSheet(context);
+                          },
                         ),
                       ),
                     ],

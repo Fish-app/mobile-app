@@ -8,9 +8,13 @@ import 'package:***REMOVED***/pages/Listing/listing_formdata.dart';
 import 'package:***REMOVED***/utils/form/form_validators.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/utils/services/rest_api_service.dart';
+import 'package:***REMOVED***/widgets/Map/choose_location_widget.dart';
 import 'package:***REMOVED***/widgets/dropdown_menu.dart';
-import 'package:***REMOVED***/widgets/dropdown_type.dart';
 import 'package:***REMOVED***/widgets/form/formfield_normal.dart';
+import 'package:***REMOVED***/widgets/standard_button.dart';
+
+import 'package:latlong/latlong.dart';
+
 
 class NewListingForm extends StatefulWidget {
   final GenericRouteData routeData;
@@ -31,6 +35,7 @@ class _NewListingFormState extends State<NewListingForm> {
   final _lastDate = DateTime(2100);
   final _dateController = TextEditingController();
   Commodity pickedFish;
+  LatLng _location;
 
   @override
   void initState() {
@@ -62,7 +67,13 @@ class _NewListingFormState extends State<NewListingForm> {
                 searchBoxHint: S.of(context).search,
                 customFilter: (commodity, filter) => commodity.filterByName(filter),
                 onFind: (String filter) => widget.service.getAllCommodities(context),
-                callback: dropdownSelectedCallback
+                callback: _dropdownSelectedCallback
+            ),
+            StandardButton(
+                buttonText: S.of(context).setPickupLocation,
+                onPressed: () {
+                  _navigateAndDisplayMap(context);
+                }
             ),
             FormFieldNormal(
               title: S.of(context).amount.toUpperCase(),
@@ -107,10 +118,19 @@ class _NewListingFormState extends State<NewListingForm> {
   //   });
   // }
 
-  dropdownSelectedCallback(newValue) {
+  _dropdownSelectedCallback(newValue) {
     setState(() {
       pickedFish = newValue;
     });
   }
 
+  _navigateAndDisplayMap(BuildContext context) async {
+    final LatLng result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ChooseLocation())
+    );
+    _location = result;
+    print("Latitude: " + _location.latitude.toString());
+    print("Longitude: " + _location.longitude.toString());
+  }
 }

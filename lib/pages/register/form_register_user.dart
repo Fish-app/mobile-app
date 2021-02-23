@@ -68,7 +68,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 40),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             FormFieldAuth(
               title: S.of(context).name,
               hint: S.of(context).fullName,
