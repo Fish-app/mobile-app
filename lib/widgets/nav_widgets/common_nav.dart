@@ -19,13 +19,14 @@ AppBar getMaoyiTopBar(BuildContext context, String barText) {
   );
 }
 
-// this is a shitshow and has to be improved
+// TODO: this is a shitshow and has to be improved
 Scaffold getMaoyiDefaultScaffold(BuildContext context,
-    {String includeTopBar, NavDestButton useNavBar, Widget child}) {
+    {String includeTopBar, NavDestButton useNavBar,
+      Widget child, bool extendBehindAppBar = true, bool extendBody = true}) {
   return Scaffold(
     resizeToAvoidBottomInset: false,
-    extendBodyBehindAppBar: true,
-    extendBody: true,
+    extendBodyBehindAppBar: extendBehindAppBar,
+    extendBody: extendBody,
     bottomNavigationBar: useNavBar != null
         ? MaoyiNavBar(
             currentActiveButton: useNavBar,

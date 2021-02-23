@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:maoyi/config/routes/route_data.dart';
 import 'package:maoyi/generated/l10n.dart';
 import 'package:maoyi/pages/Listing/form_new_listing.dart';
-import 'package:maoyi/utils/services/auth_service.dart';
-import 'package:maoyi/widgets/form/formfield_normal.dart';
 import 'package:maoyi/widgets/nav_widgets/common_nav.dart';
 
 class NewListingPage extends StatefulWidget {

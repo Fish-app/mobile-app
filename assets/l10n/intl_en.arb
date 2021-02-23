@@ -158,5 +158,9 @@
   "commodity": "Commodity",
   "@commodity": {},
   "search": "Search",
-  "@search": {}
+  "@search": {},
+  "setPickupLocation": "Set pickup location",
+  "@setPickupLocation": {},
+  "confirmLocation": "Confirm location",
+  "@confirmLocation": {}
 }
