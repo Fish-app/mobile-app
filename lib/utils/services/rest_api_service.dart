@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,7 @@ import 'package:http/http.dart';
 import 'package:***REMOVED***/constants/api_path.dart' as apiPaths;
 import 'package:***REMOVED***/entities/commodity.dart';
 import 'package:***REMOVED***/entities/listing.dart';
+import 'package:***REMOVED***/pages/listing/listing_formdata.dart';
 import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 
 class CommodityService {
@@ -60,5 +62,32 @@ class ListingService {
       }
     }
     return null;
+  }
+  
+  Future<void> createOfferListing(
+      BuildContext context, ListingFormData details) async {
+    try {
+      var response = await _client.post(context, apiPaths.createOfferListing,
+      headers: details.toJson(), addAuth: false); //TODO: change to true
+      switch (response.statusCode) {
+        case 200:
+          break;
+        case 401:
+          throw HttpException(HttpStatus.unauthorized.toString());
+          break;
+        case 403:
+          throw HttpException(HttpStatus.forbidden.toString());
+          break;
+        case 409:
+          break;
+        case 500:
+        default:
+          throw HttpException(HttpStatus.internalServerError.toString());
+          break;
+      }
+    } on IOException catch (e) {
+      log("IO failure " + e.toString(), time: DateTime.now());
+      throw HttpException("Service unavailable");
+    }
   }
 }

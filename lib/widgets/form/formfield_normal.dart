@@ -14,6 +14,7 @@ class FormFieldNormal extends StatelessWidget {
   final String initialValue;
   final GestureTapCallback onTap;
   final TextEditingController controller;
+  final bool readOnly;
 
   const FormFieldNormal(
       {Key key,
@@ -27,6 +28,7 @@ class FormFieldNormal extends StatelessWidget {
         this.labelColor,
         this.initialValue,
         this.onTap,
+        this.readOnly = false,
         this.controller})
       : super(key: key);
 
@@ -47,6 +49,7 @@ class FormFieldNormal extends StatelessWidget {
           obscureText: isObscured ?? false,
           onTap: onTap,
           controller: controller,
+          readOnly: readOnly,
         ),
       ],
     );

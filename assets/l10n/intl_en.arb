@@ -162,5 +162,9 @@
   "setPickupLocation": "Set pickup location",
   "@setPickupLocation": {},
   "confirmLocation": "Confirm location",
-  "@confirmLocation": {}
+  "@confirmLocation": {},
+  "dateNotValid": "Date can not be in the past",
+  "@dateNotValid": {},
+  "addListing": "Add listing",
+  "@addListing": {}
 }

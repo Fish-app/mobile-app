@@ -13,6 +13,7 @@ const getAllCommodity = restApiUrl + "/commodity/all";
 /// -- Listing -- ///
 
 const getListing = restApiUrl + "aa";
+const createOfferListing = restApiUrl + "/listing/newOfferListing";
 
 // needs login //
 
