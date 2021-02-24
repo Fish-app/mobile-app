@@ -26,7 +26,7 @@ class CommodityService {
   }
 
   Future<List<Commodity>> getAllCommodities(BuildContext context) async {
-    var response = await _client.get(context, apiPaths.getAllCommodity, addAuth: false);
+    var response = await _client.get(context, apiPaths.getAllCommodity, addAuth: true);
     List returnList;
 
     switch (response.statusCode) {
