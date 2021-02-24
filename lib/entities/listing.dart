@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:maoyi/entities/commodity.dart';
 import 'package:maoyi/entities/seller.dart';
-import 'package:maoyi/entities/user.dart';
 import 'package:maoyi/utils/distance_calculator.dart';
 
 part 'listing.g.dart';
@@ -10,9 +9,9 @@ part 'listing.g.dart';
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Listing {
   num id;
-  String dateCreated; // todo: finn ut hvilket dato format vi ender med
+  int dateCreated; // todo: finn ut hvilket dato format vi ender med
   Seller creator;
-  String endDate;
+  int endDate;
   Commodity commodity;
   int price;
   bool isOpen;
@@ -38,19 +37,21 @@ class OfferListing extends Listing {
   //Coordinates for pickup.
   double latitude;
   double longitude;
+  String additionalInfo;
 
   OfferListing(
       {@required num id,
-      String dateCreated,
+      int dateCreated,
       Seller creator,
-      String endDate,
+      int endDate,
       Commodity commodity,
       int price,
       bool isOpen,
       @required this.maxAmount,
       @required this.amountLeft,
       @required this.latitude,
-      @required this.longitude
+      @required this.longitude,
+      this.additionalInfo
       })
       : super(
             id: id,

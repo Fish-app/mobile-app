@@ -55,11 +55,13 @@
   "amount": "Mengde",
   "pickupDate": "Hente dato",
   "additionalInfo": "Tilleggsinformasjon",
-  "newListing": "Ny noteringstilbud",
+  "newListing": "Nytt noteringstilbud",
   "fish": "Fisk",
   "shellfish": "Skalldyr",
   "commodity": "Handelsvare",
   "search": "Søk",
   "setPickupLocation": "Angi hentested",
-  "confirmLocation": "Bekreft sted"
+  "confirmLocation": "Bekreft sted",
+  "dateNotValid": "Dato kan ikke være i fortiden",
+  "addListing": "Legg til oppføring"
 }
