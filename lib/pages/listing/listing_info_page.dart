@@ -12,11 +12,13 @@ import 'package:maoyi/widgets/nav_widgets/common_nav.dart';
 import 'package:maoyi/widgets/rating_stars.dart';
 import 'package:maoyi/widgets/standard_button.dart';
 
+
 class ListingInfoPage extends StatelessWidget {
-  final GenericRouteData routeData;
+  final LoginReturnRouteData routeData;
   OfferListing offerListing;
 
-  ListingInfoPage({Key key, this.routeData}) : super(key: key) {
+  ListingInfoPage({Key key, this.routeData, this.offerListing}) : super(key: key) {
+    //TODO: must be changed to be able to show listing from server
     this.offerListing = testOfferListing;
   }
 
@@ -47,7 +49,7 @@ class ListingInfoPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              offerListing.creator.user.name,
+                              offerListing.creator.name,
                               style:
                                   Theme.of(context).primaryTextTheme.headline4,
                             ),

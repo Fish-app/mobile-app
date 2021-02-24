@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart';
 import 'package:maoyi/constants/api_path.dart' as apiPaths;
 import 'package:maoyi/entities/commodity.dart';
 import 'package:maoyi/entities/listing.dart';
 import 'package:maoyi/pages/listing/listing_formdata.dart';
 import 'package:maoyi/utils/services/maoyi_rest_client.dart';
+
 
 class CommodityService {
   final MaoyiRestClient _client = MaoyiRestClient();
@@ -31,7 +31,6 @@ class CommodityService {
 
     switch (response.statusCode) {
       case 200:
-        //TODO: might need some sort of check for if body is empty
         var body = jsonDecode(response.body);
         returnList = Commodity.fromJsonList(body);
         break;
@@ -64,13 +63,15 @@ class ListingService {
     return null;
   }
   
-  Future<void> createOfferListing(
+  Future<OfferListing> createOfferListing(
       BuildContext context, ListingFormData details) async {
+    OfferListing offerListing;
     try {
       var response = await _client.post(context, apiPaths.createOfferListing,
-      headers: details.toJson(), addAuth: false); //TODO: change to true
+      headers: details.toMap(), addAuth: true);
       switch (response.statusCode) {
         case 200:
+         return offerListing = OfferListing.fromJson(jsonDecode(response.body));
           break;
         case 401:
           throw HttpException(HttpStatus.unauthorized.toString());
@@ -89,5 +90,6 @@ class ListingService {
       log("IO failure " + e.toString(), time: DateTime.now());
       throw HttpException("Service unavailable");
     }
+    return offerListing;
   }
 }

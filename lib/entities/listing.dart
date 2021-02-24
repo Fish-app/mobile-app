@@ -9,11 +9,11 @@ part 'listing.g.dart';
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Listing {
   num id;
-  int dateCreated; // todo: finn ut hvilket dato format vi ender med
+  int dateCreated;
   Seller creator;
   int endDate;
   Commodity commodity;
-  int price;
+  double price;
   bool isOpen;
 
   Listing(
@@ -34,9 +34,10 @@ class Listing {
 class OfferListing extends Listing {
   int maxAmount;
   int amountLeft;
-  //Coordinates for pickup.
+  //Coordinates for pickup location.
   double latitude;
   double longitude;
+
   String additionalInfo;
 
   OfferListing(
@@ -45,7 +46,7 @@ class OfferListing extends Listing {
       Seller creator,
       int endDate,
       Commodity commodity,
-      int price,
+      double price,
       bool isOpen,
       @required this.maxAmount,
       @required this.amountLeft,

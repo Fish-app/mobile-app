@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../main.dart';
 import 'package:maoyi/pages/register/register_user_page.dart';
 
+import 'route_data.dart';
 import 'routes.dart' as routes;
 
 import 'package:flutter/material.dart';
@@ -49,14 +50,11 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       );
       break;
     case routes.ListingInfo:
-      if (params is GenericRouteData) {
+      if (params is LoginReturnRouteData) {
         page = ListingInfoPage(
           routeData: params,
         );
       }
-      break;
-    case routes.NewListing:
-      page = NewListingPage();
       break;
 
     ///  --  Needs login below  -- ///
@@ -75,11 +73,13 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         return ChatPage();
       });
       break;
-    // case routes.NewListing:
-    //   page = reqireLogin(() {
-    //     return NewListingPage();
-    //   });
-    //   break;
+    case routes.NewListing:
+      page = reqireLogin(() {
+        return NewListingPage(
+          routeData: params,
+        );
+      });
+      break;
 
     default:
       page = Path404Page();

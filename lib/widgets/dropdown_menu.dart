@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:maoyi/entities/commodity.dart';
 import 'package:maoyi/utils/services/rest_api_service.dart';
 
+import '../entities/commodity.dart';
+
 class DropdownMenu extends StatefulWidget {
   final commodityService = CommodityService();
 
@@ -14,6 +16,7 @@ class DropdownMenu extends StatefulWidget {
   final Function(Commodity, String) customFilter;
   final onFind;
   final label;
+  final Function(Commodity) validator;
   DropdownMenu({
     this.showClearButton = false,
     this.showSearchBox = false,
@@ -21,7 +24,8 @@ class DropdownMenu extends StatefulWidget {
     this.searchBoxHint,
     this.customFilter,
     this.onFind,
-    this.label
+    this.label,
+    this.validator
   });
 
   @override
@@ -52,6 +56,7 @@ class _DropdownMenuState extends State<DropdownMenu> {
       label: widget.label,
       onFind: widget.onFind,
       onChanged: (c) => widget.callback(c),
+      validator: widget.validator,
     );
   }
 }

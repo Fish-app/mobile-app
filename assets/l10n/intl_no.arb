@@ -63,5 +63,7 @@
   "setPickupLocation": "Angi hentested",
   "confirmLocation": "Bekreft sted",
   "dateNotValid": "Dato kan ikke være i fortiden",
-  "addListing": "Legg til oppføring"
+  "addListing": "Legg til oppføring",
+  "commodityNotChosen": "Vennligst velg en vare",
+  "chooseDate": "Vennligst velg en dato"
 }
