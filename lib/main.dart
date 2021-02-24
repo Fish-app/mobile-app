@@ -68,7 +68,7 @@ class _App extends State<App> with WidgetsBindingObserver {
         supportedLocales: S.delegate.supportedLocales,
         theme: ***REMOVED***LightTheme,
         title: 'Flutter Demo',
-        initialRoute: routes.NewListing,
+        initialRoute: routes.Home,
         onGenerateRoute: (settings) => router(context, settings));
   }
 }
@@ -84,7 +84,8 @@ var testUserBob = User(
 );
 var testSellerBob = Seller(
   id: 22,
-  user: testUserBob,
+  name: "bob",
+  email: "bob@bob.com",
   regNumber: "2312",
   rating: 3.6,
 );

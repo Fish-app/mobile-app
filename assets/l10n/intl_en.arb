@@ -166,5 +166,9 @@
   "dateNotValid": "Date can not be in the past",
   "@dateNotValid": {},
   "addListing": "Add listing",
-  "@addListing": {}
+  "@addListing": {},
+  "commodityNotChosen": "Please choose a commodity",
+  "@commodityNotChosen": {},
+  "chooseDate": "Please choose a date",
+  "@chooseDate": {}
 }

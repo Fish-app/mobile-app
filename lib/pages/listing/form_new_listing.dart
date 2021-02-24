@@ -6,15 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:***REMOVED***/config/routes/route_data.dart';
 import 'package:***REMOVED***/entities/commodity.dart';
 import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/pages/Listing/listing_formdata.dart';
+import 'package:***REMOVED***/pages/listing/listing_formdata.dart';
 import 'package:***REMOVED***/utils/form/form_validators.dart';
 import 'package:***REMOVED***/utils/services/rest_api_service.dart';
 import 'package:***REMOVED***/widgets/Map/choose_location_widget.dart';
 import 'package:***REMOVED***/widgets/dropdown_menu.dart';
 import 'package:***REMOVED***/widgets/form/formfield_normal.dart';
 import 'package:***REMOVED***/widgets/standard_button.dart';
+import 'package:***REMOVED***/config/routes/routes.dart' as routes;
 
 import 'package:latlong/latlong.dart';
+
+import 'package:***REMOVED***/entities/listing.dart';
+
+import 'listing_info_page.dart';
+
 
 
 class NewListingForm extends StatefulWidget {
@@ -59,7 +65,6 @@ class _NewListingFormState extends State<NewListingForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //DropdownType(dropdownTypeCallback),
             Padding(padding: EdgeInsets.symmetric(vertical: 10)),
             DropdownMenu(
                 showSearchBox: true,
@@ -68,7 +73,12 @@ class _NewListingFormState extends State<NewListingForm> {
                 searchBoxHint: S.of(context).search,
                 customFilter: (commodity, filter) => commodity.filterByName(filter),
                 onFind: (String filter) => widget.service.getAllCommodities(context),
-                callback: _dropdownSelectedCallback
+                callback: _dropdownSelectedCallback,
+                validator: (value) {
+                  if (value == null) {
+                    return S.of(context).commodityNotChosen;
+                  }
+                },
             ),
             Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
             StandardButton(
@@ -80,7 +90,7 @@ class _NewListingFormState extends State<NewListingForm> {
             FormFieldNormal(
               title: S.of(context).amount.toUpperCase(),
               keyboardType: TextInputType.number,
-              onSaved: (newValue) => {_listingFormData.maxAmount = int.parse(newValue)},
+              onSaved: (newValue) => {_listingFormData.maxAmount = newValue},
               validator: (value) {
                 return validateFloatInput(value, context);
               },
@@ -88,7 +98,7 @@ class _NewListingFormState extends State<NewListingForm> {
             FormFieldNormal(
               title: S.of(context).price.toUpperCase(),
               keyboardType: TextInputType.number,
-              onSaved: (newValue) => {_listingFormData.price = double.parse(newValue)},
+              onSaved: (newValue) => {_listingFormData.price = newValue},
               validator: (value) {
                 return validateFloatInput(value, context);
               },
@@ -97,7 +107,11 @@ class _NewListingFormState extends State<NewListingForm> {
               title: S.of(context).pickupDate.toUpperCase(),
               readOnly: true,
               controller: _dateController,
-              onSaved: (newValue) => {_listingFormData.endDate = _toEpoch(newValue)},
+              onSaved: (newValue) => {
+                if (newValue.trim().isNotEmpty) {
+                  _listingFormData.endDate = _toEpoch(newValue)
+                }
+              },
               validator: (value) {
                 return validateDateNotPast(value, context);
               },
@@ -108,7 +122,7 @@ class _NewListingFormState extends State<NewListingForm> {
                     firstDate: _firstDate,
                     lastDate: _lastDate);
                 _dateController.text = date.toString().substring(0,10);
-              }, //TODO: validate that the date is not past
+              },
             ),
             FormFieldNormal(
               title: S.of(context).additionalInfo.toUpperCase(),
@@ -117,29 +131,25 @@ class _NewListingFormState extends State<NewListingForm> {
             ),
             StandardButton(
                 buttonText: S.of(context).addListing.toUpperCase(),
-                onPressed: _handleNewOffer(context))
+                onPressed: () => _handleNewOffer(context)
+            )
           ],
         ),
       ),
     );
   }
 
-  // dropdownTypeCallback(newValue) {
-  //   setState(() {
-  //     dropdownType = newValue;
-  //   });
-  // }
 
-  int _toEpoch(String date) {
+  String _toEpoch(String date) {
     DateTime i = DateTime.parse(date);
-    int epochTime = i.millisecondsSinceEpoch;
-    print(epochTime);
+    String epochTime = i.millisecondsSinceEpoch.toString();
     return epochTime;
   }
 
   _dropdownSelectedCallback(newValue) {
     setState(() {
       pickedFish = newValue;
+      _listingFormData.commodityId = pickedFish.id.toString();
     });
   }
 
@@ -149,11 +159,11 @@ class _NewListingFormState extends State<NewListingForm> {
       MaterialPageRoute(builder: (context) => ChooseLocation())
     );
     _location = result;
-    _listingFormData.longitude = _location.longitude;
-    _listingFormData.latitude = _location.latitude;
+    _listingFormData.longitude = _location.longitude.toString();
+    _listingFormData.latitude = _location.latitude.toString();
   }
 
-  _handleNewOffer(BuildContext context) async {
+  void _handleNewOffer(BuildContext context) async {
     final FormState formState = _formKey.currentState;
     setState(() {
       _errorMessage = "";
@@ -161,7 +171,17 @@ class _NewListingFormState extends State<NewListingForm> {
     formState.save();
     if (formState.validate()) {
       try {
-        await widget.listingService.createOfferListing(context, _listingFormData);
+        OfferListing suc = await widget.listingService.createOfferListing(context, _listingFormData);
+        if (suc != null) {
+          Scaffold.of(context)
+              ..removeCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text("Listing has been created")));
+          //TODO: when listing has been added, move to listing info page and display the newly created listing
+          //TODO: currently, rating is not implemented on backend so the listing info page does not work because rating = null
+          // Navigator.removeRouteBelow(context, ModalRoute.of(context));
+          // //Navigator.popAndPushNamed(context, routes.ListingInfo, arguments: suc);
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => ListingInfoPage(offerListing: suc,)));
+        }
       } on HttpException catch (e) {
         setState(() {
           _errorMessage = e.message;

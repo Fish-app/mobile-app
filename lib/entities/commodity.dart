@@ -22,7 +22,7 @@ class Commodity {
   Map<String, dynamic> toJson() => _$CommodityToJson(this);
 
   static fromJsonList(List list) {
-    if (list == null) return null;
+    if (list == null) return List();
     return list.map((e) => Commodity.fromJson(e)).toList();
   }
 

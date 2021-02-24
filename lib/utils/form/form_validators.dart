@@ -70,6 +70,9 @@ String validateEquality(String a, String b, String targetEquality, BuildContext 
 }
 
 String validateDateNotPast(String date, BuildContext context) {
+  if (date.trim().isEmpty) {
+    return S.of(context).chooseDate;
+  }
   DateTime i = DateTime.parse(date);
   if (i.isBefore(DateTime.now())) {
     return S.of(context).dateNotValid;
