@@ -55,7 +55,7 @@ class _DropdownMenuState extends State<DropdownMenu> {
       showSelectedItem: false,
       label: widget.label,
       onFind: widget.onFind,
-      onChanged: (c) => widget.callback(c),
+      onSaved: (c) => widget.callback(c),
       validator: widget.validator,
     );
   }
