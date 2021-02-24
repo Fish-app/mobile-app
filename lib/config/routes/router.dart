@@ -1,4 +1,5 @@
 import 'package:maoyi/config/routes/route_data.dart';
+import 'package:maoyi/pages/listing/choose_new_listing_page.dart';
 import 'package:maoyi/pages/listing/listing_info_page.dart';
 import 'package:maoyi/pages/listing/new_listing_page.dart';
 import 'package:maoyi/pages/home/home_page.dart';
@@ -55,6 +56,9 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
           routeData: params,
         );
       }
+      break;
+    case routes.ChooseNewListing:
+      page = ChooseNewListingPage();
       break;
 
     ///  --  Needs login below  -- ///

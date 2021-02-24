@@ -16,7 +16,7 @@ class _NewListingPageState extends State<NewListingPage> {
   @override
   Widget build(BuildContext context) {
     return getMaoyiDefaultScaffold(context,
-      includeTopBar: S.of(context).newListing,
+      includeTopBar: S.of(context).newOfferListing,
       child: Stack(
         children: [
           Container(
