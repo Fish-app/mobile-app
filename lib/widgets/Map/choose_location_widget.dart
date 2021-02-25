@@ -21,6 +21,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
   double _currentLong;
   double _pickedLat = 0.0;
   double _pickedLong = 0.0;
+  bool _hasChosen = false;
 
   Future<Position> _determinePosition = determinePosition();
 
@@ -77,9 +78,13 @@ class _ChooseLocationState extends State<ChooseLocation> {
                   height: MediaQuery.of(context).size.height/12,
                   child: BottomAppBar(
                     child: StandardButton(
-                      buttonText: S.of(context).confirmLocation.toUpperCase(),
+                      buttonText:  _buttonText(context),
                       onPressed: () {
-                        Navigator.pop(context, LatLng(_pickedLat, _pickedLong));
+                        if (_hasChosen) {
+                          Navigator.pop(context, LatLng(_pickedLat, _pickedLong));
+                        } else {
+                          Navigator.pop(context);
+                        }
                       },
                     ),
                   ),
@@ -131,7 +136,16 @@ class _ChooseLocationState extends State<ChooseLocation> {
         tappedPoint.removeLast();
       }
       tappedPoint.add(position);
+      _hasChosen = true;
     });
+  }
+
+  String _buttonText(BuildContext context) {
+    if (_hasChosen) {
+      return S.of(context).confirmLocation.toUpperCase();
+    } else {
+      return S.of(context).cancel.toUpperCase();
+    }
   }
 
 }
