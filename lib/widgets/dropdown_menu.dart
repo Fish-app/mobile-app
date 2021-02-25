@@ -9,7 +9,7 @@ import '../entities/commodity.dart';
 class DropdownMenu extends StatefulWidget {
   final commodityService = CommodityService();
 
-  final Function callback;
+  final Function onSaved;
   final bool showSearchBox;
   final showClearButton;
   final String searchBoxHint;
@@ -20,7 +20,7 @@ class DropdownMenu extends StatefulWidget {
   DropdownMenu({
     this.showClearButton = false,
     this.showSearchBox = false,
-    this.callback,
+    this.onSaved,
     this.searchBoxHint,
     this.customFilter,
     this.onFind,
@@ -55,7 +55,7 @@ class _DropdownMenuState extends State<DropdownMenu> {
       showSelectedItem: false,
       label: widget.label,
       onFind: widget.onFind,
-      onSaved: (c) => widget.callback(c),
+      onSaved: (c) => widget.onSaved(c),
       validator: widget.validator,
     );
   }

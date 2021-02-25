@@ -73,7 +73,7 @@ class _NewListingFormState extends State<NewListingForm> {
                 searchBoxHint: S.of(context).search,
                 customFilter: (commodity, filter) => commodity.filterByName(filter),
                 onFind: (String filter) => widget.service.getAllCommodities(context),
-                callback: _dropdownSelectedCallback,
+                onSaved: _dropdownSelectedCallback,
                 validator: (value) {
                   if (value == null) {
                     return S.of(context).commodityNotChosen;
@@ -147,10 +147,12 @@ class _NewListingFormState extends State<NewListingForm> {
   }
 
   _dropdownSelectedCallback(newValue) {
-    setState(() {
-      pickedFish = newValue;
-      _listingFormData.commodityId = pickedFish.id.toString();
-    });
+    if (newValue != null) {
+      setState(() {
+        pickedFish = newValue;
+        _listingFormData.commodityId = pickedFish.id.toString();
+      });
+    }
   }
 
   _navigateAndDisplayMap(BuildContext context) async {
