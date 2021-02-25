@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/widgets/Map/map_image.dart';
 import 'package:***REMOVED***/utils/distance_calculator.dart';
 import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
 import 'package:latlong/latlong.dart';
@@ -20,8 +19,8 @@ class _ChooseLocationState extends State<ChooseLocation> {
   final String _url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
   double _currentLat;
   double _currentLong;
-  double _pickedLat;
-  double _pickedLong;
+  double _pickedLat = 0.0;
+  double _pickedLong = 0.0;
 
   Future<Position> _determinePosition = determinePosition();
 

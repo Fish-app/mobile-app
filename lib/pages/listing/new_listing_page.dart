@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:***REMOVED***/config/routes/route_data.dart';
 import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/pages/Listing/form_new_listing.dart';
+import 'package:***REMOVED***/pages/listing/form_new_listing.dart';
 import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
 
 class NewListingPage extends StatefulWidget {
