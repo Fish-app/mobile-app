@@ -160,9 +160,11 @@ class _NewListingFormState extends State<NewListingForm> {
       context,
       MaterialPageRoute(builder: (context) => ChooseLocation())
     );
-    _location = result;
-    _listingFormData.longitude = _location.longitude.toString();
-    _listingFormData.latitude = _location.latitude.toString();
+    if (result != null) {
+      _location = result;
+      _listingFormData.longitude = _location.longitude.toString();
+      _listingFormData.latitude = _location.latitude.toString();
+    }
   }
 
   void _handleNewOffer(BuildContext context) async {

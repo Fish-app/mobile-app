@@ -66,5 +66,6 @@
   "addListing": "Legg til oppføring",
   "commodityNotChosen": "Vennligst velg en vare",
   "chooseDate": "Vennligst velg en dato",
-  "newListing": "Ny notering"
+  "newListing": "Ny notering",
+  "cancel": "Avbryt"
 }

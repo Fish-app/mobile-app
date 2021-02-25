@@ -172,5 +172,7 @@
   "chooseDate": "Please choose a date",
   "@chooseDate": {},
   "newListing": "New listing",
-  "@newListing": {}
+  "@newListing": {},
+  "cancel": "Cancel",
+  "@cancel": {}
 }
