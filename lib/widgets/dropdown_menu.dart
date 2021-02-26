@@ -1,8 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/entities/commodity.dart';
-import 'package:***REMOVED***/utils/services/rest_api_service.dart';
+import 'package:fishapp/entities/commodity.dart';
+import 'package:fishapp/utils/services/rest_api_service.dart';
 
 import '../entities/commodity.dart';
 

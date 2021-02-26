@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/themes/theme_config.dart';
-import 'package:***REMOVED***/entities/commodity.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
+import 'package:fishapp/config/themes/theme_config.dart';
+import 'package:fishapp/entities/commodity.dart';
+import 'package:fishapp/generated/l10n.dart';
 
 class CommodityCard extends StatelessWidget {
   final Commodity commodity;

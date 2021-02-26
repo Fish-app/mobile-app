@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:***REMOVED***/entities/user.dart';
-import 'package:***REMOVED***/utils/services/auth_service.dart';
-import 'package:***REMOVED***/utils/state/appstate.dart';
-import 'package:***REMOVED***/widgets/display_text_field.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/floating_nav_bar.dart';
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
-import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/row_topbar_return.dart';
-import 'package:***REMOVED***/widgets/standard_button.dart';
+import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/utils/services/auth_service.dart';
+import 'package:fishapp/utils/state/appstate.dart';
+import 'package:fishapp/widgets/display_text_field.dart';
+import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
+import 'package:fishapp/widgets/nav_widgets/row_topbar_return.dart';
+import 'package:fishapp/widgets/standard_button.dart';
 import 'package:provider/provider.dart';
 import 'package:strings/strings.dart';
 
@@ -30,7 +30,7 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
-    return get***REMOVED***DefaultScaffold(
+    return getFishappDefaultScaffold(
       context,
       useNavBar: navButtonUser,
       child: SafeArea(

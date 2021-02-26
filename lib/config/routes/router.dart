@@ -1,17 +1,17 @@
-import 'package:***REMOVED***/config/routes/route_data.dart';
-import 'package:***REMOVED***/pages/listing/choose_new_listing_page.dart';
-import 'package:***REMOVED***/pages/listing/listing_info_page.dart';
-import 'package:***REMOVED***/pages/listing/new_listing_page.dart';
-import 'package:***REMOVED***/pages/home/home_page.dart';
-import 'package:***REMOVED***/pages/login/login_page.dart';
-import 'package:***REMOVED***/pages/chat/chat_page.dart';
-import 'package:***REMOVED***/pages/user/user_resetpwd_page.dart';
-import 'package:***REMOVED***/pages/user/user_info.dart';
-import 'package:***REMOVED***/utils/state/appstate.dart';
+import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/pages/listing/choose_new_listing_page.dart';
+import 'package:fishapp/pages/listing/listing_info_page.dart';
+import 'package:fishapp/pages/listing/new_listing_page.dart';
+import 'package:fishapp/pages/home/home_page.dart';
+import 'package:fishapp/pages/login/login_page.dart';
+import 'package:fishapp/pages/chat/chat_page.dart';
+import 'package:fishapp/pages/user/user_resetpwd_page.dart';
+import 'package:fishapp/pages/user/user_info.dart';
+import 'package:fishapp/utils/state/appstate.dart';
 import 'package:provider/provider.dart';
 
 import '../../main.dart';
-import 'package:***REMOVED***/pages/register/register_user_page.dart';
+import 'package:fishapp/pages/register/register_user_page.dart';
 
 import 'route_data.dart';
 import 'routes.dart' as routes;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/entities/user.dart';
-import 'package:***REMOVED***/utils/services/auth_service.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/floating_nav_bar.dart';
-import 'package:***REMOVED***/pages/user/form_user_resetpwd.dart';
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
-import 'package:***REMOVED***/widgets/nav_widgets/row_topbar_return.dart';
+import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/utils/services/auth_service.dart';
+import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:fishapp/pages/user/form_user_resetpwd.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:fishapp/widgets/nav_widgets/row_topbar_return.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   final _buttonColor = Colors.amber;

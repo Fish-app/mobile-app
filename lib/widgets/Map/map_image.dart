@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
-import 'package:***REMOVED***/widgets/Map/open_map_widget.dart';
+import 'package:fishapp/widgets/Map/open_map_widget.dart';
 
 /// Displays a map image of the location specified
 /// by the latitude and longitude.

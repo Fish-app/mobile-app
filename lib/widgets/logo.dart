@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:***REMOVED***/config/themes/theme_config.dart';
+import 'package:fishapp/config/themes/theme_config.dart';
 
 class Logo extends StatelessWidget {
   @override

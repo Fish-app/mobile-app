@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:***REMOVED***/utils/services/auth_service.dart';
-import 'package:***REMOVED***/utils/state/appstate.dart';
+import 'package:fishapp/utils/services/auth_service.dart';
+import 'package:fishapp/utils/state/appstate.dart';
 import 'package:provider/provider.dart';
 
-class ***REMOVED***RestClient {
+class FishappRestClient {
   var _client = http.Client();
 
   Future<Map<String, String>> _addAuthToHeaders(

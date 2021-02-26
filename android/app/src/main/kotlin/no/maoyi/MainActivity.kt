@@ -1,4 +1,4 @@
-package no.***REMOVED***
+package no.fishapp
 
 import io.flutter.embedding.android.FlutterActivity
 

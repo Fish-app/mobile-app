@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
+import 'package:fishapp/generated/l10n.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:strings/strings.dart';
 

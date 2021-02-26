@@ -3,21 +3,21 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/routes/route_data.dart';
-import 'package:***REMOVED***/entities/commodity.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/pages/listing/listing_formdata.dart';
-import 'package:***REMOVED***/utils/form/form_validators.dart';
-import 'package:***REMOVED***/utils/services/rest_api_service.dart';
-import 'package:***REMOVED***/widgets/Map/choose_location_widget.dart';
-import 'package:***REMOVED***/widgets/dropdown_menu.dart';
-import 'package:***REMOVED***/widgets/form/formfield_normal.dart';
-import 'package:***REMOVED***/widgets/standard_button.dart';
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
+import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/entities/commodity.dart';
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/pages/listing/listing_formdata.dart';
+import 'package:fishapp/utils/form/form_validators.dart';
+import 'package:fishapp/utils/services/rest_api_service.dart';
+import 'package:fishapp/widgets/Map/choose_location_widget.dart';
+import 'package:fishapp/widgets/dropdown_menu.dart';
+import 'package:fishapp/widgets/form/formfield_normal.dart';
+import 'package:fishapp/widgets/standard_button.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 
 import 'package:latlong/latlong.dart';
 
-import 'package:***REMOVED***/entities/listing.dart';
+import 'package:fishapp/entities/listing.dart';
 
 import 'listing_info_page.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/themes/theme_config.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
+import 'package:fishapp/config/themes/theme_config.dart';
+import 'package:fishapp/generated/l10n.dart';
 
 class _Item {
   final String title;

@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/utils/distance_calculator.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/utils/distance_calculator.dart';
+import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:latlong/latlong.dart';
-import 'package:***REMOVED***/widgets/standard_button.dart';
+import 'package:fishapp/widgets/standard_button.dart';
 
 
 class ChooseLocation extends StatefulWidget {
@@ -44,7 +44,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
       );
     }).toList();
 
-    return get***REMOVED***DefaultScaffold(
+    return getFishappDefaultScaffold(
         context,
         includeTopBar: S.of(context).setPickupLocation,
         extendBehindAppBar: false,

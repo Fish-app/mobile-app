@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:***REMOVED***/entities/user.dart';
-import 'package:***REMOVED***/utils/services/storage_service.dart';
-import 'package:***REMOVED***/utils/state/appstate.dart';
+import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/utils/services/storage_service.dart';
+import 'package:fishapp/utils/state/appstate.dart';
 import 'package:provider/provider.dart';
 
 import 'config/routes/routes.dart' as routes;
@@ -65,7 +65,7 @@ class _App extends State<App> with WidgetsBindingObserver {
           GlobalMaterialLocalizations.delegate
         ],
         supportedLocales: S.delegate.supportedLocales,
-        theme: ***REMOVED***LightTheme,
+        theme: fishappLightTheme,
         title: 'Flutter Demo',
         initialRoute: routes.Home,
         onGenerateRoute: (settings) => router(context, settings));

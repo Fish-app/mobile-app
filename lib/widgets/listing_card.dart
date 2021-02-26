@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/entities/listing.dart';
-import 'package:***REMOVED***/widgets/distance_to_widget.dart';
-import 'package:***REMOVED***/widgets/rating_stars.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
+import 'package:fishapp/entities/listing.dart';
+import 'package:fishapp/widgets/distance_to_widget.dart';
+import 'package:fishapp/widgets/rating_stars.dart';
+import 'package:fishapp/generated/l10n.dart';
 
 class OfferListingCard extends StatelessWidget {
   final OfferListing cardListing;

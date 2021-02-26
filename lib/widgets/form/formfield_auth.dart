@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/themes/theme_config.dart';
+import 'package:fishapp/config/themes/theme_config.dart';
 
 /// Build a widget with a title and email
 class FormFieldAuth extends StatelessWidget {

@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/routes/route_data.dart';
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
-import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/pages/register/new_user_form_data.dart';
-import 'package:***REMOVED***/utils/form/form_validators.dart';
-import 'package:***REMOVED***/utils/services/auth_service.dart';
-import 'package:***REMOVED***/widgets/form/formfield_auth.dart';
+import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/pages/register/new_user_form_data.dart';
+import 'package:fishapp/utils/form/form_validators.dart';
+import 'package:fishapp/utils/services/auth_service.dart';
+import 'package:fishapp/widgets/form/formfield_auth.dart';
 import 'package:strings/strings.dart';
 
 class RegisterUserForm extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
 
 class ChatPage extends StatefulWidget {
   @override
@@ -25,7 +25,7 @@ class ChatPageState extends State<ChatPage> {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: ***REMOVED***NavBar(
+                child: FishappNavBar(
                   currentActiveButton: navButtonShop,
                 ),
               ),

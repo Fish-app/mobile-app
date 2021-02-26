@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'floating_nav_bar.dart';
 
-AppBar get***REMOVED***TopBar(BuildContext context, String barText) {
+AppBar getFishappTopBar(BuildContext context, String barText) {
   return AppBar(
     bottomOpacity: 1,
     leading: IconButton(
@@ -19,7 +19,7 @@ AppBar get***REMOVED***TopBar(BuildContext context, String barText) {
   );
 }
 
-Scaffold get***REMOVED***DefaultScaffold(BuildContext context,
+Scaffold getFishappDefaultScaffold(BuildContext context,
     {String includeTopBar, NavDestButton useNavBar,
       Widget child, bool extendBehindAppBar = true, bool extendBody = true}) {
   return Scaffold(
@@ -27,12 +27,12 @@ Scaffold get***REMOVED***DefaultScaffold(BuildContext context,
     extendBodyBehindAppBar: extendBehindAppBar,
     extendBody: extendBody,
     bottomNavigationBar: useNavBar != null
-        ? ***REMOVED***NavBar(
+        ? FishappNavBar(
             currentActiveButton: useNavBar,
           )
         : null,
     appBar:
-        includeTopBar != null ? get***REMOVED***TopBar(context, includeTopBar) : null,
+        includeTopBar != null ? getFishappTopBar(context, includeTopBar) : null,
     body: child,
   );
 }

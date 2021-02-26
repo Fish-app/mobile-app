@@ -2,7 +2,7 @@
 
 // our lord and saviour https://regex101.com/
 import 'package:flutter/cupertino.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
+import 'package:fishapp/generated/l10n.dart';
 
 final alpha = new RegExp(r'[A-Z]');
 final hashtag = new RegExp(r'^(((^| )#([a-zA-Z0-9]+))+ *)*$');

@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/entities/user.dart';
-import 'package:***REMOVED***/pages/user/user_resetpwd_formdata.dart';
-import 'package:***REMOVED***/utils/form/form_validators.dart';
-import 'package:***REMOVED***/utils/services/auth_service.dart';
-import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
-import 'package:***REMOVED***/widgets/form/formfield_auth.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
+import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/pages/user/user_resetpwd_formdata.dart';
+import 'package:fishapp/utils/form/form_validators.dart';
+import 'package:fishapp/utils/services/auth_service.dart';
+import 'package:fishapp/utils/services/fishapp_rest_client.dart';
+import 'package:fishapp/widgets/form/formfield_auth.dart';
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:strings/strings.dart';
 
 import '../../widgets/form/formfield_plain.dart';

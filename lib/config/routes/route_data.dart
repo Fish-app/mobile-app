@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:***REMOVED***/entities/commodity.dart';
+import 'package:fishapp/entities/commodity.dart';
 
 class GenericRouteData {
   num id;

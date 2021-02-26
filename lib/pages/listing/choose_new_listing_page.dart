@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/widgets/standard_button.dart';
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
+import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/widgets/standard_button.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 
 
-import 'package:***REMOVED***/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
 
 
 class ChooseNewListingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return get***REMOVED***DefaultScaffold(context,
+    return getFishappDefaultScaffold(context,
       useNavBar: navButtonNewListing,
       includeTopBar: S.of(context).newListing,
       extendBehindAppBar: false,

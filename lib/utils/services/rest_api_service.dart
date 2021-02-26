@@ -3,15 +3,15 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:***REMOVED***/constants/api_path.dart' as apiPaths;
-import 'package:***REMOVED***/entities/commodity.dart';
-import 'package:***REMOVED***/entities/listing.dart';
-import 'package:***REMOVED***/pages/listing/listing_formdata.dart';
-import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
+import 'package:fishapp/constants/api_path.dart' as apiPaths;
+import 'package:fishapp/entities/commodity.dart';
+import 'package:fishapp/entities/listing.dart';
+import 'package:fishapp/pages/listing/listing_formdata.dart';
+import 'package:fishapp/utils/services/fishapp_rest_client.dart';
 
 
 class CommodityService {
-  final ***REMOVED***RestClient _client = ***REMOVED***RestClient();
+  final FishappRestClient _client = FishappRestClient();
 
   Future<Commodity> getCommodity(BuildContext context, num id) async {
     var response = await _client.get(context, apiPaths.getCommodity);
@@ -49,7 +49,7 @@ class CommodityService {
 }
 
 class ListingService {
-  final ***REMOVED***RestClient _client = ***REMOVED***RestClient();
+  final FishappRestClient _client = FishappRestClient();
 
   Future<Listing> getCommodity(BuildContext context, num id) async {
     var response = await _client.get(context, apiPaths.getListing);

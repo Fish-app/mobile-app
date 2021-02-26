@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/entities/user.dart';
-import 'package:***REMOVED***/utils/auth/jwt.dart';
-import 'package:***REMOVED***/utils/services/storage_service.dart';
+import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/utils/auth/jwt.dart';
+import 'package:fishapp/utils/services/storage_service.dart';
 
 class AppState extends ChangeNotifier {
   User user;

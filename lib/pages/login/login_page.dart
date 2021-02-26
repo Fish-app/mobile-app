@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/routes/route_data.dart';
-import 'package:***REMOVED***/config/routes/router.dart';
-import 'package:***REMOVED***/config/themes/theme_config.dart';
-import 'package:***REMOVED***/widgets/BlurredImage.dart';
-import 'package:***REMOVED***/pages/login/form_user_login.dart';
-import 'package:***REMOVED***/widgets/logo.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
+import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/config/routes/router.dart';
+import 'package:fishapp/config/themes/theme_config.dart';
+import 'package:fishapp/widgets/BlurredImage.dart';
+import 'package:fishapp/pages/login/form_user_login.dart';
+import 'package:fishapp/widgets/logo.dart';
+import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 
 class LoginPage extends StatefulWidget {
   final LoginReturnRouteData loginReturnRouteData;
@@ -17,7 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return get***REMOVED***DefaultScaffold(context,
+    return getFishappDefaultScaffold(context,
         includeTopBar: "",
         child: Stack(
           children: [

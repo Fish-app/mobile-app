@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/entities/listing.dart';
+import 'package:fishapp/entities/listing.dart';
 
 class DistanceToWidget extends StatefulWidget {
   final OfferListing cardListing;

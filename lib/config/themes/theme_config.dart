@@ -47,7 +47,7 @@ final TextStyle inputTextStyle = TextStyle(
     fontSize: 18,
     color: Colors.black);
 
-final ***REMOVED***LightTheme = ThemeData(
+final fishappLightTheme = ThemeData(
   backgroundColor: Colors.white,
 
   /// -- Colors -- ///

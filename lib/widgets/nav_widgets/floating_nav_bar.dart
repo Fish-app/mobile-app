@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
+import 'package:fishapp/config/routes/routes.dart' as routes;
 
 final navButtonShop = NavDestButton(Icons.shopping_cart_outlined, routes.Home);
 final navButtonChat = NavDestButton(Icons.chat_bubble_outline, routes.chat);
@@ -91,18 +91,18 @@ class NavDestButton {
   NavDestButton(this.iconData, this.navDest);
 }
 
-class ***REMOVED***NavBar extends StatefulWidget {
+class FishappNavBar extends StatefulWidget {
   final NavDestButton currentActiveButton;
   final bool isSeller;
 
-  ***REMOVED***NavBar({Key key, this.currentActiveButton, this.isSeller = false})
+  FishappNavBar({Key key, this.currentActiveButton, this.isSeller = false})
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _***REMOVED***NavBarState();
+  State<StatefulWidget> createState() => _FishappNavBarState();
 }
 
-class _***REMOVED***NavBarState extends State<***REMOVED***NavBar> {
+class _FishappNavBarState extends State<FishappNavBar> {
   void _onNavigate(BuildContext context, NavDestButton button) {
     if (button.navDest != widget.currentActiveButton.navDest) {
       Navigator.pushNamed(context, button.navDest);

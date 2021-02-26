@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/routes/route_data.dart';
-import 'package:***REMOVED***/entities/listing.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/main.dart';
-import 'package:***REMOVED***/widgets/Map/map_image.dart';
-import 'package:***REMOVED***/widgets/Map/open_map_widget.dart';
-import 'package:***REMOVED***/widgets/display_text_field.dart';
-import 'package:***REMOVED***/widgets/distance_to_widget.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
-import 'package:***REMOVED***/widgets/rating_stars.dart';
-import 'package:***REMOVED***/widgets/standard_button.dart';
+import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/entities/listing.dart';
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/main.dart';
+import 'package:fishapp/widgets/Map/map_image.dart';
+import 'package:fishapp/widgets/Map/open_map_widget.dart';
+import 'package:fishapp/widgets/display_text_field.dart';
+import 'package:fishapp/widgets/distance_to_widget.dart';
+import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
+import 'package:fishapp/widgets/rating_stars.dart';
+import 'package:fishapp/widgets/standard_button.dart';
 
 
 class ListingInfoPage extends StatelessWidget {
@@ -24,7 +24,7 @@ class ListingInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return get***REMOVED***DefaultScaffold(
+    return getFishappDefaultScaffold(
       context,
       includeTopBar: S.of(context).listing,
       child: Container(

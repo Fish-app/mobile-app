@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:***REMOVED***/entities/image.dart';
+import 'package:fishapp/entities/image.dart';
 
 part 'commodity.g.dart';
 

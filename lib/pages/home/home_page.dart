@@ -1,21 +1,21 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/routes/route_data.dart';
-import 'package:***REMOVED***/config/routes/routes.dart';
-import 'package:***REMOVED***/entities/commodity.dart';
-import 'package:***REMOVED***/entities/listing.dart';
-import 'package:***REMOVED***/main.dart';
-import 'package:***REMOVED***/pages/listing/listing_info_page.dart';
-import 'package:***REMOVED***/utils/services/auth_service.dart';
-import 'package:***REMOVED***/widgets/buy_filter.dart';
-import 'package:***REMOVED***/widgets/commodity_card.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/floating_nav_bar.dart';
-import 'package:***REMOVED***/widgets/listing_card.dart';
-import 'package:***REMOVED***/widgets/logo.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
+import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/config/routes/routes.dart';
+import 'package:fishapp/entities/commodity.dart';
+import 'package:fishapp/entities/listing.dart';
+import 'package:fishapp/main.dart';
+import 'package:fishapp/pages/listing/listing_info_page.dart';
+import 'package:fishapp/utils/services/auth_service.dart';
+import 'package:fishapp/widgets/buy_filter.dart';
+import 'package:fishapp/widgets/commodity_card.dart';
+import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:fishapp/widgets/listing_card.dart';
+import 'package:fishapp/widgets/logo.dart';
+import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 
-import 'package:***REMOVED***/config/routes/routes.dart' as routes;
+import 'package:fishapp/config/routes/routes.dart' as routes;
 
 class HomePage extends StatefulWidget {
   @override
@@ -51,7 +51,7 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return get***REMOVED***DefaultScaffold(context,
+    return getFishappDefaultScaffold(context,
         useNavBar: navButtonShop,
         child: Column(
           mainAxisSize: MainAxisSize.min,

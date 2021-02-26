@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:***REMOVED***/config/routes/route_data.dart';
-import 'package:***REMOVED***/generated/l10n.dart';
-import 'package:***REMOVED***/pages/listing/form_new_listing.dart';
-import 'package:***REMOVED***/widgets/nav_widgets/common_nav.dart';
+import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/pages/listing/form_new_listing.dart';
+import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 
 class NewListingPage extends StatefulWidget {
   final GenericRouteData routeData;
@@ -15,7 +15,7 @@ class NewListingPage extends StatefulWidget {
 class _NewListingPageState extends State<NewListingPage> {
   @override
   Widget build(BuildContext context) {
-    return get***REMOVED***DefaultScaffold(context,
+    return getFishappDefaultScaffold(context,
       includeTopBar: S.of(context).newOfferListing,
       child: Stack(
         children: [

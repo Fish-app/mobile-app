@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:***REMOVED***/config/themes/theme_config.dart';
-import 'package:***REMOVED***/widgets/simple_icon_shadow_widget.dart';
+import 'package:fishapp/config/themes/theme_config.dart';
+import 'package:fishapp/widgets/simple_icon_shadow_widget.dart';
 
 /*
 Widget that creates the stars for showing ratings.

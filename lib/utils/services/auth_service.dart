@@ -4,16 +4,16 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:***REMOVED***/entities/user.dart';
-import 'package:***REMOVED***/main.dart';
-import 'package:***REMOVED***/pages/login/login_formdata.dart';
-import 'package:***REMOVED***/pages/register/new_user_form_data.dart';
-import 'package:***REMOVED***/pages/user/user_resetpwd_formdata.dart';
-import 'package:***REMOVED***/utils/auth/jwt.dart';
-import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
-import 'package:***REMOVED***/constants/api_path.dart';
-import 'package:***REMOVED***/utils/services/storage_service.dart';
-import 'package:***REMOVED***/utils/state/appstate.dart';
+import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/main.dart';
+import 'package:fishapp/pages/login/login_formdata.dart';
+import 'package:fishapp/pages/register/new_user_form_data.dart';
+import 'package:fishapp/pages/user/user_resetpwd_formdata.dart';
+import 'package:fishapp/utils/auth/jwt.dart';
+import 'package:fishapp/utils/services/fishapp_rest_client.dart';
+import 'package:fishapp/constants/api_path.dart';
+import 'package:fishapp/utils/services/storage_service.dart';
+import 'package:fishapp/utils/state/appstate.dart';
 import 'package:provider/provider.dart';
 
 class CreateUserException implements Exception {
@@ -22,14 +22,14 @@ class CreateUserException implements Exception {
 }
 
 class AuthService {
-  final ***REMOVED***RestClient ***REMOVED***RestClient = ***REMOVED***RestClient();
+  final FishappRestClient fishappRestClient = FishappRestClient();
 
   AuthService();
 
   Future<void> createUser(
       BuildContext context, NewUserFormData userDetails) async {
     try {
-      var response = await ***REMOVED***RestClient.post(context, createUserEndpoint,
+      var response = await fishappRestClient.post(context, createUserEndpoint,
           headers: userDetails.toMap(), addAuth: false);
       switch (response.statusCode) {
         case 200:
@@ -50,7 +50,7 @@ class AuthService {
 
   Future<void> changePassword(
       BuildContext context, ResetPasswordFormData formData) async {
-    var response = await ***REMOVED***RestClient.put(context, changePasswordEndpoint,
+    var response = await fishappRestClient.put(context, changePasswordEndpoint,
         headers: formData.toMap(), addAuth: true);
     switch (response.statusCode) {
       case 200:
@@ -69,7 +69,7 @@ class AuthService {
 
   Future<bool> loginUser(
       BuildContext context, LoginUserFormData loginDetails) async {
-    var response = await ***REMOVED***RestClient.post(context, loginUserEndpoint,
+    var response = await fishappRestClient.post(context, loginUserEndpoint,
         headers: loginDetails.toMap(), addAuth: false);
     switch (response.statusCode) {
       case 200:

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:***REMOVED***/entities/commodity.dart';
-import 'package:***REMOVED***/entities/seller.dart';
-import 'package:***REMOVED***/utils/distance_calculator.dart';
+import 'package:fishapp/entities/commodity.dart';
+import 'package:fishapp/entities/seller.dart';
+import 'package:fishapp/utils/distance_calculator.dart';
 
 part 'listing.g.dart';
 
