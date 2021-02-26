@@ -21,7 +21,6 @@ Future<double> calculateDistance(double latitude, double longitude) async {
 /// When the location services are not enabled or permissions
 /// are denied the `Future` will return an error.
 /// CODE COPIED FROM: https://pub.dev/packages/geolocator
-//TODO: problems can arise when the user denies access to location data
 Future<Position> determinePosition() async {
   bool serviceEnabled;
   LocationPermission permission;

@@ -44,7 +44,6 @@ class _App extends State<App> with WidgetsBindingObserver {
   /// Event hook for when application state changes; close, active, resume...
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    // Todo: i do not think we need to do staty stuff on close resume...
     switch (state) {
       case AppLifecycleState.resumed:
         break;

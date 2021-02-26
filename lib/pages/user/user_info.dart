@@ -86,7 +86,6 @@ class _UserPageState extends State<UserPage> {
                         ),
                       ),
                       Visibility(
-                        //TODO: IMPLEMENT SELLER IN OTHER PULL REQ
                         visible: true,
                         child: Padding(
                           padding: EdgeInsets.symmetric(

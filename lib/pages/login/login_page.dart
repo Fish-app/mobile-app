@@ -31,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               child: SafeArea(
-                // todo: if possible remove list view
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   children: <Widget>[

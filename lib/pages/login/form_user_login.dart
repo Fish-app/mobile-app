@@ -135,7 +135,6 @@ class _LoginUserFormState extends State<LoginUserForm> {
                     ),
 
                     /// ERROR MESSAGE
-                    //TODO: more concise error msgs
                     Text(
                       _errorMessage,
                       textAlign: TextAlign.center,

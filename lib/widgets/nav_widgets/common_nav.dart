@@ -19,7 +19,6 @@ AppBar get***REMOVED***TopBar(BuildContext context, String barText) {
   );
 }
 
-// TODO: this is a shitshow and has to be improved
 Scaffold get***REMOVED***DefaultScaffold(BuildContext context,
     {String includeTopBar, NavDestButton useNavBar,
       Widget child, bool extendBehindAppBar = true, bool extendBody = true}) {

@@ -30,7 +30,6 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   bool _displayAwaitHolder = false;
 
   void _handlePasswordResetRequest(BuildContext context) async {
-    //TODO: Handle password reset with formdata & mail + token
     final FormState formState = _formKey.currentState;
     setState(() {
       _errorMessage = "";
@@ -145,7 +144,6 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               labelColor: Colors.black,
             ),
             SizedBox(height: 12.0),
-            Text(this._email), // TODO: REMOVE /TESTING
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Row(

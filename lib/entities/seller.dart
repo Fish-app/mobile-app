@@ -28,8 +28,4 @@ class Seller {
   factory Seller.fromJson(Map<String, dynamic> json) => _$SellerFromJson(json);
   Map<String, dynamic> toJson() => _$SellerToJson(this);
 
-  //TODO: kan kanskje fjærnes, e ikkje sikker
-  // static bool isUserSeller(User user, Seller seller) {
-  //   return (user.id == seller.user.id) ? true : false;
-  // }
 }
