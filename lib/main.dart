@@ -84,7 +84,8 @@ var testUserBob = User(
 );
 var testSellerBob = Seller(
   id: 22,
-  user: testUserBob,
+  name: "bob",
+  email: "bob@bob.com",
   regNumber: "2312",
   rating: 3.6,
 );

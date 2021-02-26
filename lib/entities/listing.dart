@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:***REMOVED***/entities/commodity.dart';
 import 'package:***REMOVED***/entities/seller.dart';
-import 'package:***REMOVED***/entities/user.dart';
 import 'package:***REMOVED***/utils/distance_calculator.dart';
 
 part 'listing.g.dart';
@@ -10,11 +9,11 @@ part 'listing.g.dart';
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Listing {
   num id;
-  String dateCreated; // todo: finn ut hvilket dato format vi ender med
+  int dateCreated;
   Seller creator;
-  String endDate;
+  int endDate;
   Commodity commodity;
-  int price;
+  double price;
   bool isOpen;
 
   Listing(
@@ -35,22 +34,25 @@ class Listing {
 class OfferListing extends Listing {
   int maxAmount;
   int amountLeft;
-  //Coordinates for pickup.
+  //Coordinates for pickup location.
   double latitude;
   double longitude;
 
+  String additionalInfo;
+
   OfferListing(
       {@required num id,
-      String dateCreated,
+      int dateCreated,
       Seller creator,
-      String endDate,
+      int endDate,
       Commodity commodity,
-      int price,
+      double price,
       bool isOpen,
       @required this.maxAmount,
       @required this.amountLeft,
       @required this.latitude,
-      @required this.longitude
+      @required this.longitude,
+      this.additionalInfo
       })
       : super(
             id: id,

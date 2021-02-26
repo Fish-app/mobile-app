@@ -69,6 +69,17 @@ String validateEquality(String a, String b, String targetEquality, BuildContext 
   return null;
 }
 
+String validateDateNotPast(String date, BuildContext context) {
+  if (date.trim().isEmpty) {
+    return S.of(context).chooseDate;
+  }
+  DateTime i = DateTime.parse(date);
+  if (i.isBefore(DateTime.now())) {
+    return S.of(context).dateNotValid;
+  }
+  return null;
+}
+
 /// Runs all validators unless a validation fails. If one fails, return the error
 /// message for that validation. Else null is returned if all passes.
 String multivalidate(List<String Function()> validators) {

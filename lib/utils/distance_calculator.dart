@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart';
 /// Returns the distance in meters.
 Future<double> calculateDistance(double latitude, double longitude) async {
   double _distance;
-  var  distanceFuture = await _determinePosition().catchError((err) {
+  var  distanceFuture = await determinePosition().catchError((err) {
         log(err, time: DateTime.now());
       }
   );
@@ -21,7 +21,8 @@ Future<double> calculateDistance(double latitude, double longitude) async {
 /// When the location services are not enabled or permissions
 /// are denied the `Future` will return an error.
 /// CODE COPIED FROM: https://pub.dev/packages/geolocator
-Future<Position> _determinePosition() async {
+//TODO: problems can arise when the user denies access to location data
+Future<Position> determinePosition() async {
   bool serviceEnabled;
   LocationPermission permission;
 

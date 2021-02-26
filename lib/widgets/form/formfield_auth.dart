@@ -31,7 +31,7 @@ class FormFieldAuth extends StatelessWidget {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: [
           Padding(
             padding: EdgeInsets.fromLTRB(10, 15, 0, 5),
             child: Text(

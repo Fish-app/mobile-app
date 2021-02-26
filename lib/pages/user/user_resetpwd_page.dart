@@ -32,7 +32,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           ),
           child: Column(children: [
             // TOP ROW
-            TopBarRow(title: "Change password"),
+            TopBarRow(title: "Change password"), //TODO: must use localization
 
             // MAIN WINDOW
             Expanded(

@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:***REMOVED***/config/routes/route_data.dart';
-import 'package:***REMOVED***/config/routes/router.dart';
 import 'package:***REMOVED***/config/routes/routes.dart' as routes;
 import 'package:***REMOVED***/generated/l10n.dart';
 import 'package:***REMOVED***/pages/register/new_user_form_data.dart';
 import 'package:***REMOVED***/utils/form/form_validators.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
-import 'package:***REMOVED***/utils/services/***REMOVED***_rest_client.dart';
 import 'package:***REMOVED***/widgets/form/formfield_auth.dart';
 import 'package:strings/strings.dart';
 
@@ -70,7 +68,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 40),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             FormFieldAuth(
               title: S.of(context).name,
               hint: S.of(context).fullName,

@@ -12,20 +12,21 @@ AppBar get***REMOVED***TopBar(BuildContext context, String barText) {
     elevation: Theme.of(context).appBarTheme.elevation,
     title: Text(
       barText,
-      style: Theme.of(context).primaryTextTheme.headline4,
+      style: Theme.of(context).textTheme.headline4,
     ),
     backgroundColor: Theme.of(context).appBarTheme.color,
     iconTheme: IconThemeData(color: Colors.black),
   );
 }
 
-// this is a shitshow and has to be improved
+// TODO: this is a shitshow and has to be improved
 Scaffold get***REMOVED***DefaultScaffold(BuildContext context,
-    {String includeTopBar, NavDestButton useNavBar, Widget child}) {
+    {String includeTopBar, NavDestButton useNavBar,
+      Widget child, bool extendBehindAppBar = true, bool extendBody = true}) {
   return Scaffold(
     resizeToAvoidBottomInset: false,
-    extendBodyBehindAppBar: true,
-    extendBody: true,
+    extendBodyBehindAppBar: extendBehindAppBar,
+    extendBody: extendBody,
     bottomNavigationBar: useNavBar != null
         ? ***REMOVED***NavBar(
             currentActiveButton: useNavBar,

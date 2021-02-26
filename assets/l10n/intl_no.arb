@@ -50,5 +50,22 @@
   "dialogActionGotoLoginPage": "Ta meg til innloggingssiden",
   "dialogActionDoLater": "Senere",
   "clearForm": "Tøm skjema",
-  "resetPassword": "Nullstill password"
+  "resetPassword": "Nullstill passord",
+
+  "amount": "Mengde",
+  "pickupDate": "Hente dato",
+  "additionalInfo": "Tilleggsinformasjon",
+  "newOfferListing": "Nytt noteringstilbud",
+  "fish": "Fisk",
+  "shellfish": "Skalldyr",
+  "commodity": "Handelsvare",
+  "search": "Søk",
+  "setPickupLocation": "Angi hentested",
+  "confirmLocation": "Bekreft sted",
+  "dateNotValid": "Dato kan ikke være i fortiden",
+  "addListing": "Legg til oppføring",
+  "commodityNotChosen": "Vennligst velg en vare",
+  "chooseDate": "Vennligst velg en dato",
+  "newListing": "Ny notering",
+  "cancel": "Avbryt"
 }

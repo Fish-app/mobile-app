@@ -6,7 +6,7 @@ import 'package:***REMOVED***/config/routes/routes.dart';
 import 'package:***REMOVED***/entities/commodity.dart';
 import 'package:***REMOVED***/entities/listing.dart';
 import 'package:***REMOVED***/main.dart';
-import 'package:***REMOVED***/pages/listing_info_page.dart';
+import 'package:***REMOVED***/pages/listing/listing_info_page.dart';
 import 'package:***REMOVED***/utils/services/auth_service.dart';
 import 'package:***REMOVED***/widgets/buy_filter.dart';
 import 'package:***REMOVED***/widgets/commodity_card.dart';

@@ -19,7 +19,7 @@ class OfferListingCard extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            cardListing.creator.user.name,
+            cardListing.creator.name,
             style: Theme.of(context).primaryTextTheme.headline5,
           ),
           Row(

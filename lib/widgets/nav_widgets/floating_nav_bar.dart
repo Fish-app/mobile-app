@@ -5,16 +5,19 @@ final navButtonShop = NavDestButton(Icons.shopping_cart_outlined, routes.Home);
 final navButtonChat = NavDestButton(Icons.chat_bubble_outline, routes.chat);
 final navButtonUser =
     NavDestButton(Icons.person_outline_rounded, routes.UserInfo);
+final navButtonNewListing = NavDestButton(Icons.list, routes.ChooseNewListing);
 
 final List<NavDestButton> _userNavButtons = [
   navButtonShop,
   navButtonChat,
-  navButtonUser
+  navButtonUser,
+  navButtonNewListing
 ];
 final List<NavDestButton> _sellerNavButtons = [
   navButtonShop,
   navButtonChat,
-  navButtonUser
+  navButtonUser,
+  navButtonNewListing
 ];
 
 class FloatingNavBar extends StatelessWidget {
