@@ -5,7 +5,7 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "***REMOVED***",
+      "Fishapp",
       style: TextStyle(
         fontFamily: "KaushanScript",
         fontSize: 70,
