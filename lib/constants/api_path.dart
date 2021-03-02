@@ -27,9 +27,12 @@ const createBuyerEndpoint = "/buyer/create";
 
 const createSellerEndpoint = "/seller/create";
 
-/// -- user reset password ///
+/// -- user reset password -- ///
 
 const changePasswordEndpoint = "/authentication/changepassword";
+
+/// -- rating -- ///
+const ratingEndpoint = "/rating/";
 
 Uri getAppUri(String path, {Map<String, String> queryParameters}) {
   return Uri(
