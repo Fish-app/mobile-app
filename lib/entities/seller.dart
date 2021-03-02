@@ -1,31 +1,29 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'user.dart';
+
 part 'seller.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Seller {
-
-  @JsonKey(required: true)
-  num id;
-
-  @JsonKey(required: true)
-  String name;
-
-  @JsonKey(required: true)
-  String email;
-
+class Seller extends User {
   @JsonKey(required: true)
   String regNumber;
 
   @JsonKey(ignore: true)
-  double rating;
-
-  @JsonKey(ignore: true)
   String bankAccountNumber;
 
-  Seller({this.id, this.name, this.email, this.regNumber, this.rating, this.bankAccountNumber});
+  Seller(
+      {id,
+      name,
+      email,
+      this.regNumber,
+      rating,
+      this.bankAccountNumber,
+      created})
+      : super(
+            id: id, name: name, rating: rating, email: email, created: created);
 
   factory Seller.fromJson(Map<String, dynamic> json) => _$SellerFromJson(json);
-  Map<String, dynamic> toJson() => _$SellerToJson(this);
 
+  Map<String, dynamic> toJson() => _$SellerToJson(this);
 }
