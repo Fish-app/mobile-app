@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fishapp/entities/commodity.dart';
@@ -9,7 +11,7 @@ part 'listing.g.dart';
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Listing {
   num id;
-  int dateCreated;
+  int created;
   Seller creator;
   int endDate;
   Commodity commodity;
@@ -17,8 +19,8 @@ class Listing {
   bool isOpen;
 
   Listing(
-      {@required this.id,
-      this.dateCreated,
+      {this.id,
+      this.created,
       this.creator,
       this.endDate,
       this.commodity,
@@ -27,6 +29,7 @@ class Listing {
 
   factory Listing.fromJson(Map<String, dynamic> json) =>
       _$ListingFromJson(json);
+
   Map<String, dynamic> toJson() => _$ListingToJson(this);
 }
 
@@ -34,6 +37,7 @@ class Listing {
 class OfferListing extends Listing {
   int maxAmount;
   int amountLeft;
+
   //Coordinates for pickup location.
   double latitude;
   double longitude;
@@ -41,22 +45,21 @@ class OfferListing extends Listing {
   String additionalInfo;
 
   OfferListing(
-      {@required num id,
+      {num id,
       int dateCreated,
       Seller creator,
       int endDate,
       Commodity commodity,
       double price,
       bool isOpen,
-      @required this.maxAmount,
-      @required this.amountLeft,
-      @required this.latitude,
-      @required this.longitude,
-      this.additionalInfo
-      })
+      this.maxAmount,
+      this.amountLeft,
+      this.latitude,
+      this.longitude,
+      this.additionalInfo})
       : super(
             id: id,
-            dateCreated: dateCreated,
+            created: dateCreated,
             creator: creator,
             endDate: endDate,
             commodity: commodity,
@@ -64,11 +67,14 @@ class OfferListing extends Listing {
             isOpen: isOpen);
 
   Future<double> getDistanceTo() {
-    Future<double>  dis = calculateDistance(latitude, longitude);
+    Future<double> dis = calculateDistance(latitude, longitude);
     return dis;
   }
 
   factory OfferListing.fromJson(Map<String, dynamic> json) =>
       _$OfferListingFromJson(json);
+
   Map<String, dynamic> toJson() => _$OfferListingToJson(this);
+
+  String toJsonString() => jsonEncode(_$OfferListingToJson(this));
 }
