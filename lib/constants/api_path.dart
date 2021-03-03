@@ -1,4 +1,27 @@
-/// -- user auth -- ///
+
+
+/// CHAT
+const getUserConversationList = "/chat/myconversations";
+const _startChatEndpoint = "/chat/new";
+
+String startConversationFromListing(int listingId) {
+  return _startChatEndpoint + "/" + listingId.toString();
+}
+
+String sendMessageFromConversation(int conversationId) {
+  return "/chat/" + conversationId.toString();
+}
+
+String getMessageListFromId(int conversation) {
+  return "/chat/" + conversation.toString() + "/latest";
+}
+
+String getMessageListInRange(int conversation) {
+  return "/chat/" + conversation.toString() + "/range";
+}
+/// CHAT END
+
+
 
 // needs login //
 
