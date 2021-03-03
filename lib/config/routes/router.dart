@@ -10,9 +10,11 @@ import 'package:fishapp/pages/user/user_info.dart';
 import 'package:fishapp/utils/state/appstate.dart';
 import 'package:provider/provider.dart';
 
+import '../../entities/listing.dart';
 import '../../main.dart';
 import 'package:fishapp/pages/register/register_user_page.dart';
 
+import 'route_data.dart';
 import 'route_data.dart';
 import 'routes.dart' as routes;
 
@@ -52,10 +54,13 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       );
       break;
     case routes.ListingInfo:
-      if (params is LoginReturnRouteData) {
-        page = ListingInfoPage(
-          routeData: params,
+      if (params is OfferListing) {
+        print(params.toJsonString());
+        page = OfferListingInfoPage(
+          offerListing: params,
         );
+      } else {
+        page = Path404Page();
       }
       break;
     case routes.ChooseNewListing:

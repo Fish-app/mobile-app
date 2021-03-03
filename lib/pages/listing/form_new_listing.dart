@@ -19,6 +19,9 @@ import 'package:fishapp/entities/listing.dart';
 
 import '../../entities/listing.dart';
 import '../../entities/listing.dart';
+import '../../utils/form/form_validators.dart';
+import '../../utils/form/form_validators.dart';
+import '../../utils/form/form_validators.dart';
 import 'listing_info_page.dart';
 
 class NewListingForm extends StatefulWidget {
@@ -89,19 +92,25 @@ class _NewListingFormState extends State<NewListingForm> {
             FormFieldNormal(
               title: S.of(context).amount.toUpperCase(),
               keyboardType: TextInputType.number,
-              onSaved: (newValue) =>
-                  {_listingFormData.maxAmount = newValue as int},
+              suffixText: "kg",
+              onSaved: (newValue) => {
+                _listingFormData.maxAmount = int.parse(
+                  newValue,
+                  onError: (source) => 0,
+                )
+              },
               validator: (value) {
-                return validateFloatInput(value, context);
+                return validateIntInput(value, context);
               },
             ),
             FormFieldNormal(
               title: S.of(context).price.toUpperCase(),
+              suffixText: "nok",
               keyboardType: TextInputType.number,
               onSaved: (newValue) =>
-                  {_listingFormData.price = newValue as double},
+                  {_listingFormData.price = double.parse(newValue)},
               validator: (value) {
-                return validateFloatInput(value, context);
+                return validateIntInput(value, context);
               },
             ),
             FormFieldNormal(
@@ -110,7 +119,7 @@ class _NewListingFormState extends State<NewListingForm> {
               controller: _dateController,
               onSaved: (newValue) => {
                 if (newValue.trim().isNotEmpty)
-                  {_listingFormData.endDate = _toEpoch(newValue) as int}
+                  {_listingFormData.endDate = _toEpoch(newValue)}
               },
               validator: (value) {
                 return validateDateNotPast(value, context);
@@ -139,9 +148,9 @@ class _NewListingFormState extends State<NewListingForm> {
     );
   }
 
-  String _toEpoch(String date) {
+  int _toEpoch(String date) {
     DateTime i = DateTime.parse(date);
-    String epochTime = i.millisecondsSinceEpoch.toString();
+    int epochTime = i.millisecondsSinceEpoch;
     return epochTime;
   }
 
@@ -149,7 +158,7 @@ class _NewListingFormState extends State<NewListingForm> {
     if (newValue != null) {
       setState(() {
         pickedFish = newValue;
-        _listingFormData.commodity.id = pickedFish.id;
+        _listingFormData.commodity = pickedFish;
       });
     }
   }
@@ -159,8 +168,8 @@ class _NewListingFormState extends State<NewListingForm> {
         context, MaterialPageRoute(builder: (context) => ChooseLocation()));
     if (result != null) {
       _location = result;
-      _listingFormData.longitude = _location.longitude.toString() as double;
-      _listingFormData.latitude = _location.latitude.toString() as double;
+      _listingFormData.longitude = _location.longitude;
+      _listingFormData.latitude = _location.latitude;
     }
   }
 
@@ -172,17 +181,17 @@ class _NewListingFormState extends State<NewListingForm> {
     formState.save();
     if (formState.validate()) {
       try {
+        print(_listingFormData.toJson());
+        print(_listingFormData.toJsonString());
         OfferListing suc = await widget.listingService
             .createOfferListing(context, _listingFormData);
         if (suc != null) {
           Scaffold.of(context)
             ..removeCurrentSnackBar()
             ..showSnackBar(SnackBar(content: Text("Listing has been created")));
-          //TODO: when listing has been added, move to listing info page and display the newly created listing
-          //TODO: currently, rating is not implemented on backend so the listing info page does not work because rating = null
-          // Navigator.removeRouteBelow(context, ModalRoute.of(context));
-          // //Navigator.popAndPushNamed(context, routes.ListingInfo, arguments: suc);
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => ListingInfoPage(offerListing: suc,)));
+          Navigator.removeRouteBelow(context, ModalRoute.of(context));
+          Navigator.pushReplacementNamed(context, routes.ListingInfo,
+              arguments: suc);
         }
       } on HttpException catch (e) {
         setState(() {

@@ -68,7 +68,7 @@ class UserChangePasswordData extends UserLoginData {
 
   Map<String, dynamic> toJson() => _$UserChangePasswordDataToJson(this);
 
-  UserChangePasswordData({userName, password, this.name})
+  UserChangePasswordData({userName, password})
       : super(password: password, userName: userName);
 
   String toJsonString() => jsonEncode(_$UserChangePasswordDataToJson(this));

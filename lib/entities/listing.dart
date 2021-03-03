@@ -6,7 +6,16 @@ import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/seller.dart';
 import 'package:fishapp/utils/distance_calculator.dart';
 
+import 'commodity.dart';
+import 'commodity.dart';
+import 'commodity.dart';
+import 'commodity.dart';
+
 part 'listing.g.dart';
+
+String _simplifyComodity(Commodity commodity) {
+  return '{"id":${commodity.id}}}';
+}
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Listing {
@@ -14,9 +23,14 @@ class Listing {
   int created;
   Seller creator;
   int endDate;
+
   Commodity commodity;
   double price;
   bool isOpen;
+
+  //Coordinates for pickup location.
+  double latitude;
+  double longitude;
 
   Listing(
       {this.id,
@@ -25,22 +39,25 @@ class Listing {
       this.endDate,
       this.commodity,
       this.price,
-      this.isOpen});
+      this.isOpen,
+      this.latitude = 0,
+      this.longitude = 08});
 
   factory Listing.fromJson(Map<String, dynamic> json) =>
       _$ListingFromJson(json);
 
   Map<String, dynamic> toJson() => _$ListingToJson(this);
+
+  Future<double> getDistanceTo() {
+    Future<double> dis = calculateDistance(latitude, longitude);
+    return dis;
+  }
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class OfferListing extends Listing {
   int maxAmount;
   int amountLeft;
-
-  //Coordinates for pickup location.
-  double latitude;
-  double longitude;
 
   String additionalInfo;
 
@@ -52,10 +69,10 @@ class OfferListing extends Listing {
       Commodity commodity,
       double price,
       bool isOpen,
+      double latitude = 0,
+      double longitude = 0,
       this.maxAmount,
       this.amountLeft,
-      this.latitude,
-      this.longitude,
       this.additionalInfo})
       : super(
             id: id,
@@ -65,11 +82,6 @@ class OfferListing extends Listing {
             commodity: commodity,
             price: price,
             isOpen: isOpen);
-
-  Future<double> getDistanceTo() {
-    Future<double> dis = calculateDistance(latitude, longitude);
-    return dis;
-  }
 
   factory OfferListing.fromJson(Map<String, dynamic> json) =>
       _$OfferListingFromJson(json);

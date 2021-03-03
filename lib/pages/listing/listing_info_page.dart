@@ -12,15 +12,13 @@ import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/rating_stars.dart';
 import 'package:fishapp/widgets/standard_button.dart';
 
+import '../../widgets/rating_stars.dart';
 
-class ListingInfoPage extends StatelessWidget {
-  final LoginReturnRouteData routeData;
+class OfferListingInfoPage extends StatelessWidget {
   OfferListing offerListing;
 
-  ListingInfoPage({Key key, this.routeData, this.offerListing}) : super(key: key) {
-    //TODO: must be changed to be able to show listing from server
-    this.offerListing = testOfferListing;
-  }
+  OfferListingInfoPage({Key key, @required this.offerListing})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +51,8 @@ class ListingInfoPage extends StatelessWidget {
                               style:
                                   Theme.of(context).primaryTextTheme.headline4,
                             ),
-                            RatingStars(
-                              rating: offerListing.creator.rating,
+                            UserRatingStars(
+                              user: offerListing.creator,
                             )
                           ],
                         ),
@@ -71,10 +69,11 @@ class ListingInfoPage extends StatelessWidget {
                           height: MediaQuery.of(context).size.height / 2.2,
                           latitude: offerListing.latitude,
                           longitude: offerListing.longitude,
-                          onTap: (abc) {
+                          onTap: (if_nothing_here_everything_breaks) {
                             MapWidget(
-                                latitude: offerListing.latitude,
-                                longitude: offerListing.longitude).openMapSheet(context);
+                                    latitude: offerListing.latitude,
+                                    longitude: offerListing.longitude)
+                                .openMapSheet(context);
                           },
                         ),
                       ),

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:fishapp/utils/default_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/route_data.dart';
 import 'package:fishapp/config/routes/routes.dart';
@@ -17,7 +18,17 @@ import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 
 import 'package:fishapp/config/routes/routes.dart' as routes;
 
+import '../../entities/commodity.dart';
+import '../../entities/listing.dart';
+import '../../utils/services/rest_api_service.dart';
+import '../../utils/services/rest_api_service.dart';
+import '../../utils/services/rest_api_service.dart';
+import '../../utils/services/rest_api_service.dart';
+import '../../widgets/commodity_card.dart';
+
 class HomePage extends StatefulWidget {
+  final CommodityService _commodityService = CommodityService();
+
   @override
   State<StatefulWidget> createState() => HomePageState();
 }
@@ -66,16 +77,19 @@ class HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: _topPadding),
               child: BuyFilterWidget(),
             ),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: _bottomPadding),
-                children: [
-                  _makeComodityCard(testCommodity),
-                  _makeComodityCard(testCommodity2),
-                  _makeComodityCard(testCommodity3)
-                ],
-              ),
-            )
+            appFutureBuilder<List<Commodity>>(
+                widget._commodityService.getAllCommodities(context),
+                (commodities, context) {
+              return Expanded(
+                child: ListView(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: _bottomPadding),
+                  children: commodities
+                      .map((commodity) => _makeComodityCard(commodity))
+                      .toList(),
+                ),
+              );
+            })
           ],
         ));
   }
@@ -83,8 +97,9 @@ class HomePageState extends State<HomePage> {
 
 class CommodityListingPage extends StatefulWidget {
   final Commodity listedCommodity;
+  final ListingService _listingService = ListingService();
 
-  const CommodityListingPage({Key key, this.listedCommodity}) : super(key: key);
+  CommodityListingPage({Key key, this.listedCommodity}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => CommodityListingPageState();
@@ -118,13 +133,14 @@ class CommodityListingPageState extends State<CommodityListingPage>
     return GestureDetector(
       onTap: () => {
         Navigator.pushNamed(context, routes.ListingInfo,
-            arguments: GenericRouteData(id: offerListing.id))
+            arguments: offerListing)
       },
       child: OfferListingCard(cardListing: offerListing),
     );
   }
 
   double _heightUsedInAnime = 0;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -169,11 +185,15 @@ class CommodityListingPageState extends State<CommodityListingPage>
                       child: ListView(
                         children: [
                           _makeSortByWidget(),
-                          for (var n = 0; n < 10; n++)
-                            Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 3),
-                                child: _goToListing(testOfferListing)),
+                          appFutureBuilder<List<OfferListing>>(
+                              widget._listingService.getCommodityOfferListing(
+                                  context, widget.listedCommodity.id),
+                              (offerListings, context) {
+                            return Column(
+                                children: offerListings
+                                    .map((e) => _goToListing(e))
+                                    .toList());
+                          }),
                         ],
                       ),
                     ),
