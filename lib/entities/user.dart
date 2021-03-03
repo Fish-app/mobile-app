@@ -57,3 +57,19 @@ class UserNewData extends UserLoginData {
 
   String toJsonString() => jsonEncode(_$UserNewDataToJson(this));
 }
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+class UserChangePasswordData extends UserLoginData {
+  String oldPassword;
+  String newPassword;
+
+  factory UserChangePasswordData.fromJson(Map<String, dynamic> json) =>
+      _$UserChangePasswordDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserChangePasswordDataToJson(this);
+
+  UserChangePasswordData({userName, password, this.name})
+      : super(password: password, userName: userName);
+
+  String toJsonString() => jsonEncode(_$UserChangePasswordDataToJson(this));
+}
