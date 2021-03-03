@@ -10,7 +10,8 @@ const getAllCommodity = "/commodity/all";
 
 /// -- Listing -- ///
 
-const getListing = "aa";
+const getListing = "/listing/";
+const getComodityListings = "/listing/comodity/";
 
 // needs login //
 const createOfferListing = "/listing/newOfferListing";

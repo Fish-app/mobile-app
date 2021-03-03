@@ -10,13 +10,18 @@ import 'package:fishapp/utils/services/fishapp_rest_client.dart';
 
 import '../../constants/api_path.dart';
 import '../../entities/listing.dart';
+import '../../entities/listing.dart';
+import '../../entities/listing.dart';
+import '../../entities/listing.dart';
+import '../../entities/listing.dart';
+import '../../entities/listing.dart';
 
 class CommodityService {
   final FishappRestClient _client = FishappRestClient();
 
   Future<Commodity> getCommodity(BuildContext context, num id) async {
-    var uri = getAppUri(apiPaths.getAllCommodity);
-    var response = await _client.get(context, uri);
+    var uri = getAppUri(apiPaths.getCommodity);
+    var response = await _client.get(context, uri, addAuth: false);
 
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
@@ -29,7 +34,7 @@ class CommodityService {
 
   Future<List<Commodity>> getAllCommodities(BuildContext context) async {
     var uri = getAppUri(apiPaths.getAllCommodity);
-    var response = await _client.get(context, uri, addAuth: true);
+    var response = await _client.get(context, uri, addAuth: false);
     List returnList;
 
     switch (response.statusCode) {
@@ -68,15 +73,31 @@ class RatingService {
 class ListingService {
   final FishappRestClient _client = FishappRestClient();
 
-  Future<Listing> getListing(BuildContext context, num id) async {
-    var uri = getAppUri(apiPaths.getListing);
-    var response = await _client.get(context, uri);
+  Future<OfferListing> getOfferListing(BuildContext context, num id) async {
+    var uri = getAppUri(apiPaths.getListing + id.toString());
+    var response = await _client.get(context, uri, addAuth: false);
 
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
       if (body["data"] != null) {
-        return Listing.fromJson(body["data"]);
+        return OfferListing.fromJson(body["data"]);
       }
+    }
+    return null;
+  }
+
+  Future<List<OfferListing>> getCommodityOfferListing(
+      BuildContext context, num id) async {
+    var uri = getAppUri(apiPaths.getComodityListings + id.toString());
+    var response = await _client.get(context, uri, addAuth: false);
+
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body);
+      List<OfferListing> offerListings = List();
+      for (var offerListing in body) {
+        offerListings.add(OfferListing.fromJson(offerListing));
+      }
+      return offerListings;
     }
     return null;
   }
@@ -84,7 +105,6 @@ class ListingService {
   Future<OfferListing> createOfferListing(
       BuildContext context, OfferListing offerListing) async {
     var uri = getAppUri(apiPaths.createOfferListing);
-    OfferListing offerListing;
     try {
       var response = await _client.post(context, uri,
           headers: {'Content-type': "application/json"},
