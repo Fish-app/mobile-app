@@ -13,7 +13,7 @@ class User {
   @JsonKey(required: true)
   String email;
 
-  @JsonKey(includeIfNull: false)
+  @JsonKey(ignore: true)
   double rating;
 
   String name;

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:provider/provider.dart';
+
+import '../../utils/state/appstate.dart';
 
 final navButtonShop = NavDestButton(Icons.shopping_cart_outlined, routes.Home);
 final navButtonChat = NavDestButton(Icons.chat_bubble_outline, routes.chat);
@@ -132,7 +135,9 @@ class _FishappNavBarState extends State<FishappNavBar> {
         child: Center(
           heightFactor: 1.4,
           child: FloatingNavBar(
-            buttons: isSeller ? _sellerNavButtons : _userNavButtons,
+            buttons: Provider.of<AppState>(context, listen: false).isSeller()
+                ? _sellerNavButtons
+                : _userNavButtons,
             currentActiveButton: widget.currentActiveButton,
             onClick: (button) => _onNavigate(context, button),
           ),

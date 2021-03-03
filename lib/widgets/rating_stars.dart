@@ -1,7 +1,12 @@
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fishapp/config/themes/theme_config.dart';
 import 'package:fishapp/widgets/simple_icon_shadow_widget.dart';
+
+import '../entities/user.dart';
+import '../utils/services/rest_api_service.dart';
+import '../utils/services/rest_api_service.dart';
 
 /*
 Widget that creates the stars for showing ratings.
@@ -52,3 +57,47 @@ final _emptyStar = SimpleShadowWidget(
   iconColor: ratingStarTheme.color,
   blur: 1,
 );
+
+class UserRatingStars extends StatefulWidget {
+  final User user;
+  final RatingService ratingService = RatingService();
+
+  UserRatingStars({Key key, this.user}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _UserRatingStarsState();
+}
+
+class _UserRatingStarsState extends State<UserRatingStars> {
+  num _rating = 0.0;
+  CancelableOperation _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = CancelableOperation.fromFuture(
+            widget.ratingService.getRating(context, widget.user.id))
+        .then((value) {
+      setState(() {
+        _rating = value;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _future.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        RatingStars(
+          rating: _rating,
+        )
+      ],
+    );
+  }
+}

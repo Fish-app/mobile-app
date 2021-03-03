@@ -13,6 +13,9 @@ import 'package:fishapp/widgets/standard_button.dart';
 import 'package:provider/provider.dart';
 import 'package:strings/strings.dart';
 
+import '../../widgets/rating_stars.dart';
+import '../../widgets/rating_stars.dart';
+
 class UserPage extends StatefulWidget {
   final _buttonColor = Colors.amber;
   final _buttonPadding = 10.0;
@@ -60,6 +63,17 @@ class _UserPageState extends State<UserPage> {
                       // USER INFO
                       Consumer<AppState>(builder: (context, value, child) {
                         return Column(children: [
+                          // TODO: ALIGN THIS BETTER
+                          Align(
+                            child: Text(
+                              "your rating".toUpperCase(),
+                              style: Theme.of(context).textTheme.overline,
+                            ),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          UserRatingStars(user: value.user),
+                          // TODO-end
+
                           DisplayTextField(
                               description: S.of(context).name.toUpperCase(),
                               content: value.user?.name ?? ""),

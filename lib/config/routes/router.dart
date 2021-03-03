@@ -25,6 +25,7 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
   Widget page;
 
   bool loggedIn = Provider.of<AppState>(context).isLoggedIn();
+  bool isSeller = Provider.of<AppState>(context).isSeller();
 
   Function reqireLogin = (Function route) {
     if (loggedIn) {
@@ -58,7 +59,17 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       }
       break;
     case routes.ChooseNewListing:
-      page = ChooseNewListingPage();
+      if (isSeller) {
+        page = ChooseNewListingPage();
+      } else {
+        //TODO: bytte til lag order
+        page = reqireLogin(() {
+          return NewListingPage(
+            routeData: params,
+          );
+        });
+      }
+
       break;
 
     ///  --  Needs login below  -- ///

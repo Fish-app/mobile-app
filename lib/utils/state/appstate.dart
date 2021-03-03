@@ -29,6 +29,10 @@ class AppState extends ChangeNotifier {
     return user != null && jwtTokenData.hasExpired();
   }
 
+  bool isSeller() {
+    return jwtTokenData?.groups?.contains("seller") ?? false;
+  }
+
   void newAuthValues(String token, User user) {
     jwtTokenData = JwtTokenData.buildFromTokenStr(token);
     this.user = user;

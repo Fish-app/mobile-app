@@ -6,6 +6,8 @@ import 'package:fishapp/widgets/distance_to_widget.dart';
 import 'package:fishapp/widgets/rating_stars.dart';
 import 'package:fishapp/generated/l10n.dart';
 
+import 'rating_stars.dart';
+
 class OfferListingCard extends StatelessWidget {
   final OfferListing cardListing;
 
@@ -30,9 +32,7 @@ class OfferListingCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RatingStars(
-                    rating: 4.8,
-                  ),
+                  UserRatingStars(user: cardListing.creator),
                   DistanceToWidget(cardListing: cardListing),
                 ],
               ),

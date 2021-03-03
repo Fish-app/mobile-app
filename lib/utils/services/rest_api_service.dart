@@ -51,6 +51,20 @@ class CommodityService {
   }
 }
 
+class RatingService {
+  final FishappRestClient _client = FishappRestClient();
+
+  Future<num> getRating(BuildContext context, num id) async {
+    var uri = getAppUri(apiPaths.ratingEndpoint + id.toString());
+    var response = await _client.get(context, uri);
+
+    if (response.statusCode == 200) {
+      return num.parse(response.body);
+    }
+    return null;
+  }
+}
+
 class ListingService {
   final FishappRestClient _client = FishappRestClient();
 
