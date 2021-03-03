@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/route_data.dart';
 import 'package:fishapp/config/routes/router.dart';
 import 'package:fishapp/generated/l10n.dart';
-import 'package:fishapp/pages/login/login_formdata.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
 import 'package:fishapp/widgets/form/formfield_auth.dart';
@@ -12,6 +11,8 @@ import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/utils/form/form_validators.dart';
 
 import 'package:strings/strings.dart';
+
+import '../../entities/user.dart';
 
 class LoginUserForm extends StatefulWidget {
   LoginUserForm({Key key, this.returnPath}) : super(key: key);
@@ -24,7 +25,7 @@ class LoginUserForm extends StatefulWidget {
 
 class _LoginUserFormState extends State<LoginUserForm> {
   final _formKey = GlobalKey<FormState>();
-  LoginUserFormData _loginUserFormData = LoginUserFormData();
+  UserLoginData _loginUserFormData = UserLoginData();
   String _errorMessage = "";
   bool _displayAwaitHolder = false;
 
@@ -98,7 +99,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                 title: capitalize(S.of(context).email),
                 hint: S.of(context).emailHint,
                 keyboardType: TextInputType.emailAddress,
-                onSaved: (newValue) => {_loginUserFormData.email = newValue},
+                onSaved: (newValue) => {_loginUserFormData.userName = newValue},
                 validator: (value) {
                   return validateEmail(value, context);
                 },

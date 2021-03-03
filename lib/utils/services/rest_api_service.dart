@@ -6,15 +6,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:fishapp/constants/api_path.dart' as apiPaths;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
-import 'package:fishapp/pages/listing/listing_formdata.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
 
+import '../../constants/api_path.dart';
+import '../../entities/listing.dart';
 
 class CommodityService {
   final FishappRestClient _client = FishappRestClient();
 
   Future<Commodity> getCommodity(BuildContext context, num id) async {
-    var response = await _client.get(context, apiPaths.getCommodity);
+    var uri = getAppUri(apiPaths.getAllCommodity);
+    var response = await _client.get(context, uri);
 
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
@@ -26,7 +28,8 @@ class CommodityService {
   }
 
   Future<List<Commodity>> getAllCommodities(BuildContext context) async {
-    var response = await _client.get(context, apiPaths.getAllCommodity, addAuth: true);
+    var uri = getAppUri(apiPaths.getAllCommodity);
+    var response = await _client.get(context, uri, addAuth: true);
     List returnList;
 
     switch (response.statusCode) {
@@ -51,8 +54,9 @@ class CommodityService {
 class ListingService {
   final FishappRestClient _client = FishappRestClient();
 
-  Future<Listing> getCommodity(BuildContext context, num id) async {
-    var response = await _client.get(context, apiPaths.getListing);
+  Future<Listing> getListing(BuildContext context, num id) async {
+    var uri = getAppUri(apiPaths.getListing);
+    var response = await _client.get(context, uri);
 
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
@@ -62,16 +66,20 @@ class ListingService {
     }
     return null;
   }
-  
+
   Future<OfferListing> createOfferListing(
-      BuildContext context, ListingFormData details) async {
+      BuildContext context, OfferListing offerListing) async {
+    var uri = getAppUri(apiPaths.createOfferListing);
     OfferListing offerListing;
     try {
-      var response = await _client.post(context, apiPaths.createOfferListing,
-      headers: details.toMap(), addAuth: true);
+      var response = await _client.post(context, uri,
+          headers: {'Content-type': "application/json"},
+          body: offerListing.toJsonString(),
+          addAuth: true);
       switch (response.statusCode) {
         case 200:
-         return offerListing = OfferListing.fromJson(jsonDecode(response.body));
+          return offerListing =
+              OfferListing.fromJson(jsonDecode(response.body));
           break;
         case 401:
           throw HttpException(HttpStatus.unauthorized.toString());

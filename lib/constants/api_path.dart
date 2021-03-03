@@ -1,31 +1,41 @@
-const restApiUrl = "http://10.0.2.2:8080/api";
-
 /// -- user auth -- ///
 
 // needs login //
 
 /// -- Commodity -- ///
 
-const getCommodity = restApiUrl + "aa";
-const getAllCommodity = restApiUrl + "/commodity/all";
+const getCommodity = "aa";
+const getAllCommodity = "/commodity/all";
 // needs login //
 
 /// -- Listing -- ///
 
-const getListing = restApiUrl + "aa";
+const getListing = "aa";
 
 // needs login //
-const createOfferListing = restApiUrl + "/listing/newOfferListing";
-
+const createOfferListing = "/listing/newOfferListing";
 
 /// -- user auth -- ///
 
-const loginUserEndpoint = restApiUrl + "/authentication/login";
+const loginUserEndpoint = "/authentication/login";
 
-/// -- user register -- ///
+/// -- buyer register -- ///
 
-const createUserEndpoint = restApiUrl + "/user/create";
+const createBuyerEndpoint = "/buyer/create";
+
+/// -- seller register -- ///
+
+const createSellerEndpoint = "/seller/create";
 
 /// -- user reset password ///
 
-const changePasswordEndpoint = restApiUrl + "/authentication/changepassword";
+const changePasswordEndpoint = "/authentication/changepassword";
+
+Uri getAppUri(String path, {Map<String, String> queryParameters}) {
+  return Uri(
+      scheme: "http",
+      host: "10.0.2.2",
+      port: 8080,
+      path: "/api" + path,
+      queryParameters: queryParameters);
+}

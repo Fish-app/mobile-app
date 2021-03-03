@@ -6,18 +6,24 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/main.dart';
-import 'package:fishapp/pages/login/login_formdata.dart';
-import 'package:fishapp/pages/register/new_user_form_data.dart';
 import 'package:fishapp/pages/user/user_resetpwd_formdata.dart';
 import 'package:fishapp/utils/auth/jwt.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
 import 'package:fishapp/constants/api_path.dart';
 import 'package:fishapp/utils/services/storage_service.dart';
 import 'package:fishapp/utils/state/appstate.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../constants/api_path.dart';
+import '../../constants/api_path.dart';
+import '../../constants/api_path.dart';
+import '../../entities/user.dart';
+import '../../entities/user.dart';
 
 class CreateUserException implements Exception {
   String message;
+
   CreateUserException(this.message);
 }
 
@@ -26,11 +32,15 @@ class AuthService {
 
   AuthService();
 
-  Future<void> createUser(
-      BuildContext context, NewUserFormData userDetails) async {
+  Future<void> createUser(BuildContext context, UserNewData userNewData) async {
+    var uri = getAppUri(createBuyerEndpoint);
+    print(uri);
     try {
-      var response = await fishappRestClient.post(context, createUserEndpoint,
-          headers: userDetails.toMap(), addAuth: false);
+      var response = await fishappRestClient.post(context, uri,
+          headers: {'Content-type': "application/json"},
+          body: userNewData.toJsonString(),
+          addAuth: false);
+
       switch (response.statusCode) {
         case 200:
           break;
@@ -50,7 +60,8 @@ class AuthService {
 
   Future<void> changePassword(
       BuildContext context, ResetPasswordFormData formData) async {
-    var response = await fishappRestClient.put(context, changePasswordEndpoint,
+    var uri = getAppUri(changePasswordEndpoint);
+    var response = await fishappRestClient.put(context, uri,
         headers: formData.toMap(), addAuth: true);
     switch (response.statusCode) {
       case 200:
@@ -67,10 +78,13 @@ class AuthService {
     }
   }
 
-  Future<bool> loginUser(
-      BuildContext context, LoginUserFormData loginDetails) async {
-    var response = await fishappRestClient.post(context, loginUserEndpoint,
-        headers: loginDetails.toMap(), addAuth: false);
+  Future<bool> loginUser(BuildContext context, UserLoginData loginData) async {
+    var uri = getAppUri(loginUserEndpoint);
+
+    var response = await fishappRestClient.post(context, uri,
+        headers: {'Content-type': "application/json"},
+        body: loginData.toJsonString(),
+        addAuth: false);
     switch (response.statusCode) {
       case 200:
         User user = User.fromJson(jsonDecode(response.body));

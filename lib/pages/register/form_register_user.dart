@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/route_data.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/generated/l10n.dart';
-import 'package:fishapp/pages/register/new_user_form_data.dart';
 import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/widgets/form/formfield_auth.dart';
 import 'package:strings/strings.dart';
+
+import '../../entities/user.dart';
+import '../../entities/user.dart';
 
 class RegisterUserForm extends StatefulWidget {
   RegisterUserForm({Key key, this.returnRoute}) : super(key: key);
@@ -21,14 +23,14 @@ class RegisterUserForm extends StatefulWidget {
 
 class _RegisterUserFormState extends State<RegisterUserForm> {
   final _formKey = GlobalKey<FormState>();
-  bool _agreedToTOS = false;
-  NewUserFormData _newUserFormData;
+  bool _agreedToTOS = true;
+  UserNewData _newUserFormData;
   String _errorMessage = "";
 
   @override
   void initState() {
     super.initState();
-    _newUserFormData = NewUserFormData();
+    _newUserFormData = UserNewData();
   }
 
   void _handleRegister(BuildContext context) async {
@@ -41,8 +43,11 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
     if (formState.validate()) {
       try {
         await widget.authService.createUser(context, _newUserFormData);
-        bool suc =
-            await widget.authService.loginUser(context, _newUserFormData);
+        var suc = await widget.authService.loginUser(
+            context,
+            UserLoginData(
+                userName: _newUserFormData.userName,
+                password: _newUserFormData.password));
         if (suc) {
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
           Navigator.popAndPushNamed(
@@ -68,8 +73,9 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 40),
           child:
-          Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             FormFieldAuth(
+              initialValue: "kdasfjlkdfa",
               title: S.of(context).name,
               hint: S.of(context).fullName,
               keyboardType: TextInputType.name,
@@ -79,15 +85,17 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
               },
             ),
             FormFieldAuth(
+              initialValue: "oluf@example.com",
               title: capitalize(S.of(context).email),
               hint: S.of(context).emailHint,
               keyboardType: TextInputType.emailAddress,
-              onSaved: (newValue) => {_newUserFormData.email = newValue},
+              onSaved: (newValue) => {_newUserFormData.userName = newValue},
               validator: (value) {
                 return validateEmail(value, context);
               },
             ),
             FormFieldAuth(
+              initialValue: "Passord123",
               title: capitalize(S.of(context).password),
               hint: S.of(context).passwordHint,
               keyboardType: TextInputType.text,
@@ -98,6 +106,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
               isObscured: true,
             ),
             FormFieldAuth(
+              initialValue: "Passord123",
               title: S.of(context).confirmPassword,
               hint: S.of(context).confirmPasswordHint,
               keyboardType: TextInputType.text,
