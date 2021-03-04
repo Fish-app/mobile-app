@@ -40,7 +40,7 @@ class Listing {
       this.price,
       this.isOpen,
       this.latitude = 0,
-      this.longitude = 08});
+      this.longitude = 0});
 
   factory Listing.fromJson(Map<String, dynamic> json) =>
       _$ListingFromJson(json);
@@ -68,8 +68,8 @@ class OfferListing extends Listing {
       Commodity commodity,
       double price,
       bool isOpen,
-      double latitude = 0,
-      double longitude = 0,
+      double latitude,
+      double longitude,
       this.maxAmount,
       this.amountLeft,
       this.additionalInfo})
@@ -80,7 +80,9 @@ class OfferListing extends Listing {
             endDate: endDate,
             commodity: commodity,
             price: price,
-            isOpen: isOpen);
+            isOpen: isOpen,
+            latitude: latitude,
+            longitude: longitude);
 
   factory OfferListing.fromJson(Map<String, dynamic> json) =>
       _$OfferListingFromJson(json);
@@ -104,8 +106,8 @@ class BuyRequest extends Listing {
   Commodity commodity,
   double price,
   bool isOpen,
-  double latitude = 0.0,
-  double longitude = 0.0,
+  double latitude,
+  double longitude,
   this.amount,
   this.additionalInfo,
   this.maxDistance})
@@ -116,7 +118,9 @@ class BuyRequest extends Listing {
         endDate: endDate,
         commodity: commodity,
         price: price,
-        isOpen: isOpen);
+        isOpen: isOpen,
+        latitude: latitude,
+        longitude: longitude);
 
   factory BuyRequest.fromJson(Map<String, dynamic> json) =>
       _$BuyRequestFromJson(json);
