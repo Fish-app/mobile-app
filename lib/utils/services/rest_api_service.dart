@@ -32,20 +32,20 @@ class ConversationService {
     List<Message> messages = List();
     //FIXME: testing alot of messages
     for(int i = 0; i < 30; i++) {
-      Message m = testMessage1;
-      m.id++;
+      Message m = Message();
+      m.id = i+1;
       int j = i % 2;
-      print("MESG");
-      print("I=" + i.toString());
-      print("J=" + j.toString());
       if (j == 0) {
         m.senderId = 22;
+        m.content = "masse fisk!";
       } else {
         m.senderId = 23;
+        m.content = "kjøpe kjøpe kjøpe!";
       }
       messages.add(m);
+      print("Got message with sender " + m.senderId.toString());
     }
-    print("GOT MESSAGES" + messages.length.toString());
+    print("Got " + messages.length.toString() + "messages!");
     return messages;
   }
 }

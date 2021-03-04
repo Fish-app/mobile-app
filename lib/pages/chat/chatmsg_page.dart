@@ -93,6 +93,8 @@ class ChatBubbleFromMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Drawing message id:" + message.id.toString());
+
     return ChatBubble(
       //margin: EdgeInsets.only(top: 20),
       backGroundColor: _isSenderLoggedInUser(message)
@@ -119,13 +121,9 @@ class ChatBubbleFromMessage extends StatelessWidget {
 
   bool _isSenderLoggedInUser(Message message) {
     num userIdLoggedInUser = 22;
-    print("Logged in user:" + userIdLoggedInUser.toString());
-    print("Message sender id:" + message.senderId.toString());
     if (userIdLoggedInUser == message.senderId) {
-      print("true");
       return true;
     } else {
-      print("False");
       return false;
     }
   }
