@@ -4,7 +4,7 @@ import 'package:fishapp/pages/listing/listing_info_page.dart';
 import 'package:fishapp/pages/listing/new_listing_page.dart';
 import 'package:fishapp/pages/home/home_page.dart';
 import 'package:fishapp/pages/login/login_page.dart';
-import 'package:fishapp/pages/chat/chat_page.dart';
+import 'package:fishapp/pages/chat/chatlist_page.dart';
 import 'package:fishapp/pages/user/user_resetpwd_page.dart';
 import 'package:fishapp/pages/user/user_info.dart';
 import 'package:fishapp/utils/state/appstate.dart';
@@ -83,9 +83,9 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         return ChangePasswordPage();
       });
       break;
-    case routes.chat:
+    case routes.Chat:
       page = reqireLogin(() {
-        return ChatPage();
+        return ChatListPage();
       });
       break;
     case routes.NewListing:

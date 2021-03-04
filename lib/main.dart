@@ -1,3 +1,4 @@
+import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fishapp/entities/user.dart';
@@ -10,6 +11,7 @@ import 'config/routes/router.dart';
 import 'config/themes/theme_config.dart';
 import 'entities/commodity.dart';
 import 'entities/listing.dart';
+import 'entities/chat/message.dart';
 import 'entities/seller.dart';
 import 'generated/l10n.dart';
 
@@ -82,7 +84,7 @@ var testUserBob = User(
   email: "bob@bob.com",
 );
 var testSellerBob = Seller(
-  id: 22,
+  id: 23,
   name: "bob",
   email: "bob@bob.com",
   regNumber: "2312",
@@ -99,3 +101,23 @@ var testOfferListing = OfferListing(
   longitude: 18.303778,
   price: 20,
 );
+
+var testConversation = Conversation(
+  id: 1,
+  lastMessageId: 2,
+  firstMessageId: 1,
+  listing: testOfferListing,
+);
+
+var testMessage1 = Message(
+  id: 1,
+  senderId: 22,
+  content: "asdfasdasdasd"
+);
+
+var testMessage2 = Message(
+    id: 2,
+    senderId: 23,
+    content: "kfkfk kefk asdø øsd"
+);
+
