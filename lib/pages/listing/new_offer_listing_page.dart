@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fishapp/config/routes/route_data.dart';
 import 'package:fishapp/generated/l10n.dart';
-import 'package:fishapp/pages/listing/form_new_listing.dart';
+import 'package:fishapp/pages/listing/form_new_offer_listing.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 
-class NewListingPage extends StatefulWidget {
+class NewOfferListingPage extends StatefulWidget {
   final GenericRouteData routeData;
-  NewListingPage({Key key, this.routeData}) : super(key: key);
+  NewOfferListingPage({Key key, this.routeData}) : super(key: key);
 
   @override
-  _NewListingPageState createState() => _NewListingPageState();
+  _NewOfferListingPageState createState() => _NewOfferListingPageState();
 }
 
-class _NewListingPageState extends State<NewListingPage> {
+class _NewOfferListingPageState extends State<NewOfferListingPage> {
   @override
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
@@ -27,7 +27,7 @@ class _NewListingPageState extends State<NewListingPage> {
                   child: ListView(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     children: [
-                      NewListingForm(routeData: widget.routeData,),
+                      NewOfferListingForm(routeData: widget.routeData,),
                     ],
                   ))
           )

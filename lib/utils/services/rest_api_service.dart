@@ -134,4 +134,37 @@ class ListingService {
     }
     return offerListing;
   }
+  
+  Future<BuyRequest> createBuyRequest(
+      BuildContext context, BuyRequest buyRequest) async {
+    var uri = apiPaths.getAppUri(apiPaths.createBuyRequest);
+    try {
+      var response = await _client.post(context, uri,
+          headers: {'Content-type': "application/json"},
+          body: buyRequest.toJsonString(),
+          addAuth: true);
+      switch (response.statusCode) {
+        case 200:
+          return buyRequest =
+              BuyRequest.fromJson(jsonDecode(response.body));
+          break;
+        case 401:
+          throw HttpException(HttpStatus.unauthorized.toString());
+          break;
+        case 403:
+          throw HttpException(HttpStatus.forbidden.toString());
+          break;
+        case 409:
+          break;
+        case 500:
+        default:
+          throw HttpException(HttpStatus.internalServerError.toString());
+          break;
+      }
+    } on IOException catch (e) {
+      log("IO failure " + e.toString(), time: DateTime.now());
+      throw HttpException("Service unavailable");
+    }
+    return buyRequest;
+  }
 }

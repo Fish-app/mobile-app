@@ -55,7 +55,7 @@
   "amount": "Mengde",
   "pickupDate": "Hente dato",
   "additionalInfo": "Tilleggsinformasjon",
-  "newOfferListing": "Nytt noteringstilbud",
+  "newOfferListing": "Nytt salg",
   "fish": "Fisk",
   "shellfish": "Skalldyr",
   "commodity": "Handelsvare",
@@ -63,9 +63,15 @@
   "setPickupLocation": "Angi hentested",
   "confirmLocation": "Bekreft sted",
   "dateNotValid": "Dato kan ikke være i fortiden",
-  "addListing": "Legg til oppføring",
+  "addListing": "Legg til salg",
   "commodityNotChosen": "Vennligst velg en vare",
   "chooseDate": "Vennligst velg en dato",
   "newListing": "Ny notering",
-  "cancel": "Avbryt"
+  "cancel": "Avbryt",
+  "newBuyRequest": "Ny bestilling",
+  "setHomeLocation": "Angi hjemsted",
+  "dueDate": "Tidsfrist",
+  "addOrder": "Legg til bestilling",
+  "maxDistance": "max avstand",
+  "locationNotSet": "Vennligst velg en lokasjon"
 }

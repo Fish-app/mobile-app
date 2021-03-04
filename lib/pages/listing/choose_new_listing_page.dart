@@ -22,13 +22,14 @@ class ChooseNewListingPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
             child: StandardButton(
                 buttonText: S.of(context).newListing,
-                onPressed: () => Navigator.pushNamed(context, routes.NewListing)),
+                onPressed: () => Navigator.pushNamed(context, routes.NewListing)
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
             child: StandardButton(
-                buttonText: "New order",
-                onPressed: () => _doNothing()
+                buttonText: S.of(context).newBuyRequest,
+                onPressed: () => Navigator.pushNamed(context, routes.NewBuyRequest)
             ),
           ),
         ],

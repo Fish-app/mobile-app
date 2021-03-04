@@ -1,14 +1,13 @@
 import 'dart:convert';
+import 'dart:core';
 
+import 'package:fishapp/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/seller.dart';
 import 'package:fishapp/utils/distance_calculator.dart';
 
-import 'commodity.dart';
-import 'commodity.dart';
-import 'commodity.dart';
 import 'commodity.dart';
 
 part 'listing.g.dart';
@@ -21,7 +20,7 @@ String _simplifyComodity(Commodity commodity) {
 class Listing {
   num id;
   int created;
-  Seller creator;
+  User creator;
   int endDate;
 
   Commodity commodity;
@@ -89,4 +88,40 @@ class OfferListing extends Listing {
   Map<String, dynamic> toJson() => _$OfferListingToJson(this);
 
   String toJsonString() => jsonEncode(_$OfferListingToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+class BuyRequest extends Listing {
+  int amount;
+  String additionalInfo;
+  double maxDistance;
+
+  BuyRequest(
+  {num id,
+  int created,
+  User creator,
+  int endDate,
+  Commodity commodity,
+  double price,
+  bool isOpen,
+  double latitude = 0.0,
+  double longitude = 0.0,
+  this.amount,
+  this.additionalInfo,
+  this.maxDistance})
+  : super(
+        id: id,
+        created: created,
+        creator: creator,
+        endDate: endDate,
+        commodity: commodity,
+        price: price,
+        isOpen: isOpen);
+
+  factory BuyRequest.fromJson(Map<String, dynamic> json) =>
+      _$BuyRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BuyRequestToJson(this);
+
+  String toJsonString() => jsonEncode(_$BuyRequestToJson(this));
 }

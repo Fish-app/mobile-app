@@ -15,6 +15,7 @@ const getComodityListings = "/listing/comodity/";
 
 // needs login //
 const createOfferListing = "/listing/newOfferListing";
+const createBuyRequest = "/listing/newBuyRequest";
 
 /// -- user auth -- ///
 

@@ -9,5 +9,6 @@ const chat = "/chat";
 
 const ListingInfo = "/listinginfo";
 const NewListing = "/newlisting";
+const NewBuyRequest = "/newbuyrequest";
 
 const ChooseNewListing = "/choosenewlisting";
