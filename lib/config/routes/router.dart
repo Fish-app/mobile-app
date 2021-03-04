@@ -1,4 +1,6 @@
 import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/entities/chat/conversation.dart';
+import 'package:fishapp/pages/chat/chatmsg_page.dart';
 import 'package:fishapp/pages/listing/choose_new_listing_page.dart';
 import 'package:fishapp/pages/listing/listing_info_page.dart';
 import 'package:fishapp/pages/listing/new_listing_page.dart';
@@ -88,10 +90,21 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         return ChangePasswordPage();
       });
       break;
-    case routes.Chat:
+    case routes.chat:
       page = reqireLogin(() {
         return ChatListPage();
       });
+      break;
+    case routes.ChatConversation:
+      if (params is Conversation) {
+        page = reqireLogin(() {
+          return ChatMessagePage(
+            conversation: params,
+          );
+        });
+      } else {
+        page = Path404Page();
+      }
       break;
     case routes.NewListing:
       page = reqireLogin(() {

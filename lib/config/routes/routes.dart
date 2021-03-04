@@ -6,7 +6,7 @@ const UserLogin = "/user/login";
 const UserResetPwd = "/user/info/resetpassword";
 
 const ChatConversation = "/chat/conversation";
-const Chat = "/chat/list";
+const chat = "/chat/list";
 
 const ListingInfo = "/listinginfo";
 const NewListing = "/newlisting";

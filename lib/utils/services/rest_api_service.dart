@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:fishapp/entities/chat/conversation.dart';
+import 'package:fishapp/entities/chat/message.dart';
+import 'package:fishapp/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fishapp/constants/api_path.dart' as apiPaths;
 import 'package:fishapp/entities/commodity.dart';
@@ -15,6 +18,25 @@ import '../../entities/listing.dart';
 import '../../entities/listing.dart';
 import '../../entities/listing.dart';
 import '../../entities/listing.dart';
+
+class ConversationService {
+  final FishappRestClient _client = FishappRestClient();
+
+  Future<List<Conversation>> getAllConversations(BuildContext context) async {
+    List<Conversation> conversations = List();
+    conversations.add(testConversation);
+    return conversations;
+  }
+
+  Future<List<Message>> getAllMessagesInConversation(BuildContext context, num conversationId) async {
+    List<Message> messages = List();
+    messages.add(testMessage1);
+    messages.add(testMessage2);
+    return messages;
+  }
+}
+
+
 
 class CommodityService {
   final FishappRestClient _client = FishappRestClient();
