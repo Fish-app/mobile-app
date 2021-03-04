@@ -1,3 +1,4 @@
+import 'package:fishapp/config/themes/theme_config.dart';
 import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:fishapp/entities/chat/message.dart';
 import 'package:fishapp/utils/default_builder.dart';
@@ -11,45 +12,65 @@ class ChatMessagePage extends StatefulWidget {
   final ConversationService _conversationService = ConversationService();
   final Conversation conversation;
 
-  ChatMessagePage({Key key, @required this.conversation})
-      : super(key: key);
+  ChatMessagePage({Key key, @required this.conversation}) : super(key: key);
 
   @override
   _ChatMessagePageState createState() => _ChatMessagePageState();
 }
 
 class _ChatMessagePageState extends State<ChatMessagePage> {
+  final _formKey = GlobalKey<FormState>();
   List<Message> messages = List();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: getFishappDefaultScaffold(
-      context,
-      includeTopBar: widget.conversation.listing.creator.name,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            child: appFutureBuilder<List<Message>>(
-                widget._conversationService.getAllMessagesInConversation(
-                    context, widget.conversation.id),
-                (messagesFromServer, context) {
-                  return Container(
-
-                  );
-                }
-            ),
-          ),
-          Row(
-            children: [
-              FlutterLogo(size: 48.0,),
-              StandardButton(buttonText: "Send", onPressed: null)
-            ],
-          )
-        ],
+    return Container(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-    ));
+      child: SafeArea(
+          child: getFishappDefaultScaffold(
+        context,
+        includeTopBar: widget.conversation.listing.creator.name,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // CHAT MESSAGE LISTS
+            Expanded(
+              child: appFutureBuilder<List<Message>>(
+                  widget._conversationService.getAllMessagesInConversation(
+                      context, widget.conversation.id),
+                  (messagesFromServer, context) {
+                return Container();
+              }),
+            ),
+            // CHAT WRITE MESSAGE BAR
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
+              child:
+              Form(
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(icon: Icon(Icons.camera_alt), onPressed: null),
+                    Flexible(
+                      child: TextFormField(),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: StandardButton(buttonText: "Send", onPressed: null),
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      )),
+    );
   }
 }
 
