@@ -75,9 +75,9 @@ class _App extends State<App> with WidgetsBindingObserver {
 }
 
 /// -- test data -- ///
-var testCommodity = Commodity(commodityImage: null, name: "ALLLA");
-var testCommodity2 = Commodity(commodityImage: null, name: "lakdsfjlk");
-var testCommodity3 = Commodity(commodityImage: null, name: "lelele");
+var testCommodity = Commodity(id: 1, commodityImage: null, name: "ALLLA");
+var testCommodity2 = Commodity(id: 2, commodityImage: null, name: "lakdsfjlk");
+var testCommodity3 = Commodity(id: 3, commodityImage: null, name: "lelele");
 var testUserBob = User(
   id: 22,
   name: "bob",

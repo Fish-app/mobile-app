@@ -7,8 +7,10 @@ import 'package:fishapp/generated/l10n.dart';
 final alpha = new RegExp(r'[A-Z]');
 final hashtag = new RegExp(r'^(((^| )#([a-zA-Z0-9]+))+ *)*$');
 final floatRegex = new RegExp(r'^(\d*(.|,)\d*)$');
+final intRegex = new RegExp(r'^\d*$');
+
 final emailRegex =
-new RegExp(r'^[a-zA-Z0-9.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9]{2,64})+$');
+    new RegExp(r'^[a-zA-Z0-9.-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9]{2,64})+$');
 
 String validateTagFeald(String value, BuildContext context) {
   // if valid tag or empty return valid
@@ -20,6 +22,13 @@ String validateTagFeald(String value, BuildContext context) {
 
 String validateFloatInput(String value, BuildContext context) {
   if (value.contains(floatRegex)) {
+    return null;
+  }
+  return S.of(context).notANumber;
+}
+
+String validateIntInput(String value, BuildContext context) {
+  if (value.contains(intRegex)) {
     return null;
   }
   return S.of(context).notANumber;
@@ -41,7 +50,8 @@ String validateEmail(String value, BuildContext context) {
   }
 }
 
-String validateLength(String value, BuildContext context, {int min = -1, int max = -1}) {
+String validateLength(String value, BuildContext context,
+    {int min = -1, int max = -1}) {
   var invalid = false;
   if (min >= 0) {
     invalid = value.length < min;
@@ -51,8 +61,11 @@ String validateLength(String value, BuildContext context, {int min = -1, int max
   }
   var errorMessage = "";
   if (min >= 0 && max >= 0 && max >= min) {
-    errorMessage = S.of(context).betweenMinMax + " $min " + S.of(context).and +
-        " $max " + S.of(context).characters;
+    errorMessage = S.of(context).betweenMinMax +
+        " $min " +
+        S.of(context).and +
+        " $max " +
+        S.of(context).characters;
   } else if (min >= 0) {
     errorMessage = S.of(context).min + " $min " + S.of(context).characters;
   } else if (max >= 0) {
@@ -62,7 +75,8 @@ String validateLength(String value, BuildContext context, {int min = -1, int max
   return invalid ? errorMessage : null;
 }
 
-String validateEquality(String a, String b, String targetEquality, BuildContext context) {
+String validateEquality(
+    String a, String b, String targetEquality, BuildContext context) {
   if (a != b) {
     return S.of(context).notEqual + " $targetEquality";
   }

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fishapp/entities/user.dart';
-import 'package:fishapp/pages/user/user_resetpwd_formdata.dart';
 import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
@@ -11,6 +10,8 @@ import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:strings/strings.dart';
 
+import '../../entities/user.dart';
+import '../../entities/user.dart';
 import '../../widgets/form/formfield_plain.dart';
 
 class ResetPasswordForm extends StatefulWidget {
@@ -25,7 +26,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   final _formKey = GlobalKey<FormState>();
   String _email = "";
 
-  ResetPasswordFormData _resetPwdFormData = ResetPasswordFormData();
+  UserChangePasswordData _resetPwdFormData = UserChangePasswordData();
   String _errorMessage = "";
   bool _displayAwaitHolder = false;
 
@@ -113,7 +114,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               hint: S.of(context).oldPasswordHint,
               keyboardType: TextInputType.text,
               isObscured: true,
-              onSaved: (oldPassword) => _resetPwdFormData.oldpwd = oldPassword,
+              onSaved: (oldPassword) =>
+                  _resetPwdFormData.oldPassword = oldPassword,
               validator: (oldPassword) =>
                   validateLength(oldPassword, context, min: 8),
               labelColor: Colors.black,
@@ -123,7 +125,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               hint: S.of(context).newPasswordHint,
               keyboardType: TextInputType.text,
               isObscured: true,
-              onSaved: (newPassword) => _resetPwdFormData.newpwd = newPassword,
+              onSaved: (newPassword) =>
+                  _resetPwdFormData.newPassword = newPassword,
               validator: (newPassword) {
                 return validateLength(newPassword, context, min: 8);
               },
@@ -137,7 +140,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               validator: (confirmPassword) {
                 return validateEquality(
                     confirmPassword,
-                    _resetPwdFormData.newpwd,
+                    _resetPwdFormData.newPassword,
                     S.of(context).newPasswordLabel,
                     context);
               },
@@ -153,7 +156,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                     child: Text(S.of(context).clearForm),
                     color: widget._buttonColor,
                     onPressed: () {
-                      _resetPwdFormData.clearData();
+                      _resetPwdFormData = UserChangePasswordData();
                       _formKey.currentState.reset();
                     },
                   ),
