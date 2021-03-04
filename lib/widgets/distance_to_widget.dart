@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:fishapp/entities/listing.dart';
 
@@ -12,15 +13,23 @@ class DistanceToWidget extends StatefulWidget {
 
 class _DistanceToWidgetState extends State<DistanceToWidget> {
   var _distance = 0.0;
+  CancelableOperation _future;
 
   @override
   void initState() {
     super.initState();
-    widget.cardListing.getDistanceTo().then((value) {
+    _future = CancelableOperation.fromFuture(widget.cardListing.getDistanceTo())
+        .then((value) {
       setState(() {
         _distance = value;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _future.cancel();
+    super.dispose();
   }
 
   @override

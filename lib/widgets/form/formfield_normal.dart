@@ -15,21 +15,23 @@ class FormFieldNormal extends StatelessWidget {
   final GestureTapCallback onTap;
   final TextEditingController controller;
   final bool readOnly;
+  final String suffixText;
 
   const FormFieldNormal(
       {Key key,
-        @required this.title,
-        this.hint,
-        this.isObscured,
-        this.validationMsg,
-        this.keyboardType,
-        this.validator,
-        this.onSaved,
-        this.labelColor,
-        this.initialValue,
-        this.onTap,
-        this.readOnly = false,
-        this.controller})
+      @required this.title,
+      this.hint,
+      this.isObscured,
+      this.validationMsg,
+      this.keyboardType,
+      this.validator,
+      this.onSaved,
+      this.labelColor,
+      this.initialValue,
+      this.onTap,
+      this.readOnly = false,
+      this.controller,
+      this.suffixText})
       : super(key: key);
 
   @override
@@ -40,6 +42,7 @@ class FormFieldNormal extends StatelessWidget {
         TextFormField(
           initialValue: initialValue,
           decoration: InputDecoration(
+            suffixText: suffixText,
             hintText: hint,
             labelText: title,
           ).applyDefaults(normalFormFieldTheme),
@@ -54,6 +57,4 @@ class FormFieldNormal extends StatelessWidget {
       ],
     );
   }
-  
-  
 }

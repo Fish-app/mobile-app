@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fishapp/entities/image.dart';
 
+import '../constants/api_path.dart';
+
 part 'commodity.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
@@ -13,12 +15,19 @@ class Commodity {
   Commodity({this.id, this.name, this.commodityImage});
 
   Image getImage() {
-    return Image.network(
-        "https://images.pexels.com/photos/3640451/pexels-photo-3640451.jpeg");
+    num imageId = commodityImage?.id;
+    if (imageId != null) {
+      var uri = getAppUri('/resource/image/${imageId}');
+      return Image.network(uri.toString());
+    } else {
+      return Image.network(
+          "https://images.pexels.com/photos/3640451/pexels-photo-3640451.jpeg");
+    }
   }
 
   factory Commodity.fromJson(Map<String, dynamic> json) =>
       _$CommodityFromJson(json);
+
   Map<String, dynamic> toJson() => _$CommodityToJson(this);
 
   static fromJsonList(List list) {

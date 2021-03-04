@@ -6,7 +6,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/main.dart';
-import 'package:fishapp/pages/user/user_resetpwd_formdata.dart';
 import 'package:fishapp/utils/auth/jwt.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
 import 'package:fishapp/constants/api_path.dart';
@@ -18,6 +17,7 @@ import 'package:provider/provider.dart';
 import '../../constants/api_path.dart';
 import '../../constants/api_path.dart';
 import '../../constants/api_path.dart';
+import '../../entities/user.dart';
 import '../../entities/user.dart';
 import '../../entities/user.dart';
 
@@ -59,10 +59,12 @@ class AuthService {
   }
 
   Future<void> changePassword(
-      BuildContext context, ResetPasswordFormData formData) async {
+      BuildContext context, UserChangePasswordData changePasswordData) async {
     var uri = getAppUri(changePasswordEndpoint);
     var response = await fishappRestClient.put(context, uri,
-        headers: formData.toMap(), addAuth: true);
+        headers: {'Content-type': "application/json"},
+        body: changePasswordData.toJsonString(),
+        addAuth: true);
     switch (response.statusCode) {
       case 200:
         break;

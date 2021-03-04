@@ -7,12 +7,13 @@ import 'package:geolocator/geolocator.dart';
 /// Returns the distance in meters.
 Future<double> calculateDistance(double latitude, double longitude) async {
   double _distance;
-  var  distanceFuture = await determinePosition().catchError((err) {
-        log(err, time: DateTime.now());
-      }
-  );
-  _distance = (Geolocator.distanceBetween(
-      latitude, longitude, distanceFuture.latitude, distanceFuture.longitude) / 1000).floorToDouble();
+  var distanceFuture = await determinePosition().catchError((err) {
+    log(err, time: DateTime.now());
+  });
+  _distance = (Geolocator.distanceBetween(latitude ?? 0, longitude ?? 0,
+              distanceFuture.latitude, distanceFuture.longitude) /
+          1000)
+      .floorToDouble();
   return _distance;
 }
 
