@@ -1,7 +1,7 @@
 import 'package:fishapp/entities/listing.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'conversation.dart.g';
+part 'conversation.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Conversation {

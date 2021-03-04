@@ -1,8 +1,6 @@
-
-
 import 'package:json_annotation/json_annotation.dart';
 
-part 'message.dart.g';
+part 'message.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Message {
