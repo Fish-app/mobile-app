@@ -30,8 +30,22 @@ class ConversationService {
 
   Future<List<Message>> getAllMessagesInConversation(BuildContext context, num conversationId) async {
     List<Message> messages = List();
-    messages.add(testMessage1);
-    messages.add(testMessage2);
+    //FIXME: testing alot of messages
+    for(int i = 0; i < 30; i++) {
+      Message m = testMessage1;
+      m.id++;
+      int j = i % 2;
+      print("MESG");
+      print("I=" + i.toString());
+      print("J=" + j.toString());
+      if (j == 0) {
+        m.senderId = 22;
+      } else {
+        m.senderId = 23;
+      }
+      messages.add(m);
+    }
+    print("GOT MESSAGES" + messages.length.toString());
     return messages;
   }
 }
