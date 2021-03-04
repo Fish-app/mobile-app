@@ -73,5 +73,7 @@
   "dueDate": "Tidsfrist",
   "addOrder": "Legg til bestilling",
   "maxDistance": "max avstand",
-  "locationNotSet": "Vennligst velg en lokasjon"
+  "locationNotSet": "Vennligst velg en lokasjon",
+  "buyRequest": "Bestilling",
+  "takeBuyRequest": "Ta bestilling"
 }

@@ -217,7 +217,7 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
             .createBuyRequest(context, _buyRequestData);
         if (suc != null) {
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
-          Navigator.pushReplacementNamed(context, routes.ListingInfo,
+          Navigator.pushReplacementNamed(context, routes.BuyRequestInfo,
               arguments: suc);
         }
       } on HttpException catch (e) {

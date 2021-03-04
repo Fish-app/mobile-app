@@ -208,7 +208,7 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
             ..removeCurrentSnackBar()
             ..showSnackBar(SnackBar(content: Text("Listing has been created")));
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
-          Navigator.pushReplacementNamed(context, routes.ListingInfo,
+          Navigator.pushReplacementNamed(context, routes.OfferListingInfo,
               arguments: suc);
         }
       } on HttpException catch (e) {

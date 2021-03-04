@@ -7,7 +7,8 @@ const UserResetPwd = "/user/info/resetpassword";
 
 const chat = "/chat";
 
-const ListingInfo = "/listinginfo";
+const OfferListingInfo = "/offerlistinginfo";
+const BuyRequestInfo = "/buyrequestinfo";
 const NewListing = "/newlisting";
 const NewBuyRequest = "/newbuyrequest";
 

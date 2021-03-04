@@ -1,4 +1,5 @@
 import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/pages/listing/buy_request_info_page.dart';
 import 'package:fishapp/pages/listing/choose_new_listing_page.dart';
 import 'package:fishapp/pages/listing/listing_info_page.dart';
 import 'package:fishapp/pages/listing/new_buy_request_page.dart';
@@ -54,11 +55,20 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         loginReturnRouteData: params,
       );
       break;
-    case routes.ListingInfo:
+    case routes.OfferListingInfo:
       if (params is OfferListing) {
         print(params.toJsonString());
         page = OfferListingInfoPage(
           offerListing: params,
+        );
+      } else {
+        page = Path404Page();
+      }
+      break;
+    case routes.BuyRequestInfo:
+      if (params is BuyRequest) {
+        page = BuyRequestInfoPage(
+          buyRequest: params,
         );
       } else {
         page = Path404Page();

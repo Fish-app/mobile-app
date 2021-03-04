@@ -186,5 +186,9 @@
   "maxDistance": "Max distance",
   "@maxDistance": {},
   "locationNotSet": "Please set a location",
-  "@locationNotSet": {}
+  "@locationNotSet": {},
+  "buyRequest": "Buy request",
+  "@buyRequest": {},
+  "takeBuyRequest": "Take buy request",
+  "@takeBuyRequest": {}
 }
