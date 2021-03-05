@@ -106,7 +106,7 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       if (params is Conversation) {
         page = reqireLogin(() {
           return ChatMessagePage(
-            conversation: params,
+            baseConversation: params,
           );
         });
       } else {
