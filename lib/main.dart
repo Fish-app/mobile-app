@@ -109,6 +109,13 @@ var testConversation = Conversation(
   listing: testOfferListing,
 );
 
+var testConversation2 = Conversation(
+  id: 1,
+  lastMessageId: 2,
+  firstMessageId: 1,
+  listing: testOfferListing,
+);
+
 var testMessage1 = Message(
   id: 1,
   senderId: 22,

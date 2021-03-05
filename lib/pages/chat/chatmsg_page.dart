@@ -25,6 +25,7 @@ class ChatMessagePage extends StatefulWidget {
 }
 
 class _ChatMessagePageState extends State<ChatMessagePage> {
+  final _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
   List<Message> messages = List();
 
@@ -58,14 +59,22 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                       return Container(
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: ListView.builder(
+                            reverse: true,
+                            controller: _scrollController,
                             itemCount: messages.length,
-                            itemBuilder: (context, index) => Container(
+                            itemBuilder: (context, index) {
+                              // scroll to bottom
+                              // https://stackoverflow.com/a/58924439
+                              final reversedIndex = messages.length - 1 - index;
+                              final message = messages[reversedIndex];
+                              return Container(
                                   padding: EdgeInsets.symmetric(vertical: 5.0),
                                   child: ChatBubbleFromMessage(
-                                    message: messages[index],
+                                    message: message,
                                     loggedInUserId: userdata.user.id,
                                   ),
-                                )),
+                                );
+                            }),
                       );
                   }),
                 ),
@@ -100,10 +109,11 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                     this.messages = refreshRequest;
                   });
                 }),
-                StandardButton(buttonText: "clear", onPressed: () {
-                  setState(() {
-                    this.messages.clear();
-                  });
+                StandardButton(buttonText: "ned", onPressed: () {
+                  _scrollController.animateTo(
+                    _scrollController.position.minScrollExtent
+                  , duration: Duration(milliseconds: 500),
+                      curve: Curves.fastOutSlowIn);
                 }),
               ],
             );

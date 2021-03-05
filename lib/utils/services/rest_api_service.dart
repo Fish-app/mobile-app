@@ -25,6 +25,7 @@ class ConversationService {
   Future<List<Conversation>> getAllConversations(BuildContext context) async {
     List<Conversation> conversations = List();
     conversations.add(testConversation);
+    conversations.add(testConversation2);
     return conversations;
   }
 
@@ -47,6 +48,15 @@ class ConversationService {
     }
     print("API: Got " + messages.length.toString() + "messages!");
     return messages;
+  }
+
+  Future<Conversation> startNewConversation(BuildContext context,
+      num listingId) async {
+    Conversation c = Conversation();
+    c.id = testConversation.id++;
+    c.listing = testOfferListing;
+    c.firstMessageId = 0;
+    c.lastMessageId = 0;
   }
 }
 
