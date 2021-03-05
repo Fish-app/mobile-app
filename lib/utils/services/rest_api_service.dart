@@ -36,16 +36,16 @@ class ConversationService {
       m.id = i+1;
       int j = i % 2;
       if (j == 0) {
-        m.senderId = 22;
+        m.senderId = 23;
         m.content = "masse fisk!";
       } else {
-        m.senderId = 23;
+        m.senderId = 1;
         m.content = "kjøpe kjøpe kjøpe!";
       }
       messages.add(m);
-      print("Got message with sender " + m.senderId.toString());
+      //print("Got message with sender " + m.senderId.toString());
     }
-    print("Got " + messages.length.toString() + "messages!");
+    print("API: Got " + messages.length.toString() + "messages!");
     return messages;
   }
 }
