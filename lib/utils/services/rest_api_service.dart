@@ -22,47 +22,74 @@ import '../../entities/listing.dart';
 
 class ConversationService {
   final FishappRestClient _client = FishappRestClient();
+  // FIXME: Nordic/unicode charachters is broken
 
   Future<List<Conversation>> getAllConversations(BuildContext context) async {
-    List<Conversation> conversations = List();
-    conversations.add(testConversation);
-    conversations.add(testConversation2);
-    return conversations;
-  }
+    var url =
+    apiPaths.getAppUri(apiPaths.getUserConversationList);
+    var response = await _client.get(context, url, addAuth: true);
 
-  Future<List<Message>> getAllMessagesInConversation(
-      BuildContext context, num conversationId) async {
-    List<Message> messages = List();
-    //FIXME: testing alot of messages
-    for (int i = 0; i < 30; i++) {
-      Message m = Message();
-      m.id = i + 1;
-      int j = i % 2;
-      if (j == 0) {
-        m.senderId = 23;
-        m.content = "masse fisk!";
-      } else {
-        m.senderId = 1;
-        m.content = "kjøpe kjøpe kjøpe!";
-      }
-      messages.add(m);
-      //print("Got message with sender " + m.senderId.toString());
+    List<Conversation> conversationList;
+    switch (response.statusCode) {
+      case 200:
+        var body = jsonDecode(response.body);
+        conversationList = Conversation.fromJsonList(body);
+        break;
+      case 401:
+        throw HttpException(HttpStatus.unauthorized.toString());
+        break;
+      case 500:
+        throw HttpException(HttpStatus.internalServerError.toString());
+        break;
+      default:
+        conversationList = List();
+        break;
     }
-    print("API: Got " + messages.length.toString() + "messages!");
-    return messages;
+    return conversationList;
   }
 
+  //TODO: UNTESTED
   Future<Conversation> startNewConversation(
       BuildContext context, num listingId) async {
-    Conversation c = Conversation();
-    c.id = testConversation.id++;
-    c.listing = testOfferListing;
-    c.firstMessageId = 0;
-    c.lastMessageId = 0;
+
+    Conversation result = Conversation();
+    var url = apiPaths
+        .getAppUri(apiPaths.startConversationFromListing(listingId));
+
+    try {
+      var response = await _client.post(context, url,
+          headers: {'Content-type': "application/json"},
+          addAuth: true);
+      switch (response.statusCode) {
+        case 200:
+          var body = jsonDecode(response.body);
+          result = Conversation.fromJson(body["data"]);
+          break;
+        case 304:
+          // Fekk 304, chat eksisterer frå før
+          // hent/ returner eksisterande chatt i stadenfor her.
+          //FIXME: lag funksjon for å hente chatt direkte på server og chaine her
+          // eller prøve å cache/finne eksisterande conversation i appen ?
+          // kanskje må lage hjelpefunksjon her
+          break;
+        case 401:
+          throw HttpException(HttpStatus.unauthorized.toString());
+          break;
+        case 500:
+        default:
+          throw HttpException(HttpStatus.internalServerError.toString());
+          break;
+      }
+    } on IOException catch (e) {
+      log("IO failure " + e.toString(), time: DateTime.now());
+      throw HttpException("Service unavailable");
+    }
+    return result;
   }
 
   Future<Conversation> sendMessageRequest(
       BuildContext context, num conversationId, MessageBody messageBody) async {
+    Conversation result;
     var url = apiPaths
         .getAppUri(apiPaths.sendMessageFromConversation(conversationId));
 
@@ -71,38 +98,79 @@ class ConversationService {
           headers: {'Content-type': "application/json"},
           body: messageBody.toJsonString(),
           addAuth: true);
-      print('CLIENT: Got response ' + response.statusCode.toString());
       switch (response.statusCode) {
         case 200:
-          return null;
+          var body = jsonDecode(response.body);
+          result = Conversation.fromJson(body["data"]);
+          break;
+        case 401:
+          throw HttpException(HttpStatus.unauthorized.toString());
           break;
         case 500:
         default:
-          //throw HttpException(HttpStatus.internalServerError.toString());
-        return null;
+          throw HttpException(HttpStatus.internalServerError.toString());
         break;
       }
     } on IOException catch (e) {
       log("IO failure " + e.toString(), time: DateTime.now());
       throw HttpException("Service unavailable");
     }
-    return null;
+    return result;
   }
 
   Future<List<Message>> getMessageUpdates(
-      BuildContext context, num conversationId, num lastMessageId) {
-    var uri = apiPaths.getAppUri(apiPaths.getMessageListFromId(conversationId));
-    var response;
-    return null;
+      BuildContext context, num conversationId, num lastMessageId) async {
+    //TODO: add queryparam for lastMessageId to limit list
+    var url =
+    apiPaths.getAppUri(apiPaths.getMessageListUpdatesQuery(conversationId));
+    var response = await _client.get(context, url, addAuth: true);
+
+    List<Message> returnList;
+    print("REST: Got status code " + response.statusCode.toString());
+    switch (response.statusCode) {
+      case 200:
+        var body = jsonDecode(response.body);
+        returnList = Message.fromJsonList(body);
+        print("REST: Got conversationslist count " + returnList.length.toString());
+        break;
+      case 401:
+        throw HttpException(HttpStatus.unauthorized.toString());
+        break;
+      case 500:
+        throw HttpException(HttpStatus.internalServerError.toString());
+        break;
+      default:
+        returnList = List();
+        break;
+    }
+    return returnList;
   }
 
-  Future<List<Message>> getMessageRange(
-      BuildContext context, num conversationId, num fromId, num offsetInList) {
-    var uri =
+  //TODO: Implement query parameters and do testing
+  Future<List<Message>> _getMessageRange(
+      BuildContext context, num conversationId, num fromId, num offsetInList) async {
+    var url =
         apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId));
-    var response;
+    var response = await _client.get(context, url, addAuth: true);
 
-    return null;
+    List<Message> returnList;
+
+    switch (response.statusCode) {
+      case 200:
+        var body = jsonDecode(response.body);
+        returnList = Message.fromJsonList(body);
+        break;
+      case 401:
+        throw HttpException(HttpStatus.unauthorized.toString());
+        break;
+      case 500:
+        throw HttpException(HttpStatus.internalServerError.toString());
+        break;
+      default:
+        returnList = List();
+        break;
+    }
+    return returnList;
   }
 }
 

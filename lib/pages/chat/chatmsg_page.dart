@@ -56,8 +56,8 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
               // CHAT MESSAGE LISTS
               Expanded(
                 child: appFutureBuilder<List<Message>>(
-                    _conversationService.getAllMessagesInConversation(
-                        context, conversation.id),
+                    _conversationService.getMessageUpdates(
+                        context, conversation.id, null),
                     (messagesFromServer, context) {
                   print("FUTURE builder: from srv result " +
                       messagesFromServer.length.toString());
@@ -89,7 +89,13 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
               SendChatMessageForm(onSendMessage: (MessageBody message) async {
                 print("GOT CALLBACK: " + message.messageText);
                 Conversation result = await _conversationService.sendMessageRequest(
-                    context, conversation.id, message);
+                    context, widget.baseConversation.id, message);
+                    // FIXME: normal conversation id is not initalized, should be
+                    //context, conversation.id, message);
+                if(result != null) {
+                  print("Message added OK");
+                    conversation = result;
+                }
                 //TODO: implement logic handeling msgsId range from conversation
                 // add new messages to messagelist.
                 // maybe use provider or somehow make conversations observable
@@ -102,7 +108,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                   onPressed: () async {
                     this.messages.clear();
                     List<Message> refreshRequest = await _conversationService
-                        .getAllMessagesInConversation(context, conversation.id);
+                        .getMessageUpdates(context, widget.baseConversation.id, null);
                     setState(() {
                       this.messages.addAll(refreshRequest);
                     });

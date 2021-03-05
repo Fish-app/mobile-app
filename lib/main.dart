@@ -101,30 +101,3 @@ var testOfferListing = OfferListing(
   longitude: 18.303778,
   price: 20,
 );
-
-var testConversation = Conversation(
-  id: 1,
-  lastMessageId: 2,
-  firstMessageId: 1,
-  listing: testOfferListing,
-);
-
-var testConversation2 = Conversation(
-  id: 1,
-  lastMessageId: 2,
-  firstMessageId: 1,
-  listing: testOfferListing,
-);
-
-var testMessage1 = Message(
-  id: 1,
-  senderId: 22,
-  content: "asdfasdasdasd"
-);
-
-var testMessage2 = Message(
-    id: 2,
-    senderId: 23,
-    content: "kfkfk kefk asdø øsd"
-);
-

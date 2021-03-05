@@ -16,4 +16,10 @@ class Conversation {
 
   factory Conversation.fromJson(Map<String, dynamic> json) => _$ConversationFromJson(json);
   Map<String, dynamic> toJson() => _$ConversationToJson(this);
+
+
+  static fromJsonList(List list) {
+    if (list == null) return List();
+    return list.map((m) => Conversation.fromJson(m)).toList();
+  }
 }

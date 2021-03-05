@@ -14,4 +14,10 @@ class Message {
 
   factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
   Map<String, dynamic> toJson() => _$MessageToJson(this);
+
+
+  static fromJsonList(List list) {
+    if (list == null) return List();
+    return list.map((m) => Message.fromJson(m)).toList();
+  }
 }
