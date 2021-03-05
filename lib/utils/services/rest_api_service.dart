@@ -58,6 +58,34 @@ class ConversationService {
     c.firstMessageId = 0;
     c.lastMessageId = 0;
   }
+
+  Future<Conversation> sendMessageRequest(BuildContext context,
+      num conversationId,
+      String messageBody
+      ) {
+    var uri = apiPaths.getAppUri(apiPaths.sendMessageFromConversation(conversationId));
+    var response;
+    return null;
+  }
+
+  Future<List<Message>> getMessageUpdates(BuildContext context,
+      num conversationId,
+      num lastMessageId) {
+    var uri = apiPaths.getAppUri(apiPaths.getMessageListFromId(conversationId));
+    var response;
+    return null;
+  }
+
+
+  Future<List<Message>> getMessageRange(BuildContext context,
+      num conversationId,
+      num fromId,
+      num offsetInList) {
+    var uri = apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId));
+    var response;
+
+    return null;
+  }
 }
 
 
