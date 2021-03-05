@@ -25,7 +25,7 @@ final backgroundColor = Color(0xfffbfbfb);
 final searchBarColor = Color(0x1e000000);
 final searchBarBorderColor = Color(0xff707070);
 
-final inputFealdbgColor = Color(0xccffffff);
+final inputFealdbgColor = Color(0xfffbfbfb);
 
 final softBlack = Color(0xff292929);
 final accentGray = Color(0xff1f1f1f);
