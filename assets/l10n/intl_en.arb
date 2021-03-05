@@ -174,5 +174,21 @@
   "newListing": "New listing",
   "@newListing": {},
   "cancel": "Cancel",
-  "@cancel": {}
+  "@cancel": {},
+  "newBuyRequest": "New buy request",
+  "@newBuyRequest": {},
+  "setHomeLocation": "Set home location",
+  "@setHomeLocation": {},
+  "dueDate": "Due date",
+  "@dueDate": {},
+  "addOrder": "Add order",
+  "@addOrder": {},
+  "maxDistance": "Max distance",
+  "@maxDistance": {},
+  "locationNotSet": "Please set a location",
+  "@locationNotSet": {},
+  "buyRequest": "Buy request",
+  "@buyRequest": {},
+  "takeBuyRequest": "Take buy request",
+  "@takeBuyRequest": {}
 }

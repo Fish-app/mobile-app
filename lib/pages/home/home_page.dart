@@ -132,7 +132,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
   Widget _goToListing(OfferListing offerListing) {
     return GestureDetector(
       onTap: () => {
-        Navigator.pushNamed(context, routes.ListingInfo,
+        Navigator.pushNamed(context, routes.OfferListingInfo,
             arguments: offerListing)
       },
       child: OfferListingCard(cardListing: offerListing),
