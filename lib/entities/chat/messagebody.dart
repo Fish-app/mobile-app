@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'messagebody.g.dart';
@@ -11,4 +13,7 @@ class MessageBody {
 
   factory MessageBody.fromJson(Map<String, dynamic> json) => _$MessageBodyFromJson(json);
   Map<String, dynamic> toJson() => _$MessageBodyToJson(this);
+
+
+  String toJsonString() => jsonEncode(_$MessageBodyToJson(this));
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:fishapp/entities/chat/message.dart';
+import 'package:fishapp/entities/chat/messagebody.dart';
 import 'package:fishapp/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fishapp/constants/api_path.dart' as apiPaths;
@@ -29,12 +30,13 @@ class ConversationService {
     return conversations;
   }
 
-  Future<List<Message>> getAllMessagesInConversation(BuildContext context, num conversationId) async {
+  Future<List<Message>> getAllMessagesInConversation(
+      BuildContext context, num conversationId) async {
     List<Message> messages = List();
     //FIXME: testing alot of messages
-    for(int i = 0; i < 30; i++) {
+    for (int i = 0; i < 30; i++) {
       Message m = Message();
-      m.id = i+1;
+      m.id = i + 1;
       int j = i % 2;
       if (j == 0) {
         m.senderId = 23;
@@ -50,8 +52,8 @@ class ConversationService {
     return messages;
   }
 
-  Future<Conversation> startNewConversation(BuildContext context,
-      num listingId) async {
+  Future<Conversation> startNewConversation(
+      BuildContext context, num listingId) async {
     Conversation c = Conversation();
     c.id = testConversation.id++;
     c.listing = testOfferListing;
@@ -59,36 +61,50 @@ class ConversationService {
     c.lastMessageId = 0;
   }
 
-  Future<Conversation> sendMessageRequest(BuildContext context,
-      num conversationId,
-      String messageBody
-      ) {
-    var uri = apiPaths.getAppUri(apiPaths.sendMessageFromConversation(conversationId));
-    var response;
+  Future<Conversation> sendMessageRequest(
+      BuildContext context, num conversationId, MessageBody messageBody) async {
+    var url = apiPaths
+        .getAppUri(apiPaths.sendMessageFromConversation(conversationId));
+
+    try {
+      var response = await _client.post(context, url,
+          headers: {'Content-type': "application/json"},
+          body: messageBody.toJsonString(),
+          addAuth: true);
+      print('CLIENT: Got response ' + response.statusCode.toString());
+      switch (response.statusCode) {
+        case 200:
+          return null;
+          break;
+        case 500:
+        default:
+          //throw HttpException(HttpStatus.internalServerError.toString());
+        return null;
+        break;
+      }
+    } on IOException catch (e) {
+      log("IO failure " + e.toString(), time: DateTime.now());
+      throw HttpException("Service unavailable");
+    }
     return null;
   }
 
-  Future<List<Message>> getMessageUpdates(BuildContext context,
-      num conversationId,
-      num lastMessageId) {
+  Future<List<Message>> getMessageUpdates(
+      BuildContext context, num conversationId, num lastMessageId) {
     var uri = apiPaths.getAppUri(apiPaths.getMessageListFromId(conversationId));
     var response;
     return null;
   }
 
-
-  Future<List<Message>> getMessageRange(BuildContext context,
-      num conversationId,
-      num fromId,
-      num offsetInList) {
-    var uri = apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId));
+  Future<List<Message>> getMessageRange(
+      BuildContext context, num conversationId, num fromId, num offsetInList) {
+    var uri =
+        apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId));
     var response;
 
     return null;
   }
 }
-
-
 
 class CommodityService {
   final FishappRestClient _client = FishappRestClient();
@@ -208,7 +224,7 @@ class ListingService {
     }
     return offerListing;
   }
-  
+
   Future<BuyRequest> createBuyRequest(
       BuildContext context, BuyRequest buyRequest) async {
     var uri = apiPaths.getAppUri(apiPaths.createBuyRequest);
@@ -219,8 +235,7 @@ class ListingService {
           addAuth: true);
       switch (response.statusCode) {
         case 200:
-          return buyRequest =
-              BuyRequest.fromJson(jsonDecode(response.body));
+          return buyRequest = BuyRequest.fromJson(jsonDecode(response.body));
           break;
         case 401:
           throw HttpException(HttpStatus.unauthorized.toString());

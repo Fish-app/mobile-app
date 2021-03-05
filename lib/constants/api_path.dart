@@ -9,7 +9,7 @@ String startConversationFromListing(int listingId) {
 }
 
 String sendMessageFromConversation(int conversationId) {
-  return "/chat/" + conversationId.toString();
+  return "/chat/" + conversationId.toString() + "/send";
 }
 
 String getMessageListFromId(int conversation) {

@@ -86,10 +86,16 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                 }),
               ),
               // CHAT WRITE MESSAGE BAR
-              SendChatMessageForm(
-                  onSendMessage: (MessageBody message) {
-                   print("GOT CALLBACK: " + message.messageText);
+              SendChatMessageForm(onSendMessage: (MessageBody message) async {
+                print("GOT CALLBACK: " + message.messageText);
+                Conversation result = await _conversationService.sendMessageRequest(
+                    context, conversation.id, message);
+                //TODO: implement logic handeling msgsId range from conversation
+                // add new messages to messagelist.
+                // maybe use provider or somehow make conversations observable
+                // to redraw messagelist. (maybe is is not possible to use fishapp default builder)
               }),
+              //
               // DEBUG BUTTONS
               StandardButton(
                   buttonText: "refresh",
@@ -120,6 +126,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
 typedef SendMessageCallback = void Function(MessageBody messageBody);
 
 class SendChatMessageForm extends StatefulWidget {
+  //FIXME: sende mld som callback, eller resultet ?
   final SendMessageCallback onSendMessage;
   SendChatMessageForm({this.onSendMessage});
 
@@ -149,7 +156,8 @@ class _SendChatMessageFormState extends State<SendChatMessageForm> {
   }
 
   void sendMessage() {
-    MessageBody mbody = MessageBody(messageText: textEditController.text.toString());
+    MessageBody mbody =
+        MessageBody(messageText: textEditController.text.toString());
     widget.onSendMessage(mbody);
     textEditController.clear();
   }
@@ -171,12 +179,10 @@ class _SendChatMessageFormState extends State<SendChatMessageForm> {
           Align(
               alignment: Alignment.centerRight,
               child: StandardButton(
-                buttonText: "Send",
+                  buttonText: "Send",
                   //child: Text("Send"),
                   //style: Theme.of(context).elevatedButtonTheme.style,
-                  onPressed: isMessageValid ? sendMessage : null
-              )
-          ),
+                  onPressed: isMessageValid ? sendMessage : null)),
         ],
       ),
     );
