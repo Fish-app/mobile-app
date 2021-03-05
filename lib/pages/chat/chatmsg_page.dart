@@ -32,9 +32,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ChatMessageState(),
-      child: Container(
+    return Container(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
@@ -55,25 +53,20 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                           context, widget.conversation.id),
                       (messagesFromServer, context) {
                         print("FUTURE builder: from srv result " + messagesFromServer.length.toString());
-                        // Save the result
-                        //Provider.of<ChatMessageState>(context,listen: false).replaceList(messagesFromServer);
+                        this.messages = messagesFromServer;
 
-                    return Consumer<ChatMessageState>(
-                        builder: (context, messageState, child) {
-                          print("CONSUMER: mesg state update: " + messageState.getCount().toString());
                       return Container(
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: ListView.builder(
-                            itemCount: messageState.getMessages().length,
+                            itemCount: messages.length,
                             itemBuilder: (context, index) => Container(
                                   padding: EdgeInsets.symmetric(vertical: 5.0),
                                   child: ChatBubbleFromMessage(
-                                    message: messageState.getSingleMessage(index),
+                                    message: messages[index],
                                     loggedInUserId: userdata.user.id,
                                   ),
                                 )),
                       );
-                    });
                   }),
                 ),
                 // CHAT WRITE MESSAGE BAR
@@ -103,17 +96,20 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                   List<Message> refreshRequest
                   = await widget._conversationService
                       .getAllMessagesInConversation(context, widget.conversation.id);
-                  Provider.of<ChatMessageState>(context,listen: false).replaceList(refreshRequest);
+                  setState(() {
+                    this.messages = refreshRequest;
+                  });
                 }),
                 StandardButton(buttonText: "clear", onPressed: () {
-                  Provider.of<ChatMessageState>(context,listen: false).removeAll();
+                  setState(() {
+                    this.messages.clear();
+                  });
                 }),
               ],
             );
           },
         ))),
-      ),
-    );
+      );
   }
 }
 
