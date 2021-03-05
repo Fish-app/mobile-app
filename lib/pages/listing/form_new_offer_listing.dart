@@ -18,32 +18,32 @@ import 'package:latlong/latlong.dart';
 import 'package:fishapp/entities/listing.dart';
 
 import '../../entities/listing.dart';
-import '../../entities/listing.dart';
 import '../../utils/form/form_validators.dart';
-import '../../utils/form/form_validators.dart';
-import '../../utils/form/form_validators.dart';
-import 'listing_info_page.dart';
 
-class NewListingForm extends StatefulWidget {
+
+class NewOfferListingForm extends StatefulWidget {
   final GenericRouteData routeData;
   final listingService = ListingService();
   final service = CommodityService();
 
-  NewListingForm({Key key, this.routeData}) : super(key: key);
+  NewOfferListingForm({Key key, this.routeData}) : super(key: key);
 
   @override
-  _NewListingFormState createState() => _NewListingFormState();
+  _NewOfferListingFormState createState() => _NewOfferListingFormState();
 }
 
-class _NewListingFormState extends State<NewListingForm> {
+class _NewOfferListingFormState extends State<NewOfferListingForm> {
   final _formKey = GlobalKey<FormState>();
   OfferListing _listingFormData;
   String _errorMessage = "";
-  final _firstDate = DateTime(1900);
+  final _firstDate = DateTime(2000);
   final _lastDate = DateTime(2100);
   final _dateController = TextEditingController();
   Commodity pickedFish;
+  bool _hasLocation = false;
   LatLng _location;
+  String _notPickedLocationMessage = "";
+
 
   @override
   void initState() {
@@ -89,18 +89,20 @@ class _NewListingFormState extends State<NewListingForm> {
                 onPressed: () {
                   _navigateAndDisplayMap(context);
                 }),
+            Text(_notPickedLocationMessage, style: TextStyle(color: Colors.red)),
             FormFieldNormal(
               title: S.of(context).amount.toUpperCase(),
               keyboardType: TextInputType.number,
-              suffixText: "kg",
+              suffixText: "Kg",
               onSaved: (newValue) => {
-                _listingFormData.maxAmount = int.parse(
-                  newValue,
-                  onError: (source) => 0,
-                )
+                _listingFormData.maxAmount = int.tryParse(newValue)
               },
               validator: (value) {
-                return validateIntInput(value, context);
+                if (value.isEmpty) {
+                  return validateNotEmptyInput(value, context);
+                } else {
+                  return validateIntInput(value, context);
+                }
               },
             ),
             FormFieldNormal(
@@ -108,9 +110,13 @@ class _NewListingFormState extends State<NewListingForm> {
               suffixText: "nok",
               keyboardType: TextInputType.number,
               onSaved: (newValue) =>
-                  {_listingFormData.price = double.parse(newValue)},
+                  {_listingFormData.price = double.tryParse(newValue)},
               validator: (value) {
-                return validateIntInput(value, context);
+                if (value.isEmpty) {
+                  return validateNotEmptyInput(value, context);
+                } else {
+                  return validateIntInput(value, context);
+                }
               },
             ),
             FormFieldNormal(
@@ -130,7 +136,9 @@ class _NewListingFormState extends State<NewListingForm> {
                     initialDate: DateTime.now(),
                     firstDate: _firstDate,
                     lastDate: _lastDate);
-                _dateController.text = date.toString().substring(0, 10);
+                if (date != null) {
+                  _dateController.text = date.toString().substring(0, 10);
+                }
               },
             ),
             FormFieldNormal(
@@ -170,6 +178,7 @@ class _NewListingFormState extends State<NewListingForm> {
       _location = result;
       _listingFormData.longitude = _location.longitude;
       _listingFormData.latitude = _location.latitude;
+      _hasLocation = true;
     }
   }
 
@@ -179,7 +188,16 @@ class _NewListingFormState extends State<NewListingForm> {
       _errorMessage = "";
     });
     formState.save();
-    if (formState.validate()) {
+    if (!_hasLocation) {
+      setState(() {
+        _notPickedLocationMessage = S.of(context).locationNotSet;
+      });
+    } else {
+      setState(() {
+        _notPickedLocationMessage = "";
+      });
+    }
+    if (formState.validate() && _hasLocation) {
       try {
         print(_listingFormData.toJson());
         print(_listingFormData.toJsonString());
@@ -190,7 +208,7 @@ class _NewListingFormState extends State<NewListingForm> {
             ..removeCurrentSnackBar()
             ..showSnackBar(SnackBar(content: Text("Listing has been created")));
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
-          Navigator.pushReplacementNamed(context, routes.ListingInfo,
+          Navigator.pushReplacementNamed(context, routes.OfferListingInfo,
               arguments: suc);
         }
       } on HttpException catch (e) {

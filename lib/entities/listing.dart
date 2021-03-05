@@ -1,14 +1,13 @@
 import 'dart:convert';
+import 'dart:core';
 
+import 'package:fishapp/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/seller.dart';
 import 'package:fishapp/utils/distance_calculator.dart';
 
-import 'commodity.dart';
-import 'commodity.dart';
-import 'commodity.dart';
 import 'commodity.dart';
 
 part 'listing.g.dart';
@@ -21,7 +20,7 @@ String _simplifyComodity(Commodity commodity) {
 class Listing {
   num id;
   int created;
-  Seller creator;
+  User creator;
   int endDate;
 
   Commodity commodity;
@@ -41,7 +40,7 @@ class Listing {
       this.price,
       this.isOpen,
       this.latitude = 0,
-      this.longitude = 08});
+      this.longitude = 0});
 
   factory Listing.fromJson(Map<String, dynamic> json) =>
       _$ListingFromJson(json);
@@ -69,8 +68,8 @@ class OfferListing extends Listing {
       Commodity commodity,
       double price,
       bool isOpen,
-      double latitude = 0,
-      double longitude = 0,
+      double latitude,
+      double longitude,
       this.maxAmount,
       this.amountLeft,
       this.additionalInfo})
@@ -81,7 +80,9 @@ class OfferListing extends Listing {
             endDate: endDate,
             commodity: commodity,
             price: price,
-            isOpen: isOpen);
+            isOpen: isOpen,
+            latitude: latitude,
+            longitude: longitude);
 
   factory OfferListing.fromJson(Map<String, dynamic> json) =>
       _$OfferListingFromJson(json);
@@ -89,4 +90,42 @@ class OfferListing extends Listing {
   Map<String, dynamic> toJson() => _$OfferListingToJson(this);
 
   String toJsonString() => jsonEncode(_$OfferListingToJson(this));
+}
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+class BuyRequest extends Listing {
+  int amount;
+  String additionalInfo;
+  double maxDistance;
+
+  BuyRequest(
+  {num id,
+  int created,
+  User creator,
+  int endDate,
+  Commodity commodity,
+  double price,
+  bool isOpen,
+  double latitude,
+  double longitude,
+  this.amount,
+  this.additionalInfo,
+  this.maxDistance})
+  : super(
+        id: id,
+        created: created,
+        creator: creator,
+        endDate: endDate,
+        commodity: commodity,
+        price: price,
+        isOpen: isOpen,
+        latitude: latitude,
+        longitude: longitude);
+
+  factory BuyRequest.fromJson(Map<String, dynamic> json) =>
+      _$BuyRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BuyRequestToJson(this);
+
+  String toJsonString() => jsonEncode(_$BuyRequestToJson(this));
 }

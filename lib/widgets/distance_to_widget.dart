@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fishapp/entities/listing.dart';
 
 class DistanceToWidget extends StatefulWidget {
-  final OfferListing cardListing;
+  final Listing cardListing;
 
   const DistanceToWidget({Key key, this.cardListing}) : super(key: key);
 

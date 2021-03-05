@@ -1,7 +1,9 @@
 import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/pages/listing/buy_request_info_page.dart';
 import 'package:fishapp/pages/listing/choose_new_listing_page.dart';
 import 'package:fishapp/pages/listing/listing_info_page.dart';
-import 'package:fishapp/pages/listing/new_listing_page.dart';
+import 'package:fishapp/pages/listing/new_buy_request_page.dart';
+import 'package:fishapp/pages/listing/new_offer_listing_page.dart';
 import 'package:fishapp/pages/home/home_page.dart';
 import 'package:fishapp/pages/login/login_page.dart';
 import 'package:fishapp/pages/chat/chat_page.dart';
@@ -53,7 +55,7 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         loginReturnRouteData: params,
       );
       break;
-    case routes.ListingInfo:
+    case routes.OfferListingInfo:
       if (params is OfferListing) {
         print(params.toJsonString());
         page = OfferListingInfoPage(
@@ -63,13 +65,21 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         page = Path404Page();
       }
       break;
+    case routes.BuyRequestInfo:
+      if (params is BuyRequest) {
+        page = BuyRequestInfoPage(
+          buyRequest: params,
+        );
+      } else {
+        page = Path404Page();
+      }
+      break;
     case routes.ChooseNewListing:
       if (isSeller) {
         page = ChooseNewListingPage();
       } else {
-        //TODO: bytte til lag order
         page = reqireLogin(() {
-          return NewListingPage(
+          return NewBuyRequestPage(
             routeData: params,
           );
         });
@@ -95,7 +105,14 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       break;
     case routes.NewListing:
       page = reqireLogin(() {
-        return NewListingPage(
+        return NewOfferListingPage(
+          routeData: params,
+        );
+      });
+      break;
+    case routes.NewBuyRequest:
+      page = reqireLogin(() {
+        return NewBuyRequestPage(
           routeData: params,
         );
       });
