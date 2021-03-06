@@ -60,6 +60,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
         });
       } on HttpException catch (e) {
         setState(() {
+          // todo: display http status data directly??
           _errorMessage = e.message;
         });
       }
