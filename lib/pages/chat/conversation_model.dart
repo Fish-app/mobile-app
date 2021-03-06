@@ -15,7 +15,6 @@ class ConversationModel extends ChangeNotifier {
   bool _sendMessageErrorIsPresent = false;
   MessageBody _lastFailedSendMessage = MessageBody();
 
-
   ConversationModel(this._buildContext, this._currentConversation);
 
   UnmodifiableListView<Message> get messages => UnmodifiableListView(_messages);
@@ -28,7 +27,6 @@ class ConversationModel extends ChangeNotifier {
     this._messages.addAll(messages);
   }
 
-
   void clear() {
     this._messages.clear();
     this._currentConversation.firstMessageId = 0;
@@ -36,10 +34,17 @@ class ConversationModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Message>> loadMessages(
+      BuildContext context, num conversationId) async {
+    return await _conversationService.getMessageUpdates(
+        context, conversationId, null);
+  }
+
   Future<void> reloadAllMessages() async {
     List<Message> reloadResult = List();
-    reloadResult = await _conversationService.getMessageUpdates(this._buildContext, this._currentConversation.id, null);
-    if(reloadResult.isNotEmpty) {
+    reloadResult = await _conversationService.getMessageUpdates(
+        this._buildContext, this._currentConversation.id, null);
+    if (reloadResult.isNotEmpty) {
       this._messages.clear();
       this._messages.addAll(reloadResult);
       notifyListeners();
@@ -48,10 +53,9 @@ class ConversationModel extends ChangeNotifier {
 
   Future<void> sendMessage(MessageBody message) async {
     try {
-      Conversation result =
-      await _conversationService.sendMessageRequest(
+      Conversation result = await _conversationService.sendMessageRequest(
           this._buildContext, this._currentConversation.id, message);
-      if(result != null) {
+      if (result != null) {
         print('MODEL: Sendt message OK');
         _sendMessageErrorIsPresent = false;
         _lastFailedSendMessage = MessageBody();
@@ -61,30 +65,33 @@ class ConversationModel extends ChangeNotifier {
         _lastFailedSendMessage = message;
         notifyListeners();
       }
-    } on Exception catch (e) {
+    } on Exception {
       _sendMessageErrorIsPresent = true;
       _lastFailedSendMessage = message;
       notifyListeners();
     }
   }
 
-  Future<void> _loadNewMessages(Conversation metadataInApp, Conversation metadataFromServer) async {
+  Future<void> _loadNewMessages(
+      Conversation metadataInApp, Conversation metadataFromServer) async {
     num lastLocalMsgId = metadataInApp.lastMessageId; // 5
     num lastServerMsgId = metadataFromServer.lastMessageId; //6
-    print('MODEL: last msgs id local:server = ' + lastLocalMsgId.toString() + ':' + lastServerMsgId.toString());
+    print('MODEL: last msgs id local:server = ' +
+        lastLocalMsgId.toString() +
+        ':' +
+        lastServerMsgId.toString());
     List<Message> tailMessageListResult = List();
     try {
-      tailMessageListResult = await _conversationService.getMessageUpdates(this._buildContext, metadataInApp.id, lastLocalMsgId);
-      if(tailMessageListResult != null && tailMessageListResult.isNotEmpty) {
-        print('MODEL: Added ' + tailMessageListResult.length.toString() + 'messages from server.');
+      tailMessageListResult = await _conversationService.getMessageUpdates(
+          this._buildContext, metadataInApp.id, lastLocalMsgId);
+      if (tailMessageListResult != null && tailMessageListResult.isNotEmpty) {
+        print('MODEL: Added ' +
+            tailMessageListResult.length.toString() +
+            'messages from server.');
         this._messages.addAll(tailMessageListResult);
         this._currentConversation = metadataFromServer;
         notifyListeners();
       }
-
-    } on Exception catch (e) {
-
-    }
+    } on Exception catch (e) {}
   }
-
 }

@@ -1,17 +1,14 @@
-import 'package:fishapp/config/themes/theme_config.dart';
 import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:fishapp/entities/chat/message.dart';
-import 'package:fishapp/entities/chat/messagebody.dart';
-import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/pages/chat/form_send_chatmsg.dart';
 import 'package:fishapp/utils/default_builder.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:fishapp/utils/state/appstate.dart';
+import 'package:fishapp/widgets/chat/chatbubble_error.dart';
+import 'package:fishapp/widgets/chat/chattbubble_message.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_bubble/bubble_type.dart';
-import 'package:flutter_chat_bubble/chat_bubble.dart';
-import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_5.dart';
 import 'package:provider/provider.dart';
 
 import 'conversation_model.dart';
@@ -29,6 +26,11 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
   final ConversationService _conversationService = ConversationService();
   final _scrollController = ScrollController();
 
+  //FIXME: Unicode/Nordic charcates
+  //FIXME: Fix that main column is not redrawed on keyboard popup,
+  // or migrate init state/futurebuilder so that initalisation happens
+  // outside of build below
+
   @override
   void initState() {
     // TODO: implement initState
@@ -40,10 +42,6 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
     // TODO: implement dispose
     super.dispose();
   }
-
-  //FIXME: Fix that main column is not redrawed on keyboard popup,
-  // or migrate init state/futurebuilder so that initalisation happens
-  // outside of build below
 
   @override
   Widget build(BuildContext context) {
@@ -100,18 +98,22 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                     );
                   }),
                 ),
-                Consumer<ConversationModel>(builder: (context, model, child) =>
-                Visibility(
-                  visible: model.sendMessageErrorOccurred,
-                  child: ChatBubbleFromError(failedMessage: model.lastFailedSendMessage),
-                )),
+                Consumer<ConversationModel>(
+                    builder: (context, model, child) => Visibility(
+                          visible: model.sendMessageErrorOccurred,
+                          child: ChatBubbleFromError(
+                              failedMessage: model.lastFailedSendMessage),
+                        )),
                 // CHAT WRITE MESSAGE BAR
                 SendChatMessageForm(),
                 //
+
+                //TODO: REMOVE DEBUG BUTTONS
                 // DEBUG BUTTONS
                 ElevatedButton(
                     style: Theme.of(context).elevatedButtonTheme.style,
-                    child: Text("refresh/hold to vekk",
+                    child: Text(
+                      "refresh/hold to vekk",
                       style: Theme.of(context).textTheme.button,
                     ),
                     onLongPress: () {
@@ -136,136 +138,5 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
         ))),
       ),
     );
-  }
-}
-
-class SendChatMessageForm extends StatefulWidget {
-  @override
-  _SendChatMessageFormState createState() => _SendChatMessageFormState();
-}
-
-class _SendChatMessageFormState extends State<SendChatMessageForm> {
-  final textEditController = TextEditingController();
-  bool isMessageValid = false;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    textEditController.addListener(_validateMessageInput);
-  }
-
-  _validateMessageInput() {
-    setState(() {
-      if (textEditController.text.isNotEmpty) {
-        isMessageValid = true;
-      } else {
-        isMessageValid = false;
-      }
-    });
-  }
-
-  void sendMessage() {
-    MessageBody mbody =
-        MessageBody(messageText: textEditController.text.toString());
-    textEditController.clear();
-    Provider.of<ConversationModel>(context, listen: false).sendMessage(mbody);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(icon: Icon(Icons.camera_alt), onPressed: null),
-          Flexible(
-            child: TextField(
-              controller: textEditController,
-            ),
-          ),
-          Align(
-              alignment: Alignment.centerRight,
-              child: StandardButton(
-                  buttonText: "Send",
-                  onPressed: isMessageValid ? sendMessage : null)),
-        ],
-      ),
-    );
-  }
-}
-class ChatBubbleFromError extends StatelessWidget {
-  final MessageBody failedMessage;
-
-  const ChatBubbleFromError({Key key, @required this.failedMessage}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return ChatBubble(
-      backGroundColor: Colors.red,
-      alignment:
-           Alignment.topRight,
-      clipper: ChatBubbleClipper5(
-        type:
-             BubbleType.sendBubble
-      ),
-      child: Column(
-        children: [
-          Text("Failure"),
-          Text("Unable to send:" + failedMessage.messageText,
-              style: TextStyle(
-                  color:
-                  Colors.white)
-
-          ),
-          StandardButton(buttonText: "Try again?", onPressed: () {
-            Provider.of<ConversationModel>(context).sendMessage(failedMessage);
-          })
-        ],
-      ),
-    );
-  }
-}
-
-
-class ChatBubbleFromMessage extends StatelessWidget {
-  final Message message;
-  final num loggedInUserId;
-
-  const ChatBubbleFromMessage(
-      {Key key, @required this.message, @required this.loggedInUserId})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    //print("Drawing message id:" + message.id.toString());
-
-    return ChatBubble(
-      backGroundColor: _isSenderLoggedInUser(message)
-          ? Color(0xff354ff6)
-          : Color(0xffE7E7ED),
-      alignment: _isSenderLoggedInUser(message)
-          ? Alignment.topRight
-          : Alignment.topLeft,
-      clipper: ChatBubbleClipper5(
-        type: _isSenderLoggedInUser(message)
-            ? BubbleType.sendBubble
-            : BubbleType.receiverBubble,
-      ),
-      child: Text(message.content,
-          style: TextStyle(
-              color: _isSenderLoggedInUser(message)
-                  ? Colors.white
-                  : Colors.black)),
-    );
-  }
-
-  bool _isSenderLoggedInUser(Message message) {
-    if (loggedInUserId == message.senderId) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }
