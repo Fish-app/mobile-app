@@ -43,22 +43,21 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
     // TODO: implement dispose
     super.dispose();
     //Provider.of<ConversationModel>(context, listen: false).clear();
-
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => ConversationModel(context, widget.baseConversation),
+      create: (context) => ConversationModel(context, widget.baseConversation),
       child: Container(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      child: SafeArea(
-          child: getFishappDefaultScaffold(context,
-              includeTopBar: widget.baseConversation.listing.creator.name,
-              extendBehindAppBar: false, child: Consumer<AppState>(
-        builder: (context, userdata, child) {
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: SafeArea(
+            child: getFishappDefaultScaffold(context,
+                includeTopBar: widget.baseConversation.listing.creator.name,
+                extendBehindAppBar: false, child: Consumer<AppState>(
+          builder: (context, userdata, child) {
             return Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -73,80 +72,62 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                     print("FUTURE builder: from srv result " +
                         messagesFromServer.length.toString());
                     //this.messages.addAll(messagesFromServer);
-                    Provider.of<ConversationModel>(context, listen: false).initMessages(messagesFromServer);
+                    Provider.of<ConversationModel>(context, listen: false)
+                        .initMessages(messagesFromServer);
 
                     return Consumer<ConversationModel>(
-                      builder: (context, model, child) =>
-                      Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
-                      child: ListView.builder(
-                          reverse: true,
-                          controller: _scrollController,
-                          itemCount: model.messages.length,
-                          itemBuilder: (context, index) {
-                            // scroll to bottom
-                            // https://stackoverflow.com/a/58924439
-                            final reversedIndex = model.messages.length - 1 - index;
-                            final message = model.messages[reversedIndex];
-                            return Container(
-                              padding: EdgeInsets.symmetric(vertical: 5.0),
-                              child: ChatBubbleFromMessage(
-                                message: message,
-                                loggedInUserId: userdata.user.id,
-                              ),
-                            );
-                          }),
-                    ),
+                      builder: (context, model, child) => Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        child: ListView.builder(
+                            reverse: true,
+                            controller: _scrollController,
+                            itemCount: model.messages.length,
+                            itemBuilder: (context, index) {
+                              // scroll to bottom
+                              // https://stackoverflow.com/a/58924439
+                              final reversedIndex =
+                                  model.messages.length - 1 - index;
+                              final message = model.messages[reversedIndex];
+                              return Container(
+                                padding: EdgeInsets.symmetric(vertical: 5.0),
+                                child: ChatBubbleFromMessage(
+                                  message: message,
+                                  loggedInUserId: userdata.user.id,
+                                ),
+                              );
+                            }),
+                      ),
                     );
                   }),
                 ),
                 // CHAT WRITE MESSAGE BAR
-                SendChatMessageForm(onSendMessage: (MessageBody message) async {
-                  print("GOT CALLBACK: " + message.messageText);
-                  // FIXME: normal conversation id is not initalized, should be
-
-                  Provider.of<ConversationModel>(context, listen: false).sendMessage(message);
-                  //context, conversation.id, message);
-                  //TODO: implement logic handeling msgsId range from conversation
-                  // add new messages to messagelist.
-                  // maybe use provider or somehow make conversations observable
-                  // to redraw messagelist. (maybe is is not possible to use fishapp default builder)
-                }),
+                SendChatMessageForm(),
                 //
                 // DEBUG BUTTONS
-                    StandardButton(
-                        buttonText: "refresh",
-                        onPressed: () {
-                          Provider.of<ConversationModel>(context, listen: false).reloadMessages();
-                          //this.messages.clear();
-                          //List<Message> refreshRequest =
-                          //await _conversationService.getMessageUpdates(
-                           //   context, widget.baseConversation.id, null);
-                        }),
-                    StandardButton(
-                        buttonText: "ned",
-                        onPressed: () {
-                          _scrollController.animateTo(
-                              _scrollController.position.minScrollExtent,
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.fastOutSlowIn);
-                        }),
+                StandardButton(
+                    buttonText: "refresh",
+                    onPressed: () {
+                      Provider.of<ConversationModel>(context, listen: false)
+                          .reloadMessages();
+                    }),
+                StandardButton(
+                    buttonText: "ned",
+                    onPressed: () {
+                      _scrollController.animateTo(
+                          _scrollController.position.minScrollExtent,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.fastOutSlowIn);
+                    }),
               ],
-          );
-        },
-      ))),
-    ),
+            );
+          },
+        ))),
+      ),
     );
   }
 }
 
-typedef SendMessageCallback = void Function(MessageBody messageBody);
-
 class SendChatMessageForm extends StatefulWidget {
-  //FIXME: sende mld som callback, eller resultet ?
-  final SendMessageCallback onSendMessage;
-  SendChatMessageForm({this.onSendMessage});
-
   @override
   _SendChatMessageFormState createState() => _SendChatMessageFormState();
 }
@@ -175,9 +156,8 @@ class _SendChatMessageFormState extends State<SendChatMessageForm> {
   void sendMessage() {
     MessageBody mbody =
         MessageBody(messageText: textEditController.text.toString());
-    widget.onSendMessage(mbody);
     textEditController.clear();
-    //Provider.of<ConversationModel>(context, listen: false).sendMessage(mbody);
+    Provider.of<ConversationModel>(context, listen: false).sendMessage(mbody);
   }
 
   @override
@@ -198,8 +178,6 @@ class _SendChatMessageFormState extends State<SendChatMessageForm> {
               alignment: Alignment.centerRight,
               child: StandardButton(
                   buttonText: "Send",
-                  //child: Text("Send"),
-                  //style: Theme.of(context).elevatedButtonTheme.style,
                   onPressed: isMessageValid ? sendMessage : null)),
         ],
       ),

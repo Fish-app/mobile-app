@@ -101,7 +101,6 @@ class ConversationService {
       switch (response.statusCode) {
         case 200:
           var responseBody = jsonDecode(response.body);
-          print(responseBody.toString());
           result = Conversation.fromJson(responseBody);
           break;
         case 401:
@@ -121,9 +120,15 @@ class ConversationService {
 
   Future<List<Message>> getMessageUpdates(
       BuildContext context, num conversationId, num lastMessageId) async {
-    //TODO: add queryparam for lastMessageId to limit list
+    Map<String,String> queryParameters;
+    if(lastMessageId != null) {
+      queryParameters = {
+        'last-id' : lastMessageId.toString()
+      };
+    }
     var url =
-    apiPaths.getAppUri(apiPaths.getMessageListUpdatesQuery(conversationId));
+    apiPaths.getAppUri(apiPaths.getMessageListUpdatesQuery(conversationId), queryParameters: queryParameters);
+    print('REST: URL=' + url.toString());
     var response = await _client.get(context, url, addAuth: true);
 
     List<Message> returnList;
@@ -147,11 +152,19 @@ class ConversationService {
     return returnList;
   }
 
-  //TODO: Implement query parameters and do testing
+  //TODO: untested and not currently used, also needs to be checked on server before use
   Future<List<Message>> _getMessageRange(
       BuildContext context, num conversationId, num fromId, num offsetInList) async {
+
+    Map<String,String> queryParameters;
+    if(fromId != null && offsetInList != null) {
+      queryParameters = {
+        'from' : fromId.toString(),
+        'offset' : offsetInList.toString(),
+      };
+    }
     var url =
-        apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId));
+        apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId), queryParameters: queryParameters);
     var response = await _client.get(context, url, addAuth: true);
 
     List<Message> returnList;
