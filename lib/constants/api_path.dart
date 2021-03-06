@@ -13,7 +13,7 @@ String sendMessageFromConversation(int conversationId) {
 }
 
 String getMessageListUpdatesQuery(int conversation) {
-  return "/chat/" + conversation.toString() + "/latest";
+  return "/chat/" + conversation.toString() + "/updates";
 }
 
 String getMessageListInRange(int conversation) {

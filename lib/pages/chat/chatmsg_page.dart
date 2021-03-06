@@ -28,22 +28,22 @@ class ChatMessagePage extends StatefulWidget {
 class _ChatMessagePageState extends State<ChatMessagePage> {
   final ConversationService _conversationService = ConversationService();
   final _scrollController = ScrollController();
-  //final List<Message> messages = List();
-  //Conversation conversation = Conversation();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //this.conversation = widget.baseConversation;
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    //Provider.of<ConversationModel>(context, listen: false).clear();
   }
+
+  //FIXME: Fix that main column is not redrawed on keyboard popup,
+  // or migrate init state/futurebuilder so that initalisation happens
+  // outside of build below
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                       (messagesFromServer, context) {
                     print("FUTURE builder: from srv result " +
                         messagesFromServer.length.toString());
-                    //this.messages.addAll(messagesFromServer);
+
                     Provider.of<ConversationModel>(context, listen: false)
                         .initMessages(messagesFromServer);
 
@@ -100,15 +100,27 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                     );
                   }),
                 ),
+                Consumer<ConversationModel>(builder: (context, model, child) =>
+                Visibility(
+                  visible: model.sendMessageErrorOccurred,
+                  child: ChatBubbleFromError(failedMessage: model.lastFailedSendMessage),
+                )),
                 // CHAT WRITE MESSAGE BAR
                 SendChatMessageForm(),
                 //
                 // DEBUG BUTTONS
-                StandardButton(
-                    buttonText: "refresh",
+                ElevatedButton(
+                    style: Theme.of(context).elevatedButtonTheme.style,
+                    child: Text("refresh/hold to vekk",
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                    onLongPress: () {
+                      Provider.of<ConversationModel>(context, listen: false)
+                          .clear();
+                    },
                     onPressed: () {
                       Provider.of<ConversationModel>(context, listen: false)
-                          .reloadMessages();
+                          .reloadAllMessages();
                     }),
                 StandardButton(
                     buttonText: "ned",
@@ -184,6 +196,38 @@ class _SendChatMessageFormState extends State<SendChatMessageForm> {
     );
   }
 }
+class ChatBubbleFromError extends StatelessWidget {
+  final MessageBody failedMessage;
+
+  const ChatBubbleFromError({Key key, @required this.failedMessage}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ChatBubble(
+      backGroundColor: Colors.red,
+      alignment:
+           Alignment.topRight,
+      clipper: ChatBubbleClipper5(
+        type:
+             BubbleType.sendBubble
+      ),
+      child: Column(
+        children: [
+          Text("Failure"),
+          Text("Unable to send:" + failedMessage.messageText,
+              style: TextStyle(
+                  color:
+                  Colors.white)
+
+          ),
+          StandardButton(buttonText: "Try again?", onPressed: () {
+            Provider.of<ConversationModel>(context).sendMessage(failedMessage);
+          })
+        ],
+      ),
+    );
+  }
+}
+
 
 class ChatBubbleFromMessage extends StatelessWidget {
   final Message message;
@@ -195,10 +239,9 @@ class ChatBubbleFromMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Drawing message id:" + message.id.toString());
+    //print("Drawing message id:" + message.id.toString());
 
     return ChatBubble(
-      //margin: EdgeInsets.only(top: 20),
       backGroundColor: _isSenderLoggedInUser(message)
           ? Color(0xff354ff6)
           : Color(0xffE7E7ED),

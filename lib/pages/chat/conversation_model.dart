@@ -10,13 +10,18 @@ class ConversationModel extends ChangeNotifier {
   final _buildContext;
   final _conversationService = ConversationService();
   final List<Message> _messages = List();
+
   Conversation _currentConversation;
+  bool _sendMessageErrorIsPresent = false;
+  MessageBody _lastFailedSendMessage = MessageBody();
+
 
   ConversationModel(this._buildContext, this._currentConversation);
 
   UnmodifiableListView<Message> get messages => UnmodifiableListView(_messages);
-
   Conversation get conversation => (this._currentConversation);
+  bool get sendMessageErrorOccurred => (this._sendMessageErrorIsPresent);
+  MessageBody get lastFailedSendMessage => (this._lastFailedSendMessage);
 
   void initMessages(List<Message> messages) {
     this._messages.clear();
@@ -26,9 +31,12 @@ class ConversationModel extends ChangeNotifier {
 
   void clear() {
     this._messages.clear();
+    this._currentConversation.firstMessageId = 0;
+    this._currentConversation.lastMessageId = 0;
+    notifyListeners();
   }
 
-  Future<void> reloadMessages() async {
+  Future<void> reloadAllMessages() async {
     List<Message> reloadResult = List();
     reloadResult = await _conversationService.getMessageUpdates(this._buildContext, this._currentConversation.id, null);
     if(reloadResult.isNotEmpty) {
@@ -39,18 +47,24 @@ class ConversationModel extends ChangeNotifier {
   }
 
   Future<void> sendMessage(MessageBody message) async {
-
-    Conversation result =
-        await _conversationService.sendMessageRequest(
-        this._buildContext, this._currentConversation.id, message);
-    if(result != null) {
-      print('MODEL: Sendt message OK');
-      //TODO: Implement logic to get new messages only (range/latest)
-      // and add the "missing" messages to the local list
-      this._loadNewMessages(this._currentConversation, result);
-
-      //result = this._currentConversation;
-      //reloadMessages();
+    try {
+      Conversation result =
+      await _conversationService.sendMessageRequest(
+          this._buildContext, this._currentConversation.id, message);
+      if(result != null) {
+        print('MODEL: Sendt message OK');
+        _sendMessageErrorIsPresent = false;
+        _lastFailedSendMessage = MessageBody();
+        this._loadNewMessages(this._currentConversation, result);
+      } else {
+        _sendMessageErrorIsPresent = true;
+        _lastFailedSendMessage = message;
+        notifyListeners();
+      }
+    } on Exception catch (e) {
+      _sendMessageErrorIsPresent = true;
+      _lastFailedSendMessage = message;
+      notifyListeners();
     }
   }
 
