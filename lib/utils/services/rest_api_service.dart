@@ -100,8 +100,9 @@ class ConversationService {
           addAuth: true);
       switch (response.statusCode) {
         case 200:
-          var body = jsonDecode(response.body);
-          result = Conversation.fromJson(body["data"]);
+          var responseBody = jsonDecode(response.body);
+          print(responseBody.toString());
+          result = Conversation.fromJson(responseBody);
           break;
         case 401:
           throw HttpException(HttpStatus.unauthorized.toString());
