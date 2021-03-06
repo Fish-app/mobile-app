@@ -5,7 +5,7 @@ import 'package:fishapp/utils/default_builder.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:fishapp/utils/state/appstate.dart';
 import 'package:fishapp/widgets/chat/chatbubble_error.dart';
-import 'package:fishapp/widgets/chat/chattbubble_message.dart';
+import 'package:fishapp/widgets/chat/chatbubble_message.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/material.dart';

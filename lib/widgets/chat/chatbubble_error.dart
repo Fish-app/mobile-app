@@ -23,14 +23,24 @@ class ChatBubbleFromError extends StatelessWidget {
       clipper: ChatBubbleClipper5(type: BubbleType.sendBubble),
       child: Column(
         children: [
-          Text(capitalize(S.of(context).error)),
-          Text(capitalize(S.of(context).unableToSend) + ": " + failedMessage.messageText,
-              style: TextStyle(color: Colors.white)),
+          Text(capitalize(S.of(context).unableToSend),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Text(
+            failedMessage.messageText,
+            style: TextStyle(color: Colors.white,
+                fontStyle: FontStyle.italic),
+          ),
           StandardButton(
               buttonText: capitalize(S.of(context).actionTryAgain),
               onPressed: () {
                 Provider.of<ConversationModel>(context)
                     .sendMessage(failedMessage);
+              }),
+          StandardButton(
+              buttonText: capitalize(S.of(context).cancel),
+              onPressed: () {
+                Provider.of<ConversationModel>(context).clearErrorState();
               })
         ],
       ),

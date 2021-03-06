@@ -34,6 +34,12 @@ class ConversationModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearErrorState() {
+    this._sendMessageErrorIsPresent = false;
+    this._lastFailedSendMessage = MessageBody();
+    notifyListeners();
+  }
+
   Future<List<Message>> loadMessages(
       BuildContext context, num conversationId) async {
     return await _conversationService.getMessageUpdates(

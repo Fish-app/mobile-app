@@ -95,7 +95,7 @@ class ConversationService {
 
     try {
       var response = await _client.post(context, url,
-          headers: {'Content-type': "application/json"},
+          headers: {'Content-type': "application/json; charset=UTF-8"},
           body: messageBody.toJsonString(),
           addAuth: true);
       switch (response.statusCode) {
