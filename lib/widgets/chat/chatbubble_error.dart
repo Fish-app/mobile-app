@@ -17,7 +17,9 @@ class ChatBubbleFromError extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ChatBubble(
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+      child: ChatBubble(
       backGroundColor: Colors.red,
       alignment: Alignment.topRight,
       clipper: ChatBubbleClipper5(type: BubbleType.sendBubble),
@@ -43,6 +45,7 @@ class ChatBubbleFromError extends StatelessWidget {
                 Provider.of<ConversationModel>(context).clearErrorState();
               })
         ],
+      ),
       ),
     );
   }

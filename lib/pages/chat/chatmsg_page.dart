@@ -16,7 +16,6 @@ import 'package:provider/provider.dart';
 
 import 'conversation_model.dart';
 
-
 class ChatMessagePage extends StatelessWidget {
   final Conversation baseConversation;
   final scrollController = ScrollController();
@@ -29,73 +28,61 @@ class ChatMessagePage extends StatelessWidget {
       create: (context) => ConversationModel(context, baseConversation),
       child: Container(
         padding: EdgeInsets.only(
-          bottom: MediaQuery
-              .of(context)
-              .viewInsets
-              .bottom,
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         child: SafeArea(
             child: getFishappDefaultScaffold(context,
                 includeTopBar: baseConversation.listing.creator.name,
                 extendBehindAppBar: false, child: Consumer<AppState>(
-                  builder: (context, userdata, child) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // CHAT MESSAGE LISTS
-                        Consumer<ConversationModel>(
-                            builder: (context, model, child) =>
-                                Visibility(
-                                  visible: model.sendMessageErrorOccurred,
-                                  child: ChatBubbleFromError(
-                                      failedMessage: model
-                                          .lastFailedSendMessage),
-                                )),
-                        MessageListWidget(
-                            baseConversation: baseConversation,
-                            userdata: userdata,
-                            scrollController: scrollController),
-                        // CHAT WRITE MESSAGE BAR
-                        SendChatMessageForm(),
+          builder: (context, userdata, child) {
+            return Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // CHAT MESSAGE LISTS
+                MessageListWidget(
+                    baseConversation: baseConversation,
+                    userdata: userdata,
+                    scrollController: scrollController),
+                // ERROR ON SEND MESG
+                Consumer<ConversationModel>(
+                    builder: (context, model, child) => Visibility(
+                          visible: model.sendMessageErrorOccurred,
+                          child: ChatBubbleFromError(
+                              failedMessage: model.lastFailedSendMessage),
+                        )),
+                // CHAT WRITE MESSAGE BAR
+                SendChatMessageForm(),
 
-                        //TODO: REMOVE DEBUG BUTTONS
-                        // DEBUG BUTTONS
-                        ElevatedButton(
-                            style: Theme
-                                .of(context)
-                                .elevatedButtonTheme
-                                .style,
-                            child: Text(
-                              "refresh/hold to vekk",
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .button,
-                            ),
-                            onLongPress: () {
-                              Provider.of<ConversationModel>(
-                                  context, listen: false)
-                                  .clear();
-                            },
-                            onPressed: () {
-                              Provider.of<ConversationModel>(
-                                  context, listen: false)
-                                  .reloadAllMessages();
-                            }),
-                        StandardButton(
-                            buttonText: "ned",
-                            onPressed: () {
-                              scrollController.animateTo(
-                                  scrollController.position.minScrollExtent,
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.fastOutSlowIn);
-                            }),
-                      ],
-                    );
-                  },
-                ))),
+                //TODO: REMOVE DEBUG BUTTONS
+                // DEBUG BUTTONS
+                ElevatedButton(
+                    style: Theme.of(context).elevatedButtonTheme.style,
+                    child: Text(
+                      "refresh/hold to vekk",
+                      style: Theme.of(context).textTheme.button,
+                    ),
+                    onLongPress: () {
+                      Provider.of<ConversationModel>(context, listen: false)
+                          .clear();
+                    },
+                    onPressed: () {
+                      Provider.of<ConversationModel>(context, listen: false)
+                          .reloadAllMessages();
+                    }),
+                StandardButton(
+                    buttonText: "ned",
+                    onPressed: () {
+                      scrollController.animateTo(
+                          scrollController.position.minScrollExtent,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.fastOutSlowIn);
+                    }),
+              ],
+            );
+          },
+        ))),
       ),
     );
   }
@@ -117,7 +104,6 @@ class MessageListWidget extends StatefulWidget {
 class _MessageListWidgetState extends State<MessageListWidget> {
   CancelableOperation _ftrTimerLoadMsgs;
   Timer _timer;
-
 
   @override
   void dispose() {
@@ -152,7 +138,6 @@ class _MessageListWidgetState extends State<MessageListWidget> {
 
         return Consumer<ConversationModel>(
           builder: (context, model, child) => Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: ListView.builder(
                 reverse: true,
                 controller: widget.scrollController,
@@ -162,12 +147,9 @@ class _MessageListWidgetState extends State<MessageListWidget> {
                   // https://stackoverflow.com/a/58924439
                   final reversedIndex = model.messages.length - 1 - index;
                   final message = model.messages[reversedIndex];
-                  return Container(
-                    padding: EdgeInsets.symmetric(vertical: 5.0),
-                    child: ChatBubbleFromMessage(
-                      message: message,
-                      loggedInUserId: widget.userdata.user.id,
-                    ),
+                  return ChatBubbleFromMessage(
+                    message: message,
+                    loggedInUserId: widget.userdata.user.id,
                   );
                 }),
           ),

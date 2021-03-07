@@ -17,23 +17,26 @@ class ChatBubbleFromMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     //print("Drawing message id:" + message.id.toString());
 
-    return ChatBubble(
-      backGroundColor: _isSenderLoggedInUser(message)
-          ? Color(0xff354ff6)
-          : Color(0xffE7E7ED),
-      alignment: _isSenderLoggedInUser(message)
-          ? Alignment.topRight
-          : Alignment.topLeft,
-      clipper: ChatBubbleClipper5(
-        type: _isSenderLoggedInUser(message)
-            ? BubbleType.sendBubble
-            : BubbleType.receiverBubble,
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+      child: ChatBubble(
+        backGroundColor: _isSenderLoggedInUser(message)
+            ? Color(0xff354ff6)
+            : Color(0xffE7E7ED),
+        alignment: _isSenderLoggedInUser(message)
+            ? Alignment.topRight
+            : Alignment.topLeft,
+        clipper: ChatBubbleClipper5(
+          type: _isSenderLoggedInUser(message)
+              ? BubbleType.sendBubble
+              : BubbleType.receiverBubble,
+        ),
+        child: Text(message.content,
+            style: TextStyle(
+                color: _isSenderLoggedInUser(message)
+                    ? Colors.white
+                    : Colors.black)),
       ),
-      child: Text(message.content,
-          style: TextStyle(
-              color: _isSenderLoggedInUser(message)
-                  ? Colors.white
-                  : Colors.black)),
     );
   }
 
