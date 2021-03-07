@@ -60,10 +60,11 @@ class ConversationService {
       var response = await _client.post(context, url,
           headers: {'Content-type': "application/json"},
           addAuth: true);
+      print('STATUS' + response.statusCode.toString());
       switch (response.statusCode) {
         case 200:
-          var body = jsonDecode(response.body);
-          result = Conversation.fromJson(body["data"]);
+          var responseBody = jsonDecode(response.body);
+          result = Conversation.fromJson(responseBody);
           break;
         case 304:
           // Fekk 304, chat eksisterer frå før

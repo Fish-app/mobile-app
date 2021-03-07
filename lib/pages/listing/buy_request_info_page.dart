@@ -1,5 +1,6 @@
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:fishapp/widgets/Map/map_image.dart';
 import 'package:fishapp/widgets/Map/open_map_widget.dart';
 import 'package:fishapp/widgets/display_text_field.dart';
@@ -9,6 +10,8 @@ import 'package:fishapp/widgets/rating_stars.dart';
 import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:fishapp/config/routes/routes.dart' as routes;
 
 class BuyRequestInfoPage extends StatelessWidget {
   BuyRequest buyRequest;
@@ -107,7 +110,15 @@ class BuyRequestInfoPage extends StatelessWidget {
                           buttonText: "START CHAT",
                           onPressed: () {
                             print("Pressed");
-                          }, //TODO: legg til åpning av chat
+                            var _conversationService = ConversationService();
+                            _conversationService.
+                            startNewConversation(context, buyRequest.id).then((value) =>
+                            //TESTING: fungerer OK: Er dette robust nok ?
+                            Navigator.of(context).pushNamed(
+                                routes.ChatConversation,
+                                arguments: value)
+                            );
+                          },
                         ),
                         StandardButton(
                           buttonText: S.of(context).takeBuyRequest.toUpperCase(),
