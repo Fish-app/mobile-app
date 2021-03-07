@@ -29,11 +29,13 @@ class ConversationService {
     apiPaths.getAppUri(apiPaths.getUserConversationList);
     var response = await _client.get(context, url, addAuth: true);
 
-    List<Conversation> conversationList;
+    List<Conversation> conversationList = List();
     switch (response.statusCode) {
       case 200:
-        var body = jsonDecode(response.body);
-        conversationList = Conversation.fromJsonList(body);
+          if(response.body.isNotEmpty) {
+            var body = jsonDecode(response.body);
+            conversationList = Conversation.fromJsonList(body);
+          }
         break;
       case 401:
         throw HttpException(HttpStatus.unauthorized.toString());
@@ -128,13 +130,15 @@ class ConversationService {
     apiPaths.getAppUri(apiPaths.getMessageListUpdatesQuery(conversationId), queryParameters: queryParameters);
     var response = await _client.get(context, url, addAuth: true);
 
-    List<Message> returnList;
+    List<Message> returnList = List();
     print("REST: Message updates GOT " + response.statusCode.toString());
     switch (response.statusCode) {
       case 200:
-        var body = jsonDecode(response.body);
-        returnList = Message.fromJsonList(body);
-        print("REST: Parsed " + returnList.length.toString() + " messages to list");
+        if(response.body.isNotEmpty) {
+          var body = jsonDecode(response.body);
+          returnList = Message.fromJsonList(body);
+          print("REST: Parsed " + returnList.length.toString() + " messages to list");
+        }
         break;
       case 401:
         throw HttpException(HttpStatus.unauthorized.toString());
