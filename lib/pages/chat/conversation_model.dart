@@ -22,6 +22,10 @@ class ConversationModel extends ChangeNotifier {
   bool get sendMessageErrorOccurred => (this._sendMessageErrorIsPresent);
   MessageBody get lastFailedSendMessage => (this._lastFailedSendMessage);
 
+  void init() {
+    this._messages.clear();
+  }
+
   void initMessages(List<Message> messages) {
     this._messages.clear();
     this._messages.addAll(messages);
@@ -40,10 +44,9 @@ class ConversationModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Message>> loadMessages(
-      BuildContext context, num conversationId) async {
-    return await _conversationService.getMessageUpdates(
-        context, conversationId, null);
+  Future<void> loadNewMessages() async {
+    Conversation metadataOnServer = await this._loadConversationFromServer();
+    _loadNewMessages(this._currentConversation, metadataOnServer);
   }
 
   Future<void> reloadAllMessages() async {
@@ -82,7 +85,7 @@ class ConversationModel extends ChangeNotifier {
       Conversation metadataInApp, Conversation metadataFromServer) async {
     num lastLocalMsgId = metadataInApp.lastMessageId; // 5
     num lastServerMsgId = metadataFromServer.lastMessageId; //6
-    print('MODEL: last msgs id local:server = ' +
+    print('MODEL: Last message IDs: local:server = ' +
         lastLocalMsgId.toString() +
         ':' +
         lastServerMsgId.toString());
@@ -100,4 +103,12 @@ class ConversationModel extends ChangeNotifier {
       }
     } on Exception catch (e) {}
   }
+  
+  Future<Conversation> _loadConversationFromServer() async {
+      try {
+        Conversation result = await _conversationService.startNewConversation(this._buildContext, this._currentConversation.listing.id);
+        if(result != null) return result;
+      } on Exception catch (e) {}
+  }
+
 }

@@ -62,7 +62,7 @@ const ratingEndpoint = "/rating/";
 Uri getAppUri(String path, {Map<String, String> queryParameters}) {
   return Uri(
       scheme: "http",
-      host: "nilsjarle-home.bogata.lan",
+      host: "10.0.2.2",
       port: 8080,
       path: "/api" + path,
       queryParameters: queryParameters);

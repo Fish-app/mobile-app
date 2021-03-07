@@ -60,18 +60,15 @@ class ConversationService {
       var response = await _client.post(context, url,
           headers: {'Content-type': "application/json"},
           addAuth: true);
-      print('STATUS' + response.statusCode.toString());
+      print('REST: Fetch conversation: ' + response.statusCode.toString());
       switch (response.statusCode) {
         case 200:
           var responseBody = jsonDecode(response.body);
           result = Conversation.fromJson(responseBody);
           break;
         case 304:
-          // Fekk 304, chat eksisterer frå før
-          // hent/ returner eksisterande chatt i stadenfor her.
-          //FIXME: lag funksjon for å hente chatt direkte på server og chaine her
-          // eller prøve å cache/finne eksisterande conversation i appen ?
-          // kanskje må lage hjelpefunksjon her
+          // happens if server has verified that there is a conversation,
+          // but fails to process and return it
           break;
         case 401:
           throw HttpException(HttpStatus.unauthorized.toString());
@@ -129,16 +126,15 @@ class ConversationService {
     }
     var url =
     apiPaths.getAppUri(apiPaths.getMessageListUpdatesQuery(conversationId), queryParameters: queryParameters);
-    print('REST: URL=' + url.toString());
     var response = await _client.get(context, url, addAuth: true);
 
     List<Message> returnList;
-    print("REST: Got status code " + response.statusCode.toString());
+    print("REST: Message updates GOT " + response.statusCode.toString());
     switch (response.statusCode) {
       case 200:
         var body = jsonDecode(response.body);
         returnList = Message.fromJsonList(body);
-        print("REST: Got conversationslist count " + returnList.length.toString());
+        print("REST: Parsed " + returnList.length.toString() + " messages to list");
         break;
       case 401:
         throw HttpException(HttpStatus.unauthorized.toString());

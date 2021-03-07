@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:async/async.dart';
 import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:fishapp/entities/chat/message.dart';
 import 'package:fishapp/pages/chat/form_send_chatmsg.dart';
@@ -25,8 +28,10 @@ class ChatMessagePage extends StatefulWidget {
 class _ChatMessagePageState extends State<ChatMessagePage> {
   final ConversationService _conversationService = ConversationService();
   final _scrollController = ScrollController();
+  CancelableOperation _ftrTimerLoadMsgs;
+  Timer _timer;
 
-  //FIXME: Unicode/Nordic charcates
+  //FIXME: current future builder does not support empty list
   //FIXME: Fix that main column is not redrawed on keyboard popup,
   // or migrate init state/futurebuilder so that initalisation happens
   // outside of build below
@@ -39,7 +44,8 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _timer?.cancel();
+    _ftrTimerLoadMsgs?.cancel();
     super.dispose();
   }
 
@@ -73,6 +79,13 @@ class _ChatMessagePageState extends State<ChatMessagePage> {
                     Provider.of<ConversationModel>(context, listen: false)
                         .initMessages(messagesFromServer);
 
+                    _timer =
+                        Timer.periodic(Duration(seconds: 5), (Timer timer) {
+                      print('WIDGET: Timer did run');
+                      _ftrTimerLoadMsgs = CancelableOperation.fromFuture(
+                          Provider.of<ConversationModel>(context, listen: false)
+                              .loadNewMessages());
+                    });
                     return Consumer<ConversationModel>(
                       builder: (context, model, child) => Container(
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
