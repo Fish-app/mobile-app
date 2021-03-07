@@ -4,6 +4,7 @@ import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:fishapp/entities/chat/message.dart';
 import 'package:fishapp/entities/chat/messagebody.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ConversationModel extends ChangeNotifier {
@@ -44,11 +45,6 @@ class ConversationModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadNewMessages() async {
-    Conversation metadataOnServer = await this._loadConversationFromServer();
-    _loadNewMessages(this._currentConversation, metadataOnServer);
-  }
-
   Future<void> reloadAllMessages() async {
     List<Message> reloadResult = List();
     reloadResult = await _conversationService.getMessageUpdates(
@@ -68,7 +64,8 @@ class ConversationModel extends ChangeNotifier {
         print('MODEL: Sendt message OK');
         _sendMessageErrorIsPresent = false;
         _lastFailedSendMessage = MessageBody();
-        this._loadNewMessages(this._currentConversation, result);
+        this.loadNewMessages();
+        this._currentConversation = result;
       } else {
         _sendMessageErrorIsPresent = true;
         _lastFailedSendMessage = message;
@@ -81,34 +78,25 @@ class ConversationModel extends ChangeNotifier {
     }
   }
 
-  Future<void> _loadNewMessages(
-      Conversation metadataInApp, Conversation metadataFromServer) async {
-    num lastLocalMsgId = metadataInApp.lastMessageId; // 5
-    num lastServerMsgId = metadataFromServer.lastMessageId; //6
-    print('MODEL: Last message IDs: local:server = ' +
-        lastLocalMsgId.toString() +
+  Future<void> loadNewMessages() async {
+    num lastMsgIdInList = this._messages.last.id;
+    num lastMsgIdInMetadata = this._currentConversation.lastMessageId;
+    print('MODEL: Last message IDs: list:metadata= ' +
+        lastMsgIdInList.toString() +
         ':' +
-        lastServerMsgId.toString());
+        lastMsgIdInMetadata.toString());
     List<Message> tailMessageListResult = List();
     try {
       tailMessageListResult = await _conversationService.getMessageUpdates(
-          this._buildContext, metadataInApp.id, lastLocalMsgId);
+          this._buildContext, this._currentConversation.id, lastMsgIdInList);
       if (tailMessageListResult != null && tailMessageListResult.isNotEmpty) {
         print('MODEL: Added ' +
             tailMessageListResult.length.toString() +
             'messages from server.');
         this._messages.addAll(tailMessageListResult);
-        this._currentConversation = metadataFromServer;
         notifyListeners();
       }
     } on Exception catch (e) {}
   }
   
-  Future<Conversation> _loadConversationFromServer() async {
-      try {
-        Conversation result = await _conversationService.startNewConversation(this._buildContext, this._currentConversation.listing.id);
-        if(result != null) return result;
-      } on Exception catch (e) {}
-  }
-
 }

@@ -23,11 +23,6 @@ class ChatMessagePage extends StatelessWidget {
 
   ChatMessagePage({Key key, @required this.baseConversation}) : super(key: key);
 
-  //FIXME: current future builder does not support empty list
-  //FIXME: Fix that main column is not redrawed on keyboard popup,
-  // or migrate init state/futurebuilder so that initalisation happens
-  // outside of build below
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
