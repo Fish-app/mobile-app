@@ -18,60 +18,38 @@ class ConversationService {
   final FishappRestClient _client = FishappRestClient();
 
   Future<List<Conversation>> getAllConversations(BuildContext context) async {
-    var url =
-    apiPaths.getAppUri(apiPaths.getUserConversationList);
+    var url = apiPaths.getAppUri(apiPaths.getUserConversationList);
     var response = await _client.get(context, url, addAuth: true);
 
     List<Conversation> conversationList = List();
-    switch (response.statusCode) {
-      case 200:
-          if(response.body.isNotEmpty) {
-            var body = jsonDecode(response.body);
-            conversationList = Conversation.fromJsonList(body);
-          }
-        break;
-      case 401:
-        throw HttpException(HttpStatus.unauthorized.toString());
-        break;
-      case 500:
-        throw HttpException(HttpStatus.internalServerError.toString());
-        break;
-      default:
-        conversationList = List();
-        break;
+
+    if (response.statusCode == HttpStatus.ok) {
+      if (response.body.isNotEmpty) {
+        var body = jsonDecode(response.body);
+        conversationList = Conversation.fromJsonList(body);
+      } else {
+        throw ApiException(response);
+      }
     }
     return conversationList;
   }
 
-  //TODO: UNTESTED
   Future<Conversation> startNewConversation(
       BuildContext context, num listingId) async {
-
     Conversation result = Conversation();
-    var url = apiPaths
-        .getAppUri(apiPaths.startConversationFromListing(listingId));
+    var url =
+        apiPaths.getAppUri(apiPaths.startConversationFromListing(listingId));
 
     try {
       var response = await _client.post(context, url,
-          headers: {'Content-type': "application/json"},
-          addAuth: true);
+          headers: {'Content-type': "application/json"}, addAuth: true);
       print('REST: Fetch conversation: ' + response.statusCode.toString());
-      switch (response.statusCode) {
-        case 200:
-          var responseBody = jsonDecode(response.body);
-          result = Conversation.fromJson(responseBody);
-          break;
-        case 304:
-          // happens if server has verified that there is a conversation,
-          // but fails to process and return it
-          break;
-        case 401:
-          throw HttpException(HttpStatus.unauthorized.toString());
-          break;
-        case 500:
-        default:
-          throw HttpException(HttpStatus.internalServerError.toString());
-          break;
+
+      if (response.statusCode == HttpStatus.ok) {
+        var responseBody = jsonDecode(response.body);
+        result = Conversation.fromJson(responseBody);
+      } else {
+        throw ApiException(response);
       }
     } on IOException catch (e) {
       log("IO failure " + e.toString(), time: DateTime.now());
@@ -91,18 +69,12 @@ class ConversationService {
           headers: {'Content-type': "application/json; charset=UTF-8"},
           body: messageBody.toJsonString(),
           addAuth: true);
-      switch (response.statusCode) {
-        case 200:
-          var responseBody = jsonDecode(response.body);
-          result = Conversation.fromJson(responseBody);
-          break;
-        case 401:
-          throw HttpException(HttpStatus.unauthorized.toString());
-          break;
-        case 500:
-        default:
-          throw HttpException(HttpStatus.internalServerError.toString());
-        break;
+
+      if (response.statusCode == HttpStatus.ok) {
+        var responseBody = jsonDecode(response.body);
+        result = Conversation.fromJson(responseBody);
+      } else {
+        throw ApiException(response);
       }
     } on IOException catch (e) {
       log("IO failure " + e.toString(), time: DateTime.now());
@@ -113,70 +85,53 @@ class ConversationService {
 
   Future<List<Message>> getMessageUpdates(
       BuildContext context, num conversationId, num lastMessageId) async {
-    Map<String,String> queryParameters;
-    if(lastMessageId != null) {
-      queryParameters = {
-        'last-id' : lastMessageId.toString()
-      };
+    Map<String, String> queryParameters;
+    if (lastMessageId != null) {
+      queryParameters = {'last-id': lastMessageId.toString()};
     }
-    var url =
-    apiPaths.getAppUri(apiPaths.getMessageListUpdatesQuery(conversationId), queryParameters: queryParameters);
+    var url = apiPaths.getAppUri(
+        apiPaths.getMessageListUpdatesQuery(conversationId),
+        queryParameters: queryParameters);
     var response = await _client.get(context, url, addAuth: true);
 
     List<Message> returnList = List();
     print("REST: Message updates GOT " + response.statusCode.toString());
-    switch (response.statusCode) {
-      case 200:
-        if(response.body.isNotEmpty) {
-          var body = jsonDecode(response.body);
-          returnList = Message.fromJsonList(body);
-          print("REST: Parsed " + returnList.length.toString() + " messages to list");
-        }
-        break;
-      case 401:
-        throw HttpException(HttpStatus.unauthorized.toString());
-        break;
-      case 500:
-        throw HttpException(HttpStatus.internalServerError.toString());
-        break;
-      default:
-        returnList = List();
-        break;
+
+    if (response.statusCode == HttpStatus.ok) {
+      if (response.body.isNotEmpty) {
+        var body = jsonDecode(response.body);
+        returnList = Message.fromJsonList(body);
+        print("REST: Parsed " +
+            returnList.length.toString() +
+            " messages to list");
+      }
+    } else {
+      throw ApiException(response);
     }
     return returnList;
   }
 
   //TODO: untested and not currently used, also needs to be checked on server before use
-  Future<List<Message>> _getMessageRange(
-      BuildContext context, num conversationId, num fromId, num offsetInList) async {
-
-    Map<String,String> queryParameters;
-    if(fromId != null && offsetInList != null) {
+  Future<List<Message>> _getMessageRange(BuildContext context,
+      num conversationId, num fromId, num offsetInList) async {
+    Map<String, String> queryParameters;
+    if (fromId != null && offsetInList != null) {
       queryParameters = {
-        'from' : fromId.toString(),
-        'offset' : offsetInList.toString(),
+        'from': fromId.toString(),
+        'offset': offsetInList.toString(),
       };
     }
-    var url =
-        apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId), queryParameters: queryParameters);
+    var url = apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId),
+        queryParameters: queryParameters);
     var response = await _client.get(context, url, addAuth: true);
 
-    List<Message> returnList;
+    List<Message> returnList = List();
 
-    switch (response.statusCode) {
-      case 200:
-        var body = jsonDecode(response.body);
-        returnList = Message.fromJsonList(body);
-        break;
-      case 401:
-        throw HttpException(HttpStatus.unauthorized.toString());
-        break;
-      case 500:
-        throw HttpException(HttpStatus.internalServerError.toString());
-        break;
-      default:
-        returnList = List();
-        break;
+    if (response.statusCode == HttpStatus.ok) {
+      var body = jsonDecode(response.body);
+      returnList = Message.fromJsonList(body);
+    } else {
+      throw ApiException(response);
     }
     return returnList;
   }
