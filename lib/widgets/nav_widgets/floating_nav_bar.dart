@@ -10,17 +10,13 @@ final navButtonUser =
     NavDestButton(Icons.person_outline_rounded, routes.UserInfo);
 final navButtonNewListing = NavDestButton(Icons.list, routes.ChooseNewListing);
 
-final TEST_BUTTON = NavDestButton(Icons.biotech_rounded, routes.receipt);
-
 final List<NavDestButton> _userNavButtons = [
-  TEST_BUTTON,
   navButtonShop,
   navButtonChat,
   navButtonUser,
   navButtonNewListing
 ];
 final List<NavDestButton> _sellerNavButtons = [
-  TEST_BUTTON,
   navButtonShop,
   navButtonChat,
   navButtonUser,
