@@ -5,25 +5,17 @@ import 'dart:io';
 import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:fishapp/entities/chat/message.dart';
 import 'package:fishapp/entities/chat/messagebody.dart';
-import 'package:fishapp/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fishapp/constants/api_path.dart' as apiPaths;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
-import 'package:http/http.dart';
 
 import '../../constants/api_path.dart';
-import '../../entities/listing.dart';
-import '../../entities/listing.dart';
-import '../../entities/listing.dart';
-import '../../entities/listing.dart';
-import '../../entities/listing.dart';
 import '../../entities/listing.dart';
 
 class ConversationService {
   final FishappRestClient _client = FishappRestClient();
-  // FIXME: Nordic/unicode charachters is broken
 
   Future<List<Conversation>> getAllConversations(BuildContext context) async {
     var url =

@@ -89,7 +89,6 @@ class ChatMessagePage extends StatelessWidget {
 }
 
 class MessageListWidget extends StatefulWidget {
-  final _conversationService = ConversationService();
   final baseConversation;
   final userdata;
   final scrollController;
@@ -131,16 +130,6 @@ class _MessageListWidgetState extends State<MessageListWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child:
-    //  appFutureBuilder<List<Message>>(
-    //      widget._conversationService
-    //          .getMessageUpdates(context, widget.baseConversation.id, null),
-    //      (messagesFromServer, context) {
-    //    print("FUTURE builder: from srv result " +
-    //        messagesFromServer.length.toString());
-
-    //    Provider.of<ConversationModel>(context, listen: false)
-    //        .initMessages(messagesFromServer);
-
         Consumer<ConversationModel>(
           builder: (context, model, child) => Container(
             child: ListView.builder(
