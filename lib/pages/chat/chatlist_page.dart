@@ -56,18 +56,23 @@ class ConversationListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     print(conversation.starterUser.name.toString());
     final String _prefixTileTitle= S.of(context).chatWithPrefix;
+    bool isOwnerOfListing = false;
     User _remoteUser;
     if(conversation.listing.creator.id == currentUser.id) {
       _remoteUser = conversation.starterUser;
+      isOwnerOfListing = true;
     } else {
       _remoteUser = conversation.listing.creator;
+      isOwnerOfListing = false;
     }
     return Container(
       child:
       ListTile(
         leading: FlutterLogo(size: 48.0),
         title: Text(_prefixTileTitle + " " + _remoteUser.name),
-        subtitle: Text("meldingstekst her"),
+        subtitle: isOwnerOfListing ?
+            Text("Wants to buy your " + conversation.listing.commodity.name) :
+          Text("Seller is selling " + conversation.listing.commodity.name),
       ),
     );
   }
