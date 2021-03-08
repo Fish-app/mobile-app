@@ -84,8 +84,8 @@ class ConversationModel extends ChangeNotifier {
         print('MODEL: Sendt message OK');
         _sendMessageErrorIsPresent = false;
         _lastFailedSendMessage = MessageBody();
-        this.loadNewMessages();
         this._currentConversation = result;
+        this.loadNewMessages();
       } else {
         _sendMessageErrorIsPresent = true;
         _lastFailedSendMessage = message;
