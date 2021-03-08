@@ -100,9 +100,12 @@ class ConversationModel extends ChangeNotifier {
 
   ///
   ///  Loads new or missing messages from the server, by checking
-  ///  the last id of the last message in the model.
+  ///  the last id of the last message in the model. If any new
+  ///  messages was received, the UI is notified.
   ///
-  Future<void> loadNewMessages() async {
+  /// Returns: true if operation went OK, false if error
+  ///
+  Future<bool> loadNewMessages() async {
     num lastMsgIdInList = this._lastMessageIdInList;
     num lastMsgIdInMetadata = this._currentConversation.lastMessageId;
     print('MODEL: Last message IDs: list:metadata= ' +
@@ -113,14 +116,17 @@ class ConversationModel extends ChangeNotifier {
     try {
       tailMessageListResult = await _conversationService.getMessageUpdates(
           this._buildContext, this._currentConversation.id, lastMsgIdInList);
-      if (tailMessageListResult != null && tailMessageListResult.isNotEmpty) {
+      if (tailMessageListResult.isNotEmpty) {
         print('MODEL: Added ' +
             tailMessageListResult.length.toString() +
             'messages from server.');
         this._messages.addAll(tailMessageListResult);
         notifyListeners();
       }
-    } on Exception catch (e) {}
+      return true;
+    } on Exception catch (e) {
+      return false;
+    }
   }
 
   ///

@@ -106,6 +106,8 @@ class BuyRequestInfoPage extends StatelessWidget {
                         DisplayTextField(
                             description: S.of(context).maxDistance,
                             content: buyRequest.maxDistance.toString() + " Km"),
+                        //FIXME: BuyRequest: kjøpar kan lage chat selv om det ikkje er selgjarar som sel commodityen.
+                        //fix: ta vekk knappen ?
                         StandardButton(
                           buttonText: "START CHAT",
                           onPressed: () {

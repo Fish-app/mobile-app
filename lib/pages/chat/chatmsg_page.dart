@@ -115,6 +115,10 @@ class _MessageListWidgetState extends State<MessageListWidget> {
   @override
   void initState() {
     super.initState();
+
+    Provider.of<ConversationModel>(context, listen: false)
+        .loadNewMessages();
+
     _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
       print('WIDGET: Timer did run');
       _ftrTimerLoadMsgs = CancelableOperation.fromFuture(
@@ -126,17 +130,18 @@ class _MessageListWidgetState extends State<MessageListWidget> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: appFutureBuilder<List<Message>>(
-          widget._conversationService
-              .getMessageUpdates(context, widget.baseConversation.id, null),
-          (messagesFromServer, context) {
-        print("FUTURE builder: from srv result " +
-            messagesFromServer.length.toString());
+      child:
+    //  appFutureBuilder<List<Message>>(
+    //      widget._conversationService
+    //          .getMessageUpdates(context, widget.baseConversation.id, null),
+    //      (messagesFromServer, context) {
+    //    print("FUTURE builder: from srv result " +
+    //        messagesFromServer.length.toString());
 
-        Provider.of<ConversationModel>(context, listen: false)
-            .initMessages(messagesFromServer);
+    //    Provider.of<ConversationModel>(context, listen: false)
+    //        .initMessages(messagesFromServer);
 
-        return Consumer<ConversationModel>(
+        Consumer<ConversationModel>(
           builder: (context, model, child) => Container(
             child: ListView.builder(
                 reverse: true,
@@ -153,8 +158,7 @@ class _MessageListWidgetState extends State<MessageListWidget> {
                   );
                 }),
           ),
-        );
-      }),
+        ),
     );
   }
 }
