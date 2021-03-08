@@ -41,16 +41,12 @@ class _SendChatMessageFormState extends State<SendChatMessageForm> {
       padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
         children: [
-          IconButton(icon: Icon(Icons.add_a_photo), onPressed: null),
-          // FIXME: få til row her for å lage boksen frå designet (viss viktig?)
-          //Row(
-          //  children: [
-          //
-          //  ],
-          //),
+          Container(
+              padding: EdgeInsets.fromLTRB(0.0,0.0,10.0,0.0),
+              child:
+              IconButton(icon: Icon(Icons.add_a_photo), onPressed: null),
+            ),
           Expanded(
             child: Container(
               color: Colors.white,
@@ -61,13 +57,11 @@ class _SendChatMessageFormState extends State<SendChatMessageForm> {
                     children: [
                       // avoid overlap with circle
                       SizedBox(
-                        width: 3,
+                        width: 3.0,
                       ),
                       Flexible(
                         child: TextField(
                           controller: textEditController,
-                          //TODO: get decoration to works
-                          //decoration: Theme.of(context).inputDecorationTheme
                         ),
                       ),
                       IconButton(
@@ -79,22 +73,9 @@ class _SendChatMessageFormState extends State<SendChatMessageForm> {
                       border: Border.all(
                         color: Colors.black,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(20)))),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)))),
             ),
           )
-          // Flexible(
-          //   child: TextField(
-          //     controller: textEditController,
-          //     //TODO: get decoration to works
-          //     //decoration: Theme.of(context).inputDecorationTheme
-          //   ),
-          //
-          // ),
-          // Align(
-          //     alignment: Alignment.centerRight,
-          //     child: IconButton(
-          //         icon: Icon(Icons.send),
-          //         onPressed: isMessageValid ? sendMessage : null)),
         ],
       ),
     );
