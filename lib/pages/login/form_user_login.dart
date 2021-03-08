@@ -58,12 +58,11 @@ class _LoginUserFormState extends State<LoginUserForm> {
             _errorMessage = S.of(context).msgErrorClientSerializationFail;
           });
         }
-      } on HttpException catch (e) {
+      } on ApiException catch (e) {
         // SERVER ERROR CODE HANDELING
         setState(() {
-          _errorMessage = e.message;
-          switch (e.message) {
-            case "401":
+          switch (e.statusCode) {
+            case HttpStatus.forbidden:
               _errorMessage = S.of(context).msgErrorLoginRejected;
               break;
             default:
