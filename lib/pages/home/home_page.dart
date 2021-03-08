@@ -1,28 +1,20 @@
 import 'dart:ui';
 
-import 'package:fishapp/utils/default_builder.dart';
-import 'package:flutter/material.dart';
-import 'package:fishapp/config/routes/route_data.dart';
-import 'package:fishapp/config/routes/routes.dart';
+import 'package:async/async.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
-import 'package:fishapp/main.dart';
-import 'package:fishapp/pages/listing/listing_info_page.dart';
-import 'package:fishapp/utils/services/auth_service.dart';
+import 'package:fishapp/utils/default_builder.dart';
 import 'package:fishapp/widgets/buy_filter.dart';
 import 'package:fishapp/widgets/commodity_card.dart';
-import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
 import 'package:fishapp/widgets/listing_card.dart';
 import 'package:fishapp/widgets/logo.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
-
-import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:flutter/material.dart';
 
 import '../../entities/commodity.dart';
 import '../../entities/listing.dart';
-import '../../utils/services/rest_api_service.dart';
-import '../../utils/services/rest_api_service.dart';
-import '../../utils/services/rest_api_service.dart';
 import '../../utils/services/rest_api_service.dart';
 import '../../widgets/commodity_card.dart';
 
@@ -37,6 +29,21 @@ const double _topPadding = 25.0;
 const double _bottomPadding = _topPadding + 10;
 
 class HomePageState extends State<HomePage> {
+  CancelableOperation<List<Commodity>> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = CancelableOperation.fromFuture(
+        widget._commodityService.getAllCommodities(context));
+  }
+
+  @override
+  void dispose() {
+    _future.cancel();
+    super.dispose();
+  }
+
   Widget _makeComodityCard(Commodity commodity) {
     return GestureDetector(
       onTap: () => {
@@ -77,8 +84,7 @@ class HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: _topPadding),
               child: BuyFilterWidget(),
             ),
-            appFutureBuilder<List<Commodity>>(
-                widget._commodityService.getAllCommodities(context),
+            appFutureBuilder<List<Commodity>>(_future.value,
                 (commodities, context) {
               return Expanded(
                 child: ListView(
@@ -107,7 +113,13 @@ class CommodityListingPage extends StatefulWidget {
 
 class CommodityListingPageState extends State<CommodityListingPage>
     with TickerProviderStateMixin {
-  List<Widget> _listings = [];
+  CancelableOperation<List<OfferListing>> _future;
+
+  @override
+  void dispose() {
+    _future.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -117,6 +129,8 @@ class CommodityListingPageState extends State<CommodityListingPage>
         _heightUsedInAnime = double.infinity;
       });
     });
+    _future = CancelableOperation.fromFuture(widget._listingService
+        .getCommodityOfferListing(context, widget.listedCommodity.id));
   }
 
   Widget _makeSortByWidget() {
@@ -185,9 +199,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
                       child: ListView(
                         children: [
                           _makeSortByWidget(),
-                          appFutureBuilder<List<OfferListing>>(
-                              widget._listingService.getCommodityOfferListing(
-                                  context, widget.listedCommodity.id),
+                          appFutureBuilder<List<OfferListing>>(_future.value,
                               (offerListings, context) {
                             return Column(
                                 children: offerListings
