@@ -1,25 +1,25 @@
 import 'package:fishapp/entities/chat/conversation.dart';
+import 'package:fishapp/entities/receipt.dart';
+import 'package:fishapp/pages/chat/chatlist_page.dart';
 import 'package:fishapp/pages/chat/chatmsg_page.dart';
+import 'package:fishapp/pages/home/home_page.dart';
 import 'package:fishapp/pages/listing/buy_request_info_page.dart';
 import 'package:fishapp/pages/listing/choose_new_listing_page.dart';
 import 'package:fishapp/pages/listing/listing_info_page.dart';
 import 'package:fishapp/pages/listing/new_buy_request_page.dart';
 import 'package:fishapp/pages/listing/new_offer_listing_page.dart';
-import 'package:fishapp/pages/home/home_page.dart';
 import 'package:fishapp/pages/login/login_page.dart';
-import 'package:fishapp/pages/chat/chatlist_page.dart';
-import 'package:fishapp/pages/user/user_resetpwd_page.dart';
+import 'package:fishapp/pages/receipt/receipt_page.dart';
+import 'package:fishapp/pages/register/register_user_page.dart';
 import 'package:fishapp/pages/user/user_info.dart';
+import 'package:fishapp/pages/user/user_resetpwd_page.dart';
 import 'package:fishapp/utils/state/appstate.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../entities/listing.dart';
-import 'package:fishapp/pages/register/register_user_page.dart';
-
 import 'route_data.dart';
 import 'routes.dart' as routes;
-
-import 'package:flutter/material.dart';
 
 Route<dynamic> router(BuildContext context, RouteSettings settings) {
   var path = settings.name;
@@ -87,6 +87,23 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       break;
 
     ///  --  Needs login below  -- ///
+
+    case routes.receiptsList:
+      page = reqireLogin(() {
+        return ReceiptListPage();
+      });
+      break;
+    case routes.receipt:
+      if (params is Receipt) {
+        page = reqireLogin(() {
+          return ReceiptPage(
+            receipt: params,
+          );
+        });
+      } else {
+        page = Path404Page();
+      }
+      break;
     case routes.UserInfo:
       page = reqireLogin(() {
         return UserPage();
@@ -134,6 +151,7 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
   }
 
   return MaterialPageRoute(builder: (context) => page);
+  //return FadeRoute(page: page);
 }
 
 class Path404Page extends StatelessWidget {
@@ -144,4 +162,70 @@ class Path404Page extends StatelessWidget {
           "/side note burde kansje ha en vei ut av skjermen her"),
     );
   }
+}
+
+class FadeRoute extends PageRouteBuilder {
+  final Widget page;
+  FadeRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
+}
+
+class ScaleRotateRoute extends PageRouteBuilder {
+  final Widget page;
+  ScaleRotateRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionDuration: Duration(seconds: 1),
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              ScaleTransition(
+            scale: Tween<double>(
+              begin: 0.0,
+              end: 1.0,
+            ).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: Curves.fastOutSlowIn,
+              ),
+            ),
+            child: RotationTransition(
+              turns: Tween<double>(
+                begin: 0.0,
+                end: 1.0,
+              ).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.linear,
+                ),
+              ),
+              child: child,
+            ),
+          ),
+        );
 }

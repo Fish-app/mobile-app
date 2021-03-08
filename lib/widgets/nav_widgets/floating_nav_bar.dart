@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/state/appstate.dart';
@@ -10,13 +10,17 @@ final navButtonUser =
     NavDestButton(Icons.person_outline_rounded, routes.UserInfo);
 final navButtonNewListing = NavDestButton(Icons.list, routes.ChooseNewListing);
 
+final TEST_BUTTON = NavDestButton(Icons.biotech_rounded, routes.receipt);
+
 final List<NavDestButton> _userNavButtons = [
+  TEST_BUTTON,
   navButtonShop,
   navButtonChat,
   navButtonUser,
   navButtonNewListing
 ];
 final List<NavDestButton> _sellerNavButtons = [
+  TEST_BUTTON,
   navButtonShop,
   navButtonChat,
   navButtonUser,
