@@ -200,5 +200,7 @@
   "chatList": "Chat list",
   "@chatList" : {},
   "chatWithPrefix": "chat with",
-  "@chatWithPrefix": {}
+  "@chatWithPrefix": {},
+  "newConversation": "new conversation",
+  "@newConversation": {}
 }

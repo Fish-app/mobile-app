@@ -80,7 +80,7 @@ class ConversationListTile extends StatelessWidget {
           subtitle: conversation.lastMessage != null
               ? Text(getMessagePreviewText(
                   conversation.lastMessage, localUser, _remoteUser))
-              : null),
+              : Text(capitalize(S.of(context).newConversation))),
     );
   }
 
