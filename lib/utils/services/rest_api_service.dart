@@ -17,8 +17,14 @@ import '../../entities/listing.dart';
 class ConversationService {
   final FishappRestClient _client = FishappRestClient();
 
-  Future<List<Conversation>> getAllConversations(BuildContext context) async {
-    var url = apiPaths.getAppUri(apiPaths.getUserConversationList);
+  Future<List<Conversation>> getAllConversations(
+      BuildContext context, bool includeLastMsg) async {
+    Map<String, String> queryParameters;
+    if (includeLastMsg != null) {
+      queryParameters = {'include-lastmessage': includeLastMsg.toString()};
+    }
+    var url = apiPaths.getAppUri(apiPaths.getUserConversationList,
+        queryParameters: queryParameters);
     var response = await _client.get(context, url, addAuth: true);
 
     List<Conversation> conversationList = List();

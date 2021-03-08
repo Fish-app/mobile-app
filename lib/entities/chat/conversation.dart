@@ -11,8 +11,10 @@ class Conversation {
   num id;
   num lastMessageId;
   num firstMessageId;
+  num createdDate;
   User starterUser;
   Listing listing;
+  Message lastMessage;
 
   Conversation({this.id, this.lastMessageId, this.firstMessageId, this.starterUser, this.listing});
 
