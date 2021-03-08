@@ -11,6 +11,7 @@ import 'package:fishapp/constants/api_path.dart' as apiPaths;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
+import 'package:http/http.dart';
 
 import '../../constants/api_path.dart';
 import '../../entities/listing.dart';
@@ -196,11 +197,13 @@ class CommodityService {
     var uri = getAppUri(apiPaths.getCommodity);
     var response = await _client.get(context, uri, addAuth: false);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       var body = jsonDecode(response.body);
       if (body["data"] != null) {
         return Commodity.fromJson(body["data"]);
       }
+    } else {
+      throw ApiException(response);
     }
     return null;
   }
@@ -209,21 +212,11 @@ class CommodityService {
     var uri = getAppUri(apiPaths.getAllCommodity);
     var response = await _client.get(context, uri, addAuth: false);
     List returnList;
-
-    switch (response.statusCode) {
-      case 200:
-        var body = jsonDecode(response.body);
-        returnList = Commodity.fromJsonList(body);
-        break;
-      case 401:
-        throw HttpException(HttpStatus.unauthorized.toString());
-        break;
-      case 500:
-        throw HttpException(HttpStatus.internalServerError.toString());
-        break;
-      default:
-        returnList = List();
-        break;
+    if (response.statusCode == HttpStatus.ok) {
+      var body = jsonDecode(response.body);
+      returnList = Commodity.fromJsonList(body);
+    } else {
+      throw ApiException(response);
     }
     return returnList;
   }
@@ -236,10 +229,11 @@ class RatingService {
     var uri = getAppUri(apiPaths.ratingEndpoint + id.toString());
     var response = await _client.get(context, uri);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       return num.parse(response.body);
+    } else {
+      throw ApiException(response);
     }
-    return null;
   }
 }
 
@@ -250,11 +244,13 @@ class ListingService {
     var uri = getAppUri(apiPaths.getListing + id.toString());
     var response = await _client.get(context, uri, addAuth: false);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       var body = jsonDecode(response.body);
       if (body["data"] != null) {
         return OfferListing.fromJson(body["data"]);
       }
+    } else {
+      throw ApiException(response);
     }
     return null;
   }
@@ -264,79 +260,44 @@ class ListingService {
     var uri = getAppUri(apiPaths.getComodityListings + id.toString());
     var response = await _client.get(context, uri, addAuth: false);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       var body = jsonDecode(response.body);
       List<OfferListing> offerListings = List();
       for (var offerListing in body) {
         offerListings.add(OfferListing.fromJson(offerListing));
       }
       return offerListings;
+    } else {
+      throw ApiException(response);
     }
-    return null;
   }
 
   Future<OfferListing> createOfferListing(
       BuildContext context, OfferListing offerListing) async {
     var uri = getAppUri(apiPaths.createOfferListing);
-    try {
-      var response = await _client.post(context, uri,
-          headers: {'Content-type': "application/json"},
-          body: offerListing.toJsonString(),
-          addAuth: true);
-      switch (response.statusCode) {
-        case 200:
-          return offerListing =
-              OfferListing.fromJson(jsonDecode(response.body));
-          break;
-        case 401:
-          throw HttpException(HttpStatus.unauthorized.toString());
-          break;
-        case 403:
-          throw HttpException(HttpStatus.forbidden.toString());
-          break;
-        case 409:
-          break;
-        case 500:
-        default:
-          throw HttpException(HttpStatus.internalServerError.toString());
-          break;
-      }
-    } on IOException catch (e) {
-      log("IO failure " + e.toString(), time: DateTime.now());
-      throw HttpException("Service unavailable");
+    var response = await _client.post(context, uri,
+        headers: {'Content-type': "application/json"},
+        body: offerListing.toJsonString(),
+        addAuth: true);
+
+    if (response.statusCode == HttpStatus.ok) {
+      return offerListing = OfferListing.fromJson(jsonDecode(response.body));
+    } else {
+      throw ApiException(response);
     }
-    return offerListing;
   }
 
   Future<BuyRequest> createBuyRequest(
       BuildContext context, BuyRequest buyRequest) async {
     var uri = apiPaths.getAppUri(apiPaths.createBuyRequest);
-    try {
-      var response = await _client.post(context, uri,
-          headers: {'Content-type': "application/json"},
-          body: buyRequest.toJsonString(),
-          addAuth: true);
-      switch (response.statusCode) {
-        case 200:
-          return buyRequest = BuyRequest.fromJson(jsonDecode(response.body));
-          break;
-        case 401:
-          throw HttpException(HttpStatus.unauthorized.toString());
-          break;
-        case 403:
-          throw HttpException(HttpStatus.forbidden.toString());
-          break;
-        case 409:
-          break;
-        case 500:
-        default:
-          throw HttpException(HttpStatus.internalServerError.toString());
-          break;
-      }
-    } on IOException catch (e) {
-      log("IO failure " + e.toString(), time: DateTime.now());
-      throw HttpException("Service unavailable");
+    var response = await _client.post(context, uri,
+        headers: {'Content-type': "application/json"},
+        body: buyRequest.toJsonString(),
+        addAuth: true);
+    if (response.statusCode == HttpStatus.ok) {
+      return buyRequest = BuyRequest.fromJson(jsonDecode(response.body));
+    } else {
+      throw ApiException(response);
     }
-    return buyRequest;
   }
 }

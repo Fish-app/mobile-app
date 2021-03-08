@@ -6,6 +6,14 @@ import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/utils/state/appstate.dart';
 import 'package:provider/provider.dart';
 
+class ApiException implements Exception {
+  final http.Response response;
+
+  get statusCode => response.statusCode;
+
+  ApiException(this.response);
+}
+
 class FishappRestClient {
   var _client = http.Client();
 
