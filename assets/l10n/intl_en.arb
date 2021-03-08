@@ -190,5 +190,15 @@
   "buyRequest": "Buy request",
   "@buyRequest": {},
   "takeBuyRequest": "Take buy request",
-  "@takeBuyRequest": {}
+  "@takeBuyRequest": {},
+  "error": "Error",
+  "@error" : {},
+  "actionTryAgain": "try again?",
+  "@actionTryAgain": {},
+  "unableToSend": "unable to send:",
+  "@unableToSend" : {},
+  "chatList": "Chat list",
+  "@chatList" : {},
+  "chatWithPrefix": "chat with",
+  "@chatWithPrefix": {}
 }

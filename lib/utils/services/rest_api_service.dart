@@ -2,20 +2,140 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:fishapp/entities/chat/conversation.dart';
+import 'package:fishapp/entities/chat/message.dart';
+import 'package:fishapp/entities/chat/messagebody.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fishapp/constants/api_path.dart' as apiPaths;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
-import 'package:http/http.dart';
 
 import '../../constants/api_path.dart';
 import '../../entities/listing.dart';
-import '../../entities/listing.dart';
-import '../../entities/listing.dart';
-import '../../entities/listing.dart';
-import '../../entities/listing.dart';
-import '../../entities/listing.dart';
+
+class ConversationService {
+  final FishappRestClient _client = FishappRestClient();
+
+  Future<List<Conversation>> getAllConversations(BuildContext context) async {
+    var url = apiPaths.getAppUri(apiPaths.getUserConversationList);
+    var response = await _client.get(context, url, addAuth: true);
+
+    List<Conversation> conversationList = List();
+
+    if (response.statusCode == HttpStatus.ok) {
+      if (response.body.isNotEmpty) {
+        var body = jsonDecode(response.body);
+        conversationList = Conversation.fromJsonList(body);
+      } else {
+        throw ApiException(response);
+      }
+    }
+    return conversationList;
+  }
+
+  Future<Conversation> startNewConversation(
+      BuildContext context, num listingId) async {
+    Conversation result = Conversation();
+    var url =
+        apiPaths.getAppUri(apiPaths.startConversationFromListing(listingId));
+
+    try {
+      var response = await _client.post(context, url,
+          headers: {'Content-type': "application/json"}, addAuth: true);
+      print('REST: Fetch conversation: ' + response.statusCode.toString());
+
+      if (response.statusCode == HttpStatus.ok) {
+        var responseBody = jsonDecode(response.body);
+        result = Conversation.fromJson(responseBody);
+      } else {
+        throw ApiException(response);
+      }
+    } on IOException catch (e) {
+      log("IO failure " + e.toString(), time: DateTime.now());
+      throw HttpException("Service unavailable");
+    }
+    return result;
+  }
+
+  Future<Conversation> sendMessageRequest(
+      BuildContext context, num conversationId, MessageBody messageBody) async {
+    Conversation result;
+    var url = apiPaths
+        .getAppUri(apiPaths.sendMessageFromConversation(conversationId));
+
+    try {
+      var response = await _client.post(context, url,
+          headers: {'Content-type': "application/json; charset=UTF-8"},
+          body: messageBody.toJsonString(),
+          addAuth: true);
+
+      if (response.statusCode == HttpStatus.ok) {
+        var responseBody = jsonDecode(response.body);
+        result = Conversation.fromJson(responseBody);
+      } else {
+        throw ApiException(response);
+      }
+    } on IOException catch (e) {
+      log("IO failure " + e.toString(), time: DateTime.now());
+      throw HttpException("Service unavailable");
+    }
+    return result;
+  }
+
+  Future<List<Message>> getMessageUpdates(
+      BuildContext context, num conversationId, num lastMessageId) async {
+    Map<String, String> queryParameters;
+    if (lastMessageId != null) {
+      queryParameters = {'last-id': lastMessageId.toString()};
+    }
+    var url = apiPaths.getAppUri(
+        apiPaths.getMessageListUpdatesQuery(conversationId),
+        queryParameters: queryParameters);
+    var response = await _client.get(context, url, addAuth: true);
+
+    List<Message> returnList = List();
+    print("REST: Message updates GOT " + response.statusCode.toString());
+
+    if (response.statusCode == HttpStatus.ok) {
+      if (response.body.isNotEmpty) {
+        var body = jsonDecode(response.body);
+        returnList = Message.fromJsonList(body);
+        print("REST: Parsed " +
+            returnList.length.toString() +
+            " messages to list");
+      }
+    } else {
+      throw ApiException(response);
+    }
+    return returnList;
+  }
+
+  //TODO: untested and not currently used, also needs to be checked on server before use
+  Future<List<Message>> _getMessageRange(BuildContext context,
+      num conversationId, num fromId, num offsetInList) async {
+    Map<String, String> queryParameters;
+    if (fromId != null && offsetInList != null) {
+      queryParameters = {
+        'from': fromId.toString(),
+        'offset': offsetInList.toString(),
+      };
+    }
+    var url = apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId),
+        queryParameters: queryParameters);
+    var response = await _client.get(context, url, addAuth: true);
+
+    List<Message> returnList = List();
+
+    if (response.statusCode == HttpStatus.ok) {
+      var body = jsonDecode(response.body);
+      returnList = Message.fromJsonList(body);
+    } else {
+      throw ApiException(response);
+    }
+    return returnList;
+  }
+}
 
 class CommodityService {
   final FishappRestClient _client = FishappRestClient();

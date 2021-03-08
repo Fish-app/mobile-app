@@ -1,3 +1,4 @@
+import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fishapp/entities/user.dart';
@@ -10,6 +11,7 @@ import 'config/routes/router.dart';
 import 'config/themes/theme_config.dart';
 import 'entities/commodity.dart';
 import 'entities/listing.dart';
+import 'entities/chat/message.dart';
 import 'entities/seller.dart';
 import 'generated/l10n.dart';
 
@@ -82,7 +84,7 @@ var testUserBob = User(
   email: "bob@bob.com",
 );
 var testSellerBob = Seller(
-  id: 22,
+  id: 23,
   name: "bob",
   email: "bob@bob.com",
   regNumber: "2312",

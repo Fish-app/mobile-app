@@ -1,3 +1,6 @@
+import 'package:fishapp/entities/chat/conversation.dart';
+import 'package:fishapp/utils/services/fishapp_rest_client.dart';
+import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/route_data.dart';
@@ -11,6 +14,8 @@ import 'package:fishapp/widgets/distance_to_widget.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/rating_stars.dart';
 import 'package:fishapp/widgets/standard_button.dart';
+
+import 'package:fishapp/config/routes/routes.dart' as routes;
 
 import '../../widgets/rating_stars.dart';
 
@@ -104,7 +109,15 @@ class OfferListingInfoPage extends StatelessWidget {
                         buttonText: "START CHAT",
                         onPressed: () {
                           print("Pressed");
-                        }, //TODO: legg til åpning av chat
+                          var _conversationService = ConversationService();
+                          _conversationService.
+                          startNewConversation(context, offerListing.id).then((value) =>
+                          //TESTING: fungerer OK: Er dette robust nok ?
+                              Navigator.of(context).pushNamed(
+                                  routes.ChatConversation,
+                                  arguments: value)
+                          );
+                        },
                       ),
                       StandardButton(
                         buttonText: S.of(context).buyDirectly.toUpperCase(),

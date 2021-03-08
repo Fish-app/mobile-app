@@ -5,7 +5,8 @@ const UserInfo = "/user/info";
 const UserLogin = "/user/login";
 const UserResetPwd = "/user/info/resetpassword";
 
-const chat = "/chat";
+const ChatConversation = "/chat/conversation";
+const chat = "/chat/list";
 
 const OfferListingInfo = "/offerlistinginfo";
 const BuyRequestInfo = "/buyrequestinfo";
