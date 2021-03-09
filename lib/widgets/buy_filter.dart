@@ -1,6 +1,8 @@
+import 'package:fishapp/config/themes/theme_config.dart';
+import 'package:fishapp/pages/home/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fishapp/config/themes/theme_config.dart';
+import 'package:provider/provider.dart';
 
 class _BuyFilterItem {
   final String filterTitle;
@@ -49,27 +51,30 @@ class BuyFilterWidgetState extends State<BuyFilterWidget> {
               prefixIconConstraints: BoxConstraints(
                 maxHeight: 20,
               )),
+          onChanged: (value) {
+            Provider.of<SearchState>(context).searchString = value;
+          },
         ),
-        Wrap(
-          spacing: 3,
-          children: filterItems.map((filterItem) {
-            return ChoiceChip(
-              selectedColor: Theme.of(context).primaryColor,
-              label: Text(
-                filterItem.filterTitle,
-                style: TextStyle(
-                    color: filterItem.isActive ? emphasis2Color : Colors.black),
-              ),
-              onSelected: (value) {
-                print("filter " + filterItem.filterTitle + " is active");
-                setState(() {
-                  filterItem.isActive = value;
-                });
-              },
-              selected: filterItem.isActive,
-            );
-          }).toList(),
-        )
+        // Wrap(
+        //   spacing: 3,
+        //   children: filterItems.map((filterItem) {
+        //     return ChoiceChip(
+        //       selectedColor: Theme.of(context).primaryColor,
+        //       label: Text(
+        //         filterItem.filterTitle,
+        //         style: TextStyle(
+        //             color: filterItem.isActive ? emphasis2Color : Colors.black),
+        //       ),
+        //       onSelected: (value) {
+        //         print("filter " + filterItem.filterTitle + " is active");
+        //         setState(() {
+        //           filterItem.isActive = value;
+        //         });
+        //       },
+        //       selected: filterItem.isActive,
+        //     );
+        //   }).toList(),
+        // )
       ],
     );
   }
