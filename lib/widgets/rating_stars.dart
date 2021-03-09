@@ -1,11 +1,10 @@
 import 'package:async/async.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:fishapp/config/themes/theme_config.dart';
 import 'package:fishapp/widgets/simple_icon_shadow_widget.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../entities/user.dart';
-import '../utils/services/rest_api_service.dart';
 import '../utils/services/rest_api_service.dart';
 
 /*
@@ -76,7 +75,7 @@ class _UserRatingStarsState extends State<UserRatingStars> {
   void initState() {
     super.initState();
     _future = CancelableOperation.fromFuture(
-            widget.ratingService.getRating(context, widget.user.id))
+            widget.ratingService.getUserRating(context, widget.user.id))
         .then((value) {
       setState(() {
         _rating = value;

@@ -1,12 +1,7 @@
-import 'package:fishapp/entities/chat/conversation.dart';
-import 'package:fishapp/utils/services/fishapp_rest_client.dart';
-import 'package:fishapp/utils/services/rest_api_service.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/generated/l10n.dart';
-import 'package:fishapp/main.dart';
+import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:fishapp/widgets/Map/map_image.dart';
 import 'package:fishapp/widgets/Map/open_map_widget.dart';
 import 'package:fishapp/widgets/display_text_field.dart';
@@ -14,13 +9,13 @@ import 'package:fishapp/widgets/distance_to_widget.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/rating_stars.dart';
 import 'package:fishapp/widgets/standard_button.dart';
-
-import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:flutter/material.dart';
 
 import '../../widgets/rating_stars.dart';
 
 class OfferListingInfoPage extends StatelessWidget {
   OfferListing offerListing;
+  ReceiptService _receiptService = ReceiptService();
 
   OfferListingInfoPage({Key key, @required this.offerListing})
       : super(key: key);
@@ -110,19 +105,26 @@ class OfferListingInfoPage extends StatelessWidget {
                         onPressed: () {
                           print("Pressed");
                           var _conversationService = ConversationService();
-                          _conversationService.
-                          startNewConversation(context, offerListing.id).then((value) =>
-                          //TESTING: fungerer OK: Er dette robust nok ?
-                              Navigator.of(context).pushNamed(
-                                  routes.ChatConversation,
-                                  arguments: value)
-                          );
+                          _conversationService
+                              .startNewConversation(context, offerListing.id)
+                              .then((value) =>
+                                  //TESTING: fungerer OK: Er dette robust nok ?
+                                  Navigator.of(context).pushNamed(
+                                      routes.ChatConversation,
+                                      arguments: value));
                         },
                       ),
                       StandardButton(
                         buttonText: S.of(context).buyDirectly.toUpperCase(),
                         onPressed: () {
-                          print("Pressed2");
+                          _receiptService
+                              .newOrder(context, offerListing.id, 1)
+                              .then((value) {
+                            if (value != null) {
+                              Navigator.pushNamed(context, routes.receipt,
+                                  arguments: value);
+                            }
+                          });
                         }, //TODO: legg til direkte kjøp
                       )
                     ],

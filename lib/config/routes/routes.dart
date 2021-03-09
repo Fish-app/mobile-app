@@ -1,3 +1,4 @@
+// TODO: make all this use the CORRECT_NOTATION_FOR_CONSTS notForObjects
 const Home = "/";
 
 const UserNew = "/user/new";
@@ -14,3 +15,6 @@ const NewListing = "/newlisting";
 const NewBuyRequest = "/newbuyrequest";
 
 const ChooseNewListing = "/choosenewlisting";
+
+const receipt = "/receipt";
+const receiptsList = "/receiptlist";

@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 // bakgrunn - #fffbfbfb
 
 final emphasisColor = Color(0xffffc400);
+final emphasis2ishColor = Color(0xffeab400);
 final emphasis2Color = Color(0xffe1ad00);
 final emphasisButton = Color(0xff000000);
 final backgroundActiveMenuButton = Color(0xff262626);
@@ -55,6 +56,15 @@ final fishappLightTheme = ThemeData(
   primaryColorLight: Colors.grey,
   accentColor: Colors.orange,
   focusColor: Colors.orange,
+
+  sliderTheme: SliderThemeData(
+    activeTickMarkColor: Colors.white,
+    activeTrackColor: emphasis2ishColor,
+    overlayColor: emphasis2ishColor.withOpacity(0.2),
+    thumbColor: emphasisColor,
+    inactiveTickMarkColor: Colors.white,
+    inactiveTrackColor: searchBarBorderColor.withOpacity(0.3),
+  ),
 
   /// -- Playfair_Display -- ///
   primaryTextTheme: TextTheme(
@@ -158,7 +168,7 @@ final fishappLightTheme = ThemeData(
   scaffoldBackgroundColor: backgroundColor,
 );
 
-final InputDecorationTheme normalFormFieldTheme = InputDecorationTheme (
+final InputDecorationTheme normalFormFieldTheme = InputDecorationTheme(
   floatingLabelBehavior: FloatingLabelBehavior.always,
   contentPadding: EdgeInsets.fromLTRB(15, 5, 0, 5),
   border: UnderlineInputBorder(),

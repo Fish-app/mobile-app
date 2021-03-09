@@ -2,17 +2,77 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:fishapp/constants/api_path.dart' as apiPaths;
 import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:fishapp/entities/chat/message.dart';
 import 'package:fishapp/entities/chat/messagebody.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:fishapp/constants/api_path.dart' as apiPaths;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
+import 'package:fishapp/entities/receipt.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../constants/api_path.dart';
 import '../../entities/listing.dart';
+
+class ReceiptService {
+  final FishappRestClient _client = FishappRestClient();
+
+  // TODO: remove when system is in place
+  Future<Receipt> newOrder(BuildContext context, num id, int amount) async {
+    var uri = getAppUri(apiPaths.getReceipt);
+
+    var response = await _client.post(context, uri,
+        headers: {'Content-type': "application/json"},
+        addAuth: true,
+        body: NewOrder(amount: amount, listingId: id).toJsonString());
+
+    if (response.statusCode == HttpStatus.ok) {
+      var body = jsonDecode(response.body);
+      print(body);
+      return Receipt.fromJson(body);
+      if (body["data"] != null) {
+        print("AAAAAAAAAAAAAAAAAAAAAAAAA");
+        return Receipt.fromJson(body["data"]);
+      }
+    } else {
+      ApiException(response).dump();
+    }
+    return null;
+  }
+
+  Future<Receipt> getReceipt(BuildContext context, num id) async {
+    var uri = getAppUri(apiPaths.getReceipt + id.toString());
+
+    var response = await _client.get(context, uri, addAuth: false);
+
+    if (response.statusCode == HttpStatus.ok) {
+      var body = jsonDecode(response.body);
+      if (body["data"] != null) {
+        return Receipt.fromJson(body["data"]);
+      }
+    } else {
+      throw ApiException(response);
+    }
+    return null;
+  }
+
+  Future<List<Receipt>> getAllUserReceipt(BuildContext context) async {
+    var url = apiPaths.getAppUri(apiPaths.getAllReceipts);
+    var response = await _client.get(context, url, addAuth: true);
+
+    if (response.statusCode == HttpStatus.ok) {
+      var body = jsonDecode(response.body);
+      List<Receipt> offerListings = List();
+      for (var receipt in body) {
+        offerListings.add(Receipt.fromJson(receipt));
+      }
+      return offerListings;
+    } else {
+      throw ApiException(response);
+    }
+  }
+}
 
 class ConversationService {
   final FishappRestClient _client = FishappRestClient();
@@ -172,14 +232,45 @@ class CommodityService {
 class RatingService {
   final FishappRestClient _client = FishappRestClient();
 
-  Future<num> getRating(BuildContext context, num id) async {
+  Future<num> getUserRating(BuildContext context, num id) async {
     var uri = getAppUri(apiPaths.ratingEndpoint + id.toString());
-    var response = await _client.get(context, uri);
+    var response = await _client.get(context, uri, addAuth: true);
 
     if (response.statusCode == HttpStatus.ok) {
-      return num.parse(response.body);
+      return num.tryParse(response.body) ?? -1;
     } else {
       throw ApiException(response);
+    }
+  }
+
+  Future<num> getUserTransactionRating(BuildContext context, num id) async {
+    var uri =
+        getAppUri(apiPaths.transactionRatingEndpoint + id.floor().toString());
+    var response = await _client.get(context, uri, addAuth: true);
+
+    if (response.statusCode == HttpStatus.ok) {
+      return num.tryParse(response.body) ?? -1;
+    } else {
+      //throw ApiException(response);
+      print(response.statusCode);
+      print(response.request.url);
+    }
+  }
+
+  Future<num> newRating(
+      BuildContext context, num transactionId, int stars) async {
+    var uri = getAppUri(apiPaths.ratingEndpoint, queryParameters: {
+      "transactionid": transactionId.round().toString(),
+      "stars": stars.toString()
+    });
+    var response = await _client.post(context, uri, addAuth: true);
+
+    if (response.statusCode == HttpStatus.ok) {
+      return num.tryParse(response.body) ?? -1;
+    } else {
+      //throw ApiException(response);
+      print(response.statusCode);
+      print(response.request.url);
     }
   }
 }
