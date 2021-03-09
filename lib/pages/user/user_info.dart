@@ -83,8 +83,11 @@ class _UserPageState extends State<UserPage> {
                           DisplayTextField(
                               description: "session valid until".toUpperCase(),
                               content:
-                                  value.jwtTokenData?.expiresAt.toString() ??
-                                      ""),
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  (value.jwtTokenData.expiresAt * 1000).toInt(),
+                                  isUtc: true).toString().substring(0,10) ?? ""
+                                  //value.jwtTokenData?.expiresAt.toString()
+                                      ),
                         ]);
                       }),
                       // BUTTONS
@@ -97,17 +100,6 @@ class _UserPageState extends State<UserPage> {
                             Navigator.of(context)
                                 .pushNamed(routes.UserResetPwd);
                           },
-                        ),
-                      ),
-                      Visibility(
-                        visible: true,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: widget._buttonPadding),
-                          child: StandardButton(
-                            buttonText: capitalize(S.of(context).becomeSeller),
-                            onPressed: () {},
-                          ),
                         ),
                       ),
                       Padding(

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:fishapp/entities/seller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/main.dart';
@@ -39,6 +40,31 @@ class AuthService {
       var response = await fishappRestClient.post(context, uri,
           headers: {'Content-type': "application/json"},
           body: userNewData.toJsonString(),
+          addAuth: false);
+
+      switch (response.statusCode) {
+        case 200:
+          break;
+        case 409:
+          throw CreateUserException("Email already exists");
+          break;
+        case 500:
+        default:
+          throw HttpException(HttpStatus.internalServerError.toString());
+          break;
+      }
+    } on IOException catch (e) {
+      log("IO failure " + e.toString(), time: DateTime.now());
+      throw HttpException("Service unavailable");
+    }
+  }
+
+  Future<void> createSeller(BuildContext context, SellerNewData sellerNewData) async {
+    var uri = getAppUri(createSellerEndpoint);
+    try {
+      var response = await fishappRestClient.post(context, uri,
+          headers: {'Content-type': "application/json"},
+          body: sellerNewData.toJsonString(),
           addAuth: false);
 
       switch (response.statusCode) {
