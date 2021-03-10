@@ -4,6 +4,7 @@ import 'package:async/async.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
+import 'package:fishapp/pages/home/search.dart';
 import 'package:fishapp/utils/default_builder.dart';
 import 'package:fishapp/widgets/buy_filter.dart';
 import 'package:fishapp/widgets/commodity_card.dart';
@@ -12,6 +13,7 @@ import 'package:fishapp/widgets/logo.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../entities/commodity.dart';
 import '../../entities/listing.dart';
@@ -69,35 +71,44 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return getFishappDefaultScaffold(context,
-        useNavBar: navButtonShop,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: _topPadding),
-              child: Logo(),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: _topPadding),
-              child: BuyFilterWidget(),
-            ),
-            appFutureBuilder<List<Commodity>>(_future.value,
-                (commodities, context) {
-              return Expanded(
-                child: ListView(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: _bottomPadding),
-                  children: commodities
-                      .map((commodity) => _makeComodityCard(commodity))
-                      .toList(),
+    return ChangeNotifierProvider(
+        create: (context) => SearchState(),
+        child: getFishappDefaultScaffold(context,
+            useNavBar: navButtonShop,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: _topPadding),
+                  child: Logo(),
                 ),
-              );
-            })
-          ],
-        ));
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: _topPadding, vertical: 20),
+                  child: BuyFilterWidget(),
+                ),
+                appFutureBuilder<List<Commodity>>(_future.value,
+                    (commodities, context) {
+                  return Expanded(child: Consumer<SearchState>(
+                    builder: (context, value, child) {
+                      return ListView(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: _bottomPadding),
+                        children: commodities
+                            .where((element) => element.name
+                                .toLowerCase()
+                                .contains(
+                                    value?.searchString?.toLowerCase() ?? ""))
+                            .map((commodity) => _makeComodityCard(commodity))
+                            .toList(),
+                      );
+                    },
+                  ));
+                })
+              ],
+            )));
   }
 }
 
