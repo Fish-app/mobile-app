@@ -1,5 +1,3 @@
-
-
 /// CHAT
 const getUserConversationList = "/chat/myconversations";
 const _startChatEndpoint = "/chat/new";
@@ -19,8 +17,6 @@ String getMessageListUpdatesQuery(int conversation) {
 String getMessageListInRange(int conversation) {
   return "/chat/" + conversation.toString() + "/range";
 }
-/// CHAT END
-
 
 // needs login //
 
@@ -29,6 +25,11 @@ String getMessageListInRange(int conversation) {
 const getCommodity = "aa";
 const getAllCommodity = "/commodity/all";
 // needs login //
+
+/// -- Receipt -- ///
+
+const getReceipt = "/transaction/";
+const getAllReceipts = "/transaction/all";
 
 /// -- Listing -- ///
 
@@ -64,6 +65,7 @@ const changePasswordEndpoint = "/authentication/changepassword";
 
 /// -- rating -- ///
 const ratingEndpoint = "/rating/";
+const transactionRatingEndpoint = "/rating/transaction/";
 
 Uri getAppUri(String path, {Map<String, String> queryParameters}) {
   return Uri(
