@@ -81,5 +81,6 @@
   "unableToSend" : "fikk ikke til å sende",
   "chatList": "samtaler",
   "chatWithPrefix": "samtale med",
-  "newConversation": "ny samtale"
+  "newConversation": "ny samtale",
+  "view": "vis"
 }

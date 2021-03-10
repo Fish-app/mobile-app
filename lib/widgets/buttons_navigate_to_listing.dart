@@ -1,6 +1,8 @@
 import 'package:fishapp/entities/listing.dart';
+import 'package:fishapp/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:strings/strings.dart';
 
 class NavigateToOfferListingButton extends StatelessWidget {
   final OfferListing offerListing;
@@ -15,7 +17,7 @@ class NavigateToOfferListingButton extends StatelessWidget {
               .pushNamed(routes.OfferListingInfo, arguments: offerListing);
         },
         icon: Icon(Icons.description),
-        label: Text("Se annonse"));
+        label: Text(capitalize(S.of(context).view + " " + S.of(context).listing)));
   }
 }
 
@@ -32,6 +34,6 @@ class NavigateToBuyRequestButton extends StatelessWidget {
               .pushNamed(routes.BuyRequestInfo, arguments: buyRequest);
         },
         icon: Icon(Icons.description),
-        label: Text("Se forespørsel"));
+    label: Text(capitalize(S.of(context).view + " " + S.of(context).buyRequest)));
   }
 }
