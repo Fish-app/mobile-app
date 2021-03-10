@@ -24,11 +24,13 @@ class ConversationModel extends ChangeNotifier {
 
   UnmodifiableListView<Message> get messages => UnmodifiableListView(_messages);
   Conversation get conversation => (this._currentConversation);
+
+  bool get sendMessageErrorOccurred => (this._sendMessageErrorIsPresent);
+  MessageBody get lastFailedSendMessage => (this._lastFailedSendMessage);
+
   /// For button on navbar, to navigate to correct listing info page we need the listing object
   BuyRequest get buyRequest => (this._currentBuyRequest);
   OfferListing get offerListing => (this._currentOfferListing);
-  bool get sendMessageErrorOccurred => (this._sendMessageErrorIsPresent);
-  MessageBody get lastFailedSendMessage => (this._lastFailedSendMessage);
 
   ///
   /// Loads the messages handed from FutureBuilder
@@ -49,7 +51,6 @@ class ConversationModel extends ChangeNotifier {
     this.clearErrorState();
     notifyListeners();
   }
-
 
   ///
   /// Clear the current error state and notifies the UI
@@ -136,34 +137,46 @@ class ConversationModel extends ChangeNotifier {
     }
   }
 
-
   Future<bool> loadListingData() async {
     String type = this._currentConversation.listing.type;
+    // No reason to ask for listing data if type or id is missing
+    if (type == null && this._currentConversation.listing.id == null)
+      return false;
     try {
-      print('MODEL: Conversation in model has listing TYPE ' + type);
       switch (type) {
         case "O":
-          OfferListing offerListingResult = await _listingService.getOfferListing(this._buildContext, this._currentConversation.listing.id);
-          print('MODEL: Added offer listing ' + offerListingResult.id.toString());
+          print('MODEL: Conversation in model specified listing' + type);
+          OfferListing offerListingResult =
+              await _listingService.getOfferListing(
+                  this._buildContext, this._currentConversation.listing.id);
+          print('MODEL: Successfully received OfferListing object' +
+              offerListingResult.id.toString());
           this._currentOfferListing = offerListingResult;
+          this._currentBuyRequest = null;
           break;
         case "B":
-          BuyRequest buyRequestResult = await _listingService.getBuyRequest(this._buildContext, this._currentConversation.listing.id);
-          print('MODEL: Added buy request ' + buyRequestResult.id.toString());
+          BuyRequest buyRequestResult = await _listingService.getBuyRequest(
+              this._buildContext, this._currentConversation.listing.id);
+          print('MODEL: Successfully received OfferListing object' +
+              buyRequestResult.id.toString());
           this._currentBuyRequest = buyRequestResult;
+          this._currentOfferListing = null;
           break;
         default:
-          print('MODEL: Invalid listing type, aborted request');
+          print(
+              'MODEL: Aborted get listing details; Conversation in model specified unknown listing type,');
+          this._currentOfferListing = null;
+          this._currentBuyRequest = null;
           return false;
           break;
       }
       notifyListeners();
       return true;
     } on Exception catch (e) {
-      print('ERROR OCCURRED');
       return false;
     }
   }
+
   ///
   /// Used to return the message id of the last message in list.
   /// if list is, empty we return null.

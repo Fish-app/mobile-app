@@ -290,8 +290,10 @@ class ListingService {
 
     if (response.statusCode == HttpStatus.ok) {
       var body = jsonDecode(response.body);
-      if (body["data"] != null) {
-        return OfferListing.fromJson(body["data"]);
+      if (body != null) {
+        return OfferListing.fromJson(body);
+      } else {
+        throw ApiException(response);
       }
     } else {
       throw ApiException(response);

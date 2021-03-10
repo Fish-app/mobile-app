@@ -2,15 +2,14 @@ import 'dart:async';
 
 import 'package:async/async.dart';
 import 'package:fishapp/entities/chat/conversation.dart';
-import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/pages/chat/form_send_chatmsg.dart';
 import 'package:fishapp/utils/state/appstate.dart';
+import 'package:fishapp/widgets/buttons_navigate_to_listing.dart';
 import 'package:fishapp/widgets/chat/chatbubble_error.dart';
 import 'package:fishapp/widgets/chat/chatbubble_message.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/standard_button.dart';
-import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,26 +45,33 @@ class ChatMessagePage extends StatelessWidget {
               includeTopBar: topBartext,
               extendBehindAppBar: false,
               navBarActions: <Widget>[
-                Consumer<ConversationModel>(
-                    builder: (context, model, child) {
-                      if ((model.offerListing != null) ^ (model.buyRequest !=
-                          null)) {
-                        print('WIDGET: XOR OK: Display nav button to listing');
+                // TOP BAR NAVIGATE LISTING BUTTON
+                Consumer<ConversationModel>(builder: (context, model, child) {
+                  if ((model.offerListing != null) ^
+                      (model.buyRequest != null)) {
+                    print(
+                        'WIDGET: Got listing details OK: Display nav button in topbar');
                     if (model.offerListing != null) {
-                          return NavigateToOfferListingButton(
-                            offerListing: model.offerListing,);
-                        } else {
-                          return NavigateToBuyRequestButton(
-                            buyRequest: model.buyRequest,);
-                        }
-                      } else {
-                        print('WIDGET: Hiding button,model has invalid listing type state');
-                        print('        Only 1 type can be present (either Offerlisting OR BuyRequest');
-                        print(model.buyRequest.toString());
-                        print(model.offerListing.toString());
-                    return Container();
-                      }
-                    }),
+                      return NavigateToOfferListingButton(
+                        offerListing: model.offerListing,
+                      );
+                    } else {
+                      return NavigateToBuyRequestButton(
+                        buyRequest: model.buyRequest,
+                      );
+                    }
+                  } else {
+                    print(
+                        'WIDGET: Hide topbar listing button, model has invalid listing type state');
+                    print(
+                        '        Only 1 type can be present (Offerlisting XOR BuyRequest)');
+                    print('          - BuyRequest was:   ' +
+                        model.buyRequest.toString());
+                    print('          - OfferListing was: ' +
+                        model.offerListing.toString());
+                    return Container(); // must return something, and not null
+                  }
+                }),
               ],
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -89,28 +95,28 @@ class ChatMessagePage extends StatelessWidget {
 
                   //TODO: REMOVE DEBUG BUTTONS
                   // DEBUG BUTTONS
-                  ElevatedButton(
-                      style: Theme.of(context).elevatedButtonTheme.style,
-                      child: Text(
-                        "refresh/hold to vekk",
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                      onLongPress: () {
-                        Provider.of<ConversationModel>(context, listen: false)
-                            .clear();
-                      },
-                      onPressed: () {
-                        Provider.of<ConversationModel>(context, listen: false)
-                            .reloadAllMessages();
-                      }),
-                  StandardButton(
-                      buttonText: "ned",
-                      onPressed: () {
-                        scrollController.animateTo(
-                            scrollController.position.minScrollExtent,
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.fastOutSlowIn);
-                      }),
+                  //ElevatedButton(
+                  //    style: Theme.of(context).elevatedButtonTheme.style,
+                  //    child: Text(
+                  //      "refresh/hold to vekk",
+                  //      style: Theme.of(context).textTheme.button,
+                  //    ),
+                  //    onLongPress: () {
+                  //      Provider.of<ConversationModel>(context, listen: false)
+                  //          .clear();
+                  //    },
+                  //    onPressed: () {
+                  //      Provider.of<ConversationModel>(context, listen: false)
+                  //          .reloadAllMessages();
+                  //    }),
+                  //StandardButton(
+                  //    buttonText: "ned",
+                  //    onPressed: () {
+                  //      scrollController.animateTo(
+                  //          scrollController.position.minScrollExtent,
+                  //          duration: Duration(milliseconds: 500),
+                  //          curve: Curves.fastOutSlowIn);
+                  //    }),
                 ],
               ),
             );
@@ -118,39 +124,6 @@ class ChatMessagePage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-
-class NavigateToOfferListingButton extends StatelessWidget {
-  final OfferListing offerListing;
-
-  const NavigateToOfferListingButton({Key key, this.offerListing}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return TextButton.icon(
-        onPressed: () {
-          Navigator.of(context)
-              .pushNamed(routes.OfferListingInfo, arguments: offerListing);
-        },
-        icon: Icon(Icons.description),
-        label: Text("Se annonse"));
-  }
-}
-
-class NavigateToBuyRequestButton extends StatelessWidget {
-  final BuyRequest buyRequest;
-
-  const NavigateToBuyRequestButton({Key key, this.buyRequest}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-      return TextButton.icon(
-          onPressed: () {
-            Navigator.of(context)
-                .pushNamed(routes.BuyRequestInfo, arguments: buyRequest);
-          },
-          icon: Icon(Icons.description),
-          label: Text("Se forespørsel"));
   }
 }
 
