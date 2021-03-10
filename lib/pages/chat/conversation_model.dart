@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:fishapp/entities/chat/message.dart';
 import 'package:fishapp/entities/chat/messagebody.dart';
+import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,9 +11,12 @@ import 'package:flutter/widgets.dart';
 class ConversationModel extends ChangeNotifier {
   final _buildContext;
   final _conversationService = ConversationService();
+  final _listingService = ListingService();
   final List<Message> _messages = List();
 
   Conversation _currentConversation;
+  BuyRequest _currentBuyRequest;
+  OfferListing _currentOfferListing;
   bool _sendMessageErrorIsPresent = false;
   MessageBody _lastFailedSendMessage = MessageBody();
 
@@ -20,6 +24,9 @@ class ConversationModel extends ChangeNotifier {
 
   UnmodifiableListView<Message> get messages => UnmodifiableListView(_messages);
   Conversation get conversation => (this._currentConversation);
+  /// For button on navbar, to navigate to correct listing info page we need the listing object
+  BuyRequest get buyRequest => (this._currentBuyRequest);
+  OfferListing get offerListing => (this._currentOfferListing);
   bool get sendMessageErrorOccurred => (this._sendMessageErrorIsPresent);
   MessageBody get lastFailedSendMessage => (this._lastFailedSendMessage);
 
@@ -129,6 +136,36 @@ class ConversationModel extends ChangeNotifier {
     }
   }
 
+
+  Future<bool> loadListingData() async {
+    String type = this._currentConversation.listing.type;
+    try {
+      print('TYPE ' + type);
+      switch (type) {
+        case "O":
+          OfferListing offerListingResult = await _listingService.getOfferListing(this._buildContext, this._currentConversation.listing.id);
+          print('O OK');
+          this._currentOfferListing = offerListingResult;
+          notifyListeners();
+          return true;
+          break;
+        case "B":
+          BuyRequest buyRequestResult = await _listingService.getBuyRequest(this._buildContext, this._currentConversation.listing.id);
+          print('MODEL: got result' + buyRequestResult.toString());
+          this._currentBuyRequest = buyRequestResult;
+          print('B OK');
+          notifyListeners();
+          return true;
+          break;
+        default:
+          return false;
+          break;
+      }
+    } on Exception catch (e) {
+      print('ERROR OCCURRED');
+      return false;
+    }
+  }
   ///
   /// Used to return the message id of the last message in list.
   /// if list is, empty we return null.
@@ -144,6 +181,4 @@ class ConversationModel extends ChangeNotifier {
       return this._messages.last.id;
     }
   }
-
-
 }

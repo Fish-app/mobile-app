@@ -26,6 +26,7 @@ class _ChatListPageState extends State<ChatListPage> {
     return getFishappDefaultScaffold(context,
         includeTopBar: capitalize(S.of(context).chatList),
         useNavBar: navButtonChat,
+        navBarHideReturn: true,
         child: SafeArea(
             child: appFutureBuilder<List<Conversation>>(
                 widget._conversationService.getAllConversations(context, true),

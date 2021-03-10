@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:async/async.dart';
 import 'package:fishapp/entities/chat/conversation.dart';
-import 'package:fishapp/entities/chat/message.dart';
+import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/pages/chat/form_send_chatmsg.dart';
-import 'package:fishapp/utils/default_builder.dart';
-import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:fishapp/utils/state/appstate.dart';
 import 'package:fishapp/widgets/chat/chatbubble_error.dart';
 import 'package:fishapp/widgets/chat/chatbubble_message.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/standard_button.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +34,7 @@ class ChatMessagePage extends StatelessWidget {
           child: Consumer<AppState>(builder: (context, userdata, child) {
             User remoteParticipant;
             User localParticipant = userdata.user;
-            if(baseConversation.listing.creator.id == localParticipant.id) {
+            if (baseConversation.listing.creator.id == localParticipant.id) {
               remoteParticipant = baseConversation.starterUser;
             } else {
               remoteParticipant = baseConversation.listing.creator;
@@ -46,6 +45,27 @@ class ChatMessagePage extends StatelessWidget {
               context,
               includeTopBar: topBartext,
               extendBehindAppBar: false,
+              navBarActions: <Widget>[
+                Consumer<ConversationModel>(
+                    builder: (context, model, child) {
+                      if ((model.offerListing != null) ^ (model.buyRequest !=
+                          null)) {
+                        print('XOR OK');
+                    if (model.offerListing != null) {
+                          return NavigateToOfferListingButton(
+                            offerListing: model.offerListing,);
+                        } else {
+                          return NavigateToBuyRequestButton(
+                            buyRequest: model.buyRequest,);
+                        }
+                      } else {
+                        print('WIDGET: Got no listing details, hiding button');
+                        print(model.buyRequest.toString());
+                        print(model.offerListing.toString());
+                    return Container();
+                      }
+                    }),
+              ],
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -100,13 +120,49 @@ class ChatMessagePage extends StatelessWidget {
   }
 }
 
+
+class NavigateToOfferListingButton extends StatelessWidget {
+  final OfferListing offerListing;
+
+  const NavigateToOfferListingButton({Key key, this.offerListing}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return TextButton.icon(
+        onPressed: () {
+          Navigator.of(context)
+              .pushNamed(routes.OfferListingInfo, arguments: offerListing);
+        },
+        icon: Icon(Icons.description),
+        label: Text("Se annonse"));
+  }
+}
+
+class NavigateToBuyRequestButton extends StatelessWidget {
+  final BuyRequest buyRequest;
+
+  const NavigateToBuyRequestButton({Key key, this.buyRequest}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+      return TextButton.icon(
+          onPressed: () {
+            Navigator.of(context)
+                .pushNamed(routes.BuyRequestInfo, arguments: buyRequest);
+          },
+          icon: Icon(Icons.description),
+          label: Text("Se forespørsel"));
+  }
+}
+
 class MessageListWidget extends StatefulWidget {
   final Conversation baseConversation;
   final User localParticipant;
   final ScrollController scrollController;
 
   MessageListWidget(
-      {Key key, this.baseConversation, this.localParticipant, this.scrollController})
+      {Key key,
+      this.baseConversation,
+      this.localParticipant,
+      this.scrollController})
       : super(key: key);
   @override
   _MessageListWidgetState createState() => _MessageListWidgetState();
@@ -127,13 +183,14 @@ class _MessageListWidgetState extends State<MessageListWidget> {
   void initState() {
     super.initState();
 
+    Provider.of<ConversationModel>(context, listen: false).loadListingData();
     Provider.of<ConversationModel>(context, listen: false).loadNewMessages();
 
     _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
       print('WIDGET: Timer did run');
       _ftrTimerLoadMsgs = CancelableOperation.fromFuture(
           Provider.of<ConversationModel>(context, listen: false)
-              .loadNewMessages());
+              .loadListingData());
     });
   }
 

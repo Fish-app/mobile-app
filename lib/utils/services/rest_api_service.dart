@@ -253,4 +253,20 @@ class ListingService {
       throw ApiException(response);
     }
   }
+
+  Future<BuyRequest> getBuyRequest(BuildContext context, num id) async {
+    var uri = getAppUri(apiPaths.getBuyRequest(id));
+    var response = await _client.get(context, uri, addAuth: false);
+
+    print('REST: Buy request got ' + response.statusCode.toString());
+    if (response.statusCode == HttpStatus.ok) {
+      var body = jsonDecode(response.body);
+      if (body["data"] != null) {
+        return BuyRequest.fromJson(body["data"]);
+      }
+    } else {
+      throw ApiException(response);
+    }
+    return null;
+  }
 }

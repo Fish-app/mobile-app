@@ -22,6 +22,7 @@ class Listing {
   int created;
   User creator;
   int endDate;
+  String type;
 
   Commodity commodity;
   double price;
@@ -36,6 +37,7 @@ class Listing {
       this.created,
       this.creator,
       this.endDate,
+      this.type,
       this.commodity,
       this.price,
       this.isOpen,
@@ -99,28 +101,28 @@ class BuyRequest extends Listing {
   double maxDistance;
 
   BuyRequest(
-  {num id,
-  int created,
-  User creator,
-  int endDate,
-  Commodity commodity,
-  double price,
-  bool isOpen,
-  double latitude,
-  double longitude,
-  this.amount,
-  this.additionalInfo,
-  this.maxDistance})
-  : super(
-        id: id,
-        created: created,
-        creator: creator,
-        endDate: endDate,
-        commodity: commodity,
-        price: price,
-        isOpen: isOpen,
-        latitude: latitude,
-        longitude: longitude);
+      {num id,
+      int created,
+      User creator,
+      int endDate,
+      Commodity commodity,
+      double price,
+      bool isOpen,
+      double latitude,
+      double longitude,
+      this.amount,
+      this.additionalInfo,
+      this.maxDistance})
+      : super(
+            id: id,
+            created: created,
+            creator: creator,
+            endDate: endDate,
+            commodity: commodity,
+            price: price,
+            isOpen: isOpen,
+            latitude: latitude,
+            longitude: longitude);
 
   factory BuyRequest.fromJson(Map<String, dynamic> json) =>
       _$BuyRequestFromJson(json);
