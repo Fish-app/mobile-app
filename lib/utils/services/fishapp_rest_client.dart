@@ -28,6 +28,7 @@ class FishappRestClient {
 
   Future<Map<String, String>> _addAuthToHeaders(
       BuildContext context, Map<String, String> headers) async {
+    //todo: kan bli null fikse senere
     final token =
         Provider.of<AppState>(context, listen: false).jwtTokenData.tokenString;
     headers ??= new Map<String, String>();
