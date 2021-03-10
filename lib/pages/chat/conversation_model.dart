@@ -140,27 +140,25 @@ class ConversationModel extends ChangeNotifier {
   Future<bool> loadListingData() async {
     String type = this._currentConversation.listing.type;
     try {
-      print('TYPE ' + type);
+      print('MODEL: Conversation in model has listing TYPE ' + type);
       switch (type) {
         case "O":
           OfferListing offerListingResult = await _listingService.getOfferListing(this._buildContext, this._currentConversation.listing.id);
-          print('O OK');
+          print('MODEL: Added offer listing ' + offerListingResult.id.toString());
           this._currentOfferListing = offerListingResult;
-          notifyListeners();
-          return true;
           break;
         case "B":
           BuyRequest buyRequestResult = await _listingService.getBuyRequest(this._buildContext, this._currentConversation.listing.id);
-          print('MODEL: got result' + buyRequestResult.toString());
+          print('MODEL: Added buy request ' + buyRequestResult.id.toString());
           this._currentBuyRequest = buyRequestResult;
-          print('B OK');
-          notifyListeners();
-          return true;
           break;
         default:
+          print('MODEL: Invalid listing type, aborted request');
           return false;
           break;
       }
+      notifyListeners();
+      return true;
     } on Exception catch (e) {
       print('ERROR OCCURRED');
       return false;

@@ -50,7 +50,7 @@ class ChatMessagePage extends StatelessWidget {
                     builder: (context, model, child) {
                       if ((model.offerListing != null) ^ (model.buyRequest !=
                           null)) {
-                        print('XOR OK');
+                        print('WIDGET: XOR OK: Display nav button to listing');
                     if (model.offerListing != null) {
                           return NavigateToOfferListingButton(
                             offerListing: model.offerListing,);
@@ -59,7 +59,8 @@ class ChatMessagePage extends StatelessWidget {
                             buyRequest: model.buyRequest,);
                         }
                       } else {
-                        print('WIDGET: Got no listing details, hiding button');
+                        print('WIDGET: Hiding button,model has invalid listing type state');
+                        print('        Only 1 type can be present (either Offerlisting OR BuyRequest');
                         print(model.buyRequest.toString());
                         print(model.offerListing.toString());
                     return Container();
@@ -190,7 +191,7 @@ class _MessageListWidgetState extends State<MessageListWidget> {
       print('WIDGET: Timer did run');
       _ftrTimerLoadMsgs = CancelableOperation.fromFuture(
           Provider.of<ConversationModel>(context, listen: false)
-              .loadListingData());
+              .loadNewMessages());
     });
   }
 
