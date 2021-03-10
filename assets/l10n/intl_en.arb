@@ -202,5 +202,7 @@
   "chatWithPrefix": "chat with",
   "@chatWithPrefix": {},
   "newConversation": "new conversation",
-  "@newConversation": {}
+  "@newConversation": {},
+  "view": "view",
+  "@view" : {}
 }
