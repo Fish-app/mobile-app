@@ -77,6 +77,8 @@ class ReceiptService {
 class ConversationService {
   final FishappRestClient _client = FishappRestClient();
 
+  final bool _debug = false;
+
   Future<List<Conversation>> getAllConversations(
       BuildContext context, bool includeLastMsg) async {
     Map<String, String> queryParameters;
@@ -110,7 +112,7 @@ class ConversationService {
     try {
       var response = await _client.post(context, url,
           headers: {'Content-type': "application/json"}, addAuth: true);
-      print('REST: Fetch conversation: ' + response.statusCode.toString());
+      if(this._debug) print('REST: Fetch conversation: ' + response.statusCode.toString());
 
       if (response.statusCode == HttpStatus.ok) {
         var responseBody = jsonDecode(response.body);
@@ -162,13 +164,13 @@ class ConversationService {
     var response = await _client.get(context, url, addAuth: true);
 
     List<Message> returnList = List();
-    print("REST: Message updates GOT " + response.statusCode.toString());
+    if(this._debug) print("REST: Message updates GOT " + response.statusCode.toString());
 
     if (response.statusCode == HttpStatus.ok) {
       if (response.body.isNotEmpty) {
         var body = jsonDecode(response.body);
         returnList = Message.fromJsonList(body);
-        print("REST: Parsed " +
+        if(this._debug) print("REST: Parsed " +
             returnList.length.toString() +
             " messages to list");
       }
@@ -285,6 +287,8 @@ class RatingService {
 class ListingService {
   final FishappRestClient _client = FishappRestClient();
 
+  final bool _debug = false;
+
   Future<OfferListing> getOfferListing(BuildContext context, num id) async {
     var uri = getAppUri(apiPaths.getListing + id.toString());
     var response = await _client.get(context, uri, addAuth: false);
@@ -349,7 +353,7 @@ class ListingService {
   }
 
   Future<BuyRequest> getBuyRequest(BuildContext context, num id) async {
-    print('REST: Ask for buy request ' + id.toString());
+    if(this._debug)print('REST: Ask for buy request ' + id.toString());
     var uri = getAppUri(apiPaths.getBuyRequest(id));
     var response = await _client.get(context, uri, addAuth: false);
 

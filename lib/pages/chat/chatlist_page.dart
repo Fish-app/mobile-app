@@ -53,7 +53,6 @@ class _ChatListPageState extends State<ChatListPage> {
 
 class ConversationListTile extends StatelessWidget {
   final _formattedDate = DateFormat('dd/MM/yyyy');
-  final _formattedTime = DateFormat('HH:mm');
   final Conversation conversation;
   final User localUser;
 
@@ -90,17 +89,13 @@ class ConversationListTile extends StatelessWidget {
   ///
   String getMessagePreviewText(Message message, User u1, User u2) {
     String messageText = message.content;
-    String messageSent = _formattedTime
-        .format(DateTime.fromMillisecondsSinceEpoch(message.createdDate));
     if (message.content.length > 10) {
       messageText = messageText.substring(0, 10) + "...";
     }
     if (message.senderId == u1.id) {
-      return  u1.name + ": " + messageText;
-      //return messageSent + " - " + u1.name + ": " + messageText;
+      return u1.name + ": " + messageText;
     } else if (message.senderId == u2.id) {
-      return  u2.name + ": " + messageText;
-      //return messageSent + " - " + u2.name + ": " + messageText;
+      return u2.name + ": " + messageText;
     } else {
       return null;
     }

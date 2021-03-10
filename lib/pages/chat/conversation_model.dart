@@ -13,6 +13,7 @@ class ConversationModel extends ChangeNotifier {
   final _conversationService = ConversationService();
   final _listingService = ListingService();
   final List<Message> _messages = List();
+  final bool _debug = false;
 
   Conversation _currentConversation;
   BuyRequest _currentBuyRequest;
@@ -89,7 +90,7 @@ class ConversationModel extends ChangeNotifier {
       Conversation result = await _conversationService.sendMessageRequest(
           this._buildContext, this._currentConversation.id, message);
       if (result != null) {
-        print('MODEL: Sendt message OK');
+        if (this._debug) print('MODEL: Sendt message OK');
         _sendMessageErrorIsPresent = false;
         _lastFailedSendMessage = MessageBody();
         this._currentConversation = result;
@@ -116,23 +117,22 @@ class ConversationModel extends ChangeNotifier {
   Future<bool> loadNewMessages() async {
     num lastMsgIdInList = this._lastMessageIdInList;
     num lastMsgIdInMetadata = this._currentConversation.lastMessageId;
-    print('MODEL: Last message IDs: list:metadata= ' +
-        lastMsgIdInList.toString() +
-        ':' +
-        lastMsgIdInMetadata.toString());
+    if (this._debug)
+      print('MODEL: Last message IDs: list:metadata= ' +
+          lastMsgIdInList.toString() +
+          ':' +
+          lastMsgIdInMetadata.toString());
     List<Message> tailMessageListResult = List();
     try {
       tailMessageListResult = await _conversationService.getMessageUpdates(
           this._buildContext, this._currentConversation.id, lastMsgIdInList);
       if (tailMessageListResult.isNotEmpty) {
-        print('MODEL: Added ' +
-            tailMessageListResult.length.toString() +
-            'messages from server.');
         this._messages.addAll(tailMessageListResult);
         notifyListeners();
       }
       return true;
     } on Exception catch (e) {
+      if (this._debug) print('MODEL: Failed to add messages from server.');
       return false;
     }
   }
@@ -145,26 +145,22 @@ class ConversationModel extends ChangeNotifier {
     try {
       switch (type) {
         case "O":
-          print('MODEL: Conversation in model specified listing' + type);
           OfferListing offerListingResult =
               await _listingService.getOfferListing(
                   this._buildContext, this._currentConversation.listing.id);
-          print('MODEL: Successfully received OfferListing object' +
-              offerListingResult.id.toString());
           this._currentOfferListing = offerListingResult;
           this._currentBuyRequest = null;
           break;
         case "B":
           BuyRequest buyRequestResult = await _listingService.getBuyRequest(
               this._buildContext, this._currentConversation.listing.id);
-          print('MODEL: Successfully received OfferListing object' +
-              buyRequestResult.id.toString());
           this._currentBuyRequest = buyRequestResult;
           this._currentOfferListing = null;
           break;
         default:
-          print(
-              'MODEL: Aborted get listing details; Conversation in model specified unknown listing type,');
+          if (this._debug)
+            print(
+                'MODEL: Aborted get listing details; Conversation in model specified unknown listing type,');
           this._currentOfferListing = null;
           this._currentBuyRequest = null;
           return false;
@@ -173,6 +169,9 @@ class ConversationModel extends ChangeNotifier {
       notifyListeners();
       return true;
     } on Exception catch (e) {
+      if (this._debug)
+        print('MODEL: Error occured when trying to get listing data type ' +
+            type);
       return false;
     }
   }

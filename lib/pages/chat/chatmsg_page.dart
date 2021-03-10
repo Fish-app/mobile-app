@@ -46,21 +46,22 @@ class ChatMessagePage extends StatelessWidget {
               extendBehindAppBar: false,
               navBarActions: <Widget>[
                 // TOP BAR NAVIGATE LISTING BUTTON
-                Consumer<ConversationModel>(
-                    builder: (context, model, child) {
-                      if ((model.offerListing != null) ^ (model.buyRequest !=
-                          null)) {
+                Consumer<ConversationModel>(builder: (context, model, child) {
+                  if ((model.offerListing != null) ^
+                      (model.buyRequest != null)) {
                     if (model.offerListing != null) {
-                          return NavigateToOfferListingButton(
-                            offerListing: model.offerListing,);
-                        } else {
-                          return NavigateToBuyRequestButton(
-                            buyRequest: model.buyRequest,);
-                        }
-                      } else {
+                      return NavigateToOfferListingButton(
+                        offerListing: model.offerListing,
+                      );
+                    } else {
+                      return NavigateToBuyRequestButton(
+                        buyRequest: model.buyRequest,
+                      );
+                    }
+                  } else {
                     return Container(); // must return something, and not null
-                      }
-                    }),
+                  }
+                }),
               ],
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -81,31 +82,6 @@ class ChatMessagePage extends StatelessWidget {
                           )),
                   // CHAT WRITE MESSAGE BAR
                   SendChatMessageForm(),
-
-                  //TODO: REMOVE DEBUG BUTTONS
-                  // DEBUG BUTTONS
-                  ElevatedButton(
-                      style: Theme.of(context).elevatedButtonTheme.style,
-                      child: Text(
-                        "refresh/hold to vekk",
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                      onLongPress: () {
-                        Provider.of<ConversationModel>(context, listen: false)
-                            .clear();
-                      },
-                      onPressed: () {
-                        Provider.of<ConversationModel>(context, listen: false)
-                            .reloadAllMessages();
-                      }),
-                  StandardButton(
-                      buttonText: "ned",
-                      onPressed: () {
-                        scrollController.animateTo(
-                            scrollController.position.minScrollExtent,
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.fastOutSlowIn);
-                      }),
                 ],
               ),
             );
@@ -115,8 +91,6 @@ class ChatMessagePage extends StatelessWidget {
     );
   }
 }
-
-
 
 class MessageListWidget extends StatefulWidget {
   final Conversation baseConversation;
@@ -137,6 +111,8 @@ class _MessageListWidgetState extends State<MessageListWidget> {
   CancelableOperation _ftrTimerLoadMsgs;
   Timer _timer;
 
+  final bool _debug = false;
+
   @override
   void dispose() {
     _timer?.cancel();
@@ -152,7 +128,7 @@ class _MessageListWidgetState extends State<MessageListWidget> {
     Provider.of<ConversationModel>(context, listen: false).loadNewMessages();
 
     _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
-      print('WIDGET: Timer did run');
+      if (this._debug) print('WIDGET: Timer did run');
       _ftrTimerLoadMsgs = CancelableOperation.fromFuture(
           Provider.of<ConversationModel>(context, listen: false)
               .loadNewMessages());
