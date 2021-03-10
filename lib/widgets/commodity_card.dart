@@ -13,6 +13,7 @@ class CommodityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
+      // todo: endre til ikka samme navn
       tag: commodity.name,
       child: Card(
         child: SizedBox(
@@ -28,8 +29,10 @@ class CommodityCard extends StatelessWidget {
               Align(
                 alignment: Alignment(1.1, 1.1),
                 child: Container(
-                  height: 80, // height of the blured box
-                  width: 170, // with of the blured box
+                  height: 80,
+                  // height of the blured box
+                  width: 170,
+                  // with of the blured box
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
