@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 import 'user.dart';
@@ -26,4 +28,20 @@ class Seller extends User {
   factory Seller.fromJson(Map<String, dynamic> json) => _$SellerFromJson(json);
 
   Map<String, dynamic> toJson() => _$SellerToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+class SellerNewData extends UserLoginData {
+  String name;
+  String regNumber;
+
+  factory SellerNewData.fromJson(Map<String, dynamic> json) =>
+      _$SellerNewDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SellerNewDataToJson(this);
+
+  SellerNewData({userName, password, this.name, this.regNumber})
+      : super(password: password, userName: userName);
+
+  String toJsonString() => jsonEncode(_$SellerNewDataToJson(this));
 }

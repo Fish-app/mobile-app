@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:fishapp/entities/seller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/main.dart';
@@ -39,8 +40,19 @@ class AuthService {
         body: userNewData.toJsonString(),
         addAuth: false);
 
-    if (response.statusCode == HttpStatus.ok) {
-    } else {
+    if (response.statusCode != HttpStatus.ok) {
+      throw ApiException(response);
+    }
+  }
+
+  Future<void> createSeller(BuildContext context, SellerNewData sellerNewData) async {
+    var uri = getAppUri(createSellerEndpoint);
+    var response = await fishappRestClient.post(context, uri,
+        headers: {'Content-type': "application/json"},
+        body: sellerNewData.toJsonString(),
+        addAuth: false);
+
+    if (response.statusCode != HttpStatus.ok) {
       throw ApiException(response);
     }
   }

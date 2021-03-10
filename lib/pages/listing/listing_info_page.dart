@@ -24,10 +24,11 @@ class OfferListingInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(
       context,
+      extendBehindAppBar: false,
       includeTopBar: S.of(context).listing,
       child: Container(
         padding: const EdgeInsets.fromLTRB(10.0, 85.0, 10.0, 10.0),
-        child: Column(
+        child: ListView(
           children: [
             Card(
               elevation: Theme.of(context).cardTheme.elevation,
