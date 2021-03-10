@@ -40,34 +40,20 @@ class AuthService {
         body: userNewData.toJsonString(),
         addAuth: false);
 
-    if (response.statusCode == HttpStatus.ok) {
-    } else {
+    if (response.statusCode != HttpStatus.ok) {
       throw ApiException(response);
     }
   }
 
   Future<void> createSeller(BuildContext context, SellerNewData sellerNewData) async {
     var uri = getAppUri(createSellerEndpoint);
-    try {
-      var response = await fishappRestClient.post(context, uri,
-          headers: {'Content-type': "application/json"},
-          body: sellerNewData.toJsonString(),
-          addAuth: false);
+    var response = await fishappRestClient.post(context, uri,
+        headers: {'Content-type': "application/json"},
+        body: sellerNewData.toJsonString(),
+        addAuth: false);
 
-      switch (response.statusCode) {
-        case 200:
-          break;
-        case 409:
-          throw CreateUserException("Email already exists");
-          break;
-        case 500:
-        default:
-          throw HttpException(HttpStatus.internalServerError.toString());
-          break;
-      }
-    } on IOException catch (e) {
-      log("IO failure " + e.toString(), time: DateTime.now());
-      throw HttpException("Service unavailable");
+    if (response.statusCode != HttpStatus.ok) {
+      throw ApiException(response);
     }
   }
 

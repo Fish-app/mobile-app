@@ -1,22 +1,22 @@
-import 'package:fishapp/generated/l10n.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:fishapp/config/routes/route_data.dart';
 import 'package:fishapp/config/themes/theme_config.dart';
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/pages/register/form_register_seller.dart';
 import 'package:fishapp/widgets/BlurredImage.dart';
-import 'package:fishapp/pages/register/form_register_user.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:strings/strings.dart';
 
-class RegisterUserPage extends StatefulWidget {
+class RegisterSellerPage extends StatefulWidget {
   final LoginReturnRouteData returnRouteData;
-  RegisterUserPage({Key key, this.returnRouteData}) : super(key: key);
+  RegisterSellerPage({Key key, this.returnRouteData}) : super(key: key);
 
   @override
-  _RegisterUserPageState createState() => _RegisterUserPageState();
+  _RegisterSellerPageState createState() => _RegisterSellerPageState();
 }
 
-class _RegisterUserPageState extends State<RegisterUserPage> {
+class _RegisterSellerPageState extends State<RegisterSellerPage> {
   @override
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
@@ -25,7 +25,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
           children: [
             BlurredImage(
               backgroundImage:
-                  AssetImage('assets/images/background-oceanview.jpg'),
+              AssetImage('assets/images/background-houses.jpg'),
               blurColor: softBlack.withOpacity(0.05),
             ),
             Container(
@@ -36,16 +36,13 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   children: [
-                    SizedBox(
-                      height: 52.0,
-                    ),
                     Align(
                         alignment: Alignment.center,
                         child: Text(
-                          camelize(S.of(context).createUser),
-                          style: Theme.of(context).primaryTextTheme.headline1,
+                          camelize(S.of(context).createSeller),
+                          style: Theme.of(context).primaryTextTheme.headline1.copyWith(color: Colors.white),
                         )),
-                    RegisterUserForm(returnRoute: widget.returnRouteData),
+                    RegisterSellerForm(returnRoute: widget.returnRouteData),
                   ],
                 ),
               ),

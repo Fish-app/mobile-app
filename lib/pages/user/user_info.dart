@@ -1,5 +1,6 @@
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/utils/auth/jwt.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/utils/state/appstate.dart';
 import 'package:fishapp/widgets/display_text_field.dart';
@@ -77,7 +78,7 @@ class _UserPageState extends State<UserPage> {
                               description: "session valid until".toUpperCase(),
                               content:
                               DateTime.fromMillisecondsSinceEpoch(
-                                  (value.jwtTokenData.expiresAt * 1000).toInt(),
+                                  _toReadableDate(value.jwtTokenData),
                                   isUtc: true).toString().substring(0,10) ?? ""
                                   //value.jwtTokenData?.expiresAt.toString()
                                       ),
@@ -138,5 +139,13 @@ class _UserPageState extends State<UserPage> {
         ),
       ),
     );
+  }
+
+  _toReadableDate(JwtTokenData jwtTokenData) {
+    if (jwtTokenData != null) {
+      return (jwtTokenData.expiresAt * 1000).toInt();
+    } else {
+      return 1;
+    }
   }
 }

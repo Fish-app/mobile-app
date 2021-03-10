@@ -12,6 +12,7 @@ class ApiException implements Exception {
 
   ApiException(this.response);
 
+  //TODO: burde ikke dette logges?
   void dump() {
     print("############## API EXEP ##############");
     print("URL ${this.response.request.url}");

@@ -10,6 +10,7 @@ import 'package:fishapp/pages/listing/new_buy_request_page.dart';
 import 'package:fishapp/pages/listing/new_offer_listing_page.dart';
 import 'package:fishapp/pages/login/login_page.dart';
 import 'package:fishapp/pages/receipt/receipt_page.dart';
+import 'package:fishapp/pages/register/register_seller_page.dart';
 import 'package:fishapp/pages/register/register_user_page.dart';
 import 'package:fishapp/pages/user/user_info.dart';
 import 'package:fishapp/pages/user/user_resetpwd_page.dart';
@@ -83,7 +84,11 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
           );
         });
       }
-
+      break;
+    case routes.SellerNew:
+      page = RegisterSellerPage(
+        returnRouteData: params,
+      );
       break;
 
     ///  --  Needs login below  -- ///

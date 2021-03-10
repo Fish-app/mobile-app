@@ -146,7 +146,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                     /// BUTTONS
                     Column(mainAxisSize: MainAxisSize.min, children: [
                       FlatButton(
-                        padding: EdgeInsets.fromLTRB(0, 30, 0, 130),
+                        padding: EdgeInsets.fromLTRB(0, 30, 0, 110),
                         child: Text(
                           S.of(context).loginUser,
                           style: Theme.of(context)
@@ -165,7 +165,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                       ),
                       FlatButton(
                         child: Text(
-                          S.of(context).createUser,
+                          camelize(S.of(context).createUser),
                           style: Theme.of(context)
                               .primaryTextTheme
                               .headline4
@@ -175,6 +175,22 @@ class _LoginUserFormState extends State<LoginUserForm> {
                         ),
                         onPressed: () {
                           Navigator.pushNamed(context, routes.UserNew,
+                              arguments: widget.returnPath);
+                        },
+                      ),
+                      FlatButton(
+                        padding: EdgeInsets.symmetric(vertical: 30),
+                        child: Text(
+                          camelize(S.of(context).createSeller),
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .headline4
+                              .copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, routes.SellerNew,
                               arguments: widget.returnPath);
                         },
                       ),
