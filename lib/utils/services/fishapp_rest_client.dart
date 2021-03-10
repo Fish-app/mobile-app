@@ -1,10 +1,27 @@
 import 'dart:convert';
 
+import 'package:fishapp/utils/state/appstate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:fishapp/utils/services/auth_service.dart';
-import 'package:fishapp/utils/state/appstate.dart';
 import 'package:provider/provider.dart';
+
+class ApiException implements Exception {
+  final http.Response response;
+
+  get statusCode => response.statusCode;
+
+  ApiException(this.response);
+
+  void dump() {
+    print("############## API EXEP ##############");
+    print("URL ${this.response.request.url}");
+    print("URL ${this.response.statusCode}");
+    print("## body ##");
+    print(this.response.body);
+
+    print("############## EXEP END ##############");
+  }
+}
 
 class FishappRestClient {
   var _client = http.Client();

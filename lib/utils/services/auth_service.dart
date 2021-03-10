@@ -35,27 +35,14 @@ class AuthService {
 
   Future<void> createUser(BuildContext context, UserNewData userNewData) async {
     var uri = getAppUri(createBuyerEndpoint);
-    print(uri);
-    try {
-      var response = await fishappRestClient.post(context, uri,
-          headers: {'Content-type': "application/json"},
-          body: userNewData.toJsonString(),
-          addAuth: false);
+    var response = await fishappRestClient.post(context, uri,
+        headers: {'Content-type': "application/json"},
+        body: userNewData.toJsonString(),
+        addAuth: false);
 
-      switch (response.statusCode) {
-        case 200:
-          break;
-        case 409:
-          throw CreateUserException("Email already exists");
-          break;
-        case 500:
-        default:
-          throw HttpException(HttpStatus.internalServerError.toString());
-          break;
-      }
-    } on IOException catch (e) {
-      log("IO failure " + e.toString(), time: DateTime.now());
-      throw HttpException("Service unavailable");
+    if (response.statusCode == HttpStatus.ok) {
+    } else {
+      throw ApiException(response);
     }
   }
 
@@ -91,18 +78,9 @@ class AuthService {
         headers: {'Content-type': "application/json"},
         body: changePasswordData.toJsonString(),
         addAuth: true);
-    switch (response.statusCode) {
-      case 200:
-        break;
-      case 401:
-        throw HttpException(HttpStatus.unauthorized.toString());
-        break;
-      case 403:
-        throw HttpException(HttpStatus.forbidden.toString());
-      case 500:
-      default:
-        throw HttpException(HttpStatus.internalServerError.toString());
-        break;
+    if (response.statusCode == HttpStatus.ok) {
+    } else {
+      throw ApiException(response);
     }
   }
 
@@ -113,26 +91,18 @@ class AuthService {
         headers: {'Content-type': "application/json"},
         body: loginData.toJsonString(),
         addAuth: false);
-    switch (response.statusCode) {
-      case 200:
-        User user = User.fromJson(jsonDecode(response.body));
-        if (user != null) {
-          String token = response.headers["authorization"];
-          Provider.of<AppState>(context, listen: false)
-              .newAuthValues(token, user);
-          return true;
-        }
-        break;
-      case 401:
-        throw HttpException(HttpStatus.unauthorized.toString());
-        break;
-      case 500:
-        throw HttpException(HttpStatus.internalServerError.toString());
-        break;
-      default:
-        break;
+    if (response.statusCode == HttpStatus.ok) {
+      User user = User.fromJson(jsonDecode(response.body));
+      if (user != null) {
+        String token = response.headers["authorization"];
+        Provider.of<AppState>(context, listen: false)
+            .newAuthValues(token, user);
+        return true;
+      }
+      return false;
+    } else {
+      throw ApiException(response);
     }
-    return false;
   }
 
   static Future<void> logout(BuildContext context) async {

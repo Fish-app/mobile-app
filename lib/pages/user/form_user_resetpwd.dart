@@ -45,14 +45,13 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           AuthService.logout(context);
           _showPasswordChangedDialog();
         });
-      } on HttpException catch (e) {
+      } on ApiException catch (e) {
         setState(() {
-          _errorMessage = e.message;
-          switch (e.message) {
-            case "401":
+          switch (e.statusCode) {
+            case HttpStatus.unauthorized:
               _errorMessage = S.of(context).msgErrorPasswdChgGeneralFailure;
               break;
-            case "403":
+            case HttpStatus.forbidden:
               _errorMessage =
                   S.of(context).msgErrorPasswdChgVerificationFailure;
               break;

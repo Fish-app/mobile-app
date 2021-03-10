@@ -78,5 +78,10 @@
   "maxDistance": "max avstand",
   "locationNotSet": "Vennligst velg en lokasjon",
   "buyRequest": "Bestilling",
-  "takeBuyRequest": "Ta bestilling"
+  "takeBuyRequest": "Ta bestilling",
+  "error": "feil",
+  "actionTryAgain" : "prøv på nytt?",
+  "unableToSend" : "fikk ikke til å sende",
+  "chatList": "samtaler",
+  "chatWithPrefix": "samtale med"
 }

@@ -1,4 +1,24 @@
-/// -- user auth -- ///
+/// CHAT
+const getUserConversationList = "/chat/myconversations";
+const _startChatEndpoint = "/chat/new";
+
+String startConversationFromListing(int listingId) {
+  return _startChatEndpoint + "/" + listingId.toString();
+}
+
+String sendMessageFromConversation(int conversationId) {
+  return "/chat/" + conversationId.toString() + "/send";
+}
+
+String getMessageListUpdatesQuery(int conversation) {
+  return "/chat/" + conversation.toString() + "/updates";
+}
+
+String getMessageListInRange(int conversation) {
+  return "/chat/" + conversation.toString() + "/range";
+}
+
+/// CHAT END
 
 // needs login //
 
@@ -7,6 +27,11 @@
 const getCommodity = "aa";
 const getAllCommodity = "/commodity/all";
 // needs login //
+
+/// -- Receipt -- ///
+
+const getReceipt = "/transaction/";
+const getAllReceipts = "/transaction/all";
 
 /// -- Listing -- ///
 
@@ -35,6 +60,7 @@ const changePasswordEndpoint = "/authentication/changepassword";
 
 /// -- rating -- ///
 const ratingEndpoint = "/rating/";
+const transactionRatingEndpoint = "/rating/transaction/";
 
 Uri getAppUri(String path, {Map<String, String> queryParameters}) {
   return Uri(

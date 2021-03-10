@@ -1,3 +1,4 @@
+// TODO: make all this use the CORRECT_NOTATION_FOR_CONSTS notForObjects
 const Home = "/";
 
 const UserNew = "/user/new";
@@ -5,7 +6,8 @@ const UserInfo = "/user/info";
 const UserLogin = "/user/login";
 const UserResetPwd = "/user/info/resetpassword";
 
-const chat = "/chat";
+const ChatConversation = "/chat/conversation";
+const chat = "/chat/list";
 
 const OfferListingInfo = "/offerlistinginfo";
 const BuyRequestInfo = "/buyrequestinfo";
@@ -13,3 +15,6 @@ const NewListing = "/newlisting";
 const NewBuyRequest = "/newbuyrequest";
 
 const ChooseNewListing = "/choosenewlisting";
+
+const receipt = "/receipt";
+const receiptsList = "/receiptlist";
