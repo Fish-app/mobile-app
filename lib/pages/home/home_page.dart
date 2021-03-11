@@ -31,22 +31,10 @@ const double _topPadding = 25.0;
 const double _bottomPadding = _topPadding + 10;
 
 class HomePageState extends State<HomePage> {
-  CancelableOperation<List<Commodity>> _future;
+  Future<List<DisplayCommodity>> _future =
+      CommodityService().getAllDisplayCommodities();
 
-  @override
-  void initState() {
-    super.initState();
-    _future = CancelableOperation.fromFuture(
-        widget._commodityService.getAllCommodities(context));
-  }
-
-  @override
-  void dispose() {
-    _future.cancel();
-    super.dispose();
-  }
-
-  Widget _makeComodityCard(Commodity commodity) {
+  Widget _makeComodityCard(DisplayCommodity commodity) {
     return GestureDetector(
       onTap: () => {
         Navigator.of(context).push(PageRouteBuilder(
@@ -61,11 +49,11 @@ class HomePageState extends State<HomePage> {
           opaque: false,
           pageBuilder: (context, animation, secondaryAnimation) =>
               CommodityListingPage(
-            listedCommodity: commodity,
+            displayCommodity: commodity,
           ),
         ))
       },
-      child: CommodityCard(commodity: commodity),
+      child: CommodityCard(displayCommodity: commodity),
     );
   }
 
@@ -89,34 +77,108 @@ class HomePageState extends State<HomePage> {
                       horizontal: _topPadding, vertical: 20),
                   child: BuyFilterWidget(),
                 ),
-                appFutureBuilder<List<Commodity>>(_future.value,
-                    (commodities, context) {
-                  return Expanded(child: Consumer<SearchState>(
-                    builder: (context, value, child) {
-                      return ListView(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: _bottomPadding),
-                        children: commodities
-                            .where((element) => element.name
-                                .toLowerCase()
-                                .contains(
-                                    value?.searchString?.toLowerCase() ?? ""))
-                            .map((commodity) => _makeComodityCard(commodity))
-                            .toList(),
-                      );
-                    },
-                  ));
-                })
+                appFutureBuilder<List<DisplayCommodity>>(
+                    future: _future,
+                    onSuccess: (commodities, context) {
+                      return Expanded(child: Consumer<SearchState>(
+                        builder: (context, value, child) {
+                          return ListView(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: _bottomPadding),
+                            children: commodities
+                                .where((element) => element.commodity.name
+                                    .toLowerCase()
+                                    .contains(
+                                        value?.searchString?.toLowerCase() ??
+                                            ""))
+                                .map(
+                                    (commodity) => _makeComodityCard(commodity))
+                                .toList(),
+                          );
+                        },
+                      ));
+                    })
               ],
             )));
   }
 }
 
+// class HomePageState extends State<HomePage> {
+//
+//   Widget _makeComodityCard(DisplayCommodity commodity) {
+//     return GestureDetector(
+//       onTap: () => {
+//         Navigator.of(context).push(PageRouteBuilder(
+//           transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//             return FadeTransition(
+//               opacity: animation,
+//               child: child,
+//             );
+//           },
+//           transitionDuration: Duration(milliseconds: 200),
+//           barrierDismissible: true,
+//           opaque: false,
+//           pageBuilder: (context, animation, secondaryAnimation) =>
+//               CommodityListingPage(
+//             displayCommodity: commodity,
+//           ),
+//         ))
+//       },
+//       child: CommodityCard(displayCommodity: commodity),
+//     );
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ChangeNotifierProvider(
+//         create: (context) => SearchState(),
+//         child: getFishappDefaultScaffold(context,
+//             useNavBar: navButtonShop,
+//             child: Column(
+//               mainAxisSize: MainAxisSize.min,
+//               mainAxisAlignment: MainAxisAlignment.start,
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Padding(
+//                   padding: const EdgeInsets.symmetric(horizontal: _topPadding),
+//                   child: Logo(),
+//                 ),
+//                 Padding(
+//                   padding: const EdgeInsets.symmetric(
+//                       horizontal: _topPadding, vertical: 20),
+//                   child: BuyFilterWidget(),
+//                 ),
+//                 appFutureBuilder<List<DisplayCommodity>>(
+//                     future: widget._future,
+//                     onSuccess: (commodities, context) {
+//                       return Expanded(child: Consumer<SearchState>(
+//                         builder: (context, value, child) {
+//                           return ListView(
+//                             padding: const EdgeInsets.symmetric(
+//                                 horizontal: _bottomPadding),
+//                             children: commodities
+//                                 .where((element) => element.commodity.name
+//                                     .toLowerCase()
+//                                     .contains(
+//                                         value?.searchString?.toLowerCase() ??
+//                                             ""))
+//                                 .map(
+//                                     (commodity) => _makeComodityCard(commodity))
+//                                 .toList(),
+//                           );
+//                         },
+//                       ));
+//                     })
+//               ],
+//             )));
+//   }
+// }
+
 class CommodityListingPage extends StatefulWidget {
-  final Commodity listedCommodity;
+  final DisplayCommodity displayCommodity;
   final ListingService _listingService = ListingService();
 
-  CommodityListingPage({Key key, this.listedCommodity}) : super(key: key);
+  CommodityListingPage({Key key, this.displayCommodity}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => CommodityListingPageState();
@@ -141,7 +203,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
       });
     });
     _future = CancelableOperation.fromFuture(widget._listingService
-        .getCommodityOfferListing(context, widget.listedCommodity.id));
+        .getCommodityOfferListing(widget.displayCommodity.commodity.id));
   }
 
   Widget _makeSortByWidget() {
@@ -210,13 +272,14 @@ class CommodityListingPageState extends State<CommodityListingPage>
                       child: ListView(
                         children: [
                           _makeSortByWidget(),
-                          appFutureBuilder<List<OfferListing>>(_future.value,
-                              (offerListings, context) {
-                            return Column(
-                                children: offerListings
-                                    .map((e) => _goToListing(e))
-                                    .toList());
-                          }),
+                          appFutureBuilder<List<OfferListing>>(
+                              future: _future.value,
+                              onSuccess: (offerListings, context) {
+                                return Column(
+                                    children: offerListings
+                                        .map((e) => _goToListing(e))
+                                        .toList());
+                              }),
                         ],
                       ),
                     ),
@@ -229,7 +292,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
         Padding(
           padding: EdgeInsets.fromLTRB(_bottomPadding, 0, _bottomPadding,
               MediaQuery.of(context).size.height / 1.53),
-          child: CommodityCard(commodity: widget.listedCommodity),
+          child: CommodityCard(displayCommodity: widget.displayCommodity),
         ),
       ],
       alignment: Alignment.bottomCenter,
