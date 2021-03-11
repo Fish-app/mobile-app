@@ -47,24 +47,6 @@ class ChatMessagePage extends StatelessWidget {
                 NavigateToListingButton(
                   conv_listing: baseConversation.listing,
                 )
-                // TOP BAR NAVIGATE LISTING BUTTON
-                // Consumer<ConversationModel>(builder: (context, model, child) {
-                //   if ((model.offerListing != null) ^
-                //       (model.buyRequest != null)) {
-                //     if (model.offerListing != null) {
-                //       return NavigateToOfferListingButton(
-                //         offerListing: model.offerListing,
-                //       );
-                //     } else {
-                //       return NavigateToBuyRequestButton(
-                //         buyRequest: model.buyRequest,
-                //       );
-                //     }
-                //   } else {
-                //     return Container(); // must return something, and not null
-                //   }
-                // }
-                //),
               ],
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -132,9 +114,9 @@ class _MessageListWidgetState extends State<MessageListWidget> {
 
     _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
       if (this._debug) print('WIDGET: Timer did run');
-      // _ftrTimerLoadMsgs = CancelableOperation.fromFuture(
-      //     Provider.of<ConversationModel>(context, listen: false)
-      //         .loadNewMessages());
+      _ftrTimerLoadMsgs = CancelableOperation.fromFuture(
+          Provider.of<ConversationModel>(context, listen: false)
+              .loadNewMessages());
     });
   }
 
