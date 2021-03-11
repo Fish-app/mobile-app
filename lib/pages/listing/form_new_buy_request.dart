@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/generated/l10n.dart';
@@ -13,9 +14,6 @@ import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
-import 'package:fishapp/config/routes/routes.dart' as routes;
-
-
 
 class NewBuyRequestForm extends StatefulWidget {
   final GenericRouteData routeData;
@@ -70,7 +68,7 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
               customFilter: (commodity, filter) =>
                   commodity.filterByName(filter),
               onFind: (String filter) =>
-                  widget.commodityService.getAllCommodities(context),
+                  widget.commodityService.getAllCommodities(),
               onSaved: _dropdownSelectedCallback,
               validator: (value) {
                 if (value == null) {
@@ -84,29 +82,14 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
                 onPressed: () {
                   _navigateAndDisplayMap(context);
                 }),
-            Text(_notPickedLocationMessage, style: TextStyle(color: Colors.red)),
+            Text(_notPickedLocationMessage,
+                style: TextStyle(color: Colors.red)),
             FormFieldNormal(
-                title: S.of(context).amount.toUpperCase(),
+              title: S.of(context).amount.toUpperCase(),
               keyboardType: TextInputType.number,
               suffixText: "Kg",
-              onSaved: (newValue) => {
-                  _buyRequestData.amount = int.tryParse(newValue)
-              },
-              validator: (value) {
-                  if (value.isEmpty) {
-                    return validateNotEmptyInput(value, context);
-                  } else {
-                    return validateIntInput(value, context);
-                  }
-              },
-            ),
-            FormFieldNormal(
-                title: S.of(context).price.toUpperCase(),
-              suffixText: "nok",
-              keyboardType: TextInputType.number,
-              onSaved: (newValue) => {
-                  _buyRequestData.price = double.tryParse(newValue)
-              },
+              onSaved: (newValue) =>
+                  {_buyRequestData.amount = int.tryParse(newValue)},
               validator: (value) {
                 if (value.isEmpty) {
                   return validateNotEmptyInput(value, context);
@@ -116,42 +99,53 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
               },
             ),
             FormFieldNormal(
-                title: S.of(context).dueDate.toUpperCase(),
+              title: S.of(context).price.toUpperCase(),
+              suffixText: "nok",
+              keyboardType: TextInputType.number,
+              onSaved: (newValue) =>
+                  {_buyRequestData.price = double.tryParse(newValue)},
+              validator: (value) {
+                if (value.isEmpty) {
+                  return validateNotEmptyInput(value, context);
+                } else {
+                  return validateIntInput(value, context);
+                }
+              },
+            ),
+            FormFieldNormal(
+              title: S.of(context).dueDate.toUpperCase(),
               readOnly: true,
               controller: _dateController,
               onSaved: (newValue) => {
-                  if (newValue.trim().isNotEmpty) {
-                    _buyRequestData.endDate = _toEpoch(newValue)
-                  }
+                if (newValue.trim().isNotEmpty)
+                  {_buyRequestData.endDate = _toEpoch(newValue)}
               },
               validator: (value) {
-                  return validateDateNotPast(value, context);
+                return validateDateNotPast(value, context);
               },
               onTap: () async {
-                  var date = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: _firstDate,
-                      lastDate: _lastDate);
-                  if (date != null) {
-                    _dateController.text = date.toString().substring(0, 10);
-                  }
+                var date = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: _firstDate,
+                    lastDate: _lastDate);
+                if (date != null) {
+                  _dateController.text = date.toString().substring(0, 10);
+                }
               },
             ),
             FormFieldNormal(
-                title: S.of(context).additionalInfo.toUpperCase(),
+              title: S.of(context).additionalInfo.toUpperCase(),
               keyboardType: TextInputType.text,
-              onSaved: (newValue) => {
-                  _buyRequestData.additionalInfo = newValue
-              },
+              onSaved: (newValue) =>
+                  {_buyRequestData.additionalInfo = newValue},
             ),
             FormFieldNormal(
-                title: S.of(context).maxDistance.toUpperCase(),
+              title: S.of(context).maxDistance.toUpperCase(),
               suffixText: "Km",
               keyboardType: TextInputType.number,
-              onSaved: (newValue) => {
-                  _buyRequestData.maxDistance = double.tryParse(newValue)
-              },
+              onSaved: (newValue) =>
+                  {_buyRequestData.maxDistance = double.tryParse(newValue)},
               validator: (value) {
                 if (value.isEmpty) {
                   return validateNotEmptyInput(value, context);
@@ -162,8 +156,7 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
             ),
             StandardButton(
                 buttonText: S.of(context).addOrder.toUpperCase(),
-                onPressed: () => _handleBuyRequest(context)
-            )
+                onPressed: () => _handleBuyRequest(context))
           ],
         ),
       ),
@@ -213,8 +206,8 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
     }
     if (formState.validate() && _hasLocation) {
       try {
-        BuyRequest suc = await widget.listingService
-            .createBuyRequest(context, _buyRequestData);
+        BuyRequest suc =
+            await widget.listingService.createBuyRequest(_buyRequestData);
         if (suc != null) {
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
           Navigator.pushReplacementNamed(context, routes.BuyRequestInfo,

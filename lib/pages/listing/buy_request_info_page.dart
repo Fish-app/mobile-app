@@ -1,3 +1,4 @@
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
@@ -11,8 +12,6 @@ import 'package:fishapp/widgets/rating_stars.dart';
 import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:provider/provider.dart';
 
 class BuyRequestInfoPage extends StatelessWidget {
@@ -111,7 +110,8 @@ class BuyRequestInfoPage extends StatelessWidget {
                         //FIXME: BuyRequest: kjøpar kan lage chat selv om det ikkje er selgjarar som sel commodityen.
                         //fix: ta vekk knappen ?
                         Consumer<AppState>(builder: (context, userdata, child) {
-                          final bool _isSellerOfThisCommodity = (buyRequest.creator.id == userdata.user.id);
+                          final bool _isSellerOfThisCommodity =
+                              (buyRequest.creator.id == userdata.user.id);
                           return Visibility(
                             visible: !_isSellerOfThisCommodity,
                             child: StandardButton(
@@ -121,8 +121,7 @@ class BuyRequestInfoPage extends StatelessWidget {
                                 var _conversationService =
                                     ConversationService();
                                 _conversationService
-                                    .startNewConversation(
-                                        context, buyRequest.id)
+                                    .startNewConversation(buyRequest.id)
                                     .then((value) =>
                                         //TESTING: fungerer OK: Er dette robust nok ?
                                         Navigator.of(context).pushNamed(

@@ -24,13 +24,16 @@ class ConversationModel extends ChangeNotifier {
   ConversationModel(this._buildContext, this._currentConversation);
 
   UnmodifiableListView<Message> get messages => UnmodifiableListView(_messages);
+
   Conversation get conversation => (this._currentConversation);
 
   bool get sendMessageErrorOccurred => (this._sendMessageErrorIsPresent);
+
   MessageBody get lastFailedSendMessage => (this._lastFailedSendMessage);
 
   /// For button on navbar, to navigate to correct listing info page we need the listing object
   BuyRequest get buyRequest => (this._currentBuyRequest);
+
   OfferListing get offerListing => (this._currentOfferListing);
 
   ///
@@ -47,7 +50,6 @@ class ConversationModel extends ChangeNotifier {
   ///
   void clear() {
     this._messages.clear();
-    this._currentConversation.firstMessageId = 0;
     this._currentConversation.lastMessageId = 0;
     this.clearErrorState();
     notifyListeners();
@@ -69,7 +71,7 @@ class ConversationModel extends ChangeNotifier {
   Future<void> reloadAllMessages() async {
     List<Message> reloadResult = List();
     reloadResult = await _conversationService.getMessageUpdates(
-        this._buildContext, this._currentConversation.id, null);
+        this._currentConversation.id, null);
     if (reloadResult.isNotEmpty) {
       this._messages.clear();
       this._messages.addAll(reloadResult);
@@ -88,7 +90,7 @@ class ConversationModel extends ChangeNotifier {
   Future<void> sendMessage(MessageBody message) async {
     try {
       Conversation result = await _conversationService.sendMessageRequest(
-          this._buildContext, this._currentConversation.id, message);
+          this._currentConversation.id, message);
       if (result != null) {
         if (this._debug) print('MODEL: Sendt message OK');
         _sendMessageErrorIsPresent = false;
@@ -122,10 +124,10 @@ class ConversationModel extends ChangeNotifier {
           lastMsgIdInList.toString() +
           ':' +
           lastMsgIdInMetadata.toString());
-    List<Message> tailMessageListResult = List();
+    List<Message> tailMessageListResult = [];
     try {
       tailMessageListResult = await _conversationService.getMessageUpdates(
-          this._buildContext, this._currentConversation.id, lastMsgIdInList);
+          this._currentConversation.id, lastMsgIdInList);
       if (tailMessageListResult.isNotEmpty) {
         this._messages.addAll(tailMessageListResult);
         notifyListeners();
@@ -133,45 +135,6 @@ class ConversationModel extends ChangeNotifier {
       return true;
     } on Exception catch (e) {
       if (this._debug) print('MODEL: Failed to add messages from server.');
-      return false;
-    }
-  }
-
-  Future<bool> loadListingData() async {
-    String type = this._currentConversation.listing.type;
-    // No reason to ask for listing data if type or id is missing
-    if (type == null && this._currentConversation.listing.id == null)
-      return false;
-    try {
-      switch (type) {
-        case "O":
-          OfferListing offerListingResult =
-              await _listingService.getOfferListing(
-                  this._buildContext, this._currentConversation.listing.id);
-          this._currentOfferListing = offerListingResult;
-          this._currentBuyRequest = null;
-          break;
-        case "B":
-          BuyRequest buyRequestResult = await _listingService.getBuyRequest(
-              this._buildContext, this._currentConversation.listing.id);
-          this._currentBuyRequest = buyRequestResult;
-          this._currentOfferListing = null;
-          break;
-        default:
-          if (this._debug)
-            print(
-                'MODEL: Aborted get listing details; Conversation in model specified unknown listing type,');
-          this._currentOfferListing = null;
-          this._currentBuyRequest = null;
-          return false;
-          break;
-      }
-      notifyListeners();
-      return true;
-    } on Exception catch (e) {
-      if (this._debug)
-        print('MODEL: Error occured when trying to get listing data type ' +
-            type);
       return false;
     }
   }

@@ -28,8 +28,8 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
 
   Widget page;
 
-  bool loggedIn = Provider.of<AppState>(context).isLoggedIn();
-  bool isSeller = Provider.of<AppState>(context).isSeller();
+  bool loggedIn = Provider.of<AppState>(context, listen: false).isLoggedIn();
+  bool isSeller = Provider.of<AppState>(context, listen: false).isSeller();
 
   Function reqireLogin = (Function route) {
     if (loggedIn) {
@@ -171,6 +171,7 @@ class Path404Page extends StatelessWidget {
 
 class FadeRoute extends PageRouteBuilder {
   final Widget page;
+
   FadeRoute({this.page})
       : super(
           pageBuilder: (
@@ -194,6 +195,7 @@ class FadeRoute extends PageRouteBuilder {
 
 class ScaleRotateRoute extends PageRouteBuilder {
   final Widget page;
+
   ScaleRotateRoute({this.page})
       : super(
           pageBuilder: (

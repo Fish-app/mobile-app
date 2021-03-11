@@ -1,15 +1,13 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/route_data.dart';
-import 'package:fishapp/config/routes/router.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
 import 'package:fishapp/widgets/form/formfield_auth.dart';
-import 'package:fishapp/config/routes/routes.dart' as routes;
-import 'package:fishapp/utils/form/form_validators.dart';
-
+import 'package:flutter/material.dart';
 import 'package:strings/strings.dart';
 
 import '../../entities/user.dart';
@@ -42,8 +40,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
     formState.save();
     if (formState.validate()) {
       try {
-        var sucsess =
-            await widget.authService.loginUser(context, _loginUserFormData);
+        var sucsess = await widget.authService.loginUser(_loginUserFormData);
         if (sucsess) {
           // LOGIN OK
           Navigator.popAndPushNamed(
@@ -94,7 +91,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               FormFieldAuth(
-                initialValue: "oluf@example.com",
+                initialValue: "testb@example.com",
                 title: capitalize(S.of(context).email),
                 hint: S.of(context).emailHint,
                 keyboardType: TextInputType.emailAddress,
@@ -104,7 +101,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                 },
               ),
               FormFieldAuth(
-                initialValue: "Passord123",
+                initialValue: "12345678",
                 title: capitalize(S.of(context).password),
                 hint: capitalize(S.of(context).passwordHint),
                 isObscured: true,
@@ -186,8 +183,8 @@ class _LoginUserFormState extends State<LoginUserForm> {
                               .primaryTextTheme
                               .headline4
                               .copyWith(
-                            color: Colors.white,
-                          ),
+                                color: Colors.white,
+                              ),
                         ),
                         onPressed: () {
                           Navigator.pushNamed(context, routes.SellerNew,

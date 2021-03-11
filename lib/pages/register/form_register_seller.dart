@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/seller.dart';
 import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/generated/l10n.dart';
@@ -11,8 +10,6 @@ import 'package:fishapp/widgets/form/formfield_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:strings/strings.dart';
-import 'package:fishapp/config/routes/routes.dart' as routes;
-
 
 class RegisterSellerForm extends StatefulWidget {
   final LoginReturnRouteData returnRoute;
@@ -45,7 +42,7 @@ class _RegisterSellerFormState extends State<RegisterSellerForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               FormFieldAuth(
-                initialValue: "kdasfjlkdfa",
+                initialValue: "tests",
                 title: S.of(context).name,
                 hint: S.of(context).fullName,
                 keyboardType: TextInputType.name,
@@ -55,7 +52,7 @@ class _RegisterSellerFormState extends State<RegisterSellerForm> {
                 },
               ),
               FormFieldAuth(
-                initialValue: "oluf@example.com",
+                initialValue: "tests@example.com",
                 title: capitalize(S.of(context).email),
                 hint: S.of(context).emailHint,
                 keyboardType: TextInputType.emailAddress,
@@ -79,7 +76,7 @@ class _RegisterSellerFormState extends State<RegisterSellerForm> {
                 },
               ),
               FormFieldAuth(
-                initialValue: "Passord123",
+                initialValue: "12345678",
                 title: capitalize(S.of(context).password),
                 hint: S.of(context).passwordHint,
                 keyboardType: TextInputType.text,
@@ -90,7 +87,7 @@ class _RegisterSellerFormState extends State<RegisterSellerForm> {
                 isObscured: true,
               ),
               FormFieldAuth(
-                initialValue: "Passord123",
+                initialValue: "12345678",
                 title: S.of(context).confirmPassword,
                 hint: S.of(context).confirmPasswordHint,
                 keyboardType: TextInputType.text,
@@ -121,7 +118,8 @@ class _RegisterSellerFormState extends State<RegisterSellerForm> {
                 child: ElevatedButton(
                     style: Theme.of(context).elevatedButtonTheme.style.copyWith(
                         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.symmetric(horizontal: 25, vertical: 10))),
+                            EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 10))),
                     onPressed: () {
                       if (_agreedToTOS) {
                         _handleRegister(context);
@@ -138,8 +136,7 @@ class _RegisterSellerFormState extends State<RegisterSellerForm> {
               )
             ],
           ),
-        )
-    );
+        ));
   }
 
   void _setAgreedToTOS(bool newValue) {
@@ -157,12 +154,10 @@ class _RegisterSellerFormState extends State<RegisterSellerForm> {
     formState.save();
     if (formState.validate()) {
       try {
-        await widget.authService.createSeller(context, _sellerNewData);
-        var suc = await widget.authService.loginUser(
-            context,
-            UserLoginData(
-                userName: _sellerNewData.userName,
-                password:_sellerNewData.password));
+        await widget.authService.createSeller(_sellerNewData);
+        var suc = await widget.authService.loginUser(UserLoginData(
+            userName: _sellerNewData.userName,
+            password: _sellerNewData.password));
         if (suc) {
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
           Navigator.popAndPushNamed(

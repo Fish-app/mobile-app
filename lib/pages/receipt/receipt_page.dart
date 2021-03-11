@@ -10,7 +10,7 @@ import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/material.dart';
 
 class ReceiptListPage extends StatefulWidget {
-  ReceiptService _receiptService = ReceiptService();
+  final ReceiptService _receiptService = ReceiptService();
 
   @override
   State<StatefulWidget> createState() => ReceiptListPageState();
@@ -37,18 +37,19 @@ class ReceiptListPageState extends State<ReceiptListPage> {
     return getFishappDefaultScaffold(context,
         includeTopBar: "ReceiptListPage",
         extendBehindAppBar: false,
-        child:
-            appFutureBuilder<List<Receipt>>(_future.value, (receipts, context) {
-          return ListView(
-              children: receipts
-                  .map((e) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: _ReceiptCard(
-                          receipt: e,
-                        ),
-                      ))
-                  .toList());
-        }));
+        child: appFutureBuilder<List<Receipt>>(
+            future: _future.value,
+            onSuccess: (receipts, context) {
+              return ListView(
+                  children: receipts
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: _ReceiptCard(
+                              receipt: e,
+                            ),
+                          ))
+                      .toList());
+            }));
   }
 }
 
@@ -84,7 +85,7 @@ class _ReceiptCard extends StatelessWidget {
 }
 
 class _RatedOrNotCheck extends StatefulWidget {
-  RatingService _ratingService = RatingService();
+  final RatingService _ratingService = RatingService();
   final Receipt receipt;
 
   _RatedOrNotCheck({Key key, this.receipt}) : super(key: key);
@@ -99,32 +100,33 @@ class _RatedOrNotCheckState extends State<_RatedOrNotCheck> {
   @override
   void initState() {
     super.initState();
-    _future = widget._ratingService
-        .getUserTransactionRating(context, widget.receipt.id);
+    _future = widget._ratingService.getUserTransactionRating(widget.receipt.id);
   }
 
   @override
   Widget build(BuildContext context) {
-    return appFutureBuilder<num>(_future, (num, context) {
-      return Container(
-        color: Colors.white,
-        child: (num == -1)
-            ? Text(
-                "NOT RATED",
-                style: Theme.of(context)
-                    .textTheme
-                    .button
-                    .copyWith(color: Colors.red),
-              )
-            : Text(
-                "RATED",
-                style: Theme.of(context)
-                    .textTheme
-                    .button
-                    .copyWith(color: Colors.green),
-              ),
-      );
-    });
+    return appFutureBuilder<num>(
+        future: _future,
+        onSuccess: (num, context) {
+          return Container(
+            color: Colors.white,
+            child: (num == -1)
+                ? Text(
+                    "NOT RATED",
+                    style: Theme.of(context)
+                        .textTheme
+                        .button
+                        .copyWith(color: Colors.red),
+                  )
+                : Text(
+                    "RATED",
+                    style: Theme.of(context)
+                        .textTheme
+                        .button
+                        .copyWith(color: Colors.green),
+                  ),
+          );
+        });
   }
 }
 
@@ -144,8 +146,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
   @override
   void initState() {
     super.initState();
-    _future = widget._ratingService
-        .getUserTransactionRating(context, widget.receipt.id);
+    _future = widget._ratingService.getUserTransactionRating(widget.receipt.id);
   }
 
   @override
@@ -182,8 +183,8 @@ class _ReceiptPageState extends State<ReceiptPage> {
               buttonText: "Save value?",
               onPressed: () => {
                     setState(() {
-                      _future = widget._ratingService.newRating(
-                          context, widget.receipt.id, _newRatingVal.floor());
+                      _future = widget._ratingService
+                          .newRating(widget.receipt.id, _newRatingVal.floor());
                     })
                   })
         ],
@@ -224,9 +225,11 @@ class _ReceiptPageState extends State<ReceiptPage> {
 
               Padding(
                 padding: const EdgeInsets.only(top: 30),
-                child: appFutureBuilder<num>(_future, (ratingNumber, context) {
-                  return ratingAria(ratingNumber);
-                }),
+                child: appFutureBuilder<num>(
+                    future: _future,
+                    onSuccess: (ratingNumber, context) {
+                      return ratingAria(ratingNumber);
+                    }),
               ),
 
               /// --- Total --- ///
@@ -405,11 +408,11 @@ class _InfoValuePairDisplay extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "${info}",
+            "$info",
             style: Theme.of(context).textTheme.bodyText2,
           ),
           Text(
-            "${value}",
+            "$value",
             style: Theme.of(context).textTheme.bodyText2,
           ),
         ],

@@ -10,17 +10,16 @@ part 'conversation.g.dart';
 class Conversation {
   num id;
   num lastMessageId;
-  num firstMessageId;
   num createdDate;
   User starterUser;
   Listing listing;
   Message lastMessage;
 
-  Conversation({this.id, this.lastMessageId, this.firstMessageId, this.starterUser, this.listing});
+  Conversation({this.id, this.lastMessageId, this.starterUser, this.listing});
 
-  factory Conversation.fromJson(Map<String, dynamic> json) => _$ConversationFromJson(json);
+  factory Conversation.fromJson(Map<String, dynamic> json) =>
+      _$ConversationFromJson(json);
   Map<String, dynamic> toJson() => _$ConversationToJson(this);
-
 
   static fromJsonList(List list) {
     if (list == null) return List();

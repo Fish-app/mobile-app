@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:async/async.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/pages/home/search.dart';
 import 'package:fishapp/utils/default_builder.dart';
+import 'package:fishapp/utils/state/appstate.dart';
 import 'package:fishapp/widgets/buy_filter.dart';
 import 'package:fishapp/widgets/commodity_card.dart';
 import 'package:fishapp/widgets/listing_card.dart';
@@ -20,21 +20,14 @@ import '../../entities/listing.dart';
 import '../../utils/services/rest_api_service.dart';
 import '../../widgets/commodity_card.dart';
 
-class HomePage extends StatefulWidget {
-  final CommodityService _commodityService = CommodityService();
-
-  @override
-  State<StatefulWidget> createState() => HomePageState();
-}
-
 const double _topPadding = 25.0;
 const double _bottomPadding = _topPadding + 10;
 
-class HomePageState extends State<HomePage> {
-  Future<List<DisplayCommodity>> _future =
+class HomePage extends StatelessWidget {
+  final Future<List<DisplayCommodity>> _future =
       CommodityService().getAllDisplayCommodities();
 
-  Widget _makeComodityCard(DisplayCommodity commodity) {
+  Widget _makeComodityCard(DisplayCommodity commodity, BuildContext context) {
     return GestureDetector(
       onTap: () => {
         Navigator.of(context).push(PageRouteBuilder(
@@ -91,8 +84,8 @@ class HomePageState extends State<HomePage> {
                                     .contains(
                                         value?.searchString?.toLowerCase() ??
                                             ""))
-                                .map(
-                                    (commodity) => _makeComodityCard(commodity))
+                                .map((commodity) =>
+                                    _makeComodityCard(commodity, context))
                                 .toList(),
                           );
                         },
@@ -102,77 +95,6 @@ class HomePageState extends State<HomePage> {
             )));
   }
 }
-
-// class HomePageState extends State<HomePage> {
-//
-//   Widget _makeComodityCard(DisplayCommodity commodity) {
-//     return GestureDetector(
-//       onTap: () => {
-//         Navigator.of(context).push(PageRouteBuilder(
-//           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-//             return FadeTransition(
-//               opacity: animation,
-//               child: child,
-//             );
-//           },
-//           transitionDuration: Duration(milliseconds: 200),
-//           barrierDismissible: true,
-//           opaque: false,
-//           pageBuilder: (context, animation, secondaryAnimation) =>
-//               CommodityListingPage(
-//             displayCommodity: commodity,
-//           ),
-//         ))
-//       },
-//       child: CommodityCard(displayCommodity: commodity),
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ChangeNotifierProvider(
-//         create: (context) => SearchState(),
-//         child: getFishappDefaultScaffold(context,
-//             useNavBar: navButtonShop,
-//             child: Column(
-//               mainAxisSize: MainAxisSize.min,
-//               mainAxisAlignment: MainAxisAlignment.start,
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: _topPadding),
-//                   child: Logo(),
-//                 ),
-//                 Padding(
-//                   padding: const EdgeInsets.symmetric(
-//                       horizontal: _topPadding, vertical: 20),
-//                   child: BuyFilterWidget(),
-//                 ),
-//                 appFutureBuilder<List<DisplayCommodity>>(
-//                     future: widget._future,
-//                     onSuccess: (commodities, context) {
-//                       return Expanded(child: Consumer<SearchState>(
-//                         builder: (context, value, child) {
-//                           return ListView(
-//                             padding: const EdgeInsets.symmetric(
-//                                 horizontal: _bottomPadding),
-//                             children: commodities
-//                                 .where((element) => element.commodity.name
-//                                     .toLowerCase()
-//                                     .contains(
-//                                         value?.searchString?.toLowerCase() ??
-//                                             ""))
-//                                 .map(
-//                                     (commodity) => _makeComodityCard(commodity))
-//                                 .toList(),
-//                           );
-//                         },
-//                       ));
-//                     })
-//               ],
-//             )));
-//   }
-// }
 
 class CommodityListingPage extends StatefulWidget {
   final DisplayCommodity displayCommodity;
@@ -186,13 +108,7 @@ class CommodityListingPage extends StatefulWidget {
 
 class CommodityListingPageState extends State<CommodityListingPage>
     with TickerProviderStateMixin {
-  CancelableOperation<List<OfferListing>> _future;
-
-  @override
-  void dispose() {
-    _future.cancel();
-    super.dispose();
-  }
+  Future<List<OfferListing>> _future;
 
   @override
   void initState() {
@@ -202,8 +118,13 @@ class CommodityListingPageState extends State<CommodityListingPage>
         _heightUsedInAnime = double.infinity;
       });
     });
-    _future = CancelableOperation.fromFuture(widget._listingService
-        .getCommodityOfferListing(widget.displayCommodity.commodity.id));
+    if (Provider.of<AppState>(context, listen: false).isSeller()) {
+      _future = widget._listingService
+          //TODO:fortsjett her
+          .getCommodityOfferListing(widget.displayCommodity.commodity.id);
+    }
+    _future = widget._listingService
+        .getCommodityOfferListing(widget.displayCommodity.commodity.id);
   }
 
   Widget _makeSortByWidget() {
@@ -273,7 +194,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
                         children: [
                           _makeSortByWidget(),
                           appFutureBuilder<List<OfferListing>>(
-                              future: _future.value,
+                              future: _future,
                               onSuccess: (offerListings, context) {
                                 return Column(
                                     children: offerListings

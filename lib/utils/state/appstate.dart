@@ -1,18 +1,26 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/utils/auth/jwt.dart';
 import 'package:fishapp/utils/services/storage_service.dart';
+import 'package:flutter/material.dart';
 
 class AppState extends ChangeNotifier {
   User user;
 
   JwtTokenData jwtTokenData;
 
-  AppState() {
+  /// -- this may be poor form -- ///
+  /// Singeltoning a change notifier feels wrong
+  AppState._privateConstruct() {
     _readFromStorage();
   }
+
+  static final AppState _instance = AppState._privateConstruct();
+
+  factory AppState() {
+    return _instance;
+  }
+
+  /// -- this may be poor form -- ///
 
   Future<void> _readFromStorage() async {
     var cur_user = await SharedStorage().loadUser();
