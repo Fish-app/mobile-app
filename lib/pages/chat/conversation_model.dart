@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:fishapp/entities/chat/conversation.dart';
 import 'package:fishapp/entities/chat/message.dart';
 import 'package:fishapp/entities/chat/messagebody.dart';
+import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,9 +11,13 @@ import 'package:flutter/widgets.dart';
 class ConversationModel extends ChangeNotifier {
   final _buildContext;
   final _conversationService = ConversationService();
+  final _listingService = ListingService();
   final List<Message> _messages = List();
+  final bool _debug = false;
 
   Conversation _currentConversation;
+  BuyRequest _currentBuyRequest;
+  OfferListing _currentOfferListing;
   bool _sendMessageErrorIsPresent = false;
   MessageBody _lastFailedSendMessage = MessageBody();
 
@@ -20,8 +25,13 @@ class ConversationModel extends ChangeNotifier {
 
   UnmodifiableListView<Message> get messages => UnmodifiableListView(_messages);
   Conversation get conversation => (this._currentConversation);
+
   bool get sendMessageErrorOccurred => (this._sendMessageErrorIsPresent);
   MessageBody get lastFailedSendMessage => (this._lastFailedSendMessage);
+
+  /// For button on navbar, to navigate to correct listing info page we need the listing object
+  BuyRequest get buyRequest => (this._currentBuyRequest);
+  OfferListing get offerListing => (this._currentOfferListing);
 
   ///
   /// Loads the messages handed from FutureBuilder
@@ -42,7 +52,6 @@ class ConversationModel extends ChangeNotifier {
     this.clearErrorState();
     notifyListeners();
   }
-
 
   ///
   /// Clear the current error state and notifies the UI
@@ -81,11 +90,11 @@ class ConversationModel extends ChangeNotifier {
       Conversation result = await _conversationService.sendMessageRequest(
           this._buildContext, this._currentConversation.id, message);
       if (result != null) {
-        print('MODEL: Sendt message OK');
+        if (this._debug) print('MODEL: Sendt message OK');
         _sendMessageErrorIsPresent = false;
         _lastFailedSendMessage = MessageBody();
-        this.loadNewMessages();
         this._currentConversation = result;
+        this.loadNewMessages();
       } else {
         _sendMessageErrorIsPresent = true;
         _lastFailedSendMessage = message;
@@ -108,23 +117,61 @@ class ConversationModel extends ChangeNotifier {
   Future<bool> loadNewMessages() async {
     num lastMsgIdInList = this._lastMessageIdInList;
     num lastMsgIdInMetadata = this._currentConversation.lastMessageId;
-    print('MODEL: Last message IDs: list:metadata= ' +
-        lastMsgIdInList.toString() +
-        ':' +
-        lastMsgIdInMetadata.toString());
+    if (this._debug)
+      print('MODEL: Last message IDs: list:metadata= ' +
+          lastMsgIdInList.toString() +
+          ':' +
+          lastMsgIdInMetadata.toString());
     List<Message> tailMessageListResult = List();
     try {
       tailMessageListResult = await _conversationService.getMessageUpdates(
           this._buildContext, this._currentConversation.id, lastMsgIdInList);
       if (tailMessageListResult.isNotEmpty) {
-        print('MODEL: Added ' +
-            tailMessageListResult.length.toString() +
-            'messages from server.');
         this._messages.addAll(tailMessageListResult);
         notifyListeners();
       }
       return true;
     } on Exception catch (e) {
+      if (this._debug) print('MODEL: Failed to add messages from server.');
+      return false;
+    }
+  }
+
+  Future<bool> loadListingData() async {
+    String type = this._currentConversation.listing.type;
+    // No reason to ask for listing data if type or id is missing
+    if (type == null && this._currentConversation.listing.id == null)
+      return false;
+    try {
+      switch (type) {
+        case "O":
+          OfferListing offerListingResult =
+              await _listingService.getOfferListing(
+                  this._buildContext, this._currentConversation.listing.id);
+          this._currentOfferListing = offerListingResult;
+          this._currentBuyRequest = null;
+          break;
+        case "B":
+          BuyRequest buyRequestResult = await _listingService.getBuyRequest(
+              this._buildContext, this._currentConversation.listing.id);
+          this._currentBuyRequest = buyRequestResult;
+          this._currentOfferListing = null;
+          break;
+        default:
+          if (this._debug)
+            print(
+                'MODEL: Aborted get listing details; Conversation in model specified unknown listing type,');
+          this._currentOfferListing = null;
+          this._currentBuyRequest = null;
+          return false;
+          break;
+      }
+      notifyListeners();
+      return true;
+    } on Exception catch (e) {
+      if (this._debug)
+        print('MODEL: Error occured when trying to get listing data type ' +
+            type);
       return false;
     }
   }
@@ -144,6 +191,4 @@ class ConversationModel extends ChangeNotifier {
       return this._messages.last.id;
     }
   }
-
-
 }

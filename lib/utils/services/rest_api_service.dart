@@ -77,12 +77,21 @@ class ReceiptService {
 class ConversationService {
   final FishappRestClient _client = FishappRestClient();
 
-  Future<List<Conversation>> getAllConversations(BuildContext context) async {
-    var url = apiPaths.getAppUri(apiPaths.getUserConversationList);
+  final bool _debug = false;
+
+  Future<List<Conversation>> getAllConversations(
+      BuildContext context, bool includeLastMsg) async {
+    Map<String, String> queryParameters;
+    if (includeLastMsg != null) {
+      queryParameters = {'include-lastmessage': includeLastMsg.toString()};
+    }
+    var url = apiPaths.getAppUri(apiPaths.getUserConversationList,
+        queryParameters: queryParameters);
     var response = await _client.get(context, url, addAuth: true);
 
     List<Conversation> conversationList = List();
 
+    print(response.statusCode.toString());
     if (response.statusCode == HttpStatus.ok) {
       if (response.body.isNotEmpty) {
         var body = jsonDecode(response.body);
@@ -103,7 +112,7 @@ class ConversationService {
     try {
       var response = await _client.post(context, url,
           headers: {'Content-type': "application/json"}, addAuth: true);
-      print('REST: Fetch conversation: ' + response.statusCode.toString());
+      if(this._debug) print('REST: Fetch conversation: ' + response.statusCode.toString());
 
       if (response.statusCode == HttpStatus.ok) {
         var responseBody = jsonDecode(response.body);
@@ -155,13 +164,13 @@ class ConversationService {
     var response = await _client.get(context, url, addAuth: true);
 
     List<Message> returnList = List();
-    print("REST: Message updates GOT " + response.statusCode.toString());
+    if(this._debug) print("REST: Message updates GOT " + response.statusCode.toString());
 
     if (response.statusCode == HttpStatus.ok) {
       if (response.body.isNotEmpty) {
         var body = jsonDecode(response.body);
         returnList = Message.fromJsonList(body);
-        print("REST: Parsed " +
+        if(this._debug) print("REST: Parsed " +
             returnList.length.toString() +
             " messages to list");
       }
@@ -278,14 +287,18 @@ class RatingService {
 class ListingService {
   final FishappRestClient _client = FishappRestClient();
 
+  final bool _debug = false;
+
   Future<OfferListing> getOfferListing(BuildContext context, num id) async {
     var uri = getAppUri(apiPaths.getListing + id.toString());
     var response = await _client.get(context, uri, addAuth: false);
 
     if (response.statusCode == HttpStatus.ok) {
       var body = jsonDecode(response.body);
-      if (body["data"] != null) {
-        return OfferListing.fromJson(body["data"]);
+      if (body != null) {
+        return OfferListing.fromJson(body);
+      } else {
+        throw ApiException(response);
       }
     } else {
       throw ApiException(response);
@@ -337,5 +350,20 @@ class ListingService {
     } else {
       throw ApiException(response);
     }
+  }
+
+  Future<BuyRequest> getBuyRequest(BuildContext context, num id) async {
+    if(this._debug)print('REST: Ask for buy request ' + id.toString());
+    var uri = getAppUri(apiPaths.getBuyRequest(id));
+    var response = await _client.get(context, uri, addAuth: false);
+
+    BuyRequest result;
+    if (response.statusCode == HttpStatus.ok) {
+      var responseBody = jsonDecode(response.body);
+      result = BuyRequest.fromJson(responseBody);
+    } else {
+      throw ApiException(response);
+    }
+    return result;
   }
 }

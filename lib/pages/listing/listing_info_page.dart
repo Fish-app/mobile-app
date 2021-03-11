@@ -1,7 +1,10 @@
+import 'package:fishapp/utils/services/rest_api_service.dart';
+import 'package:fishapp/utils/state/appstate.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/generated/l10n.dart';
-import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:fishapp/widgets/Map/map_image.dart';
 import 'package:fishapp/widgets/Map/open_map_widget.dart';
 import 'package:fishapp/widgets/display_text_field.dart';
@@ -9,7 +12,8 @@ import 'package:fishapp/widgets/distance_to_widget.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/rating_stars.dart';
 import 'package:fishapp/widgets/standard_button.dart';
-import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 
 import '../../widgets/rating_stars.dart';
 
@@ -101,20 +105,29 @@ class OfferListingInfoPage extends StatelessWidget {
                           description:
                               S.of(context).quantityAvailable.toUpperCase(),
                           content: offerListing.amountLeft.toString() + " Kg"),
-                      StandardButton(
-                        buttonText: "START CHAT",
-                        onPressed: () {
-                          print("Pressed");
-                          var _conversationService = ConversationService();
-                          _conversationService
-                              .startNewConversation(context, offerListing.id)
-                              .then((value) =>
-                                  //TESTING: fungerer OK: Er dette robust nok ?
-                                  Navigator.of(context).pushNamed(
-                                      routes.ChatConversation,
-                                      arguments: value));
-                        },
-                      ),
+
+                      Consumer<AppState>(builder: (context, userdata, child) {
+                        final bool _isSellerOfThisCommodity = (offerListing.creator.id == userdata.user.id);
+                        return Visibility(
+                          visible: !_isSellerOfThisCommodity,
+                          child: StandardButton(
+                            buttonText: "START CHAT",
+                            onPressed: () {
+                              print("Pressed");
+                              var _conversationService =
+                              ConversationService();
+                              _conversationService
+                                  .startNewConversation(
+                                  context, offerListing.id)
+                                  .then((value) =>
+                              //TESTING: fungerer OK: Er dette robust nok ?
+                              Navigator.of(context).pushNamed(
+                                  routes.ChatConversation,
+                                  arguments: value));
+                            },
+                          ),
+                        );
+                      }),
                       StandardButton(
                         buttonText: S.of(context).buyDirectly.toUpperCase(),
                         onPressed: () {

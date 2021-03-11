@@ -18,8 +18,6 @@ String getMessageListInRange(int conversation) {
   return "/chat/" + conversation.toString() + "/range";
 }
 
-/// CHAT END
-
 // needs login //
 
 /// -- Commodity -- ///
@@ -37,6 +35,13 @@ const getAllReceipts = "/transaction/all";
 
 const getListing = "/listing/";
 const getComodityListings = "/listing/comodity/";
+
+String getBuyRequest(int buyreqeustId) {
+  return "/listing/buyrequest/" + buyreqeustId.toString();
+
+}
+
+
 
 // needs login //
 const createOfferListing = "/listing/newOfferListing";
