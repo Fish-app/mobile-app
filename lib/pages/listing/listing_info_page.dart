@@ -32,7 +32,7 @@ class OfferListingInfoPage extends StatelessWidget {
       child: ListView(
         children: [
           Container(
-            padding: const EdgeInsets.fromLTRB(10.0, 85.0, 10.0, 10.0),
+            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
             child: Column(
               children: [
                 Card(

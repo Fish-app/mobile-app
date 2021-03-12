@@ -25,7 +25,7 @@ class BuyRequestInfoPage extends StatelessWidget {
         extendBehindAppBar: false,
         includeTopBar: S.of(context).buyRequest,
         child: Container(
-          padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+          padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
           child: ListView(
             children: [
               Card(
