@@ -6,6 +6,7 @@ import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
+import 'package:fishapp/widgets/form/formfield_normal.dart';
 import 'package:flutter/material.dart';
 import 'package:strings/strings.dart';
 
@@ -106,9 +107,9 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            FormFieldPlain(
-              title: S.of(context).oldPasswordLabel,
-              hint: S.of(context).oldPasswordHint,
+            FormFieldNormal(
+              title: camelize(S.of(context).oldPasswordLabel),
+              hint: capitalize(S.of(context).oldPasswordHint),
               keyboardType: TextInputType.text,
               isObscured: true,
               onSaved: (oldPassword) =>
@@ -117,9 +118,9 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   validateLength(oldPassword, context, min: 8),
               labelColor: Colors.black,
             ),
-            FormFieldPlain(
-              title: S.of(context).newPasswordLabel,
-              hint: S.of(context).newPasswordHint,
+            FormFieldNormal(
+              title: camelize(S.of(context).newPasswordLabel),
+              hint: capitalize(S.of(context).newPasswordHint),
               keyboardType: TextInputType.text,
               isObscured: true,
               onSaved: (newPassword) =>
@@ -129,9 +130,9 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               },
               labelColor: Colors.black,
             ),
-            FormFieldPlain(
-              title: S.of(context).confirmPassword,
-              hint: S.of(context).confirmPasswordHint,
+            FormFieldNormal(
+              title: camelize(S.of(context).confirmPassword),
+              hint: capitalize(S.of(context).confirmPasswordHint),
               keyboardType: TextInputType.text,
               isObscured: true,
               validator: (confirmPassword) {
