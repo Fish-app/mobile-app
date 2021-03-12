@@ -1,5 +1,5 @@
-import 'package:async/async.dart';
 import 'package:fishapp/config/themes/theme_config.dart';
+import 'package:fishapp/utils/default_builder.dart';
 import 'package:fishapp/widgets/simple_icon_shadow_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,44 +57,28 @@ final _emptyStar = SimpleShadowWidget(
   blur: 1,
 );
 
-class UserRatingStars extends StatefulWidget {
+class UserRatingStars extends StatelessWidget {
   final User user;
   final RatingService ratingService = RatingService();
+  Future<num> _future;
 
-  UserRatingStars({Key key, this.user}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _UserRatingStarsState();
-}
-
-class _UserRatingStarsState extends State<UserRatingStars> {
-  num _rating = 0.0;
-  CancelableOperation _future;
-
-  @override
-  void initState() {
-    super.initState();
-    _future = CancelableOperation.fromFuture(
-            widget.ratingService.getUserRating(context, widget.user.id))
-        .then((value) {
-      setState(() {
-        _rating = value;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _future.cancel();
-    super.dispose();
+  UserRatingStars({Key key, this.user}) : super(key: key) {
+    _future = user != null
+        ? ratingService.getUserRating(user.id)
+        : Future.delayed(Duration(seconds: 1));
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        RatingStars(
-          rating: _rating,
+        appFutureBuilder<num>(
+          future: _future,
+          onSuccess: (futureValue, context) {
+            return RatingStars(
+              rating: futureValue,
+            );
+          },
         )
       ],
     );

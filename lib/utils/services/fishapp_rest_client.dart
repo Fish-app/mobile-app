@@ -1,9 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:fishapp/utils/state/appstate.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class ApiException implements Exception {
   final http.Response response;
@@ -28,45 +27,64 @@ class FishappRestClient {
   var _client = http.Client();
 
   Future<Map<String, String>> _addAuthToHeaders(
-      BuildContext context, Map<String, String> headers) async {
+      Map<String, String> headers) async {
     //todo: kan bli null fikse senere
-    final token =
-        Provider.of<AppState>(context, listen: false).jwtTokenData.tokenString;
+    final token = AppState().jwtTokenData?.tokenString;
     headers ??= new Map<String, String>();
     return headers..addAll({"Authorization": token});
   }
 
-  Future<http.Response> get(BuildContext context, dynamic url,
-      {Map<String, String> headers, bool addAuth = true}) async {
-    return _client.get(url,
-        headers: addAuth ? await _addAuthToHeaders(context, headers) : headers);
+  Map<String, String> _addContentType(
+      Map<String, String> headers, ContentType contentType) {
+    headers ??= new Map<String, String>();
+    return headers
+      ..addAll({
+        'Content-type':
+            "${contentType.mimeType}; charset=${contentType.charset}"
+      });
   }
 
-  Future<http.Response> post(BuildContext context, dynamic url,
+  Future<http.Response> get(dynamic url,
+      {Map<String, String> headers,
+      bool addAuth = true,
+      ContentType contentType}) async {
+    headers =
+        contentType != null ? _addContentType(headers, contentType) : headers;
+    headers = addAuth ? await _addAuthToHeaders(headers) : headers;
+    return _client.get(url, headers: headers);
+  }
+
+  Future<http.Response> post(dynamic url,
       {Map<String, String> headers,
       dynamic body,
       Encoding encoding,
-      bool addAuth = true}) async {
-    return _client.post(url,
-        headers: addAuth ? await _addAuthToHeaders(context, headers) : headers,
-        body: body,
-        encoding: encoding);
+      bool addAuth = true,
+      ContentType contentType}) async {
+    headers =
+        contentType != null ? _addContentType(headers, contentType) : headers;
+    headers = addAuth ? await _addAuthToHeaders(headers) : headers;
+    return _client.post(url, headers: headers, body: body, encoding: encoding);
   }
 
-  Future<http.Response> put(BuildContext context, dynamic url,
+  Future<http.Response> put(dynamic url,
       {Map<String, String> headers,
       dynamic body,
       Encoding encoding,
-      bool addAuth = true}) async {
-    return _client.put(url,
-        headers: addAuth ? await _addAuthToHeaders(context, headers) : headers,
-        body: body,
-        encoding: encoding);
+      bool addAuth = true,
+      ContentType contentType}) async {
+    headers =
+        contentType != null ? _addContentType(headers, contentType) : headers;
+    headers = addAuth ? await _addAuthToHeaders(headers) : headers;
+    return _client.put(url, headers: headers, body: body, encoding: encoding);
   }
 
-  Future<http.Response> delete(BuildContext context, dynamic url,
-      {Map<String, String> headers, bool addAuth = true}) async {
-    return _client.delete(url,
-        headers: addAuth ? await _addAuthToHeaders(context, headers) : headers);
+  Future<http.Response> delete(dynamic url,
+      {Map<String, String> headers,
+      bool addAuth = true,
+      ContentType contentType}) async {
+    headers =
+        contentType != null ? _addContentType(headers, contentType) : headers;
+    headers = addAuth ? await _addAuthToHeaders(headers) : headers;
+    return _client.delete(url, headers: headers);
   }
 }

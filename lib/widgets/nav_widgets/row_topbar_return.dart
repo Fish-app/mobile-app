@@ -15,8 +15,7 @@ class TopBarRow extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 2.0),
       child: Row(
         children: [
-          FlatButton(
-            padding: EdgeInsets.zero,
+          TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -27,10 +26,8 @@ class TopBarRow extends StatelessWidget {
           ),
           Text(
             title,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontSize: 24.0),
+            style:
+                Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 24.0),
           ),
         ],
       ),

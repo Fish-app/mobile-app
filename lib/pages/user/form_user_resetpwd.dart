@@ -1,16 +1,14 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
-import 'package:fishapp/widgets/form/formfield_auth.dart';
-import 'package:fishapp/generated/l10n.dart';
-import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:flutter/material.dart';
 import 'package:strings/strings.dart';
 
-import '../../entities/user.dart';
 import '../../entities/user.dart';
 import '../../widgets/form/formfield_plain.dart';
 
@@ -42,7 +40,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             .changePassword(context, _resetPwdFormData)
             .then((value) {
           // LOGOUT USER AND SHOW DIALOG
-          AuthService.logout(context);
+          AuthService.logout();
           _showPasswordChangedDialog();
         });
       } on ApiException catch (e) {

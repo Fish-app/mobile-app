@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:async/async.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/pages/home/search.dart';
 import 'package:fishapp/utils/default_builder.dart';
+import 'package:fishapp/utils/state/appstate.dart';
 import 'package:fishapp/widgets/buy_filter.dart';
 import 'package:fishapp/widgets/commodity_card.dart';
 import 'package:fishapp/widgets/listing_card.dart';
@@ -20,33 +20,14 @@ import '../../entities/listing.dart';
 import '../../utils/services/rest_api_service.dart';
 import '../../widgets/commodity_card.dart';
 
-class HomePage extends StatefulWidget {
-  final CommodityService _commodityService = CommodityService();
-
-  @override
-  State<StatefulWidget> createState() => HomePageState();
-}
-
 const double _topPadding = 25.0;
 const double _bottomPadding = _topPadding + 10;
 
-class HomePageState extends State<HomePage> {
-  CancelableOperation<List<Commodity>> _future;
+class HomePage extends StatelessWidget {
+  final Future<List<DisplayCommodity>> _future =
+      CommodityService().getAllDisplayCommodities();
 
-  @override
-  void initState() {
-    super.initState();
-    _future = CancelableOperation.fromFuture(
-        widget._commodityService.getAllCommodities(context));
-  }
-
-  @override
-  void dispose() {
-    _future.cancel();
-    super.dispose();
-  }
-
-  Widget _makeComodityCard(Commodity commodity) {
+  Widget _makeComodityCard(DisplayCommodity commodity, BuildContext context) {
     return GestureDetector(
       onTap: () => {
         Navigator.of(context).push(PageRouteBuilder(
@@ -61,11 +42,11 @@ class HomePageState extends State<HomePage> {
           opaque: false,
           pageBuilder: (context, animation, secondaryAnimation) =>
               CommodityListingPage(
-            listedCommodity: commodity,
+            displayCommodity: commodity,
           ),
         ))
       },
-      child: CommodityCard(commodity: commodity),
+      child: CommodityCard(displayCommodity: commodity),
     );
   }
 
@@ -89,34 +70,37 @@ class HomePageState extends State<HomePage> {
                       horizontal: _topPadding, vertical: 20),
                   child: BuyFilterWidget(),
                 ),
-                appFutureBuilder<List<Commodity>>(_future.value,
-                    (commodities, context) {
-                  return Expanded(child: Consumer<SearchState>(
-                    builder: (context, value, child) {
-                      return ListView(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: _bottomPadding),
-                        children: commodities
-                            .where((element) => element.name
-                                .toLowerCase()
-                                .contains(
-                                    value?.searchString?.toLowerCase() ?? ""))
-                            .map((commodity) => _makeComodityCard(commodity))
-                            .toList(),
-                      );
-                    },
-                  ));
-                })
+                appFutureBuilder<List<DisplayCommodity>>(
+                    future: _future,
+                    onSuccess: (commodities, context) {
+                      return Expanded(child: Consumer<SearchState>(
+                        builder: (context, value, child) {
+                          return ListView(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: _bottomPadding),
+                            children: commodities
+                                .where((element) => element.commodity.name
+                                    .toLowerCase()
+                                    .contains(
+                                        value?.searchString?.toLowerCase() ??
+                                            ""))
+                                .map((commodity) =>
+                                    _makeComodityCard(commodity, context))
+                                .toList(),
+                          );
+                        },
+                      ));
+                    })
               ],
             )));
   }
 }
 
 class CommodityListingPage extends StatefulWidget {
-  final Commodity listedCommodity;
+  final DisplayCommodity displayCommodity;
   final ListingService _listingService = ListingService();
 
-  CommodityListingPage({Key key, this.listedCommodity}) : super(key: key);
+  CommodityListingPage({Key key, this.displayCommodity}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => CommodityListingPageState();
@@ -124,13 +108,7 @@ class CommodityListingPage extends StatefulWidget {
 
 class CommodityListingPageState extends State<CommodityListingPage>
     with TickerProviderStateMixin {
-  CancelableOperation<List<OfferListing>> _future;
-
-  @override
-  void dispose() {
-    _future.cancel();
-    super.dispose();
-  }
+  Future<List<OfferListing>> _future;
 
   @override
   void initState() {
@@ -140,8 +118,13 @@ class CommodityListingPageState extends State<CommodityListingPage>
         _heightUsedInAnime = double.infinity;
       });
     });
-    _future = CancelableOperation.fromFuture(widget._listingService
-        .getCommodityOfferListing(context, widget.listedCommodity.id));
+    if (Provider.of<AppState>(context, listen: false).isSeller()) {
+      _future = widget._listingService
+          //TODO:fortsjett her
+          .getCommodityOfferListing(widget.displayCommodity.commodity.id);
+    }
+    _future = widget._listingService
+        .getCommodityOfferListing(widget.displayCommodity.commodity.id);
   }
 
   Widget _makeSortByWidget() {
@@ -210,13 +193,14 @@ class CommodityListingPageState extends State<CommodityListingPage>
                       child: ListView(
                         children: [
                           _makeSortByWidget(),
-                          appFutureBuilder<List<OfferListing>>(_future.value,
-                              (offerListings, context) {
-                            return Column(
-                                children: offerListings
-                                    .map((e) => _goToListing(e))
-                                    .toList());
-                          }),
+                          appFutureBuilder<List<OfferListing>>(
+                              future: _future,
+                              onSuccess: (offerListings, context) {
+                                return Column(
+                                    children: offerListings
+                                        .map((e) => _goToListing(e))
+                                        .toList());
+                              }),
                         ],
                       ),
                     ),
@@ -229,7 +213,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
         Padding(
           padding: EdgeInsets.fromLTRB(_bottomPadding, 0, _bottomPadding,
               MediaQuery.of(context).size.height / 1.53),
-          child: CommodityCard(commodity: widget.listedCommodity),
+          child: CommodityCard(displayCommodity: widget.displayCommodity),
         ),
       ],
       alignment: Alignment.bottomCenter,

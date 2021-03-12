@@ -76,12 +76,14 @@ class _UserPageState extends State<UserPage> {
                               content: value.user?.email ?? ""),
                           DisplayTextField(
                               description: "session valid until".toUpperCase(),
-                              content:
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  _toReadableDate(value.jwtTokenData),
-                                  isUtc: true).toString().substring(0,10) ?? ""
-                                  //value.jwtTokenData?.expiresAt.toString()
-                                      ),
+                              content: DateTime.fromMillisecondsSinceEpoch(
+                                          _toReadableDate(value.jwtTokenData),
+                                          isUtc: true)
+                                      .toString()
+                                      .substring(0, 10) ??
+                                  ""
+                              //value.jwtTokenData?.expiresAt.toString()
+                              ),
                         ]);
                       }),
                       // BUTTONS
@@ -102,9 +104,9 @@ class _UserPageState extends State<UserPage> {
                         child: StandardButton(
                           buttonText: capitalize("Logout"),
                           onPressed: () {
-                            AuthService.logout(context);
-                            Navigator.of(context)
-                                .popAndPushNamed(routes.UserLogin);
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                routes.Home, ModalRoute.withName(routes.Home));
+                            AuthService.logout();
                           },
                         ),
                       ),

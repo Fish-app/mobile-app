@@ -9,7 +9,6 @@ import 'package:fishapp/widgets/buttons_navigate_to_listing.dart';
 import 'package:fishapp/widgets/chat/chatbubble_error.dart';
 import 'package:fishapp/widgets/chat/chatbubble_message.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
-import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,23 +44,9 @@ class ChatMessagePage extends StatelessWidget {
               includeTopBar: topBartext,
               extendBehindAppBar: false,
               navBarActions: <Widget>[
-                // TOP BAR NAVIGATE LISTING BUTTON
-                Consumer<ConversationModel>(builder: (context, model, child) {
-                  if ((model.offerListing != null) ^
-                      (model.buyRequest != null)) {
-                    if (model.offerListing != null) {
-                      return NavigateToOfferListingButton(
-                        offerListing: model.offerListing,
-                      );
-                    } else {
-                      return NavigateToBuyRequestButton(
-                        buyRequest: model.buyRequest,
-                      );
-                    }
-                  } else {
-                    return Container(); // must return something, and not null
-                  }
-                }),
+                NavigateToListingButton(
+                  conv_listing: baseConversation.listing,
+                )
               ],
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -103,6 +88,7 @@ class MessageListWidget extends StatefulWidget {
       this.localParticipant,
       this.scrollController})
       : super(key: key);
+
   @override
   _MessageListWidgetState createState() => _MessageListWidgetState();
 }
@@ -124,7 +110,6 @@ class _MessageListWidgetState extends State<MessageListWidget> {
   void initState() {
     super.initState();
 
-    Provider.of<ConversationModel>(context, listen: false).loadListingData();
     Provider.of<ConversationModel>(context, listen: false).loadNewMessages();
 
     _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {

@@ -24,6 +24,7 @@ String getMessageListInRange(int conversation) {
 
 const getCommodity = "aa";
 const getAllCommodity = "/commodity/all";
+const getAllDisplayCommodity = "/commodity/all-display";
 // needs login //
 
 /// -- Receipt -- ///
@@ -38,10 +39,7 @@ const getComodityListings = "/listing/comodity/";
 
 String getBuyRequest(int buyreqeustId) {
   return "/listing/buyrequest/" + buyreqeustId.toString();
-
 }
-
-
 
 // needs login //
 const createOfferListing = "/listing/newOfferListing";

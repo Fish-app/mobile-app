@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'loading_spinnder.dart';
 
-typedef OnSucBuild<T> = Widget Function(T, BuildContext);
+typedef OnSucBuild<T> = Widget Function(T futureValue, BuildContext context);
 
-FutureBuilder<T> appFutureBuilder<T>(Future<T> future, OnSucBuild<T> onSucses,
-    {bool allowNull = false}) {
+FutureBuilder<T> appFutureBuilder<T>(
+    {@required Future<T> future,
+    @required OnSucBuild<T> onSuccess,
+    bool allowNull = false}) {
   return FutureBuilder(
     future: future,
     builder: (BuildContext context, AsyncSnapshot<T> snapshot) {
@@ -22,10 +24,11 @@ FutureBuilder<T> appFutureBuilder<T>(Future<T> future, OnSucBuild<T> onSucses,
             if (!allowNull && snapshot.data == null) {
               return _showOnConError();
             }
-            return onSucses(snapshot.data, context);
+            return onSuccess(snapshot.data, context);
           } else {
             // todo:remove
             print("Future builder error: ${snapshot.error}");
+            print(snapshot.stackTrace);
             return _showOnConError();
           }
       }
@@ -34,14 +37,14 @@ FutureBuilder<T> appFutureBuilder<T>(Future<T> future, OnSucBuild<T> onSucses,
 }
 
 Widget _showOnConError() {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      const Padding(
-        padding: EdgeInsets.only(top: 16),
-        child: Text('ERROR:'),
-      )
-    ],
+  return Center(
+    child: Text(
+      '< Connection error >',
+      style: TextStyle(
+          fontSize: 15,
+          color: Colors.black,
+          fontStyle: FontStyle.normal,
+          decoration: TextDecoration.none),
+    ),
   );
 }

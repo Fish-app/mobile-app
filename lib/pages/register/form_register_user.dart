@@ -1,12 +1,11 @@
-import 'package:fishapp/utils/services/fishapp_rest_client.dart';
-import 'package:fishapp/widgets/standard_button.dart';
-import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/route_data.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
+import 'package:fishapp/utils/services/fishapp_rest_client.dart';
 import 'package:fishapp/widgets/form/formfield_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:strings/strings.dart';
 
 import '../../entities/user.dart';
@@ -41,12 +40,10 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
     formState.save();
     if (formState.validate()) {
       try {
-        await widget.authService.createUser(context, _newUserFormData);
-        var suc = await widget.authService.loginUser(
-            context,
-            UserLoginData(
-                userName: _newUserFormData.userName,
-                password:_newUserFormData.password));
+        await widget.authService.createUser(_newUserFormData);
+        var suc = await widget.authService.loginUser(UserLoginData(
+            userName: _newUserFormData.userName,
+            password: _newUserFormData.password));
         if (suc) {
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
           Navigator.popAndPushNamed(
@@ -69,89 +66,88 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 40),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    FormFieldAuth(
-                      initialValue: "kdasfjlkdfa",
-                      title: S.of(context).name,
-                      hint: S.of(context).fullName,
-                      keyboardType: TextInputType.name,
-                      onSaved: (newValue) => {_newUserFormData.name = newValue},
-                      validator: (value) {
-                        return validateNotEmptyInput(value, context);
-                      },
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            FormFieldAuth(
+              initialValue: "testb",
+              title: S.of(context).name,
+              hint: S.of(context).fullName,
+              keyboardType: TextInputType.name,
+              onSaved: (newValue) => {_newUserFormData.name = newValue},
+              validator: (value) {
+                return validateNotEmptyInput(value, context);
+              },
+            ),
+            FormFieldAuth(
+              initialValue: "testb@example.com",
+              title: capitalize(S.of(context).email),
+              hint: S.of(context).emailHint,
+              keyboardType: TextInputType.emailAddress,
+              onSaved: (newValue) => {_newUserFormData.userName = newValue},
+              validator: (value) {
+                return validateEmail(value, context);
+              },
+            ),
+            FormFieldAuth(
+              initialValue: "12345678",
+              title: capitalize(S.of(context).password),
+              hint: S.of(context).passwordHint,
+              keyboardType: TextInputType.text,
+              onSaved: (newValue) => {_newUserFormData.password = newValue},
+              validator: (value) {
+                return validateLength(value, context, min: 8);
+              },
+              isObscured: true,
+            ),
+            FormFieldAuth(
+              initialValue: "12345678",
+              title: S.of(context).confirmPassword,
+              hint: S.of(context).confirmPasswordHint,
+              keyboardType: TextInputType.text,
+              validator: (value) {
+                return validateEquality(value, _newUserFormData.password,
+                    S.of(context).password, context);
+              },
+              isObscured: true,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Row(
+                children: [
+                  Checkbox(value: _agreedToTOS, onChanged: _setAgreedToTOS),
+                  GestureDetector(
+                    onTap: () => _setAgreedToTOS(!_agreedToTOS),
+                    child: Text(
+                      S.of(context).tos,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
-                    FormFieldAuth(
-                      initialValue: "oluf@example.com",
-                      title: capitalize(S.of(context).email),
-                      hint: S.of(context).emailHint,
-                      keyboardType: TextInputType.emailAddress,
-                      onSaved: (newValue) => {_newUserFormData.userName = newValue},
-                      validator: (value) {
-                        return validateEmail(value, context);
-                      },
-                    ),
-                    FormFieldAuth(
-                      initialValue: "Passord123",
-                      title: capitalize(S.of(context).password),
-                      hint: S.of(context).passwordHint,
-                      keyboardType: TextInputType.text,
-                      onSaved: (newValue) => {_newUserFormData.password = newValue},
-                      validator: (value) {
-                        return validateLength(value, context, min: 8);
-                      },
-                      isObscured: true,
-                    ),
-                    FormFieldAuth(
-                      initialValue: "Passord123",
-                      title: S.of(context).confirmPassword,
-                      hint: S.of(context).confirmPasswordHint,
-                      keyboardType: TextInputType.text,
-                      validator: (value) {
-                        return validateEquality(value, _newUserFormData.password,
-                            S.of(context).password, context);
-                      },
-                      isObscured: true,
-                    ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Row(
-                    children: [
-                      Checkbox(value: _agreedToTOS, onChanged: _setAgreedToTOS),
-                      GestureDetector(
-                        onTap: () => _setAgreedToTOS(!_agreedToTOS),
-                        child: Text(
-                          S.of(context).tos,
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Center(
-                  child: ElevatedButton(
-                      style: Theme.of(context).elevatedButtonTheme.style.copyWith(
-                          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                              EdgeInsets.symmetric(horizontal: 25, vertical: 10))),
-                      onPressed: () {
-                        if (_agreedToTOS) {
-                          _handleRegister(context);
-                        }
-                      },
-                      child: Text(
-                        S.of(context).createUser.toUpperCase(),
-                        style: Theme.of(context).primaryTextTheme.headline5,
-                      )),
-                ),
-                Center(
-                  child: Text(
-                    _errorMessage,
-                    style: TextStyle(color: Theme.of(context).errorColor),
+                  )
+                ],
               ),
-                )
-           ]),
+            ),
+            Center(
+              child: ElevatedButton(
+                  style: Theme.of(context).elevatedButtonTheme.style.copyWith(
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          EdgeInsets.symmetric(horizontal: 25, vertical: 10))),
+                  onPressed: () {
+                    if (_agreedToTOS) {
+                      _handleRegister(context);
+                    }
+                  },
+                  child: Text(
+                    S.of(context).createUser.toUpperCase(),
+                    style: Theme.of(context).primaryTextTheme.headline5,
+                  )),
+            ),
+            Center(
+              child: Text(
+                _errorMessage,
+                style: TextStyle(color: Theme.of(context).errorColor),
+              ),
+            )
+          ]),
         ));
   }
 
@@ -160,5 +156,4 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
       _agreedToTOS = newValue;
     });
   }
-
 }

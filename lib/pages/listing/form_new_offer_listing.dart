@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:fishapp/config/routes/route_data.dart';
+import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/commodity.dart';
+import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
@@ -11,15 +11,12 @@ import 'package:fishapp/widgets/Map/choose_location_widget.dart';
 import 'package:fishapp/widgets/dropdown_menu.dart';
 import 'package:fishapp/widgets/form/formfield_normal.dart';
 import 'package:fishapp/widgets/standard_button.dart';
-import 'package:fishapp/config/routes/routes.dart' as routes;
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
-
-import 'package:fishapp/entities/listing.dart';
 
 import '../../entities/listing.dart';
 import '../../utils/form/form_validators.dart';
-
 
 class NewOfferListingForm extends StatefulWidget {
   final GenericRouteData routeData;
@@ -43,7 +40,6 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
   bool _hasLocation = false;
   LatLng _location;
   String _notPickedLocationMessage = "";
-
 
   @override
   void initState() {
@@ -74,8 +70,7 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
               searchBoxHint: S.of(context).search,
               customFilter: (commodity, filter) =>
                   commodity.filterByName(filter),
-              onFind: (String filter) =>
-                  widget.service.getAllCommodities(context),
+              onFind: (String filter) => widget.service.getAllCommodities(),
               onSaved: _dropdownSelectedCallback,
               validator: (value) {
                 if (value == null) {
@@ -89,14 +84,14 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
                 onPressed: () {
                   _navigateAndDisplayMap(context);
                 }),
-            Text(_notPickedLocationMessage, style: TextStyle(color: Colors.red)),
+            Text(_notPickedLocationMessage,
+                style: TextStyle(color: Colors.red)),
             FormFieldNormal(
               title: S.of(context).amount.toUpperCase(),
               keyboardType: TextInputType.number,
               suffixText: "Kg",
-              onSaved: (newValue) => {
-                _listingFormData.maxAmount = int.tryParse(newValue)
-              },
+              onSaved: (newValue) =>
+                  {_listingFormData.maxAmount = int.tryParse(newValue)},
               validator: (value) {
                 if (value.isEmpty) {
                   return validateNotEmptyInput(value, context);
@@ -201,8 +196,8 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
       try {
         print(_listingFormData.toJson());
         print(_listingFormData.toJsonString());
-        OfferListing suc = await widget.listingService
-            .createOfferListing(context, _listingFormData);
+        OfferListing suc =
+            await widget.listingService.createOfferListing(_listingFormData);
         if (suc != null) {
           Scaffold.of(context)
             ..removeCurrentSnackBar()

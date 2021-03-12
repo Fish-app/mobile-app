@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:fishapp/entities/user.dart';
-import 'package:flutter/material.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/seller.dart';
+import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/utils/distance_calculator.dart';
+import 'package:flutter/foundation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'commodity.dart';
 
@@ -16,13 +16,30 @@ String _simplifyComodity(Commodity commodity) {
   return '{"id":${commodity.id}}}';
 }
 
+ListingTypes _listingTypeFromJson(String json) {
+  return ListingTypes.values.firstWhere((e) => getStringFromEnum(e) == json);
+}
+
+/// Returns the value of the enum type as string
+String getStringFromEnum(enumType) {
+  return describeEnum(enumType);
+}
+
+/// Returns the enum type for the provided enum string representation
+getEnumType<T>(List<T> types, stringRepresentation) {
+  return types.firstWhere((e) => getStringFromEnum(e) == stringRepresentation);
+}
+
+enum ListingTypes { Offer, Request }
+
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Listing {
   num id;
   int created;
   User creator;
   int endDate;
-  String type;
+  @JsonKey(fromJson: _listingTypeFromJson)
+  ListingTypes listingType;
 
   Commodity commodity;
   double price;
@@ -37,7 +54,7 @@ class Listing {
       this.created,
       this.creator,
       this.endDate,
-      this.type,
+      this.listingType,
       this.commodity,
       this.price,
       this.isOpen,

@@ -1,20 +1,21 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:fishapp/config/themes/theme_config.dart';
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/generated/l10n.dart';
+import 'package:flutter/material.dart';
 
 class CommodityCard extends StatelessWidget {
-  final Commodity commodity;
+  final DisplayCommodity displayCommodity;
 
-  const CommodityCard({Key key, this.commodity}) : super(key: key);
+  const CommodityCard({Key key, this.displayCommodity}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Hero(
       // todo: endre til ikka samme navn
-      tag: commodity.name,
+      tag:
+          "comodity-${displayCommodity.commodity.name}-${displayCommodity.commodity.id}",
       child: Card(
         child: SizedBox(
           height: 180,
@@ -24,7 +25,7 @@ class CommodityCard extends StatelessWidget {
             children: [
               Image(
                 fit: BoxFit.cover,
-                image: commodity.getImage().image,
+                image: displayCommodity.commodity.getImage().image,
               ),
               Align(
                 alignment: Alignment(1.1, 1.1),
@@ -55,21 +56,23 @@ class CommodityCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              commodity.name,
+                              displayCommodity.commodity.name,
                               style:
                                   Theme.of(context).primaryTextTheme.headline3,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  S.of(context).from + " X kr/kg",
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline5,
-                                ),
-                              ],
-                            )
+                            if (displayCommodity.cheapestPrice != -1)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    S.of(context).from +
+                                        " ${displayCommodity.cheapestPrice} kr/kg",
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline5,
+                                  ),
+                                ],
+                              )
                           ],
                         ),
                       ),

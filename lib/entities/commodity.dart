@@ -1,6 +1,6 @@
+import 'package:fishapp/entities/image.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:fishapp/entities/image.dart';
 
 import '../constants/api_path.dart';
 
@@ -49,4 +49,23 @@ class Commodity {
 
   @override
   String toString() => name;
+}
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+class DisplayCommodity {
+  Commodity commodity;
+
+  num cheapestPrice;
+
+  DisplayCommodity({this.commodity, this.cheapestPrice});
+
+  factory DisplayCommodity.fromJson(Map<String, dynamic> json) =>
+      _$DisplayCommodityFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DisplayCommodityToJson(this);
+
+  static fromJsonList(List list) {
+    if (list == null) return List();
+    return list.map((e) => DisplayCommodity.fromJson(e)).toList();
+  }
 }
