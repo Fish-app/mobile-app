@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:strings/strings.dart';
 
 import '../../entities/user.dart';
-import '../../widgets/form/formfield_plain.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   final _buttonColor = Colors.amber;
