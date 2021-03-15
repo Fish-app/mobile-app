@@ -3,6 +3,7 @@ import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/auth/jwt.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/utils/state/appstate.dart';
+import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/display_text_field.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
@@ -55,8 +56,14 @@ class _UserPageState extends State<UserPage> {
                         ),
                       ),
                       // USER INFO
+
                       Consumer<AppState>(builder: (context, value, child) {
                         return Column(children: [
+                          Card(
+                            child: Column(
+                              children: [],
+                            ),
+                          ),
                           // TODO: ALIGN THIS BETTER
                           Align(
                             child: Text(
@@ -67,6 +74,8 @@ class _UserPageState extends State<UserPage> {
                           ),
                           UserRatingStars(user: value.user),
                           // TODO-end
+
+                          ButtonV2(),
 
                           DisplayTextField(
                               description: S.of(context).name.toUpperCase(),

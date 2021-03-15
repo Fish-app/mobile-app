@@ -54,7 +54,7 @@ final fishappLightTheme = ThemeData(
   /// -- Colors -- ///
   primaryColor: Colors.black,
   primaryColorLight: Colors.grey,
-  accentColor: Colors.orange,
+  accentColor: emphasisColor,
   focusColor: Colors.orange,
 
   sliderTheme: SliderThemeData(

@@ -10,6 +10,8 @@ const UserResetPwd = "/user/info/resetpassword";
 const ChatConversation = "/chat/conversation";
 const chat = "/chat/list";
 
+const commodityListingPage = "/commodity";
+
 const OfferListingInfo = "/offerlistinginfo";
 const BuyRequestInfo = "/buyrequestinfo";
 const NewListing = "/newlisting";

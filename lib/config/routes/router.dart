@@ -1,7 +1,9 @@
 import 'package:fishapp/entities/chat/conversation.dart';
+import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/entities/receipt.dart';
 import 'package:fishapp/pages/chat/chatlist_page.dart';
 import 'package:fishapp/pages/chat/chatmsg_page.dart';
+import 'package:fishapp/pages/commodity_info/commodity_listing_page.dart';
 import 'package:fishapp/pages/home/home_page.dart';
 import 'package:fishapp/pages/listing/buy_request_info_page.dart';
 import 'package:fishapp/pages/listing/choose_new_listing_page.dart';
@@ -44,6 +46,15 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
     case routes.Home:
       page = HomePage();
       break;
+    case routes.commodityListingPage:
+      if (params is DisplayCommodity) {
+        page = CommodityListingPage(
+          displayCommodity: params,
+        );
+      } else {
+        page = Path404Page();
+      }
+      break;
 
     case routes.UserNew:
       page = RegisterUserPage(
@@ -57,7 +68,6 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       break;
     case routes.OfferListingInfo:
       if (params is OfferListing) {
-        print(params.toJsonString());
         page = OfferListingInfoPage(
           offerListing: params,
         );
