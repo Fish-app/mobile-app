@@ -16,56 +16,50 @@ class NewBuyRequestPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
         extendBehindAppBar: true,
+        extendBody: true,
         useNavBar: navButtonNewListing,
-        child: Stack(
-          children: [
-            CircleThingy(
-              sizeX: 1000,
-              sizeY: 800,
-              centerX: 90,
-              centerY: -200,
-              top: true,
-              left: true,
-            ),
-            CircleThingy(
-              sizeX: 700,
-              sizeY: 500,
-              centerX: -60,
-              centerY: -150,
-              top: false,
-              left: false,
-            ),
-            ListView(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
+        bgDecor: [
+          CircleThingy(
+            sizeX: 1000,
+            sizeY: 800,
+            centerX: 90,
+            centerY: -200,
+            top: true,
+            left: true,
+          ),
+          CircleThingy(
+            sizeX: 700,
+            sizeY: 500,
+            centerX: -60,
+            centerY: -150,
+            top: false,
+            left: false,
+          ),
+        ],
+        child: Container(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: SafeArea(
+            bottom: false,
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               children: [
-                Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: SafeArea(
-                    child: ListView(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      children: [
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Text(
-                          S.of(context).newBuyRequest,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              .copyWith(fontSize: 24.0),
-                        ),
-                        NewBuyRequestForm(
-                          routeData: routeData,
-                        )
-                      ],
-                    ),
-                  ),
+                SizedBox(
+                  height: 40,
                 ),
+                Text(
+                  S.of(context).newBuyRequest,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(fontSize: 24.0),
+                ),
+                NewBuyRequestForm(
+                  routeData: routeData,
+                )
               ],
-            )
-          ],
+            ),
+          ),
         ));
   }
 }

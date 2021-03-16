@@ -22,54 +22,47 @@ class _NewOfferListingPageState extends State<NewOfferListingPage> {
     return getFishappDefaultScaffold(context,
         extendBehindAppBar: true,
         useNavBar: navButtonNewListing,
-        child: Stack(
-          children: [
-            CircleThingy(
-              sizeX: 1000,
-              sizeY: 1200,
-              centerX: -400,
-              centerY: 200,
-              top: false,
-              left: true,
+        bgDecor: [
+          CircleThingy(
+            sizeX: 1000,
+            sizeY: 1200,
+            centerX: -400,
+            centerY: 200,
+            top: false,
+            left: true,
+          ),
+          CircleThingy(
+            sizeX: 500,
+            sizeY: 700,
+            centerX: -150,
+            centerY: -60,
+            top: true,
+            left: false,
+          ),
+        ],
+        child: Container(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
-            CircleThingy(
-              sizeX: 500,
-              sizeY: 700,
-              centerX: -150,
-              centerY: -60,
-              top: true,
-              left: false,
-            ),
-            ListView(
-              children: [
-                Container(
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom,
+            child: SafeArea(
+                bottom: false,
+                child: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  children: [
+                    SizedBox(
+                      height: 40,
                     ),
-                    child: SafeArea(
-                        child: ListView(
-                      shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      children: [
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Text(
-                          S.of(context).newOfferListing,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              .copyWith(fontSize: 24.0),
-                        ),
-                        NewOfferListingForm(
-                          routeData: widget.routeData,
-                        ),
-                      ],
-                    ))),
-              ],
-            )
-          ],
-        ));
+                    Text(
+                      S.of(context).newOfferListing,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(fontSize: 24.0),
+                    ),
+                    NewOfferListingForm(
+                      routeData: widget.routeData,
+                    ),
+                  ],
+                ))));
   }
 }

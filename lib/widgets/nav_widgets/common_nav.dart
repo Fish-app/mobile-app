@@ -30,6 +30,7 @@ Scaffold getFishappDefaultScaffold(BuildContext context,
     bool navBarHideReturn,
     List<Widget> navBarActions,
     Widget child,
+    List<Widget> bgDecor,
     bool extendBehindAppBar = true,
     bool extendBody = true}) {
   return Scaffold(
@@ -45,6 +46,9 @@ Scaffold getFishappDefaultScaffold(BuildContext context,
         ? getFishappTopBar(
             context, includeTopBar, navBarHideReturn, navBarActions)
         : null,
-    body: child,
+    body: Stack(
+      fit: StackFit.expand,
+      children: [if (bgDecor != null) ...bgDecor, child],
+    ),
   );
 }

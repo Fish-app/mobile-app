@@ -157,10 +157,13 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
               ],
             ),
             ButtonV2(
-                padding: const EdgeInsets.symmetric(vertical: 90),
+                padding: const EdgeInsets.symmetric(vertical: 30),
                 buttonText: S.of(context).addListing.toUpperCase(),
                 buttonIcon: Icons.add,
                 onPressed: () => _handleNewOffer(context)),
+            SizedBox(
+              height: 100,
+            )
           ],
         ),
       ),
