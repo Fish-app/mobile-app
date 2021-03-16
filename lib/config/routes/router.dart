@@ -86,7 +86,11 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       break;
     case routes.ChooseNewListing:
       if (isSeller) {
-        page = ChooseNewListingPage();
+        page = reqireLogin(() {
+          return NewOfferListingPage(
+            routeData: params,
+          );
+        });
       } else {
         page = reqireLogin(() {
           return NewBuyRequestPage(

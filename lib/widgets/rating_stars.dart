@@ -61,7 +61,7 @@ class UserRatingStars extends StatelessWidget {
   final Future<num> _future;
 
   UserRatingStars({Key key, User user})
-      : _future = RatingService().getUserRating(user.id),
+      : _future = RatingService().getUserRating(user?.id),
         super(key: key);
 
   @override

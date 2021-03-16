@@ -6,6 +6,7 @@ import 'package:fishapp/utils/services/rest_api_service.dart';
 
 import '../entities/commodity.dart';
 
+//TODO: SER IKKE BRA UT (som i stil) FIX!
 class DropdownMenu extends StatefulWidget {
   final commodityService = CommodityService();
 
@@ -17,24 +18,22 @@ class DropdownMenu extends StatefulWidget {
   final onFind;
   final label;
   final Function(Commodity) validator;
-  DropdownMenu({
-    this.showClearButton = false,
-    this.showSearchBox = false,
-    this.onSaved,
-    this.searchBoxHint,
-    this.customFilter,
-    this.onFind,
-    this.label,
-    this.validator
-  });
+
+  DropdownMenu(
+      {this.showClearButton = false,
+      this.showSearchBox = false,
+      this.onSaved,
+      this.searchBoxHint,
+      this.customFilter,
+      this.onFind,
+      this.label,
+      this.validator});
 
   @override
   _DropdownMenuState createState() => _DropdownMenuState();
-
 }
 
 class _DropdownMenuState extends State<DropdownMenu> {
-
   @override
   void initState() {
     super.initState();
@@ -47,9 +46,7 @@ class _DropdownMenuState extends State<DropdownMenu> {
       showSearchBox: widget.showSearchBox,
       showClearButton: widget.showClearButton,
       searchBoxDecoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: widget.searchBoxHint
-      ),
+          border: OutlineInputBorder(), labelText: widget.searchBoxHint),
       mode: Mode.MENU,
       filterFn: widget.customFilter,
       showSelectedItem: false,

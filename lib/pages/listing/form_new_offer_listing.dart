@@ -8,6 +8,7 @@ import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:fishapp/widgets/Map/choose_location_widget.dart';
+import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/dropdown_menu.dart';
 import 'package:fishapp/widgets/form/formfield_normal.dart';
 import 'package:fishapp/widgets/standard_button.dart';
@@ -78,73 +79,88 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
                 }
               },
             ),
-            Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-            StandardButton(
-                buttonText: S.of(context).setPickupLocation,
-                onPressed: () {
-                  _navigateAndDisplayMap(context);
-                }),
-            Text(_notPickedLocationMessage,
-                style: TextStyle(color: Colors.red)),
-            FormFieldNormal(
-              title: S.of(context).amount.toUpperCase(),
-              keyboardType: TextInputType.number,
-              suffixText: "Kg",
-              onSaved: (newValue) =>
-                  {_listingFormData.maxAmount = int.tryParse(newValue)},
-              validator: (value) {
-                if (value.isEmpty) {
-                  return validateNotEmptyInput(value, context);
-                } else {
-                  return validateIntInput(value, context);
-                }
-              },
+            DefaultCard(
+              children: [
+                FormFieldNormal(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  title: S.of(context).amount.toUpperCase(),
+                  keyboardType: TextInputType.number,
+                  suffixText: "Kg",
+                  onSaved: (newValue) =>
+                      {_listingFormData.maxAmount = int.tryParse(newValue)},
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return validateNotEmptyInput(value, context);
+                    } else {
+                      return validateIntInput(value, context);
+                    }
+                  },
+                ),
+                FormFieldNormal(
+                  title: S.of(context).price.toUpperCase(),
+                  suffixText: "nok",
+                  keyboardType: TextInputType.number,
+                  onSaved: (newValue) =>
+                      {_listingFormData.price = double.tryParse(newValue)},
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return validateNotEmptyInput(value, context);
+                    } else {
+                      return validateIntInput(value, context);
+                    }
+                  },
+                ),
+                FormFieldNormal(
+                  title: S.of(context).pickupDate.toUpperCase(),
+                  readOnly: true,
+                  controller: _dateController,
+                  onSaved: (newValue) => {
+                    if (newValue.trim().isNotEmpty)
+                      {_listingFormData.endDate = _toEpoch(newValue)}
+                  },
+                  validator: (value) {
+                    return validateDateNotPast(value, context);
+                  },
+                  onTap: () async {
+                    var date = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: _firstDate,
+                        lastDate: _lastDate);
+                    if (date != null) {
+                      _dateController.text = date.toString().substring(0, 10);
+                    }
+                  },
+                ),
+              ],
             ),
-            FormFieldNormal(
-              title: S.of(context).price.toUpperCase(),
-              suffixText: "nok",
-              keyboardType: TextInputType.number,
-              onSaved: (newValue) =>
-                  {_listingFormData.price = double.tryParse(newValue)},
-              validator: (value) {
-                if (value.isEmpty) {
-                  return validateNotEmptyInput(value, context);
-                } else {
-                  return validateIntInput(value, context);
-                }
-              },
+            DefaultCard(
+              children: [
+                //TODO: fikse slik som wireframe
+                StandardButton(
+                    buttonText: S.of(context).setPickupLocation,
+                    onPressed: () {
+                      _navigateAndDisplayMap(context);
+                    }),
+                Text(_notPickedLocationMessage,
+                    style: TextStyle(color: Colors.red)),
+              ],
             ),
-            FormFieldNormal(
-              title: S.of(context).pickupDate.toUpperCase(),
-              readOnly: true,
-              controller: _dateController,
-              onSaved: (newValue) => {
-                if (newValue.trim().isNotEmpty)
-                  {_listingFormData.endDate = _toEpoch(newValue)}
-              },
-              validator: (value) {
-                return validateDateNotPast(value, context);
-              },
-              onTap: () async {
-                var date = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: _firstDate,
-                    lastDate: _lastDate);
-                if (date != null) {
-                  _dateController.text = date.toString().substring(0, 10);
-                }
-              },
+            DefaultCard(
+              children: [
+                FormFieldNormal(
+                  title: S.of(context).additionalInfo.toUpperCase(),
+                  keyboardType: TextInputType.text,
+                  onSaved: (newValue) =>
+                      {_listingFormData.additionalInfo = newValue},
+                ),
+              ],
             ),
-            FormFieldNormal(
-              title: S.of(context).additionalInfo.toUpperCase(),
-              keyboardType: TextInputType.text,
-              onSaved: (newValue) =>
-                  {_listingFormData.additionalInfo = newValue},
-            ),
-            StandardButton(
+            ButtonV2(
+                padding: const EdgeInsets.symmetric(vertical: 90),
                 buttonText: S.of(context).addListing.toUpperCase(),
-                onPressed: () => _handleNewOffer(context))
+                buttonIcon: Icons.add,
+                onPressed: () => _handleNewOffer(context)),
           ],
         ),
       ),

@@ -250,13 +250,17 @@ class RatingService {
   final FishappRestClient _client = FishappRestClient();
 
   Future<num> getUserRating(num id) async {
-    var uri = getAppUri(apiPaths.ratingEndpoint + id.toString());
-    var response = await _client.get(uri, addAuth: true);
+    if (num != null) {
+      var uri = getAppUri(apiPaths.ratingEndpoint + id.toString());
+      var response = await _client.get(uri, addAuth: true);
 
-    if (response.statusCode == HttpStatus.ok) {
-      return num.tryParse(response.body) ?? -1;
+      if (response.statusCode == HttpStatus.ok) {
+        return num.tryParse(response.body) ?? -1;
+      } else {
+        throw ApiException(response);
+      }
     } else {
-      throw ApiException(response);
+      return Future(() => 0);
     }
   }
 

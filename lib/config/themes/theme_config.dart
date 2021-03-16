@@ -169,10 +169,15 @@ final fishappLightTheme = ThemeData(
 );
 
 final InputDecorationTheme normalFormFieldTheme = InputDecorationTheme(
-  floatingLabelBehavior: FloatingLabelBehavior.always,
+  //floatingLabelBehavior: FloatingLabelBehavior.always,
+
   contentPadding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-  border: UnderlineInputBorder(),
-  filled: true,
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+  ),
+  border: UnderlineInputBorder(
+      borderSide: BorderSide(width: 0.5, color: Colors.grey)),
+  filled: false,
   fillColor: inputFealdbgColor,
   hintStyle: inputHintStyle,
 );
