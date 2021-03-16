@@ -142,6 +142,7 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
                   children: [
                     ImageFiltered(
                       imageFilter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
+                      //TODO: få kartet til å slytte seg til valgt lokasjon
                       child: MapImage(
                         latitude: _location.latitude,
                         longitude: _location.longitude,
