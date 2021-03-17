@@ -206,10 +206,12 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
     final LatLng result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => ChooseLocation()));
     if (result != null) {
-      _location = result;
-      _listingFormData.longitude = _location.longitude;
-      _listingFormData.latitude = _location.latitude;
-      _hasLocation = true;
+      setState(() {
+        _location = result;
+        _listingFormData.longitude = _location.longitude;
+        _listingFormData.latitude = _location.latitude;
+        _hasLocation = true;
+      });
     }
   }
 
