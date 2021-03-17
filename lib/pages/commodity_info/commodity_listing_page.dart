@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/config/themes/theme_config.dart';
 import 'package:fishapp/entities/commodity.dart';
@@ -107,10 +108,15 @@ class CommodityListingPageState extends State<CommodityListingPage>
                         bottomLeft: Radius.circular(appBorderRadius),
                         bottomRight: Radius.circular(appBorderRadius),
                       )),
-                      child: Image(
+                      child: CachedNetworkImage(
+                        placeholder: (context, url) => Container(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        imageUrl: widget.displayCommodity.commodity
+                            .getImageUrl()
+                            .toString(),
                         fit: BoxFit.cover,
-                        image:
-                            widget.displayCommodity.commodity.getImage().image,
                       ),
                     ),
                   ),

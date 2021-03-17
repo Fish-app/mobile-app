@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fishapp/config/routes/route_data.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/commodity.dart';
@@ -135,6 +136,14 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
                 ),
               ],
             ),
+            MapCard(
+              height: MediaQuery.of(context).size.height / 3,
+              interactive: true,
+              onNewPosSelected: (position) {
+                _buyRequestData.longitude = position.longitude;
+                _buyRequestData.latitude = position.latitude;
+              },
+            ),
             DefaultCard(
               children: [
                 FormFieldNormal(
@@ -153,28 +162,6 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
                 ),
                 SizedBox(
                   height: 20,
-                ),
-                Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
-                      //TODO: få kartet til å slytte seg til valgt lokasjon
-                      child: MapImage(
-                        latitude: _location.latitude,
-                        longitude: _location.longitude,
-                        height: MediaQuery.of(context).size.height / 2.2,
-                        interactive: false,
-                        onTap: (asd) {
-                          _navigateAndDisplayMap(context);
-                        },
-                      ),
-                    ),
-                    Text(
-                      S.of(context).setPickupLocation,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  ],
                 ),
                 Text(_notPickedLocationMessage,
                     style: TextStyle(color: Colors.red)),
@@ -209,22 +196,6 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
       setState(() {
         pickedFish = newValue;
         _buyRequestData.commodity = pickedFish;
-      });
-    }
-  }
-
-  _navigateAndDisplayMap(BuildContext context) async {
-    final LatLng result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ChooseLocation()));
-    if (result != null) {
-      setState(() {
-        _location = result;
-        _buyRequestData.longitude = _location.longitude;
-        _buyRequestData.latitude = _location.latitude;
-        _hasLocation = true;
-        var a = widget._mapController.move(
-            LatLng(_buyRequestData.latitude, _buyRequestData.longitude), 15);
-        print(a);
       });
     }
   }
