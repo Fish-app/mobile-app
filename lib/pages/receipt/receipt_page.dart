@@ -4,6 +4,7 @@ import 'package:fishapp/entities/receipt.dart';
 import 'package:fishapp/utils/default_builder.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:fishapp/widgets/Map/open_map_widget.dart';
+import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/rating_stars.dart';
 import 'package:fishapp/widgets/standard_button.dart';
@@ -37,19 +38,44 @@ class ReceiptListPageState extends State<ReceiptListPage> {
     return getFishappDefaultScaffold(context,
         includeTopBar: "ReceiptListPage",
         extendBehindAppBar: false,
-        child: appFutureBuilder<List<Receipt>>(
-            future: _future.value,
-            onSuccess: (receipts, context) {
-              return ListView(
-                  children: receipts
-                      .map((e) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _ReceiptCard(
-                              receipt: e,
-                            ),
-                          ))
-                      .toList());
-            }));
+        child: Stack(
+          children: [
+            // CircleThingy(
+            //   sizeX: 400,
+            //   sizeY: 300,
+            //   centerX: 50,
+            //   centerY: 300,
+            //   top: true,
+            //   left: false,
+            // ),
+            CircleThingy(
+              sizeX: 500,
+              sizeY: 700,
+              centerX: 0,
+              centerY: -60,
+              top: false,
+              left: true,
+            ),
+            appFutureBuilder<List<Receipt>>(
+                future: _future.value,
+                onSuccess: (receipts, context) {
+                  return ListView(children: [
+                    DefaultCard(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      children: [
+                        Text("click on a entry to view recit"),
+                        for (Receipt r in receipts) ...[
+                          Divider(),
+                          _ReceiptCard(
+                            receipt: r,
+                          ),
+                        ]
+                      ],
+                    )
+                  ]);
+                }),
+          ],
+        ));
   }
 }
 
@@ -60,25 +86,28 @@ class _ReceiptCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      color: Colors.pink,
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Text(receipt.buyer.name),
-              Text(receipt.listing.commodity.name)
-            ],
-          ),
-          StandardButton(
-              buttonText: "AAAA",
-              onPressed: () => Navigator.pushNamed(context, routes.receipt,
-                  arguments: receipt)),
-          _RatedOrNotCheck(
-            receipt: receipt,
-          )
-        ],
+    return GestureDetector(
+      onTap: () =>
+          Navigator.pushNamed(context, routes.receipt, arguments: receipt),
+      child: Container(
+        color: Colors.black.withOpacity(0),
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("order#: ${receipt.id}"),
+                Text("commodity: ${receipt.listing.commodity.name}")
+              ],
+            ),
+            Spacer(),
+            _RatedOrNotCheck(
+              receipt: receipt,
+            ),
+          ],
+        ),
       ),
     );
   }

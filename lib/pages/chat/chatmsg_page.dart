@@ -28,19 +28,17 @@ class ChatMessagePage extends StatelessWidget {
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        child: SafeArea(
-          child: Consumer<AppState>(builder: (context, userdata, child) {
-            User remoteParticipant;
-            User localParticipant = userdata.user;
-            if (baseConversation.listing.creator.id == localParticipant.id) {
-              remoteParticipant = baseConversation.starterUser;
-            } else {
-              remoteParticipant = baseConversation.listing.creator;
-            }
-            String topBartext = remoteParticipant.name;
+        child: Consumer<AppState>(builder: (context, userdata, child) {
+          User remoteParticipant;
+          User localParticipant = userdata.user;
+          if (baseConversation.listing.creator.id == localParticipant.id) {
+            remoteParticipant = baseConversation.starterUser;
+          } else {
+            remoteParticipant = baseConversation.listing.creator;
+          }
+          String topBartext = remoteParticipant.name;
 
-            return getFishappDefaultScaffold(
-              context,
+          return getFishappDefaultScaffold(context,
               includeTopBar: topBartext,
               extendBehindAppBar: false,
               navBarActions: <Widget>[
@@ -48,30 +46,30 @@ class ChatMessagePage extends StatelessWidget {
                   conv_listing: baseConversation.listing,
                 )
               ],
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // CHAT MESSAGE LISTS
-                  MessageListWidget(
-                      baseConversation: baseConversation,
-                      localParticipant: localParticipant,
-                      scrollController: scrollController),
-                  // ERROR ON SEND MESG
-                  Consumer<ConversationModel>(
-                      builder: (context, model, child) => Visibility(
-                            visible: model.sendMessageErrorOccurred,
-                            child: ChatBubbleFromError(
-                                failedMessage: model.lastFailedSendMessage),
-                          )),
-                  // CHAT WRITE MESSAGE BAR
-                  SendChatMessageForm(),
-                ],
-              ),
-            );
-          }),
-        ),
+              child: SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // CHAT MESSAGE LISTS
+                    MessageListWidget(
+                        baseConversation: baseConversation,
+                        localParticipant: localParticipant,
+                        scrollController: scrollController),
+                    // ERROR ON SEND MESG
+                    Consumer<ConversationModel>(
+                        builder: (context, model, child) => Visibility(
+                              visible: model.sendMessageErrorOccurred,
+                              child: ChatBubbleFromError(
+                                  failedMessage: model.lastFailedSendMessage),
+                            )),
+                    // CHAT WRITE MESSAGE BAR
+                    SendChatMessageForm(),
+                  ],
+                ),
+              ));
+        }),
       ),
     );
   }

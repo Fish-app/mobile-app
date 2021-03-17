@@ -16,6 +16,7 @@ class FormFieldNormal extends StatelessWidget {
   final TextEditingController controller;
   final bool readOnly;
   final String suffixText;
+  final EdgeInsets padding;
 
   const FormFieldNormal(
       {Key key,
@@ -31,28 +32,32 @@ class FormFieldNormal extends StatelessWidget {
       this.onTap,
       this.readOnly = false,
       this.controller,
-      this.suffixText})
+      this.suffixText,
+      this.padding})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(padding: EdgeInsets.symmetric(vertical: 20.0)),
-        TextFormField(
-          initialValue: initialValue,
-          decoration: InputDecoration(
-            suffixText: suffixText,
-            hintText: hint,
-            labelText: title,
-          ).applyDefaults(normalFormFieldTheme),
-          style: listingInputStyle,
-          onSaved: onSaved,
-          validator: validator,
-          obscureText: isObscured ?? false,
-          onTap: onTap,
-          controller: controller,
-          readOnly: readOnly,
+        Padding(
+          padding: padding ?? EdgeInsets.zero,
+          child: TextFormField(
+            keyboardType: keyboardType,
+            initialValue: initialValue,
+            decoration: InputDecoration(
+              suffixText: suffixText,
+              hintText: hint,
+              labelText: title,
+            ).applyDefaults(normalFormFieldTheme),
+            style: listingInputStyle,
+            onSaved: onSaved,
+            validator: validator,
+            obscureText: isObscured ?? false,
+            onTap: onTap,
+            controller: controller,
+            readOnly: readOnly,
+          ),
         ),
       ],
     );

@@ -52,29 +52,30 @@ class BuyFilterWidgetState extends State<BuyFilterWidget> {
                 maxHeight: 20,
               )),
           onChanged: (value) {
-            Provider.of<SearchState>(context).searchString = value;
+            Provider.of<SearchState>(context, listen: false).searchString =
+                value;
           },
         ),
-        // Wrap(
-        //   spacing: 3,
-        //   children: filterItems.map((filterItem) {
-        //     return ChoiceChip(
-        //       selectedColor: Theme.of(context).primaryColor,
-        //       label: Text(
-        //         filterItem.filterTitle,
-        //         style: TextStyle(
-        //             color: filterItem.isActive ? emphasis2Color : Colors.black),
-        //       ),
-        //       onSelected: (value) {
-        //         print("filter " + filterItem.filterTitle + " is active");
-        //         setState(() {
-        //           filterItem.isActive = value;
-        //         });
-        //       },
-        //       selected: filterItem.isActive,
-        //     );
-        //   }).toList(),
-        // )
+        Wrap(
+          spacing: 3,
+          children: filterItems.map((filterItem) {
+            return ChoiceChip(
+              selectedColor: Theme.of(context).primaryColor,
+              label: Text(
+                filterItem.filterTitle,
+                style: TextStyle(
+                    color: filterItem.isActive ? Colors.white : Colors.black),
+              ),
+              onSelected: (value) {
+                print("filter " + filterItem.filterTitle + " is active");
+                setState(() {
+                  filterItem.isActive = value;
+                });
+              },
+              selected: filterItem.isActive,
+            );
+          }).toList(),
+        )
       ],
     );
   }

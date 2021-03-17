@@ -58,15 +58,11 @@ final _emptyStar = SimpleShadowWidget(
 );
 
 class UserRatingStars extends StatelessWidget {
-  final User user;
-  final RatingService ratingService = RatingService();
-  Future<num> _future;
+  final Future<num> _future;
 
-  UserRatingStars({Key key, this.user}) : super(key: key) {
-    _future = user != null
-        ? ratingService.getUserRating(user.id)
-        : Future.delayed(Duration(seconds: 1));
-  }
+  UserRatingStars({Key key, User user})
+      : _future = RatingService().getUserRating(user?.id),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
