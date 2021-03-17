@@ -15,6 +15,7 @@ import 'package:fishapp/widgets/dropdown_menu.dart';
 import 'package:fishapp/widgets/form/formfield_normal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 
 import '../../entities/listing.dart';
@@ -24,6 +25,7 @@ class NewOfferListingForm extends StatefulWidget {
   final GenericRouteData routeData;
   final listingService = ListingService();
   final service = CommodityService();
+  final MapController _mapController = MapController();
 
   NewOfferListingForm({Key key, this.routeData}) : super(key: key);
 
@@ -211,6 +213,9 @@ class _NewOfferListingFormState extends State<NewOfferListingForm> {
         _listingFormData.longitude = _location.longitude;
         _listingFormData.latitude = _location.latitude;
         _hasLocation = true;
+        var a = widget._mapController.move(
+            LatLng(_listingFormData.latitude, _listingFormData.longitude), 15);
+        print(a);
       });
     }
   }

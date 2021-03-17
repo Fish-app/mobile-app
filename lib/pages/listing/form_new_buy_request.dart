@@ -15,12 +15,14 @@ import 'package:fishapp/widgets/dropdown_menu.dart';
 import 'package:fishapp/widgets/form/formfield_normal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 
 class NewBuyRequestForm extends StatefulWidget {
   final GenericRouteData routeData;
   final listingService = ListingService();
   final commodityService = CommodityService();
+  final MapController _mapController = MapController();
 
   NewBuyRequestForm({Key key, this.routeData}) : super(key: key);
 
@@ -220,6 +222,9 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
         _buyRequestData.longitude = _location.longitude;
         _buyRequestData.latitude = _location.latitude;
         _hasLocation = true;
+        var a = widget._mapController.move(
+            LatLng(_buyRequestData.latitude, _buyRequestData.longitude), 15);
+        print(a);
       });
     }
   }

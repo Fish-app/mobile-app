@@ -14,49 +14,47 @@ class MapImage extends StatelessWidget {
   final double height;
   final double zoom;
   final String _url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+  final MapController mapController;
 
-  const MapImage({
-    Key key,
-    @required this.latitude,
-    @required this.longitude,
-    @required this.height,
-    this.zoom = 15.0,
-    this.interactive = false,
-    this.onTap
-  }) : super(key: key);
-
+  const MapImage(
+      {Key key,
+      @required this.latitude,
+      @required this.longitude,
+      @required this.height,
+      this.zoom = 15.0,
+      this.interactive = false,
+      this.onTap,
+      this.mapController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: height,
       child: FlutterMap(
+        mapController: this.mapController,
         options: MapOptions(
             center: LatLng(latitude, longitude),
             zoom: zoom,
             interactive: interactive,
-            onTap: onTap
-        ),
+            onTap: onTap),
         layers: [
           TileLayerOptions(
-              urlTemplate: _url,
-              subdomains: ['a', 'b', 'c'],
+            urlTemplate: _url,
+            subdomains: ['a', 'b', 'c'],
           ),
-          MarkerLayerOptions(
-            markers: [
-              Marker(
+          MarkerLayerOptions(markers: [
+            Marker(
                 width: 50.0,
                 height: 50.0,
                 point: LatLng(latitude, longitude),
                 builder: (context) => Container(
-                  child: Icon(
-                    Icons.location_on,
-                    color: Colors.red,
-                  ),
-                )
-              )
-            ]
-          )
+                      child: Icon(
+                        Icons.location_on,
+                        color: Colors.red,
+                      ),
+                    ))
+          ])
         ],
       ),
     );

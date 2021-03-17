@@ -33,7 +33,7 @@ class ListingCard extends StatelessWidget {
               height: 5,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,6 +63,7 @@ class ListingCard extends StatelessWidget {
                     )
                   ],
                 ),
+                Spacer(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
