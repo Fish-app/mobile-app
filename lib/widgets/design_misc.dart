@@ -10,6 +10,8 @@ class DefaultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 4,
+      shadowColor: Colors.black54,
       margin: padding ?? const EdgeInsets.symmetric(vertical: 20),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),

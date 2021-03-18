@@ -15,6 +15,25 @@ import 'entities/chat/message.dart';
 import 'entities/seller.dart';
 import 'generated/l10n.dart';
 
+class MyImageCache extends ImageCache {
+  @override
+  void clear() {
+    print("Clearing cache!");
+    super.clear();
+  }
+
+  MyImageCache() {
+    print(maximumSizeBytes);
+    maximumSizeBytes = 1000000000;
+    print(maximumSizeBytes);
+  }
+}
+
+class MyWidgetsBinding extends WidgetsFlutterBinding {
+  @override
+  ImageCache createImageCache() => MyImageCache();
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

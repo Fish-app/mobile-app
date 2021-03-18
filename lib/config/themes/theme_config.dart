@@ -116,7 +116,8 @@ final fishappLightTheme = ThemeData(
 
   /// -- CardTheme -- ///
   cardTheme: CardTheme(
-    elevation: 10,
+    elevation: 4,
+    shadowColor: Colors.black54,
     clipBehavior: Clip.hardEdge,
     color: Colors.white,
     shape: RoundedRectangleBorder(

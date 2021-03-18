@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fishapp/config/themes/theme_config.dart';
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,9 +25,13 @@ class CommodityCard extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 elevation: 4,
                 margin: EdgeInsets.zero,
-                child: Image(
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => Container(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  imageUrl: displayCommodity.commodity.getImageUrl().toString(),
                   fit: BoxFit.cover,
-                  image: displayCommodity.commodity.getImage().image,
                 ),
               ),
             ),

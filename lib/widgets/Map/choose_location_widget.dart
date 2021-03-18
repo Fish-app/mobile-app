@@ -8,8 +8,12 @@ import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:latlong/latlong.dart';
 import 'package:fishapp/widgets/standard_button.dart';
 
-
 class ChooseLocation extends StatefulWidget {
+  final LatLng initialLatLang;
+
+  ChooseLocation({Key key, LatLng initialLatLang})
+      : this.initialLatLang = initialLatLang ?? LatLng(0, 0),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ChooseLocationState();
@@ -27,7 +31,6 @@ class _ChooseLocationState extends State<ChooseLocation> {
 
   List<LatLng> tappedPoint = [];
 
-
   @override
   Widget build(BuildContext context) {
     var _marker = tappedPoint.map((latlng) {
@@ -44,88 +47,98 @@ class _ChooseLocationState extends State<ChooseLocation> {
       );
     }).toList();
 
-    return getFishappDefaultScaffold(
-        context,
+    if (_marker.length == 0) {
+      _marker.add(Marker(
+        width: 50.0,
+        height: 50.0,
+        point: widget.initialLatLang,
+        builder: (ctx) => Container(
+          child: Icon(
+            Icons.location_on,
+            color: Colors.red,
+          ),
+        ),
+      ));
+    }
+
+    return getFishappDefaultScaffold(context,
         includeTopBar: S.of(context).setPickupLocation,
         extendBehindAppBar: false,
         child: FutureBuilder(
-          future: _determinePosition,
-          builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
-            List<Widget> children;
-            if (snapshot.hasData) {
-              _currentLat = snapshot.data.latitude;
-              _currentLong = snapshot.data.longitude;
-              children = [
-                FlutterMap(
+            future: _determinePosition,
+            builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+              List<Widget> children;
+              if (snapshot.hasData) {
+                _currentLat = snapshot.data.latitude;
+                _currentLong = snapshot.data.longitude;
+                children = [
+                  FlutterMap(
                     options: MapOptions(
-                      interactiveFlags: InteractiveFlag.pinchZoom |
-                        InteractiveFlag.drag | InteractiveFlag.doubleTapZoom,
-                      center: LatLng(_currentLat, _currentLong),
-                      zoom: 14.0,
-                      interactive: true,
-                      onTap: _handleNewMarker
-                    ),
-                  layers: [
-                    TileLayerOptions(
+                        interactiveFlags: InteractiveFlag.pinchZoom |
+                            InteractiveFlag.drag |
+                            InteractiveFlag.doubleTapZoom,
+                        center: LatLng(_currentLat, _currentLong),
+                        zoom: 14.0,
+                        interactive: true,
+                        onTap: _handleNewMarker),
+                    layers: [
+                      TileLayerOptions(
                         urlTemplate: _url,
                         subdomains: ['a', 'b', 'c'],
                       ),
-                    MarkerLayerOptions(markers: _marker)
-                  ],
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height/12,
-                  child: BottomAppBar(
-                    child: StandardButton(
-                      buttonText:  _buttonText(context),
-                      onPressed: () {
-                        if (_hasChosen) {
-                          Navigator.pop(context, LatLng(_pickedLat, _pickedLong));
-                        } else {
-                          Navigator.pop(context);
-                        }
-                      },
-                    ),
+                      MarkerLayerOptions(markers: _marker)
+                    ],
                   ),
-                )
-              ];
-            } else if (snapshot.hasError) {
-              children = [
-                Column(
-                  children: [
-                    Icon(
-                      Icons.error_outline,
-                      color: Colors.red,
-                      size: 60,
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 12,
+                    child: BottomAppBar(
+                      child: StandardButton(
+                        buttonText: _buttonText(context),
+                        onPressed: () {
+                          if (_hasChosen) {
+                            Navigator.pop(
+                                context, LatLng(_pickedLat, _pickedLong));
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        },
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: Text('Error: ${snapshot.error}'),
-                    )
-                  ],
-                )
-              ];
-            } else {
-              children = [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator()
-                  ],
-                )
-              ];
-            }
-            return Center(
-              child: Stack(
-                alignment: AlignmentDirectional.bottomCenter,
-                children: children,
-              ),
-            );
-          }
-        )
-    );
+                  )
+                ];
+              } else if (snapshot.hasError) {
+                children = [
+                  Column(
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 60,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Text('Error: ${snapshot.error}'),
+                      )
+                    ],
+                  )
+                ];
+              } else {
+                children = [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [CircularProgressIndicator()],
+                  )
+                ];
+              }
+              return Center(
+                child: Stack(
+                  alignment: AlignmentDirectional.bottomCenter,
+                  children: children,
+                ),
+              );
+            }));
   }
 
   void _handleNewMarker(LatLng position) {
@@ -147,5 +160,4 @@ class _ChooseLocationState extends State<ChooseLocation> {
       return S.of(context).cancel.toUpperCase();
     }
   }
-
 }
