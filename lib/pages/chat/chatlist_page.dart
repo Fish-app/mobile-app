@@ -5,6 +5,7 @@ import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/default_builder.dart';
 import 'package:fishapp/utils/state/appstate.dart';
+import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -25,28 +26,40 @@ class ChatListPage extends StatelessWidget {
         includeTopBar: capitalize(S.of(context).chatList),
         useNavBar: navButtonChat,
         navBarHideReturn: true,
-        child: SafeArea(
-            child: appFutureBuilder<List<Conversation>>(
-                future: _future,
-                onSuccess: (conversations, context) {
-                  return Consumer<AppState>(
-                      builder: (context, userdata, child) {
-                    return Container(
-                      child: ListView.builder(
-                          itemCount: conversations.length,
-                          itemBuilder: (context, index) => GestureDetector(
-                              onTap: () {
-                                return Navigator.of(context).pushNamed(
-                                    routes.ChatConversation,
-                                    arguments: conversations[index]);
-                              },
-                              child: ConversationListTile(
-                                conversation: conversations[index],
-                                localUser: userdata.user,
-                              ))),
-                    );
-                  });
-                })));
+        child: Stack(
+          children: [
+            CircleThingy(
+              sizeX: 1100,
+              sizeY: 200,
+              centerX: 0,
+              centerY: -50,
+              top: false,
+              left: false,
+            ),
+            SafeArea(
+                child: appFutureBuilder<List<Conversation>>(
+                    future: _future,
+                    onSuccess: (conversations, context) {
+                      return Consumer<AppState>(
+                          builder: (context, userdata, child) {
+                        return Container(
+                          child: ListView.builder(
+                              itemCount: conversations.length,
+                              itemBuilder: (context, index) => GestureDetector(
+                                  onTap: () {
+                                    return Navigator.of(context).pushNamed(
+                                        routes.ChatConversation,
+                                        arguments: conversations[index]);
+                                  },
+                                  child: ConversationListTile(
+                                    conversation: conversations[index],
+                                    localUser: userdata.user,
+                                  ))),
+                        );
+                      });
+                    }))
+          ],
+        ));
   }
 }
 

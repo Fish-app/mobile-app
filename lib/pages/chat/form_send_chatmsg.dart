@@ -38,15 +38,10 @@ class _SendChatMessageFormState extends State<SendChatMessageForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Container(
-              padding: EdgeInsets.fromLTRB(0.0,0.0,10.0,0.0),
-              child:
-              IconButton(icon: Icon(Icons.add_a_photo), onPressed: null),
-            ),
           Expanded(
             child: Container(
               color: Colors.white,
