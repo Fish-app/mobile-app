@@ -36,13 +36,13 @@ class ChatBubbleFromError extends StatelessWidget {
           StandardButton(
               buttonText: capitalize(S.of(context).actionTryAgain),
               onPressed: () {
-                Provider.of<ConversationModel>(context)
+                Provider.of<ConversationModel>(context, listen: false)
                     .sendMessage(failedMessage);
               }),
           StandardButton(
               buttonText: capitalize(S.of(context).cancel),
               onPressed: () {
-                Provider.of<ConversationModel>(context).clearErrorState();
+                Provider.of<ConversationModel>(context, listen: false).clearErrorState();
               })
         ],
       ),
