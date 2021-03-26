@@ -51,6 +51,10 @@ class ChatListPage extends StatelessWidget {
                   return Consumer<AppState>(
                       builder: (context, userdata, child) {
                     return Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 0.0,
+                        horizontal: 0.1 * MediaQuery.of(context).size.width,
+                      ),
                       child: ListView.builder(
                           itemCount: conversations.length,
                           itemBuilder: (context, index) => GestureDetector(
