@@ -16,7 +16,6 @@ import 'package:strings/strings.dart';
 import '../../utils/services/rest_api_service.dart';
 
 class ChatListPage extends StatelessWidget {
-  final ConversationService _conversationService = ConversationService();
   final Future<List<Conversation>> _future =
       ConversationService().getAllConversations(includeLastMsg: true);
 
@@ -44,17 +43,16 @@ class ChatListPage extends StatelessWidget {
             left: true,
           ),
         ],
-        child: SafeArea(
-            child: appFutureBuilder<List<Conversation>>(
-                future: _future,
-                onSuccess: (conversations, context) {
-                  return Consumer<AppState>(
-                      builder: (context, userdata, child) {
-                    return Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 0.0,
-                        horizontal: 0.1 * MediaQuery.of(context).size.width,
-                      ),
+        child: appFutureBuilder<List<Conversation>>(
+            future: _future,
+            onSuccess: (conversations, context) {
+              return Consumer<AppState>(builder: (context, userdata, child) {
+                return Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 67,
+                    horizontal: 0.05 * MediaQuery.of(context).size.width,
+                  ),
+                  child: Card(
                       child: ListView.builder(
                           itemCount: conversations.length,
                           itemBuilder: (context, index) => GestureDetector(
@@ -66,10 +64,10 @@ class ChatListPage extends StatelessWidget {
                               child: ConversationListTile(
                                 conversation: conversations[index],
                                 localUser: userdata.user,
-                              ))),
-                    );
-                  });
-                })));
+                              )))),
+                );
+              });
+            }));
   }
 }
 
