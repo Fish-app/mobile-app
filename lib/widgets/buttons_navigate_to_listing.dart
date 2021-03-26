@@ -8,18 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:strings/strings.dart';
 
 class NavigateToListingButton extends StatelessWidget {
-  final Listing conv_listing;
+  final Listing listing;
 
   Future<Listing> _future;
 
-  NavigateToListingButton({Key key, this.conv_listing}) : super(key: key) {
-    print(conv_listing.listingType);
-    switch (conv_listing.listingType) {
+  NavigateToListingButton({Key key, this.listing}) : super(key: key) {
+    print(listing.listingType);
+    switch (listing.listingType) {
       case ListingTypes.Offer:
-        _future = ListingService().getOfferListing(conv_listing.id);
+        _future = ListingService().getOfferListing(listing.id);
         break;
       case ListingTypes.Request:
-        _future = ListingService().getBuyRequest(conv_listing.id);
+        _future = ListingService().getBuyRequest(listing.id);
         break;
     }
   }
@@ -41,14 +41,21 @@ class NavigateToListingButton extends StatelessWidget {
     return appFutureBuilder(
       future: _future,
       onSuccess: (futureValue, context) {
-        return TextButton.icon(
-            onPressed: () {
-              _navigate(context, futureValue);
-            },
-            icon: Icon(Icons.description, color: emphasisColor),
-            label: Text(
-                capitalize(S.of(context).view + " " + S.of(context).listing),
-                style: TextStyle(color: emphasisColor)));
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: TextButton.icon(
+              onPressed: () {
+                _navigate(context, futureValue);
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith((states) => emphasisColor),
+
+              ),
+              icon: Icon(Icons.description, color: emphasisButton),
+              label: Text(
+                  capitalize(S.of(context).view + " " + S.of(context).listing),
+                  style: TextStyle(color: emphasisButton))),
+        );
       },
     );
   }

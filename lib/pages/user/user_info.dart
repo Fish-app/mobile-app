@@ -142,7 +142,7 @@ class _UserPageState extends State<UserPage> {
                                 .pushNamed(routes.UserResetPwd);
                           },
                           buttonText: "Change password",
-                          buttonIcon: Icons.bike_scooter_rounded,
+                          buttonIcon: Icons.vpn_key,
                         ),
 
                         ButtonV2(

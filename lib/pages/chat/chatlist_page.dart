@@ -5,6 +5,7 @@ import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/default_builder.dart';
 import 'package:fishapp/utils/state/appstate.dart';
+import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -15,38 +16,77 @@ import 'package:strings/strings.dart';
 import '../../utils/services/rest_api_service.dart';
 
 class ChatListPage extends StatelessWidget {
-  final ConversationService _conversationService = ConversationService();
   final Future<List<Conversation>> _future =
       ConversationService().getAllConversations(includeLastMsg: true);
 
   @override
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
-        includeTopBar: capitalize(S.of(context).chatList),
         useNavBar: navButtonChat,
         navBarHideReturn: true,
-        child: SafeArea(
-            child: appFutureBuilder<List<Conversation>>(
-                future: _future,
-                onSuccess: (conversations, context) {
-                  return Consumer<AppState>(
-                      builder: (context, userdata, child) {
-                    return Container(
-                      child: ListView.builder(
-                          itemCount: conversations.length,
-                          itemBuilder: (context, index) => GestureDetector(
-                              onTap: () {
-                                return Navigator.of(context).pushNamed(
-                                    routes.ChatConversation,
-                                    arguments: conversations[index]);
-                              },
-                              child: ConversationListTile(
-                                conversation: conversations[index],
-                                localUser: userdata.user,
-                              ))),
-                    );
-                  });
-                })));
+        bgDecor: [
+          CircleThingy(
+            sizeX: 0.4 * MediaQuery.of(context).size.width,
+            sizeY: 0.6 * MediaQuery.of(context).size.height,
+            centerX: 0.0,
+            centerY: -0.05 * MediaQuery.of(context).size.height,
+            top: false,
+            left: false,
+          ),
+          CircleThingy(
+            sizeX: 0.4 * MediaQuery.of(context).size.width,
+            sizeY: 0.6 * MediaQuery.of(context).size.height,
+            centerX: 0.0,
+            centerY: 0.2 * MediaQuery.of(context).size.height,
+            top: true,
+            left: true,
+          ),
+        ],
+        child: appFutureBuilder<List<Conversation>>(
+            future: _future,
+            onSuccess: (conversations, context) {
+              return Consumer<AppState>(builder: (context, userdata, child) {
+                return Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 29.0, bottom: 29.0),
+                        child: Text(
+                          capitalize(S.of(context).chatList),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              .copyWith(fontSize: 24.0),
+                        ),
+                        //TODO: Insert helper text here
+                      ),
+                      Expanded(
+                        child: Card(
+                            child: ListView.builder(
+                                itemCount: conversations.length,
+                                itemBuilder: (context, index) =>
+                                    GestureDetector(
+                                        onTap: () {
+                                          return Navigator.of(context)
+                                              .pushNamed(
+                                                  routes.ChatConversation,
+                                                  arguments:
+                                                      conversations[index]);
+                                        },
+                                        child: ConversationListTile(
+                                          conversation: conversations[index],
+                                          localUser: userdata.user,
+                                        )))),
+                      ),
+                    ],
+                  ),
+                );
+              });
+            }));
   }
 }
 

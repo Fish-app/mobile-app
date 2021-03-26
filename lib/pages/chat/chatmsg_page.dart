@@ -43,7 +43,7 @@ class ChatMessagePage extends StatelessWidget {
               extendBehindAppBar: false,
               navBarActions: <Widget>[
                 NavigateToListingButton(
-                  conv_listing: baseConversation.listing,
+                  listing: baseConversation.listing,
                 )
               ],
               child: SafeArea(
