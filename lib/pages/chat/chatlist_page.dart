@@ -22,7 +22,6 @@ class ChatListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
-        //includeTopBar: capitalize(S.of(context).chatList),
         useNavBar: navButtonChat,
         navBarHideReturn: true,
         bgDecor: [
@@ -48,7 +47,7 @@ class ChatListPage extends StatelessWidget {
             onSuccess: (conversations, context) {
               return Consumer<AppState>(builder: (context, userdata, child) {
                 return Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
@@ -63,6 +62,7 @@ class ChatListPage extends StatelessWidget {
                               .bodyText2
                               .copyWith(fontSize: 24.0),
                         ),
+                        //TODO: Insert helper text here
                       ),
                       Expanded(
                         child: Card(
