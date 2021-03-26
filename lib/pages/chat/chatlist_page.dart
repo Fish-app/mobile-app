@@ -26,40 +26,46 @@ class ChatListPage extends StatelessWidget {
         includeTopBar: capitalize(S.of(context).chatList),
         useNavBar: navButtonChat,
         navBarHideReturn: true,
-        child: Stack(
-          children: [
-            CircleThingy(
-              sizeX: 1100,
-              sizeY: 200,
-              centerX: 0,
-              centerY: -50,
-              top: false,
-              left: false,
-            ),
-            SafeArea(
-                child: appFutureBuilder<List<Conversation>>(
-                    future: _future,
-                    onSuccess: (conversations, context) {
-                      return Consumer<AppState>(
-                          builder: (context, userdata, child) {
-                        return Container(
-                          child: ListView.builder(
-                              itemCount: conversations.length,
-                              itemBuilder: (context, index) => GestureDetector(
-                                  onTap: () {
-                                    return Navigator.of(context).pushNamed(
-                                        routes.ChatConversation,
-                                        arguments: conversations[index]);
-                                  },
-                                  child: ConversationListTile(
-                                    conversation: conversations[index],
-                                    localUser: userdata.user,
-                                  ))),
-                        );
-                      });
-                    }))
-          ],
-        ));
+        bgDecor: [
+          CircleThingy(
+            sizeX: 0.4 * MediaQuery.of(context).size.width,
+            sizeY: 0.6 * MediaQuery.of(context).size.height,
+            centerX: 0.0,
+            centerY: -0.05 * MediaQuery.of(context).size.height,
+            top: false,
+            left: false,
+          ),
+          CircleThingy(
+            sizeX: 0.4 * MediaQuery.of(context).size.width,
+            sizeY: 0.6 * MediaQuery.of(context).size.height,
+            centerX: 0.0,
+            centerY: 0.2 * MediaQuery.of(context).size.height,
+            top: true,
+            left: true,
+          ),
+        ],
+        child: SafeArea(
+            child: appFutureBuilder<List<Conversation>>(
+                future: _future,
+                onSuccess: (conversations, context) {
+                  return Consumer<AppState>(
+                      builder: (context, userdata, child) {
+                    return Container(
+                      child: ListView.builder(
+                          itemCount: conversations.length,
+                          itemBuilder: (context, index) => GestureDetector(
+                              onTap: () {
+                                return Navigator.of(context).pushNamed(
+                                    routes.ChatConversation,
+                                    arguments: conversations[index]);
+                              },
+                              child: ConversationListTile(
+                                conversation: conversations[index],
+                                localUser: userdata.user,
+                              ))),
+                    );
+                  });
+                })));
   }
 }
 

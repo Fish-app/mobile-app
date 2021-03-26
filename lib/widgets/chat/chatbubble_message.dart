@@ -1,3 +1,4 @@
+import 'package:fishapp/config/themes/theme_config.dart';
 import 'package:fishapp/entities/chat/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,7 +22,7 @@ class ChatBubbleFromMessage extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       child: ChatBubble(
         backGroundColor: _isSenderLoggedInUser(message)
-            ? Color(0xff354ff6)
+            ? emphasisColor
             : Color(0xffE7E7ED),
         alignment: _isSenderLoggedInUser(message)
             ? Alignment.topRight
@@ -34,7 +35,7 @@ class ChatBubbleFromMessage extends StatelessWidget {
         child: Text(message.content,
             style: TextStyle(
                 color: _isSenderLoggedInUser(message)
-                    ? Colors.white
+                    ? Colors.black
                     : Colors.black)),
       ),
     );
