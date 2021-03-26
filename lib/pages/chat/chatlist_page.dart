@@ -22,7 +22,7 @@ class ChatListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
-        includeTopBar: capitalize(S.of(context).chatList),
+        //includeTopBar: capitalize(S.of(context).chatList),
         useNavBar: navButtonChat,
         navBarHideReturn: true,
         bgDecor: [
@@ -47,24 +47,43 @@ class ChatListPage extends StatelessWidget {
             future: _future,
             onSuccess: (conversations, context) {
               return Consumer<AppState>(builder: (context, userdata, child) {
-                return Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 67,
-                    horizontal: 0.05 * MediaQuery.of(context).size.width,
+                return Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 29.0, bottom: 29.0),
+                        child: Text(
+                          capitalize(S.of(context).chatList),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              .copyWith(fontSize: 24.0),
+                        ),
+                      ),
+                      Expanded(
+                        child: Card(
+                            child: ListView.builder(
+                                itemCount: conversations.length,
+                                itemBuilder: (context, index) =>
+                                    GestureDetector(
+                                        onTap: () {
+                                          return Navigator.of(context)
+                                              .pushNamed(
+                                                  routes.ChatConversation,
+                                                  arguments:
+                                                      conversations[index]);
+                                        },
+                                        child: ConversationListTile(
+                                          conversation: conversations[index],
+                                          localUser: userdata.user,
+                                        )))),
+                      ),
+                    ],
                   ),
-                  child: Card(
-                      child: ListView.builder(
-                          itemCount: conversations.length,
-                          itemBuilder: (context, index) => GestureDetector(
-                              onTap: () {
-                                return Navigator.of(context).pushNamed(
-                                    routes.ChatConversation,
-                                    arguments: conversations[index]);
-                              },
-                              child: ConversationListTile(
-                                conversation: conversations[index],
-                                localUser: userdata.user,
-                              )))),
                 );
               });
             }));
