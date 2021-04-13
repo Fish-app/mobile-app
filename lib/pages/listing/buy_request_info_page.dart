@@ -125,7 +125,7 @@ class BuyRequestInfoPage extends StatelessWidget {
                                     .then((value) =>
                                         //TESTING: fungerer OK: Er dette robust nok ?
                                         Navigator.of(context).pushNamed(
-                                            routes.ChatConversation,
+                                            routes.CHAT_CONVERSATIONS,
                                             arguments: value));
                               },
                             ),

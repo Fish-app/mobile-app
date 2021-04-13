@@ -44,7 +44,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
         if (sucsess) {
           // LOGIN OK
           Navigator.popAndPushNamed(
-              context, widget.returnPath?.path ?? routes.Home,
+              context, widget.returnPath?.path ?? routes.HOME,
               arguments: widget.returnPath?.pathParams);
         } else {
           // TODO: Når kan det her egentlig skje, vil det ikke ver en fuckup på serveren i såfall
@@ -171,7 +171,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                               ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, routes.UserNew,
+                          Navigator.pushNamed(context, routes.USER_NEW,
                               arguments: widget.returnPath);
                         },
                       ),
@@ -187,7 +187,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                               ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, routes.SellerNew,
+                          Navigator.pushNamed(context, routes.SELLER_NEW,
                               arguments: widget.returnPath);
                         },
                       ),

@@ -47,7 +47,7 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
         if (suc) {
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
           Navigator.popAndPushNamed(
-              context, widget.returnRoute?.path ?? routes.Home,
+              context, widget.returnRoute?.path ?? routes.HOME,
               arguments: widget.returnRoute?.pathParams);
         }
       } on ApiException catch (e) {

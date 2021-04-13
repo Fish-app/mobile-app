@@ -25,7 +25,7 @@ class AuthService {
   AuthService();
 
   Future<void> createUser(UserNewData userNewData) async {
-    var uri = getAppUri(createBuyerEndpoint);
+    var uri = getAppUri(CREATE_BUYER_ENDPOINT);
     var response = await fishappRestClient.post(uri,
         contentType: ContentType.json,
         body: userNewData.toJsonString(),
@@ -37,7 +37,7 @@ class AuthService {
   }
 
   Future<void> createSeller(SellerNewData sellerNewData) async {
-    var uri = getAppUri(createSellerEndpoint);
+    var uri = getAppUri(CREATE_SELLER_ENDPOINT);
     var response = await fishappRestClient.post(uri,
         contentType: ContentType.json,
         body: sellerNewData.toJsonString(),
@@ -50,7 +50,7 @@ class AuthService {
 
   Future<void> changePassword(
       BuildContext context, UserChangePasswordData changePasswordData) async {
-    var uri = getAppUri(changePasswordEndpoint);
+    var uri = getAppUri(CHANGE_PASSWORD_ENDPOINT);
     var response = await fishappRestClient.put(uri,
         contentType: ContentType.json,
         body: changePasswordData.toJsonString(),
@@ -62,7 +62,7 @@ class AuthService {
   }
 
   Future<bool> loginUser(UserLoginData loginData) async {
-    var uri = getAppUri(loginUserEndpoint);
+    var uri = getAppUri(LOGIN_USER_ENDPOINT);
 
     var response = await fishappRestClient.post(uri,
         contentType: ContentType.json,

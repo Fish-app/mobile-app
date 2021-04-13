@@ -7,11 +7,9 @@ import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/display_text_field.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
-import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:strings/strings.dart';
 
 import '../../widgets/rating_stars.dart';
 
@@ -111,7 +109,7 @@ class _UserPageState extends State<UserPage> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
                             Navigator.of(context).pushNamedAndRemoveUntil(
-                                routes.Home, ModalRoute.withName(routes.Home));
+                                routes.HOME, ModalRoute.withName(routes.HOME));
                             AuthService.logout();
                           },
                           buttonText: "Logout",
@@ -122,7 +120,7 @@ class _UserPageState extends State<UserPage> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
                             Navigator.of(context)
-                                .pushNamed(routes.receiptsList);
+                                .pushNamed(routes.RECEIPTS_LIST);
                           },
                           buttonText: "Go To Recepts",
                           buttonIcon: Icons.receipt_long,
@@ -139,7 +137,7 @@ class _UserPageState extends State<UserPage> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
                             Navigator.of(context)
-                                .pushNamed(routes.UserResetPwd);
+                                .pushNamed(routes.USER_RESET_PWD);
                           },
                           buttonText: "Change password",
                           buttonIcon: Icons.vpn_key,
@@ -149,7 +147,7 @@ class _UserPageState extends State<UserPage> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
                             Navigator.of(context)
-                                .pushNamed(routes.receiptsList);
+                                .pushNamed(routes.RECEIPTS_LIST);
                           },
                           buttonText: "Delete User",
                           buttonIcon: Icons.delete,

@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
     return GestureDetector(
       onTap: () => {
         Navigator.of(context)
-            .pushNamed(routes.commodityListingPage, arguments: commodity)
+            .pushNamed(routes.COMMODITY_LISTING_PAGE, arguments: commodity)
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),

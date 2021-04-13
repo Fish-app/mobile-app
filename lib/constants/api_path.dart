@@ -1,69 +1,54 @@
+// needs login start//
 /// CHAT
-const getUserConversationList = "/chat/myconversations";
-const _startChatEndpoint = "/chat/new";
+const GET_USER_CONVERSATION_LIST = "/conversations";
+const _START_CHAT_ENDPOINT = "/new";
 
 String startConversationFromListing(int listingId) {
-  return _startChatEndpoint + "/" + listingId.toString();
+  return _START_CHAT_ENDPOINT + "/" + listingId.toString();
 }
 
 String sendMessageFromConversation(int conversationId) {
-  return "/chat/" + conversationId.toString() + "/send";
+  return conversationId.toString() + "/send";
 }
 
 String getMessageListUpdatesQuery(int conversation) {
-  return "/chat/" + conversation.toString() + "/updates";
+  return conversation.toString() + "/updates";
 }
-
-String getMessageListInRange(int conversation) {
-  return "/chat/" + conversation.toString() + "/range";
-}
-
-// needs login //
 
 /// -- Commodity -- ///
-
-const getCommodity = "aa";
-const getAllCommodity = "/commodity/all";
-const getAllDisplayCommodity = "/commodity/all-display";
-// needs login //
+const GET_COMMODITY = "/commodity";
+const GET_ALL_COMMODITIES = "/commodity/all";
+const GET_ALL_DISPLAY_COMMODITIES = "/commodity/all-display";
 
 /// -- Receipt -- ///
-
-const getReceipt = "/transaction/";
-const getAllReceipts = "/transaction/all";
+const GET_RECEIPT = "/transaction/"; //TODO: Remove when system is in place
+const GET_ALL_RECEIPTS = "/transaction/all";
 
 /// -- Listing -- ///
+const GET_LISTING = "/listing/offer";
+const GET_COMMODITY_LISTINGS = "/listing/commodity/";
+const GET_BUY_REQUEST = "/listing/buy";
 
-const getListing = "/listing/";
-const getComodityListings = "/listing/comodity/";
+const CREATE_OFFER_LISTING = "/listing/offer/new";
+const CREATE_BUY_REQUEST = "/listing/buy/new";
 
-String getBuyRequest(int buyreqeustId) {
-  return "/listing/buyrequest/" + buyreqeustId.toString();
-}
-
-// needs login //
-const createOfferListing = "/listing/newOfferListing";
-const createBuyRequest = "/listing/newBuyRequest";
+// needs login end //
 
 /// -- user auth -- ///
-
-const loginUserEndpoint = "/authentication/login";
+const LOGIN_USER_ENDPOINT = "/authentication/login";
 
 /// -- buyer register -- ///
-
-const createBuyerEndpoint = "/buyer/create";
+const CREATE_BUYER_ENDPOINT = "/buyer/create";
 
 /// -- seller register -- ///
-
-const createSellerEndpoint = "/seller/create";
+const CREATE_SELLER_ENDPOINT = "/seller/create";
 
 /// -- user reset password -- ///
-
-const changePasswordEndpoint = "/authentication/changepassword";
+const CHANGE_PASSWORD_ENDPOINT = "/authentication/changepass";
 
 /// -- rating -- ///
-const ratingEndpoint = "/rating/";
-const transactionRatingEndpoint = "/rating/transaction/";
+const RATING_ENDPOINT = "/rating/";
+const TRANSACTION_RATING_ENDPOINT = "/rating/transaction/";
 
 Uri getAppUri(String path, {Map<String, String> queryParameters}) {
   return Uri(

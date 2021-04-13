@@ -1,17 +1,14 @@
-import 'package:fishapp/entities/chat/conversation.dart';
+import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/utils/state/appstate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:fishapp/entities/user.dart';
-import 'package:fishapp/utils/services/storage_service.dart';
-import 'package:fishapp/utils/state/appstate.dart';
 import 'package:provider/provider.dart';
 
-import 'config/routes/routes.dart' as routes;
 import 'config/routes/router.dart';
+import 'config/routes/routes.dart' as routes;
 import 'config/themes/theme_config.dart';
 import 'entities/commodity.dart';
 import 'entities/listing.dart';
-import 'entities/chat/message.dart';
 import 'entities/seller.dart';
 import 'generated/l10n.dart';
 
@@ -88,7 +85,7 @@ class _App extends State<App> with WidgetsBindingObserver {
         supportedLocales: S.delegate.supportedLocales,
         theme: fishappLightTheme,
         title: 'Flutter Demo',
-        initialRoute: routes.Home,
+        initialRoute: routes.HOME,
         onGenerateRoute: (settings) => router(context, settings));
   }
 }

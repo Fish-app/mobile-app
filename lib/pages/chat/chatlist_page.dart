@@ -73,7 +73,7 @@ class ChatListPage extends StatelessWidget {
                                         onTap: () {
                                           return Navigator.of(context)
                                               .pushNamed(
-                                                  routes.ChatConversation,
+                                                  routes.CHAT_CONVERSATIONS,
                                                   arguments:
                                                       conversations[index]);
                                         },

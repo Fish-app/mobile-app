@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 
 import '../../utils/state/appstate.dart';
 
-final navButtonShop = NavDestButton(Icons.shopping_cart_outlined, routes.Home);
-final navButtonChat = NavDestButton(Icons.chat_bubble_outline, routes.chat);
+final navButtonShop = NavDestButton(Icons.shopping_cart_outlined, routes.HOME);
+final navButtonChat = NavDestButton(Icons.chat_bubble_outline, routes.CHAT);
 final navButtonUser =
-    NavDestButton(Icons.person_outline_rounded, routes.UserInfo);
-final navButtonNewListing = NavDestButton(Icons.list, routes.ChooseNewListing);
+    NavDestButton(Icons.person_outline_rounded, routes.USER_INFO);
+final navButtonNewListing = NavDestButton(Icons.list, routes.CHOOSE_NEW_LISITNG);
 
 final List<NavDestButton> _userNavButtons = [
   navButtonShop,
