@@ -82,13 +82,13 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 TextButton(
                     onPressed: () {
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          routes.UserLogin, (route) => false);
+                          routes.USER_LOGIN, (route) => false);
                     },
                     child: Text(S.of(context).dialogActionGotoLoginPage)),
                 TextButton(
                     onPressed: () {
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          routes.Home, (route) => false);
+                          routes.HOME, (route) => false);
                     },
                     child: Text(S.of(context).dialogActionDoLater))
               ],

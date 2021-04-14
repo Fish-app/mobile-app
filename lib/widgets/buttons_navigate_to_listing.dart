@@ -28,11 +28,11 @@ class NavigateToListingButton extends StatelessWidget {
     if (listing is OfferListing) {
       print("aaa");
       Navigator.of(context)
-          .pushNamed(routes.OfferListingInfo, arguments: listing);
+          .pushNamed(routes.OFFER_LISTING_INFO, arguments: listing);
     } else if (listing is BuyRequest) {
       print("bbb");
       Navigator.of(context)
-          .pushNamed(routes.BuyRequestInfo, arguments: listing);
+          .pushNamed(routes.BUY_REQUEST_INFO, arguments: listing);
     }
   }
 
@@ -48,8 +48,8 @@ class NavigateToListingButton extends StatelessWidget {
                 _navigate(context, futureValue);
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith((states) => emphasisColor),
-
+                backgroundColor: MaterialStateProperty.resolveWith(
+                    (states) => emphasisColor),
               ),
               icon: Icon(Icons.description, color: emphasisButton),
               label: Text(

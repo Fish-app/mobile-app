@@ -150,7 +150,7 @@ class OfferListingInfoPage extends StatelessWidget {
                                         .then((value) =>
                                             //TESTING: fungerer OK: Er dette robust nok ?
                                             Navigator.of(context).pushNamed(
-                                                routes.ChatConversation,
+                                                routes.CHAT_CONVERSATIONS,
                                                 arguments: value));
                                   },
                                 ),
@@ -164,7 +164,7 @@ class OfferListingInfoPage extends StatelessWidget {
                                       .then((value) {
                                     if (value != null) {
                                       Navigator.pushNamed(
-                                          context, routes.receipt,
+                                          context, routes.RECEIPT,
                                           arguments: value);
                                     }
                                   });

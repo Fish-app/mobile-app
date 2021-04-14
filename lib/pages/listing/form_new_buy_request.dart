@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fishapp/config/routes/route_data.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/commodity.dart';
@@ -9,7 +8,6 @@ import 'package:fishapp/entities/listing.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
-import 'package:fishapp/widgets/Map/choose_location_widget.dart';
 import 'package:fishapp/widgets/Map/map_image.dart';
 import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/dropdown_menu.dart';
@@ -227,7 +225,7 @@ class _NewBuyRequestFormState extends State<NewBuyRequestForm> {
             await widget.listingService.createBuyRequest(_buyRequestData);
         if (suc != null) {
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
-          Navigator.pushReplacementNamed(context, routes.BuyRequestInfo,
+          Navigator.pushReplacementNamed(context, routes.BUY_REQUEST_INFO,
               arguments: suc);
         }
       } on HttpException catch (e) {

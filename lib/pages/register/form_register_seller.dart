@@ -14,6 +14,7 @@ import 'package:strings/strings.dart';
 class RegisterSellerForm extends StatefulWidget {
   final LoginReturnRouteData returnRoute;
   final authService = AuthService();
+
   RegisterSellerForm({Key key, this.returnRoute}) : super(key: key);
 
   @override
@@ -161,7 +162,7 @@ class _RegisterSellerFormState extends State<RegisterSellerForm> {
         if (suc) {
           Navigator.removeRouteBelow(context, ModalRoute.of(context));
           Navigator.popAndPushNamed(
-              context, widget.returnRoute?.path ?? routes.Home,
+              context, widget.returnRoute?.path ?? routes.HOME,
               arguments: widget.returnRoute?.pathParams);
         }
       } on ApiException catch (e) {

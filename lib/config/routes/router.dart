@@ -6,7 +6,6 @@ import 'package:fishapp/pages/chat/chatmsg_page.dart';
 import 'package:fishapp/pages/commodity_info/commodity_listing_page.dart';
 import 'package:fishapp/pages/home/home_page.dart';
 import 'package:fishapp/pages/listing/buy_request_info_page.dart';
-import 'package:fishapp/pages/listing/choose_new_listing_page.dart';
 import 'package:fishapp/pages/listing/listing_info_page.dart';
 import 'package:fishapp/pages/listing/new_buy_request_page.dart';
 import 'package:fishapp/pages/listing/new_offer_listing_page.dart';
@@ -43,10 +42,10 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
   };
 
   switch (path) {
-    case routes.Home:
+    case routes.HOME:
       page = HomePage();
       break;
-    case routes.commodityListingPage:
+    case routes.COMMODITY_LISTING_PAGE:
       if (params is DisplayCommodity) {
         page = CommodityListingPage(
           displayCommodity: params,
@@ -56,17 +55,17 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
       }
       break;
 
-    case routes.UserNew:
+    case routes.USER_NEW:
       page = RegisterUserPage(
         returnRouteData: params,
       );
       break;
-    case routes.UserLogin:
+    case routes.USER_LOGIN:
       page = LoginPage(
         loginReturnRouteData: params,
       );
       break;
-    case routes.OfferListingInfo:
+    case routes.OFFER_LISTING_INFO:
       if (params is OfferListing) {
         page = OfferListingInfoPage(
           offerListing: params,
@@ -75,7 +74,7 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         page = Path404Page();
       }
       break;
-    case routes.BuyRequestInfo:
+    case routes.BUY_REQUEST_INFO:
       if (params is BuyRequest) {
         page = BuyRequestInfoPage(
           buyRequest: params,
@@ -84,7 +83,7 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         page = Path404Page();
       }
       break;
-    case routes.ChooseNewListing:
+    case routes.CHOOSE_NEW_LISITNG:
       if (isSeller) {
         page = reqireLogin(() {
           return NewOfferListingPage(
@@ -99,7 +98,7 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         });
       }
       break;
-    case routes.SellerNew:
+    case routes.SELLER_NEW:
       page = RegisterSellerPage(
         returnRouteData: params,
       );
@@ -107,12 +106,12 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
 
     ///  --  Needs login below  -- ///
 
-    case routes.receiptsList:
+    case routes.RECEIPTS_LIST:
       page = reqireLogin(() {
         return ReceiptListPage();
       });
       break;
-    case routes.receipt:
+    case routes.RECEIPT:
       if (params is Receipt) {
         page = reqireLogin(() {
           return ReceiptPage(
@@ -123,22 +122,22 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         page = Path404Page();
       }
       break;
-    case routes.UserInfo:
+    case routes.USER_INFO:
       page = reqireLogin(() {
         return UserPage();
       });
       break;
-    case routes.UserResetPwd:
+    case routes.USER_RESET_PWD:
       page = reqireLogin(() {
         return ChangePasswordPage();
       });
       break;
-    case routes.chat:
+    case routes.CHAT:
       page = reqireLogin(() {
         return ChatListPage();
       });
       break;
-    case routes.ChatConversation:
+    case routes.CHAT_CONVERSATIONS:
       if (params is Conversation) {
         page = reqireLogin(() {
           return ChatMessagePage(
@@ -149,14 +148,14 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
         page = Path404Page();
       }
       break;
-    case routes.NewListing:
+    case routes.NEW_LISTING:
       page = reqireLogin(() {
         return NewOfferListingPage(
           routeData: params,
         );
       });
       break;
-    case routes.NewBuyRequest:
+    case routes.NEW_BUY_REQUEST:
       page = reqireLogin(() {
         return NewBuyRequestPage(
           routeData: params,

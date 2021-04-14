@@ -153,7 +153,7 @@ class _FilteredListingListState extends State<_FilteredListingList> {
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
       child: GestureDetector(
         onTap: () => {
-          Navigator.pushNamed(context, routes.OfferListingInfo,
+          Navigator.pushNamed(context, routes.OFFER_LISTING_INFO,
               arguments: listing)
         },
         child: ListingCard(cardListing: listing),

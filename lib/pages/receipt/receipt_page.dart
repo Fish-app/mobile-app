@@ -88,7 +88,7 @@ class _ReceiptCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () =>
-          Navigator.pushNamed(context, routes.receipt, arguments: receipt),
+          Navigator.pushNamed(context, routes.RECEIPT, arguments: receipt),
       child: Container(
         color: Colors.black.withOpacity(0),
         padding: const EdgeInsets.all(8.0),

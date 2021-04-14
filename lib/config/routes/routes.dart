@@ -1,23 +1,23 @@
 // TODO: make all this use the CORRECT_NOTATION_FOR_CONSTS notForObjects
-const Home = "/";
+const HOME = "/";
 
-const UserNew = "/user/new";
-const SellerNew = "/seller/new";
-const UserInfo = "/user/info";
-const UserLogin = "/user/login";
-const UserResetPwd = "/user/info/resetpassword";
+const USER_NEW = "/user/new";
+const SELLER_NEW = "/seller/new";
+const USER_INFO = "/user/info";
+const USER_LOGIN = "/user/login";
+const USER_RESET_PWD = "/user/info/resetpassword";
 
-const ChatConversation = "/chat/conversation";
-const chat = "/chat/list";
+const CHAT_CONVERSATIONS = "/chat/conversation";
+const CHAT = "/chat/list";
 
-const commodityListingPage = "/commodity";
+const COMMODITY_LISTING_PAGE = "/commodity";
 
-const OfferListingInfo = "/offerlistinginfo";
-const BuyRequestInfo = "/buyrequestinfo";
-const NewListing = "/newlisting";
-const NewBuyRequest = "/newbuyrequest";
+const OFFER_LISTING_INFO = "/offerlistinginfo";
+const BUY_REQUEST_INFO = "/buyrequestinfo";
+const NEW_LISTING = "/newlisting";
+const NEW_BUY_REQUEST = "/newbuyrequest";
 
-const ChooseNewListing = "/choosenewlisting";
+const CHOOSE_NEW_LISITNG = "/choosenewlisting";
 
-const receipt = "/receipt";
-const receiptsList = "/receiptlist";
+const RECEIPT = "/receipt";
+const RECEIPTS_LIST = "/receiptlist";

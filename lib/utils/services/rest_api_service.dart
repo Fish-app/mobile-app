@@ -20,7 +20,7 @@ class ReceiptService {
 
   // TODO: remove when system is in place
   Future<Receipt> newOrder(num id, int amount) async {
-    var uri = getAppUri(apiPaths.getReceipt);
+    var uri = getAppUri(apiPaths.GET_RECEIPT);
     var response = await _client.post(uri,
         addAuth: true,
         contentType: ContentType.json,
@@ -36,7 +36,7 @@ class ReceiptService {
   }
 
   Future<Receipt> getReceipt(num id) async {
-    var uri = getAppUri(apiPaths.getReceipt + id.toString());
+    var uri = getAppUri(apiPaths.GET_RECEIPT + id.toString());
 
     var response = await _client.get(uri, addAuth: false);
 
@@ -52,7 +52,7 @@ class ReceiptService {
   }
 
   Future<List<Receipt>> getAllUserReceipt(BuildContext context) async {
-    var url = apiPaths.getAppUri(apiPaths.getAllReceipts);
+    var url = apiPaths.getAppUri(apiPaths.GET_ALL_RECEIPTS);
     var response = await _client.get(url, addAuth: true);
 
     if (response.statusCode == HttpStatus.ok) {
@@ -78,7 +78,7 @@ class ConversationService {
     if (includeLastMsg != null) {
       queryParameters = {'include-lastmessage': includeLastMsg.toString()};
     }
-    var url = apiPaths.getAppUri(apiPaths.getUserConversationList,
+    var url = apiPaths.getAppUri(apiPaths.GET_USER_CONVERSATION_LIST,
         queryParameters: queryParameters);
     var response = await _client.get(url, addAuth: true);
 
@@ -174,38 +174,13 @@ class ConversationService {
     }
     return returnList;
   }
-
-  //TODO: untested and not currently used, also needs to be checked on server before use
-  Future<List<Message>> _getMessageRange(
-      num conversationId, num fromId, num offsetInList) async {
-    Map<String, String> queryParameters;
-    if (fromId != null && offsetInList != null) {
-      queryParameters = {
-        'from': fromId.toString(),
-        'offset': offsetInList.toString(),
-      };
-    }
-    var url = apiPaths.getAppUri(apiPaths.getMessageListInRange(conversationId),
-        queryParameters: queryParameters);
-    var response = await _client.get(url, addAuth: true);
-
-    List<Message> returnList = List();
-
-    if (response.statusCode == HttpStatus.ok) {
-      var body = jsonDecode(response.body);
-      returnList = Message.fromJsonList(body);
-    } else {
-      throw ApiException(response);
-    }
-    return returnList;
-  }
 }
 
 class CommodityService {
   final FishappRestClient _client = FishappRestClient();
 
   Future<Commodity> getCommodity(num id) async {
-    var uri = getAppUri(apiPaths.getCommodity);
+    var uri = getAppUri(apiPaths.GET_COMMODITY + id.toString());
     var response = await _client.get(uri, addAuth: false);
 
     if (response.statusCode == HttpStatus.ok) {
@@ -220,7 +195,7 @@ class CommodityService {
   }
 
   Future<List<Commodity>> getAllCommodities() async {
-    var uri = getAppUri(apiPaths.getAllCommodity);
+    var uri = getAppUri(apiPaths.GET_ALL_COMMODITIES);
     var response = await _client.get(uri, addAuth: false);
     List returnList;
     if (response.statusCode == HttpStatus.ok) {
@@ -233,7 +208,7 @@ class CommodityService {
   }
 
   Future<List<DisplayCommodity>> getAllDisplayCommodities() async {
-    var uri = getAppUri(apiPaths.getAllDisplayCommodity);
+    var uri = getAppUri(apiPaths.GET_ALL_DISPLAY_COMMODITIES);
     var response = await _client.get(uri, addAuth: false);
     List returnList;
     if (response.statusCode == HttpStatus.ok) {
@@ -251,7 +226,7 @@ class RatingService {
 
   Future<num> getUserRating(num id) async {
     if (num != null) {
-      var uri = getAppUri(apiPaths.ratingEndpoint + id.toString());
+      var uri = getAppUri(apiPaths.RATING_ENDPOINT + id.toString());
       var response = await _client.get(uri, addAuth: true);
 
       if (response.statusCode == HttpStatus.ok) {
@@ -264,9 +239,10 @@ class RatingService {
     }
   }
 
+  //TODO: denna returnere bare hvis det går bra, ka skal skje om det går til hælvette?
   Future<num> getUserTransactionRating(num id) async {
     var uri =
-        getAppUri(apiPaths.transactionRatingEndpoint + id.floor().toString());
+        getAppUri(apiPaths.TRANSACTION_RATING_ENDPOINT + id.floor().toString());
     var response = await _client.get(uri, addAuth: true);
 
     if (response.statusCode == HttpStatus.ok) {
@@ -279,7 +255,7 @@ class RatingService {
   }
 
   Future<num> newRating(num transactionId, int stars) async {
-    var uri = getAppUri(apiPaths.ratingEndpoint, queryParameters: {
+    var uri = getAppUri(apiPaths.RATING_ENDPOINT, queryParameters: {
       "transactionid": transactionId.round().toString(),
       "stars": stars.toString()
     });
@@ -301,7 +277,7 @@ class ListingService {
   final bool _debug = false;
 
   Future<OfferListing> getOfferListing(num id) async {
-    var uri = getAppUri(apiPaths.getListing + id.toString());
+    var uri = getAppUri(apiPaths.GET_LISTING + id.toString());
     var response = await _client.get(uri, addAuth: false);
 
     if (response.statusCode == HttpStatus.ok) {
@@ -318,7 +294,7 @@ class ListingService {
   }
 
   Future<List<OfferListing>> getCommodityOfferListing(num id) async {
-    var uri = getAppUri(apiPaths.getComodityListings + id.toString());
+    var uri = getAppUri(apiPaths.GET_COMMODITY_LISTINGS + id.toString());
     var response = await _client.get(uri, addAuth: false);
 
     if (response.statusCode == HttpStatus.ok) {
@@ -334,7 +310,7 @@ class ListingService {
   }
 
   Future<OfferListing> createOfferListing(OfferListing offerListing) async {
-    var uri = getAppUri(apiPaths.createOfferListing);
+    var uri = getAppUri(apiPaths.CREATE_OFFER_LISTING);
     var response = await _client.post(uri,
         contentType: ContentType.json,
         body: offerListing.toJsonString(),
@@ -348,7 +324,7 @@ class ListingService {
   }
 
   Future<BuyRequest> createBuyRequest(BuyRequest buyRequest) async {
-    var uri = apiPaths.getAppUri(apiPaths.createBuyRequest);
+    var uri = apiPaths.getAppUri(apiPaths.CREATE_BUY_REQUEST);
     var response = await _client.post(uri,
         contentType: ContentType.json,
         body: buyRequest.toJsonString(),
@@ -362,7 +338,7 @@ class ListingService {
 
   Future<BuyRequest> getBuyRequest(num id) async {
     if (this._debug) print('REST: Ask for buy request ' + id.toString());
-    var uri = getAppUri(apiPaths.getBuyRequest(id));
+    var uri = getAppUri(apiPaths.GET_BUY_REQUEST + id.toString());
     var response = await _client.get(uri, addAuth: false);
 
     BuyRequest result;
