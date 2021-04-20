@@ -28,7 +28,7 @@ FutureBuilder<T> appFutureBuilder<T>(
           } else {
             // todo:remove
             print("Future builder error: ${snapshot.error}");
-            print(snapshot.stackTrace);
+            print(snapshot.error.toString());
             return _showOnConError();
           }
       }
