@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fishapp/entities/image.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -18,7 +17,7 @@ class Commodity {
   Image getImage() {
     num imageId = commodityImage?.id;
     if (imageId != null) {
-      var uri = getAppUri('/resource/image/${imageId}');
+      var uri = getAppUri('/media/image/${imageId}');
       return Image.network(uri.toString());
     } else {
       return Image.network(
@@ -29,7 +28,7 @@ class Commodity {
   Uri getImageUrl() {
     num imageId = commodityImage?.id;
     if (imageId != null) {
-      var uri = getAppUri('/resource/image/${imageId}');
+      var uri = getAppUri('/media/image/${imageId}');
       print(uri.toString());
       return uri;
     } else {
