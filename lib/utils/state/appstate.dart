@@ -41,10 +41,14 @@ class AppState extends ChangeNotifier {
     return jwtTokenData?.groups?.contains("seller") ?? false;
   }
 
-  void newAuthValues(String token, User user) {
+  void setToken(String token) {
     jwtTokenData = JwtTokenData.buildFromTokenStr(token);
-    this.user = user;
     SecureStorage().writeTokenString(token);
+    notifyListeners();
+  }
+
+  void setUser(User user) {
+    this.user = user;
     SharedStorage().saveUser(user);
     notifyListeners();
   }
