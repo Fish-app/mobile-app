@@ -32,7 +32,6 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
   }
 
   void _handleRegister(BuildContext context) async {
-    print(widget.returnRoute?.path);
     final FormState formState = _formKey.currentState;
     setState(() {
       _errorMessage = "";
