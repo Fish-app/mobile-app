@@ -2,12 +2,15 @@ import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/pages/home/search.dart';
 import 'package:fishapp/utils/default_builder.dart';
+import 'package:fishapp/utils/payment_webview.dart';
+import 'package:fishapp/utils/services/subscription_service.dart';
 import 'package:fishapp/widgets/buy_filter.dart';
 import 'package:fishapp/widgets/commodity_card.dart';
 import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/logo.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -65,6 +68,23 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: _topPadding, vertical: 20),
                       child: BuyFilterWidget(),
+                    ),
+                    StandardButton(
+                      buttonText: "webtest",
+                      onPressed: () {
+                        var a = new SubscriptionService();
+                        a.getNewSubscription().then((value) {
+                          print(value.hostedPaymentPageUrl);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentWebview(
+                                  killUrl: "",
+                                  startUrl: value.hostedPaymentPageUrl,
+                                ),
+                              ));
+                        });
+                      },
                     ),
                     appFutureBuilder<List<DisplayCommodity>>(
                         future: _future,
