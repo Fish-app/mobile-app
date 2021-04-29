@@ -51,7 +51,7 @@ class AuthService {
   Future<void> changePassword(
       BuildContext context, UserChangePasswordData changePasswordData) async {
     var uri = getAppUri(CHANGE_PASSWORD_ENDPOINT);
-    var response = await fishappRestClient.put(uri,
+    var response = await fishappRestClient.patch(uri,
         contentType: ContentType.json,
         body: changePasswordData.toJsonString(),
         addAuth: true);

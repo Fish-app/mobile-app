@@ -66,7 +66,7 @@ class FishappRestClient {
     return _client.post(url, headers: headers, body: body, encoding: encoding);
   }
 
-  Future<http.Response> put(dynamic url,
+  Future<http.Response> patch(dynamic url,
       {Map<String, String> headers,
       dynamic body,
       Encoding encoding,
@@ -75,7 +75,7 @@ class FishappRestClient {
     headers =
         contentType != null ? _addContentType(headers, contentType) : headers;
     headers = addAuth ? await _addAuthToHeaders(headers) : headers;
-    return _client.put(url, headers: headers, body: body, encoding: encoding);
+    return _client.patch(url, headers: headers, body: body, encoding: encoding);
   }
 
   Future<http.Response> delete(dynamic url,
