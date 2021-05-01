@@ -262,7 +262,7 @@
   "@seller": {},
   "buyer": "buyer",
   "@buyer": {},
-  "pickUpLocation": "pickup location",
+  "pickupLocation": "pickup location",
   "@pickupLocation": {},
   "goToMap": "go to map",
   "@goToMap": {}

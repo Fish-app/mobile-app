@@ -1,10 +1,10 @@
-import 'package:fishapp/widgets/design_misc.dart';
-import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:fishapp/config/routes/route_data.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/pages/listing/form_new_offer_listing.dart';
+import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
+import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewOfferListingPage extends StatefulWidget {
@@ -22,6 +22,7 @@ class _NewOfferListingPageState extends State<NewOfferListingPage> {
     return getFishappDefaultScaffold(context,
         extendBehindAppBar: true,
         useNavBar: navButtonNewListing,
+        includeTopBar: S.of(context).newOfferListing,
         bgDecor: [
           CircleThingy(
             sizeX: 1000,
@@ -49,16 +50,6 @@ class _NewOfferListingPageState extends State<NewOfferListingPage> {
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   children: [
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Text(
-                      S.of(context).newOfferListing,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2
-                          .copyWith(fontSize: 24.0),
-                    ),
                     NewOfferListingForm(
                       routeData: widget.routeData,
                     ),

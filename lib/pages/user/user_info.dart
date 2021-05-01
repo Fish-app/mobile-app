@@ -31,6 +31,7 @@ class _UserPageState extends State<UserPage> {
       context,
       extendBehindAppBar: true,
       useNavBar: navButtonUser,
+      includeTopBar: S.of(context).userInfo,
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -48,24 +49,12 @@ class _UserPageState extends State<UserPage> {
                 // MAIN WINDOW
                 Container(
                   child: Padding(
-                    padding: const EdgeInsets.all(24.0),
+                    padding: const EdgeInsets.fromLTRB(24.0, 5.0, 24.0, 24.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          padding: EdgeInsets.only(bottom: 29),
-                          child: Text(
-                            S.of(context).userInfo,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                .copyWith(fontSize: 24.0),
-                          ),
-                        ),
-                        // USER INFO
-
                         Consumer<AppState>(builder: (context, value, child) {
                           return Column(children: [
                             DefaultCard(
