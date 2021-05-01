@@ -69,14 +69,14 @@ class ListingCard extends StatelessWidget {
                   children: [
                     Text(
                       cardListing.price.toString() + "kr/Kg",
-                      style: Theme.of(context).primaryTextTheme.headline5,
+                      style: Theme.of(context).primaryTextTheme.headline6,
                     ),
                     SizedBox(
                       height: _spaceBetweenRows,
                     ),
                     Text(
                       cardListing.price.toString() + "kr/Kg",
-                      style: Theme.of(context).primaryTextTheme.headline5,
+                      style: Theme.of(context).primaryTextTheme.headline6,
                     ),
                     // Text(
                     //   cardListing.amountLeft.toString() + "Kg",

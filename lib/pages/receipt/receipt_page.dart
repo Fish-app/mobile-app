@@ -1,6 +1,7 @@
 import 'package:async/async.dart';
 import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/receipt.dart';
+import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/default_builder.dart';
 import 'package:fishapp/utils/services/rest_api_service.dart';
 import 'package:fishapp/widgets/Map/open_map_widget.dart';
@@ -9,6 +10,7 @@ import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/rating_stars.dart';
 import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/material.dart';
+import 'package:strings/strings.dart';
 
 class ReceiptListPage extends StatefulWidget {
   final ReceiptService _receiptService = ReceiptService();
@@ -36,7 +38,7 @@ class ReceiptListPageState extends State<ReceiptListPage> {
   @override
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
-        includeTopBar: "ReceiptListPage",
+        includeTopBar: camelize(S.of(context).listReceipt),
         extendBehindAppBar: false,
         child: Stack(
           children: [
@@ -63,7 +65,7 @@ class ReceiptListPageState extends State<ReceiptListPage> {
                     DefaultCard(
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       children: [
-                        Text("click on a entry to view recit"),
+                        Text(capitalize(S.of(context).clickViewReceipt)),
                         for (Receipt r in receipts) ...[
                           Divider(),
                           _ReceiptCard(
@@ -98,8 +100,9 @@ class _ReceiptCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("order#: ${receipt.id}"),
-                Text("commodity: ${receipt.listing.commodity.name}")
+                Text(capitalize(S.of(context).orderNr) + ": ${receipt.id}"),
+                Text(S.of(context).commodity +
+                    ": ${receipt.listing.commodity.name}")
               ],
             ),
             Spacer(),
@@ -141,14 +144,14 @@ class _RatedOrNotCheckState extends State<_RatedOrNotCheck> {
             color: Colors.white,
             child: (num == -1)
                 ? Text(
-                    "NOT RATED",
+                    S.of(context).notRated.toUpperCase(),
                     style: Theme.of(context)
                         .textTheme
                         .button
                         .copyWith(color: Colors.red),
                   )
                 : Text(
-                    "RATED",
+                    S.of(context).rated.toUpperCase(),
                     style: Theme.of(context)
                         .textTheme
                         .button
@@ -193,7 +196,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "NOT YET RATED:",
+            S.of(context).notYetRated.toUpperCase() + ":",
             style: Theme.of(context).textTheme.overline,
           ),
           Slider(
@@ -201,7 +204,8 @@ class _ReceiptPageState extends State<ReceiptPage> {
             min: 0.0,
             max: 5.0,
             divisions: 5,
-            label: "Current rating ${_newRatingVal.round()}",
+            label: capitalize(S.of(context).currentRating) +
+                ": ${_newRatingVal.round()}",
             onChanged: (value) {
               setState(() {
                 _newRatingVal = value;
@@ -209,7 +213,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
             },
           ),
           StandardButton(
-              buttonText: "Save value?",
+              buttonText: capitalize(S.of(context).saveRating) + "?",
               onPressed: () => {
                     setState(() {
                       _future = widget._ratingService
@@ -223,7 +227,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "RATING:",
+            S.of(context).rating.toUpperCase() + ":",
             style: Theme.of(context).textTheme.overline,
           ),
           RatingStars(rating: userRating.toDouble())
@@ -235,7 +239,8 @@ class _ReceiptPageState extends State<ReceiptPage> {
   @override
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
-        includeTopBar: "Receipt for #${widget.receipt.id.round()} ",
+        includeTopBar: capitalize(S.of(context).receiptFor) +
+            " #${widget.receipt.id.round()}",
         extendBehindAppBar: false,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -244,7 +249,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "COMMODITY SOLD:",
+                S.of(context).commoditySold.toUpperCase() + ":",
                 style: Theme.of(context).textTheme.overline,
               ),
               Text(
@@ -271,23 +276,23 @@ class _ReceiptPageState extends State<ReceiptPage> {
                 child: Column(
                   children: [
                     _InfoValuePairDisplay(
-                      info: "Price:",
+                      info: capitalize(S.of(context).price),
                       value: "${widget.receipt.price.floor()}",
                       padding: EdgeInsets.symmetric(vertical: _padding),
                     ),
                     _InfoValuePairDisplay(
-                      info: "Ammount:",
+                      info: capitalize(S.of(context).amount) + ":",
                       value: "${widget.receipt.amount.floor()}",
                       padding: EdgeInsets.symmetric(vertical: _padding),
                     ),
                     _InfoValuePairDisplay(
-                      info: "sum:",
+                      info: capitalize(S.of(context).sum) + ":",
                       value:
                           "${(widget.receipt.amount * widget.receipt.price).floor()}",
                       padding: EdgeInsets.symmetric(vertical: _padding),
                     ),
                     _InfoValuePairDisplay(
-                      info: "salgs avgift 15%:",
+                      info: capitalize(S.of(context).salesTax) + " 15%:",
                       value:
                           "${(widget.receipt.price * widget.receipt.amount * 0.15).floor()}",
                       padding: EdgeInsets.fromLTRB(0, _padding, 0, 0),
@@ -297,7 +302,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                       color: Theme.of(context).dividerTheme.color,
                     ),
                     _InfoValuePairDisplay(
-                      info: "Total:",
+                      info: capitalize(S.of(context).total) + ":",
                       value:
                           "${(widget.receipt.price * widget.receipt.amount * 1.15).floor()}",
                       padding: EdgeInsets.symmetric(vertical: 5),
@@ -315,7 +320,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
                 child: Text(
-                  "SELLER",
+                  S.of(context).seller.toUpperCase(),
                   style: Theme.of(context).textTheme.overline,
                 ),
               ),
@@ -327,11 +332,12 @@ class _ReceiptPageState extends State<ReceiptPage> {
                 height: 5,
               ),
               Text(
-                "Registration number: ${widget.receipt.seller.regNumber}",
+                S.of(context).regNumber +
+                    ": ${widget.receipt.seller.regNumber}",
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Text(
-                "Annen: info",
+                S.of(context).additionalInfo + ":",
                 style: Theme.of(context).textTheme.bodyText2,
               ),
 
@@ -340,7 +346,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 0),
                 child: Text(
-                  "BUYER",
+                  S.of(context).buyer.toUpperCase(),
                   style: Theme.of(context).textTheme.overline,
                 ),
               ),
@@ -353,7 +359,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
               ),
 
               Text(
-                "Annen: info",
+                S.of(context).additionalInfo + ":",
                 style: Theme.of(context).textTheme.bodyText2,
               ),
 
@@ -366,12 +372,13 @@ class _ReceiptPageState extends State<ReceiptPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
                 child: Text(
-                  "PICKUP DATE:",
+                  S.of(context).pickupDate.toUpperCase() + ":",
                   style: Theme.of(context).textTheme.overline,
                 ),
               ),
               Text(
-                "${DateTime.fromMillisecondsSinceEpoch((widget.receipt.created * 1000).floor())}",
+                "${DateTime.fromMillisecondsSinceEpoch((widget.receipt.created * 1000).floor())}"
+                    .substring(0, 10),
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Divider(
@@ -381,7 +388,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
                 child: Text(
-                  "PICKUP LOCATION:",
+                  S.of(context).pickupLocation.toUpperCase() + ":",
                   style: Theme.of(context).textTheme.overline,
                 ),
               ),
@@ -398,13 +405,13 @@ class _ReceiptPageState extends State<ReceiptPage> {
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                       Text(
-                        "lon: ${widget.receipt.listing.longitude}",
+                        "lng: ${widget.receipt.listing.longitude}",
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
                   ),
                   StandardButton(
-                      buttonText: "GO TO MAP",
+                      buttonText: S.of(context).goToMap.toUpperCase(),
                       onPressed: () {
                         MapWidget(
                                 latitude: widget.receipt.listing.latitude,

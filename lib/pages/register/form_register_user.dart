@@ -5,8 +5,10 @@ import 'package:fishapp/utils/form/form_validators.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
 import 'package:fishapp/utils/services/fishapp_rest_client.dart';
 import 'package:fishapp/widgets/form/formfield_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:strings/strings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../entities/user.dart';
 
@@ -115,14 +117,25 @@ class _RegisterUserFormState extends State<RegisterUserForm> {
                 children: [
                   Checkbox(value: _agreedToTOS, onChanged: _setAgreedToTOS),
                   GestureDetector(
-                    onTap: () => _setAgreedToTOS(!_agreedToTOS),
-                    child: Text(
-                      S.of(context).tos,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
+                      onTap: () => _setAgreedToTOS(!_agreedToTOS),
+                      child: RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                            text: S.of(context).tos1,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          TextSpan(
+                              text: S.of(context).tos2,
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Theme.of(context).accentColor),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  launch(
+                                      "https://www.maoyi.no/info/terms-of-service.pdf");
+                                })
+                        ]),
+                      ))
                 ],
               ),
             ),

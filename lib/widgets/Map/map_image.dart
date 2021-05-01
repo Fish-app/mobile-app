@@ -1,16 +1,14 @@
 import 'dart:ui';
 
-import 'package:fishapp/config/themes/theme_config.dart';
+import 'package:async/async.dart';
+import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/distance_calculator.dart';
 import 'package:fishapp/utils/loading_spinnder.dart';
-import 'package:fishapp/widgets/BlurredImage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
-import 'package:async/async.dart';
-import 'package:fishapp/widgets/Map/open_map_widget.dart';
+import 'package:strings/strings.dart';
 
 import 'choose_location_widget.dart';
 
@@ -186,7 +184,7 @@ class MapCardState extends State<MapCard> {
                     color: Colors.white.withOpacity(0.2),
                   ),
                 ),
-                Center(child: Text('Click  here to select location')),
+                Center(child: Text(capitalize(S.of(context).clickLocation))),
               ],
               GestureDetector(
                 onTap: () {
