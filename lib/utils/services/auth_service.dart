@@ -32,6 +32,7 @@ class AuthService {
         addAuth: false);
 
     if (response.statusCode != HttpStatus.ok) {
+      ApiException(response).dump();
       throw ApiException(response);
     }
   }
@@ -44,6 +45,7 @@ class AuthService {
         addAuth: false);
 
     if (response.statusCode != HttpStatus.ok) {
+      ApiException(response).dump();
       throw ApiException(response);
     }
   }
@@ -57,6 +59,7 @@ class AuthService {
         addAuth: true);
     if (response.statusCode == HttpStatus.ok) {
     } else {
+      ApiException(response).dump();
       throw ApiException(response);
     }
   }
@@ -77,6 +80,7 @@ class AuthService {
       }
       return false;
     } else {
+      ApiException(response).dump();
       throw ApiException(response);
     }
   }
