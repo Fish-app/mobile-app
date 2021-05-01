@@ -53,8 +53,8 @@ const TRANSACTION_RATING_ENDPOINT = "/rating/transaction/";
 Uri getAppUri(String path, {Map<String, String> queryParameters}) {
   return Uri(
       scheme: "http",
-      //host: "10.0.2.2",
-      host: "remote-run.uials.no",
+      host: "10.0.2.2",
+      //host: "remote-run.uials.no",
       port: 8080,
       path: "/api" + path,
       queryParameters: queryParameters);

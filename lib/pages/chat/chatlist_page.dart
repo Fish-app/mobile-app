@@ -23,7 +23,7 @@ class ChatListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
         useNavBar: navButtonChat,
-        navBarHideReturn: true,
+        includeTopBar: capitalize(S.of(context).chatList),
         bgDecor: [
           CircleThingy(
             sizeX: 0.4 * MediaQuery.of(context).size.width,
@@ -55,13 +55,6 @@ class ChatListPage extends StatelessWidget {
                     children: [
                       Container(
                         padding: EdgeInsets.only(top: 29.0, bottom: 29.0),
-                        child: Text(
-                          capitalize(S.of(context).chatList),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              .copyWith(fontSize: 24.0),
-                        ),
                         //TODO: Insert helper text here
                       ),
                       Expanded(

@@ -145,7 +145,7 @@ class _LoginUserFormState extends State<LoginUserForm> {
                       FlatButton(
                         padding: EdgeInsets.fromLTRB(0, 30, 0, 110),
                         child: Text(
-                          S.of(context).loginUser,
+                          camelize(S.of(context).loginUser),
                           style: Theme.of(context)
                               .primaryTextTheme
                               .headline3
