@@ -31,14 +31,12 @@
   "quantityAvailable": "mengde tilgjengelig:",
   "buyDirectly": "kjøp direkte",
   "pos": "utsalgssted",
-
   "msgErrorNetworkFail": "Fikk ikke kontakt med serveren, sjekk at du er tilkoblet Internett",
   "msgErrorServerFail": "Det oppstod en serverfeil, prøv igjen om en liten stund",
   "msgErrorClientSerializationFail": "Det skjedde en feil, vennligst start appen på nytt",
   "msgErrorLoginRejected": "Fikk ikke til å logge på, vennligst sjekk ditt brukernavn/passord",
   "msgAwaitResponse": "Vennligst vent....",
   "msgSuccessfulLogin": "Velkommen {name}! ",
-
   "newPasswordHint": "skriv inn nytt passord",
   "oldPasswordLabel": "nåværende passord",
   "oldPasswordHint": "skriv inn ditt gjeldende passord",
@@ -54,7 +52,6 @@
   "dialogActionDoLater": "Senere",
   "clearForm": "Tøm skjema",
   "resetPassword": "Nullstill passord",
-
   "amount": "Mengde",
   "pickupDate": "Hente dato",
   "additionalInfo": "Tilleggsinformasjon",
@@ -80,10 +77,15 @@
   "buyRequest": "Bestilling",
   "takeBuyRequest": "Ta bestilling",
   "error": "feil",
-  "actionTryAgain" : "prøv på nytt?",
-  "unableToSend" : "fikk ikke til å sende",
+  "actionTryAgain": "prøv på nytt?",
+  "unableToSend": "fikk ikke til å sende",
   "chatList": "samtaler",
   "chatWithPrefix": "samtale med",
   "newConversation": "ny samtale",
-  "view": "vis"
+  "view": "vis",
+  "subscribe": "abonner",
+  "viewSubscription": "vis abonnement",
+  "subscriptionInfo": "abonnement info",
+  "subscriptionStatus": "abonnement status",
+  "cancelSubscription": "stopp abonnement"
 }

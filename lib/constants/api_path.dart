@@ -56,15 +56,20 @@ const TRANSACTION_RATING_ENDPOINT = "/rating/transaction/";
 const GET_BUYER = "/user/buyer/current";
 const GET_SELLER = "/user/seller/current";
 
-/// -- -- ///
+/// -- subscription -- ///
 const NEW_SUBSCRIPTION_ENDPOINT = "/checkout/new-sub";
+const IS_SUBSCRIPTION_VALID_ENDPOINT = "/checkout/subscription/valid/";
+const CANCEL_SUBSCRIPTION_ENDPOINT = "/checkout/subscription/cancel";
+const SUBSCRIPTION_STATUS_ENDPOINT = "/checkout/subscription/status/";
+
+/// -- payment -- ///
 
 Uri getAppUri(String path, {Map<String, String> queryParameters}) {
   return Uri(
-      scheme: "http",
-      // host: "10.0.2.2",
-      host: "remote-run.uials.no",
-      port: 80,
+      scheme: "https",
+// host: "10.0.2.2",
+      host: "pc-1.uials.no",
+      //port: 80,
       path: "/api" + path,
       queryParameters: queryParameters);
 }

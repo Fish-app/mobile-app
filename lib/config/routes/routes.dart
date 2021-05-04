@@ -21,3 +21,5 @@ const CHOOSE_NEW_LISITNG = "/choosenewlisting";
 
 const RECEIPT = "/receipt";
 const RECEIPTS_LIST = "/receiptlist";
+
+const SUBSCRIPTION_INFO = "/subscription/info";

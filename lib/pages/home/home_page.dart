@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
   final Future<List<DisplayCommodity>> _future =
       CommodityService().getAllDisplayCommodities();
 
-  Widget _makeComodityCard(DisplayCommodity commodity, BuildContext context) {
+  Widget _makeCommodityCard(DisplayCommodity commodity, BuildContext context) {
     return GestureDetector(
       onTap: () => {
         Navigator.of(context)
@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
                                             .contains(value?.searchString
                                                     ?.toLowerCase() ??
                                                 ""))
-                                        .map((commodity) => _makeComodityCard(
+                                        .map((commodity) => _makeCommodityCard(
                                             commodity, context))
                                         .toList(),
                                   );

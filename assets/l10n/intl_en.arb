@@ -5,7 +5,7 @@
   "availability": "Availability:",
   "@availability": {},
   "from": "from",
-  "@from":{},
+  "@from": {},
   "name": "Full Name",
   "@name": {},
   "fullName": "Enter your full name",
@@ -32,7 +32,7 @@
   "@createSeller": {},
   "regNumber": "Registration number",
   "@regNumber": {},
-  "loginUser" : "Login",
+  "loginUser": "Login",
   "@loginUser": {
     "description": ""
   },
@@ -125,7 +125,7 @@
     "description": ""
   },
   "msgPasswdChangeOk": "The password has been changed",
-    "@msgPasswdChangeOk": {
+  "@msgPasswdChangeOk": {
     "description": ""
   },
   "dialogMsgPasswdChangeOk": "Your request was successfully executed. For security reasons you have now been logged out. Do you want to login now?",
@@ -148,7 +148,6 @@
   "@resetPassword": {
     "description": ""
   },
-
   "amount": "Amount",
   "@amount": {},
   "pickupDate": "Pickup date",
@@ -198,17 +197,27 @@
   "takeBuyRequest": "Take buy request",
   "@takeBuyRequest": {},
   "error": "Error",
-  "@error" : {},
+  "@error": {},
   "actionTryAgain": "try again?",
   "@actionTryAgain": {},
   "unableToSend": "unable to send:",
-  "@unableToSend" : {},
+  "@unableToSend": {},
   "chatList": "Chat list",
-  "@chatList" : {},
+  "@chatList": {},
   "chatWithPrefix": "chat with",
   "@chatWithPrefix": {},
   "newConversation": "new conversation",
   "@newConversation": {},
   "view": "view",
-  "@view" : {}
+  "@view": {},
+  "subscribe": "subscribe",
+  "@subscribe": {},
+  "viewSubscription": "view subscription",
+  "@viewSubscription": {},
+  "subscriptionInfo": "subscription info",
+  "@subscriptionInfo": {},
+  "subscriptionStatus": "subscription status",
+  "@subscriptionStatus": {},
+  "cancelSubscription": "cancel subscription",
+  "@cancelSubscription": {}
 }

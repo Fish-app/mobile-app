@@ -35,6 +35,7 @@ dependencies:
   dropdown_search: ^0.4.9
   flutter_chat_bubble: ^1.0.2
   webview_flutter: ^1.0.7
+  string_validator: ^0.1.4
 
 
   flutter_secure_storage: ^3.3.5
