@@ -32,6 +32,7 @@ class AuthService {
         addAuth: false);
 
     if (response.statusCode != HttpStatus.ok) {
+      ApiException(response).dump();
       throw ApiException(response);
     }
   }
@@ -44,6 +45,7 @@ class AuthService {
         addAuth: false);
 
     if (response.statusCode != HttpStatus.ok) {
+      ApiException(response).dump();
       throw ApiException(response);
     }
   }
@@ -51,12 +53,13 @@ class AuthService {
   Future<void> changePassword(
       BuildContext context, UserChangePasswordData changePasswordData) async {
     var uri = getAppUri(CHANGE_PASSWORD_ENDPOINT);
-    var response = await fishappRestClient.put(uri,
+    var response = await fishappRestClient.patch(uri,
         contentType: ContentType.json,
         body: changePasswordData.toJsonString(),
         addAuth: true);
     if (response.statusCode == HttpStatus.ok) {
     } else {
+      ApiException(response).dump();
       throw ApiException(response);
     }
   }
@@ -77,6 +80,7 @@ class AuthService {
       }
       return false;
     } else {
+      ApiException(response).dump();
       throw ApiException(response);
     }
   }
