@@ -53,6 +53,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
   @override
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
+        includeTopBar: "",
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -98,7 +99,7 @@ class CommodityListingPageState extends State<CommodityListingPage>
                   width: double.infinity,
                   child: Hero(
                     tag:
-                        "comodity-${widget.displayCommodity.commodity.name}-${widget.displayCommodity.commodity.id}",
+                        "commodity-${widget.displayCommodity.commodity.name}-${widget.displayCommodity.commodity.id}",
                     child: Card(
                       elevation: 5,
                       clipBehavior: Clip.antiAlias,

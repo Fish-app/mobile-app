@@ -37,6 +37,7 @@ class _UserPageState extends State<UserPage> {
       context,
       extendBehindAppBar: true,
       useNavBar: navButtonUser,
+      includeTopBar: S.of(context).userInfo,
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -53,33 +54,20 @@ class _UserPageState extends State<UserPage> {
               children: [
                 // MAIN WINDOW
                 Container(
-                  // color: Colors.black38,
                   child: Padding(
-                    padding: const EdgeInsets.all(24.0),
+                    padding: const EdgeInsets.fromLTRB(24.0, 5.0, 24.0, 24.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          padding: EdgeInsets.only(bottom: 29),
-                          child: Text(
-                            "User info",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                .copyWith(fontSize: 24.0),
-                          ),
-                        ),
-                        // USER INFO
-
                         Consumer<AppState>(builder: (context, value, child) {
                           return Column(children: [
                             DefaultCard(
                               children: [
                                 Align(
                                   child: Text(
-                                    "your rating".toUpperCase(),
+                                    S.of(context).yourRating.toUpperCase(),
                                     style: Theme.of(context).textTheme.overline,
                                   ),
                                   alignment: Alignment.centerLeft,
@@ -94,8 +82,10 @@ class _UserPageState extends State<UserPage> {
                                         S.of(context).email.toUpperCase(),
                                     content: value.user?.email ?? ""),
                                 DisplayTextField(
-                                    description:
-                                        "session valid until".toUpperCase(),
+                                    description: S
+                                        .of(context)
+                                        .sessionValidUntil
+                                        .toUpperCase(),
                                     content:
                                         DateTime.fromMillisecondsSinceEpoch(
                                                     _toReadableDate(
@@ -103,9 +93,7 @@ class _UserPageState extends State<UserPage> {
                                                     isUtc: true)
                                                 .toString()
                                                 .substring(0, 10) ??
-                                            ""
-                                    //value.jwtTokenData?.expiresAt.toString()
-                                    ),
+                                            ""),
                               ],
                             ),
                           ]);
@@ -119,7 +107,7 @@ class _UserPageState extends State<UserPage> {
                                 routes.HOME, ModalRoute.withName(routes.HOME));
                             AuthService.logout();
                           },
-                          buttonText: "Logout",
+                          buttonText: camelize(S.of(context).logout),
                           buttonIcon: Icons.logout,
                         ),
 
@@ -129,14 +117,14 @@ class _UserPageState extends State<UserPage> {
                             Navigator.of(context)
                                 .pushNamed(routes.RECEIPTS_LIST);
                           },
-                          buttonText: "Go To Recepts",
+                          buttonText: camelize(S.of(context).goToReceipts),
                           buttonIcon: Icons.receipt_long,
                         ),
 
                         ButtonV2(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {},
-                          buttonText: "Go To Listings",
+                          buttonText: camelize(S.of(context).goToListings),
                           buttonIcon: Icons.list_alt,
                         ),
 
@@ -151,7 +139,7 @@ class _UserPageState extends State<UserPage> {
                             Navigator.of(context)
                                 .pushNamed(routes.USER_RESET_PWD);
                           },
-                          buttonText: "Change password",
+                          buttonText: camelize(S.of(context).changePassword),
                           buttonIcon: Icons.vpn_key,
                         ),
 
@@ -161,7 +149,7 @@ class _UserPageState extends State<UserPage> {
                             Navigator.of(context)
                                 .pushNamed(routes.RECEIPTS_LIST);
                           },
-                          buttonText: "Delete User",
+                          buttonText: camelize(S.of(context).deleteUser),
                           buttonIcon: Icons.delete,
                         ),
                       ],
