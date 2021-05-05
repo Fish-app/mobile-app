@@ -1,15 +1,13 @@
 import 'package:fishapp/config/routes/routes.dart' as routes;
-import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/auth/jwt.dart';
-import 'package:fishapp/utils/payment_webview.dart';
 import 'package:fishapp/utils/services/auth_service.dart';
-import 'package:fishapp/utils/services/subscription_service.dart';
 import 'package:fishapp/utils/state/appstate.dart';
 import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/display_text_field.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:fishapp/widgets/subscription_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +18,6 @@ import '../../widgets/rating_stars.dart';
 class UserPage extends StatefulWidget {
   final _buttonColor = Colors.amber;
   final _buttonPadding = 10.0;
-  final subService = SubscriptionService();
-  bool _isSubscribed = false;
 
   UserPage({Key key}) : super(key: key);
 
@@ -32,7 +28,6 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
-    _getIsSubscriptionValid();
     return getFishappDefaultScaffold(
       context,
       extendBehindAppBar: true,
@@ -98,8 +93,14 @@ class _UserPageState extends State<UserPage> {
                             ),
                           ]);
                         }),
+                        GestureDetector(
+                          child: SubscriptionStatus(),
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, routes.SUBSCRIPTION_INFO);
+                          },
+                        ),
                         // BUTTONS
-
                         ButtonV2(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
@@ -126,11 +127,6 @@ class _UserPageState extends State<UserPage> {
                           onPressed: () {},
                           buttonText: camelize(S.of(context).goToListings),
                           buttonIcon: Icons.list_alt,
-                        ),
-
-                        Visibility(
-                          child: _displaySubscriptionButton(),
-                          visible: AppState().isSeller(),
                         ),
 
                         ButtonV2(
@@ -169,47 +165,6 @@ class _UserPageState extends State<UserPage> {
       return (jwtTokenData.expiresAt * 1000).toInt();
     } else {
       return 1;
-    }
-  }
-
-  void _getIsSubscriptionValid() async {
-    User user = Provider.of<AppState>(context, listen: false)?.user;
-    bool isValid = await widget.subService.getIsSubscriptionValid(user.id);
-    setState(() {
-      widget._isSubscribed = isValid;
-    });
-  }
-
-  Widget _displaySubscriptionButton() {
-    if (widget._isSubscribed) {
-      return ButtonV2(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        onPressed: () {
-          Navigator.of(context).pushNamed(routes.SUBSCRIPTION_INFO);
-        },
-        buttonText: camelize(S.of(context).viewSubscription),
-        buttonIcon: Icons.view_list_outlined,
-      );
-    } else {
-      return ButtonV2(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        onPressed: () {
-          var a = new SubscriptionService();
-          a.getNewSubscription().then((value) {
-            print(value.hostedPaymentPageUrl);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentWebview(
-                    killUrl: "http://foo.bar",
-                    startUrl: value.hostedPaymentPageUrl,
-                  ),
-                ));
-          });
-        },
-        buttonText: capitalize(S.of(context).subscribe),
-        buttonIcon: Icons.assignment_turned_in,
-      );
     }
   }
 }

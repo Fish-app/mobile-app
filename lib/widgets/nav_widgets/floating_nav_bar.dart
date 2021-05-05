@@ -2,6 +2,7 @@ import 'package:fishapp/config/routes/routes.dart' as routes;
 import 'package:fishapp/entities/user.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:fishapp/utils/services/subscription_service.dart';
+import 'package:fishapp/widgets/standard_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:strings/strings.dart';
@@ -120,7 +121,7 @@ class _FishappNavBarState extends State<FishappNavBar> {
                 {
                   showDialog(
                       context: context,
-                      barrierDismissible: false,
+                      barrierDismissible: true,
                       builder: (BuildContext context) =>
                           _buildAlertDialog(context))
                 }
@@ -193,14 +194,21 @@ class _FishappNavBarState extends State<FishappNavBar> {
       title: Text(camelize(S.of(context).noSubscription)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [Text(capitalize(S.of(context).errorNotSubscribed))],
+        children: [
+          Text(capitalize(S.of(context).errorNotSubscribed)),
+          StandardButton(
+              buttonText: capitalize(S.of(context).subscribe),
+              onPressed: () {
+                Navigator.pushNamed(context, routes.SUBSCRIPTION_INFO);
+              })
+        ],
       ),
       actions: [
         new FlatButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text(S.of(context).close))
+            child: Text(capitalize(S.of(context).close)))
       ],
     );
   }
