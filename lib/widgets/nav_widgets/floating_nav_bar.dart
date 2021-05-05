@@ -1,6 +1,10 @@
 import 'package:fishapp/config/routes/routes.dart' as routes;
+import 'package:fishapp/entities/user.dart';
+import 'package:fishapp/generated/l10n.dart';
+import 'package:fishapp/utils/services/subscription_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:strings/strings.dart';
 
 import '../../utils/state/appstate.dart';
 
@@ -8,19 +12,21 @@ final navButtonShop = NavDestButton(Icons.shopping_cart_outlined, routes.HOME);
 final navButtonChat = NavDestButton(Icons.chat_bubble_outline, routes.CHAT);
 final navButtonUser =
     NavDestButton(Icons.person_outline_rounded, routes.USER_INFO);
-final navButtonNewListing = NavDestButton(Icons.list, routes.CHOOSE_NEW_LISITNG);
+final navButtonNewOfferListing = NavDestButton(Icons.list, routes.NEW_LISTING);
+final navButtonNewBuyRequest =
+    NavDestButton(Icons.list, routes.NEW_BUY_REQUEST);
 
 final List<NavDestButton> _userNavButtons = [
   navButtonShop,
   navButtonChat,
   navButtonUser,
-  navButtonNewListing
+  navButtonNewBuyRequest
 ];
 final List<NavDestButton> _sellerNavButtons = [
   navButtonShop,
   navButtonChat,
   navButtonUser,
-  navButtonNewListing
+  navButtonNewOfferListing
 ];
 
 class FloatingNavBar extends StatelessWidget {
@@ -107,9 +113,47 @@ class FishappNavBar extends StatefulWidget {
 
 class _FishappNavBarState extends State<FishappNavBar> {
   void _onNavigate(BuildContext context, NavDestButton button) {
-    if (button.navDest != widget.currentActiveButton.navDest) {
-      Navigator.pushNamed(context, button.navDest);
+    switch (button.navDest) {
+      case routes.NEW_LISTING:
+        _isSubscriptionActive().then((value) => {
+              if (!value)
+                {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) =>
+                          _buildAlertDialog(context))
+                }
+              else if (_isNotCurrent(button) && value)
+                {Navigator.pushNamed(context, button.navDest)}
+            });
+        break;
+      case routes.NEW_BUY_REQUEST:
+        if (_isNotCurrent(button)) {
+          Navigator.pushNamed(context, button.navDest);
+        }
+        break;
+      default:
+        if (_isNotCurrent(button)) {
+          Navigator.pushNamed(context, button.navDest);
+        }
     }
+  }
+
+  Future<bool> _isSubscriptionActive() async {
+    User user = Provider.of<AppState>(context, listen: false)?.user;
+    bool isActive = await SubscriptionService().getIsSubscriptionValid(user.id);
+    return isActive;
+  }
+
+  bool _isNotCurrent(NavDestButton button) {
+    bool current;
+    if (button.navDest != widget.currentActiveButton.navDest) {
+      current = true;
+    } else {
+      current = false;
+    }
+    return current;
   }
 
   @override
@@ -142,5 +186,22 @@ class _FishappNavBarState extends State<FishappNavBar> {
             onClick: (button) => _onNavigate(context, button),
           ),
         ));
+  }
+
+  Widget _buildAlertDialog(BuildContext context) {
+    return AlertDialog(
+      title: Text(camelize(S.of(context).noSubscription)),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [Text(capitalize(S.of(context).errorNotSubscribed))],
+      ),
+      actions: [
+        new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(S.of(context).close))
+      ],
+    );
   }
 }

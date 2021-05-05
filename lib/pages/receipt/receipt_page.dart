@@ -291,12 +291,13 @@ class _ReceiptPageState extends State<ReceiptPage> {
                           "${(widget.receipt.amount * widget.receipt.price).floor()}",
                       padding: EdgeInsets.symmetric(vertical: _padding),
                     ),
-                    _InfoValuePairDisplay(
-                      info: capitalize(S.of(context).salesTax) + " 15%:",
-                      value:
-                          "${(widget.receipt.price * widget.receipt.amount * 0.15).floor()}",
-                      padding: EdgeInsets.fromLTRB(0, _padding, 0, 0),
-                    ),
+                    // Not used with the subscription model
+                    // _InfoValuePairDisplay(
+                    //   info: capitalize(S.of(context).salesTax) + " 15%:",
+                    //   value:
+                    //       "${(widget.receipt.price * widget.receipt.amount * 0.15).floor()}",
+                    //   padding: EdgeInsets.fromLTRB(0, _padding, 0, 0),
+                    // ),
                     Divider(
                       thickness: Theme.of(context).dividerTheme.thickness,
                       color: Theme.of(context).dividerTheme.color,
@@ -304,11 +305,15 @@ class _ReceiptPageState extends State<ReceiptPage> {
                     _InfoValuePairDisplay(
                       info: capitalize(S.of(context).total) + ":",
                       value:
-                          "${(widget.receipt.price * widget.receipt.amount * 1.15).floor()}",
+                          "${(widget.receipt.price * widget.receipt.amount).floor()}",
                       padding: EdgeInsets.symmetric(vertical: 5),
                     ),
                   ],
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(capitalize(S.of(context).paymentAtPickup)),
               ),
 
               /// --- seller --- ///

@@ -17,7 +17,7 @@ class NewBuyRequestPage extends StatelessWidget {
     return getFishappDefaultScaffold(context,
         extendBehindAppBar: true,
         extendBody: true,
-        useNavBar: navButtonNewListing,
+        useNavBar: navButtonNewOfferListing,
         includeTopBar: S.of(context).newBuyRequest,
         bgDecor: [
           CircleThingy(

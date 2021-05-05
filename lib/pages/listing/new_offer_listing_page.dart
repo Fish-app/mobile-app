@@ -21,7 +21,7 @@ class _NewOfferListingPageState extends State<NewOfferListingPage> {
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
         extendBehindAppBar: true,
-        useNavBar: navButtonNewListing,
+        useNavBar: navButtonNewOfferListing,
         includeTopBar: S.of(context).newOfferListing,
         bgDecor: [
           CircleThingy(

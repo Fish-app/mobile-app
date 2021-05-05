@@ -275,5 +275,13 @@
   "pickupLocation": "pickup location",
   "@pickupLocation": {},
   "goToMap": "go to map",
-  "@goToMap": {}
+  "@goToMap": {},
+  "paymentAtPickup": "payment is completed at pickup.",
+  "@paymentAtPickup": {},
+  "errorNotSubscribed": "you need a subscription to create new listings",
+  "@errorNotSubscribed": {},
+  "noSubscription": "no subscription",
+  "@noSubscription": {},
+  "close": "close",
+  "@close": {}
 }
