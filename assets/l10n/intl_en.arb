@@ -221,7 +221,7 @@
   "subscriptionStatus": "subscription status",
   "@subscriptionStatus": {},
   "cancelSubscription": "cancel subscription",
-  "@cancelSubscription": {}
+  "@cancelSubscription": {},
   "userInfo": "User info",
   "@userInfo": {},
   "yourRating": "your rating",
