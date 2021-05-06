@@ -7,6 +7,7 @@ import 'package:fishapp/widgets/design_misc.dart';
 import 'package:fishapp/widgets/display_text_field.dart';
 import 'package:fishapp/widgets/nav_widgets/common_nav.dart';
 import 'package:fishapp/widgets/nav_widgets/floating_nav_bar.dart';
+import 'package:fishapp/widgets/subscription_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -92,8 +93,14 @@ class _UserPageState extends State<UserPage> {
                             ),
                           ]);
                         }),
+                        GestureDetector(
+                          child: SubscriptionStatus(),
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, routes.SUBSCRIPTION_INFO);
+                          },
+                        ),
                         // BUTTONS
-
                         ButtonV2(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
@@ -120,6 +127,20 @@ class _UserPageState extends State<UserPage> {
                           onPressed: () {},
                           buttonText: camelize(S.of(context).goToListings),
                           buttonIcon: Icons.list_alt,
+                        ),
+
+                        Visibility(
+                          child: ButtonV2(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(routes.SUBSCRIPTION_INFO);
+                            },
+                            buttonText:
+                                camelize(S.of(context).viewSubscription),
+                            buttonIcon: Icons.view_list_outlined,
+                          ),
+                          visible: AppState().isSeller(),
                         ),
 
                         ButtonV2(

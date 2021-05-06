@@ -10,7 +10,7 @@ class ChooseNewListingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return getFishappDefaultScaffold(context,
-        useNavBar: navButtonNewListing,
+        useNavBar: navButtonNewOfferListing,
         includeTopBar: S.of(context).newListing,
         extendBehindAppBar: false,
         child: Column(

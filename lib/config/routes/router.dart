@@ -13,6 +13,7 @@ import 'package:fishapp/pages/login/login_page.dart';
 import 'package:fishapp/pages/receipt/receipt_page.dart';
 import 'package:fishapp/pages/register/register_seller_page.dart';
 import 'package:fishapp/pages/register/register_user_page.dart';
+import 'package:fishapp/pages/user/subscription_info_page.dart';
 import 'package:fishapp/pages/user/user_info.dart';
 import 'package:fishapp/pages/user/user_resetpwd_page.dart';
 import 'package:fishapp/utils/state/appstate.dart';
@@ -158,6 +159,14 @@ Route<dynamic> router(BuildContext context, RouteSettings settings) {
     case routes.NEW_BUY_REQUEST:
       page = reqireLogin(() {
         return NewBuyRequestPage(
+          routeData: params,
+        );
+      });
+      break;
+
+    case routes.SUBSCRIPTION_INFO:
+      page = reqireLogin(() {
+        return SubscriptionInfoPage(
           routeData: params,
         );
       });

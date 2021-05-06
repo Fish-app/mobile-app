@@ -84,6 +84,11 @@
   "chatWithPrefix": "samtale med",
   "newConversation": "ny samtale",
   "view": "vis",
+  "subscribe": "abonner",
+  "viewSubscription": "vis abonnement",
+  "subscriptionInfo": "abonnement info",
+  "subscriptionStatus": "abonnement status",
+  "cancelSubscription": "stopp abonnement",
   "userInfo": "Brukerinformasjon",
   "yourRating": "din vurdering",
   "sessionValidUntil": "økt gyldig til",
@@ -108,5 +113,9 @@
   "seller": "selger",
   "buyer": "kjøper",
   "pickupLocation": "hentested",
-  "goToMap": "gå til kart"
+  "goToMap": "gå til kart",
+  "paymentAtPickup": "betaling gjøres ved henting.",
+  "errorNotSubscribed": "du trenger et abonnement for å lage nye salg",
+  "noSubscription": "ingen abonnement",
+  "close": "lukk"
 }

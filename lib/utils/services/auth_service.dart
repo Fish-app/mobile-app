@@ -64,6 +64,30 @@ class AuthService {
     }
   }
 
+  Future<User> getBuyer() async {
+    var uri = getAppUri(GET_BUYER);
+    var response = await fishappRestClient.get(uri,
+        contentType: ContentType.json, addAuth: true);
+
+    print(response.statusCode);
+    if (response.statusCode == HttpStatus.ok) {
+      var body = jsonDecode(response.body);
+
+      return User.fromJson(body);
+    }
+  }
+
+  Future<Seller> getSeller() async {
+    var uri = getAppUri(GET_SELLER);
+    var response = await fishappRestClient.get(uri,
+        contentType: ContentType.json, addAuth: true);
+
+    if (response.statusCode == HttpStatus.ok) {
+      var body = jsonDecode(response.body);
+      return Seller.fromJson(body);
+    }
+  }
+
   Future<bool> loginUser(UserLoginData loginData) async {
     var uri = getAppUri(LOGIN_USER_ENDPOINT);
 
@@ -72,13 +96,19 @@ class AuthService {
         body: loginData.toJsonString(),
         addAuth: false);
     if (response.statusCode == HttpStatus.ok) {
-      User user = User.fromJson(jsonDecode(response.body));
-      if (user != null) {
-        String token = response.headers["authorization"];
-        AppState().newAuthValues(token, user);
-        return true;
+      //User user = User.fromJson(jsonDecode(response.body));
+      String token = response.headers["authorization"];
+
+      AppState().setToken(token);
+      User user;
+      if (AppState().isSeller()) {
+        user = await getSeller();
+      } else {
+        user = await getBuyer();
       }
-      return false;
+
+      AppState().setUser(user);
+      return true;
     } else {
       ApiException(response).dump();
       throw ApiException(response);
