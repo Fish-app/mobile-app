@@ -15,7 +15,7 @@ class PaymentWebview extends StatelessWidget {
       javascriptMode: JavascriptMode.unrestricted,
       initialUrl: startUrl,
       onPageStarted: (url) {
-        if (url == killUrl) {
+        if (url.contains(killUrl)) {
           Navigator.pop(context);
         }
       },

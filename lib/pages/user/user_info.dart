@@ -129,6 +129,20 @@ class _UserPageState extends State<UserPage> {
                           buttonIcon: Icons.list_alt,
                         ),
 
+                        Visibility(
+                          child: ButtonV2(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(routes.SUBSCRIPTION_INFO);
+                            },
+                            buttonText:
+                                camelize(S.of(context).viewSubscription),
+                            buttonIcon: Icons.view_list_outlined,
+                          ),
+                          visible: AppState().isSeller(),
+                        ),
+
                         ButtonV2(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
