@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'loading_spinnder.dart';
 
@@ -27,8 +28,16 @@ FutureBuilder<T> appFutureBuilder<T>(
             return onSuccess(snapshot.data, context);
           } else {
             // todo:remove
+            print("#####################################");
             print("Future builder error: ${snapshot.error}");
-            print(snapshot.error.toString());
+            print("Error name: ${snapshot.error.toString()}");
+            print("Error type: ${snapshot.error.runtimeType}");
+            print("#####################################");
+            switch (snapshot.error.runtimeType) {
+              case MissingRequiredKeysException:
+                MissingRequiredKeysException a = snapshot.error;
+                print("madlad switch error: ${a.message}");
+            }
             return _showOnConError();
           }
       }

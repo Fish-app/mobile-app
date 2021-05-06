@@ -1,7 +1,7 @@
 // needs login start//
 /// CHAT
-const GET_USER_CONVERSATION_LIST = "/conversations";
-const _START_CHAT_ENDPOINT = "/new";
+const GET_USER_CONVERSATION_LIST = "/chat/conversations";
+const _START_CHAT_ENDPOINT = "/chat/new";
 
 String startConversationFromListing(int listingId) {
   return _START_CHAT_ENDPOINT + "/" + listingId.toString();
@@ -48,10 +48,12 @@ const CREATE_SELLER_ENDPOINT = "/user/seller/create";
 const CHANGE_PASSWORD_ENDPOINT = "/authentication/changepass";
 
 /// -- rating -- ///
-const RATING_ENDPOINT = "/rating/";
-const TRANSACTION_RATING_ENDPOINT = "/rating/transaction/";
+const RATING_ENDPOINT = "/store/rating/";
+const TRANSACTION_RATING_ENDPOINT = "/store/rating/transaction/";
 
 /// -- -- ///
+
+const GET_SPESIFIC_SELLER = "/user/buyer/current";
 
 const GET_BUYER = "/user/buyer/current";
 const GET_SELLER = "/user/seller/current";

@@ -58,7 +58,7 @@ final _emptyStar = SimpleShadowWidget(
 );
 
 class UserRatingStars extends StatelessWidget {
-  final Future<num> _future;
+  final Future<double> _future;
 
   UserRatingStars({Key key, User user})
       : _future = RatingService().getUserRating(user?.id),
@@ -68,7 +68,7 @@ class UserRatingStars extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        appFutureBuilder<num>(
+        appFutureBuilder<double>(
           future: _future,
           onSuccess: (futureValue, context) {
             return RatingStars(
