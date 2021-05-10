@@ -60,6 +60,7 @@ class ChatListPage extends StatelessWidget {
                       Expanded(
                         child: Card(
                             child: ListView.builder(
+                                padding: EdgeInsets.all(0.0),
                                 itemCount: conversations.length,
                                 itemBuilder: (context, index) =>
                                     GestureDetector(
