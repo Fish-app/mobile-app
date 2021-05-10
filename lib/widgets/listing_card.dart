@@ -46,6 +46,7 @@ class ListingCard extends StatelessWidget {
                     DistanceToWidget(cardListing: cardListing),
                   ],
                 ),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 40)),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,10 +58,10 @@ class ListingCard extends StatelessWidget {
                     SizedBox(
                       height: _spaceBetweenRows,
                     ),
-                    Text(
-                      S.of(context).availability,
-                      style: Theme.of(context).primaryTextTheme.headline6,
-                    )
+                    // Text(
+                    //   S.of(context).availability,
+                    //   style: Theme.of(context).primaryTextTheme.headline6,
+                    // )
                   ],
                 ),
                 Spacer(),
@@ -74,10 +75,10 @@ class ListingCard extends StatelessWidget {
                     SizedBox(
                       height: _spaceBetweenRows,
                     ),
-                    Text(
-                      cardListing.price.toString() + "kr/Kg",
-                      style: Theme.of(context).primaryTextTheme.headline6,
-                    ),
+                    // Text(
+                    //   cardListing.price.toString() + "kr/Kg",
+                    //   style: Theme.of(context).primaryTextTheme.headline6,
+                    // ),
                     // Text(
                     //   cardListing.amountLeft.toString() + "Kg",
                     //   style: Theme.of(context).primaryTextTheme.headline6,
