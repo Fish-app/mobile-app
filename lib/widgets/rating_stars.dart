@@ -11,7 +11,7 @@ import '../utils/services/rest_api_service.dart';
 Widget that creates the stars for showing ratings.
  */
 class RatingStars extends StatelessWidget {
-  final double rating;
+  final num rating;
 
   const RatingStars({Key key, this.rating}) : super(key: key);
 
@@ -58,7 +58,7 @@ final _emptyStar = SimpleShadowWidget(
 );
 
 class UserRatingStars extends StatelessWidget {
-  final Future<double> _future;
+  final Future<num> _future;
 
   UserRatingStars({Key key, User user})
       : _future = RatingService().getUserRating(user?.id),
@@ -68,7 +68,7 @@ class UserRatingStars extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        appFutureBuilder<double>(
+        appFutureBuilder<num>(
           future: _future,
           onSuccess: (futureValue, context) {
             return RatingStars(

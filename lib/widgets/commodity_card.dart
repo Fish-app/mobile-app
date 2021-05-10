@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fishapp/config/themes/theme_config.dart';
 import 'package:fishapp/entities/commodity.dart';
 import 'package:fishapp/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,11 +50,11 @@ class CommodityCard extends StatelessWidget {
                           " ${displayCommodity.cheapestPrice} kr/kg",
                       style: Theme.of(context).primaryTextTheme.headline5,
                     ),
-                    Text(
-                      S.of(context).from +
-                          " ${displayCommodity.cheapestPrice} kr/kg",
-                      style: Theme.of(context).primaryTextTheme.headline5,
-                    ),
+                    // Text(
+                    //   S.of(context).from +
+                    //       " ${displayCommodity.cheapestPrice} kr/kg",
+                    //   style: Theme.of(context).primaryTextTheme.headline5,
+                    // ),
                   ],
                 )
               ],

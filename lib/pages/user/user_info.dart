@@ -93,12 +93,15 @@ class _UserPageState extends State<UserPage> {
                             ),
                           ]);
                         }),
-                        GestureDetector(
-                          child: SubscriptionStatus(),
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, routes.SUBSCRIPTION_INFO);
-                          },
+                        Visibility(
+                          visible: AppState().isSeller(),
+                          child: GestureDetector(
+                            child: SubscriptionStatus(),
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, routes.SUBSCRIPTION_INFO);
+                            },
+                          ),
                         ),
                         // BUTTONS
                         ButtonV2(
