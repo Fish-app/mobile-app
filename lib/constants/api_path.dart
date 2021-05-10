@@ -1,10 +1,9 @@
 // needs login start//
 /// CHAT
 const GET_USER_CONVERSATION_LIST = "/chat/conversations";
-const _START_CHAT_ENDPOINT = "/chat/new";
 
 String startConversationFromListing(int listingId) {
-  return "/chat/" + _START_CHAT_ENDPOINT + "/" + listingId.toString();
+  return "/chat/new/" + listingId.toString();
 }
 
 String sendMessageFromConversation(int conversationId) {
