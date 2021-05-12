@@ -224,13 +224,13 @@ class CommodityService {
 class RatingService {
   final FishappRestClient _client = FishappRestClient();
 
-  Future<num> getUserRating(num id) async {
+  Future<double> getUserRating(num id) async {
     if (num != null) {
       var uri = getAppUri(apiPaths.RATING_ENDPOINT + id.toString());
       var response = await _client.get(uri, addAuth: true);
 
       if (response.statusCode == HttpStatus.ok) {
-        return num.tryParse(response.body) ?? -1;
+        return double.tryParse(response.body) ?? -1;
       } else {
         throw ApiException(response);
       }
