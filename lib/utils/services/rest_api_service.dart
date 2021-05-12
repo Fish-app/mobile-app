@@ -71,7 +71,7 @@ class ReceiptService {
 class ConversationService {
   final FishappRestClient _client = FishappRestClient();
 
-  final bool _debug = true;
+  final bool _debug = false;
 
   Future<List<Conversation>> getAllConversations({bool includeLastMsg}) async {
     Map<String, String> queryParameters;
@@ -224,8 +224,6 @@ class CommodityService {
 class RatingService {
   final FishappRestClient _client = FishappRestClient();
 
-  //FIXME: Her får ein  rød feil viss ein køyrer med vanlig develop for appen
-  // feiler på at Future<num> ikkje er ein type av Future<double>
   Future<double> getUserRating(num id) async {
     if (num != null) {
       var uri = getAppUri(apiPaths.RATING_ENDPOINT + id.toString());
