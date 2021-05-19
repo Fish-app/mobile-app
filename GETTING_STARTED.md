@@ -1,4 +1,13 @@
 # Getting Started
+
+### How to run
+1. Import the project into **Android Studio** and ensure you have the *Flutter SDK Plugin* installed
+1. Ensure you have installed the Flutter and Dart SDK versions noted above, use `flutter --version`
+1. Run `./dev_tools/jsonbuild.sh` to generate required JSON serialization code
+1. Run `./dev_tools/build_local.sh` to generate required translation strings used in the project
+1. All set, now you can build the Flutter Project from your IDE or with `flutter run`
+
+### Important folders
 The most important folders in the project is listed below.
  * *assets* - contains static images, fonts and generated locatizations
  * *dev_tools* - various utility scripts used during development
@@ -33,9 +42,3 @@ The most important folders in the project is listed below.
 ├── pubspec.yaml 
 └── README.md
 ```
-# How to run
-1. Import the project into **Android Studio** and ensure you have the *Flutter SDK Plugin* installed
-1. Ensure you have installed the Flutter and Dart SDK versions noted above, use `flutter --version`
-1. Run `./dev_tools/jsonbuild.sh` to generate required JSON serialization code
-1. Run `./dev_tools/build_local.sh` to generate required translation strings used in the project
-1. All set, now you can build the Flutter Project from your IDE or with `flutter run`
