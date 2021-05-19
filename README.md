@@ -9,31 +9,36 @@ Flutter 1.22.6
 ```
 # Folder structure
 The most important folders in the project is listed below.
+ * *assets* - contains static images, fonts and generated locatizations
+ * *dev_tools* - various utility scripts used during development
+ * *lib* - source code of the project
 
 ```
+(*) = must be runned at first start
+
 ├── android
 ├── assets
-│   ├── fonts
-│   ├── images
-│   └── l10n
-├── dev_tools
-│   ├── build_local.sh
-│   ├── jsonbuild.sh
-│   ├── jsonclean.sh
+│   ├── fonts <-- fonts packages embedded in app
+│   ├── images <-- static images in-app
+│   └── l10n <-- translation source files, one per language
+├── dev_tools 
+│   ├── build_local.sh <-- build translation output files (*)
+│   ├── jsonbuild.sh <-- build JSON-serialization code (*)
+│   ├── jsonclean.sh <-- removes generated JSON-serialization code
 │   └── jsonwatch.sh
 ├── flutter.yml
 ├── ios
 ├── l10n.yaml
 ├── lib
 │   ├── config
-│   ├── constants
+│   ├── constants <-- contains server endpoint and other static definitions
 │   ├── entities
 │   ├── generated
-│   ├── main.dart
+│   ├── main.dart <-- main class for project
 │   ├── pages
 │   ├── utils
 │   └── widgets
 ├── pubspec.lock
-├── pubspec.yaml
-├── README.md
+├── pubspec.yaml 
+└── README.md
 ```
