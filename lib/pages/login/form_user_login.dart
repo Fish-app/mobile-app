@@ -47,8 +47,6 @@ class _LoginUserFormState extends State<LoginUserForm> {
               context, widget.returnPath?.path ?? routes.HOME,
               arguments: widget.returnPath?.pathParams);
         } else {
-          // TODO: Når kan det her egentlig skje, vil det ikke ver en fuckup på serveren i såfall
-
           // JSON ERROR HANDELING
           print("FORMLOGIN: PARSE ERROR");
           setState(() {

@@ -164,10 +164,9 @@ class _FishappNavBarState extends State<FishappNavBar> {
   }
 
   void _setIsSeller() async {
-    // todo: the fetching and check for is seller here
     await Future.delayed(Duration(milliseconds: 30));
     setState(() {
-      this.isSeller = true;
+      this.isSeller = Provider.of<AppState>(context, listen: false).isSeller();
     });
   }
 

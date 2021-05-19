@@ -15,7 +15,6 @@ class ApiException implements Exception {
 
   ApiException(this.response);
 
-  //TODO: burde ikke dette logges?
   void dump() {
     print("############## API EXEP ##############");
     print("URL ${this.response.request.url}");
@@ -32,10 +31,10 @@ class FishappRestClient {
 
   Future<Map<String, String>> _addAuthToHeaders(
       Map<String, String> headers) async {
-    //todo: kan bli null fikse senere
     final token = AppState().jwtTokenData?.tokenString;
     headers ??= new Map<String, String>();
-    return headers..addAll({"Authorization": token});
+    return (token == null) ? headers : headers
+      ..addAll({"Authorization": token});
   }
 
   Map<String, String> _addContentType(

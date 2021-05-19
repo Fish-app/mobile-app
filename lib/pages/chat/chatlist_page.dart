@@ -55,7 +55,6 @@ class ChatListPage extends StatelessWidget {
                     children: [
                       Container(
                         padding: EdgeInsets.only(top: 29.0, bottom: 29.0),
-                        //TODO: Insert helper text here
                       ),
                       Expanded(
                         child: Card(

@@ -22,7 +22,6 @@ import '../../entities/listing.dart';
 class ReceiptService {
   final FishappRestClient _client = FishappRestClient();
 
-  // TODO: remove when system is in place
   Future<Receipt> newOrder(num id, int amount) async {
     var uri = getAppUri(apiPaths.GET_RECEIPT);
     var response = await _client.post(uri,
@@ -243,7 +242,6 @@ class RatingService {
     }
   }
 
-  //TODO: denna returnere bare hvis det går bra, ka skal skje om det går til hælvette?
   Future<num> getUserTransactionRating(num id) async {
     var uri =
         getAppUri(apiPaths.TRANSACTION_RATING_ENDPOINT + id.floor().toString());
@@ -252,9 +250,7 @@ class RatingService {
     if (response.statusCode == HttpStatus.ok) {
       return num.tryParse(response.body) ?? -1;
     } else {
-      //throw ApiException(response);
-      print(response.statusCode);
-      print(response.request.url);
+      return -1;
     }
   }
 
