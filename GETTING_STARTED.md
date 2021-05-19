@@ -9,7 +9,7 @@
 
 ### Important folders
 The most important folders in the project is listed below.
- * *assets* - contains static images, fonts and generated locatizations
+ * *assets* - contains static images, fonts and translation source strings
  * *dev_tools* - various utility scripts used during development
  * *lib* - source code of the project
 
