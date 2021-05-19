@@ -4,6 +4,10 @@ import 'dart:io';
 import 'package:fishapp/utils/state/appstate.dart';
 import 'package:http/http.dart' as http;
 
+///
+/// This class implements a REST Client, used
+/// by the various service.dart classes
+///
 class ApiException implements Exception {
   final http.Response response;
 

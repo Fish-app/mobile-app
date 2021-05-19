@@ -15,6 +15,10 @@ import 'package:flutter/cupertino.dart';
 import '../../constants/api_path.dart';
 import '../../entities/listing.dart';
 
+///
+/// This class exposes a REST Client for the app,
+/// to communicate with the REST API.
+///
 class ReceiptService {
   final FishappRestClient _client = FishappRestClient();
 

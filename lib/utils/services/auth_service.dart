@@ -19,6 +19,10 @@ class CreateUserException implements Exception {
   CreateUserException(this.message);
 }
 
+///
+/// This class exposes a REST Client for the
+/// authentication part of the app.
+///
 class AuthService {
   final FishappRestClient fishappRestClient = FishappRestClient();
 
