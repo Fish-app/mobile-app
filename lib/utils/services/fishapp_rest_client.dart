@@ -5,8 +5,8 @@ import 'package:fishapp/utils/state/appstate.dart';
 import 'package:http/http.dart' as http;
 
 ///
-/// This class implements a REST Client, used
-/// by the various service.dart classes
+///  This class prints URL and HTTP Status Codes
+///  if an error occurs during networking.
 ///
 class ApiException implements Exception {
   final http.Response response;
@@ -27,6 +27,10 @@ class ApiException implements Exception {
   }
 }
 
+///
+/// This class implements a REST Client, used
+/// by the various *_service.dart classes
+///
 class FishappRestClient {
   var _client = http.Client();
 
