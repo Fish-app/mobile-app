@@ -1,4 +1,6 @@
-// TODO: make all this use the CORRECT_NOTATION_FOR_CONSTS notForObjects
+/**
+ *  This file contains static route paths, used by router.dart
+ */
 const HOME = "/";
 
 const USER_NEW = "/user/new";

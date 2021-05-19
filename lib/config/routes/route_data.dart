@@ -1,5 +1,8 @@
+/**
+ * This class is used to send data between pages, when
+ * navigating in the application.
+ */
 import 'package:flutter/cupertino.dart';
-import 'package:fishapp/entities/commodity.dart';
 
 class GenericRouteData {
   num id;
