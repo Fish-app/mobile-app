@@ -1,8 +1,8 @@
-/**
- *  This class specifies the REST API-endpoints on the
- *  server. The endpoints are grouped by the
- *  microservices on the server.
- */
+///
+/// This class specifies the REST API-endpoints on the
+/// server. The endpoints are grouped by the
+/// microservices on the server.
+///
 
 /// AUTH ///
 const CHANGE_PASSWORD_ENDPOINT = "/auth/authentication/changepass";
@@ -56,6 +56,7 @@ const GET_SELLER = "/user/seller/current";
 const CREATE_BUYER_ENDPOINT = "/user/buyer/create";
 const CREATE_SELLER_ENDPOINT = "/user/seller/create";
 
+/// COMMON SERVER URL ///
 Uri getAppUri(String path, {Map<String, String> queryParameters}) {
   return Uri(
       //LOCAL
