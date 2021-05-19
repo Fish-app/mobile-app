@@ -39,7 +39,6 @@ class CommodityListingPageState extends State<CommodityListingPage>
     });
     if (Provider.of<AppState>(context, listen: false).isSeller()) {
       _future = widget._listingService
-          //TODO:fortsjett her
           .getCommodityOfferListing(widget.displayCommodity.commodity.id);
     }
     _future = widget._listingService

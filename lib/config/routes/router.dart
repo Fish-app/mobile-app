@@ -24,6 +24,11 @@ import '../../entities/listing.dart';
 import 'route_data.dart';
 import 'routes.dart' as routes;
 
+/**
+ * The router has the responsebility to handle the
+ * navigation of the app. When recieiving a route
+ * request, the router returns the appropiate page.
+ */
 Route<dynamic> router(BuildContext context, RouteSettings settings) {
   var path = settings.name;
   var params = settings.arguments;

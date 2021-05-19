@@ -4,6 +4,10 @@ import 'dart:io';
 import 'package:fishapp/utils/state/appstate.dart';
 import 'package:http/http.dart' as http;
 
+///
+///  This class prints URL and HTTP Status Codes
+///  if an error occurs during networking.
+///
 class ApiException implements Exception {
   final http.Response response;
 
@@ -11,7 +15,6 @@ class ApiException implements Exception {
 
   ApiException(this.response);
 
-  //TODO: burde ikke dette logges?
   void dump() {
     print("############## API EXEP ##############");
     print("URL ${this.response.request.url}");
@@ -23,15 +26,19 @@ class ApiException implements Exception {
   }
 }
 
+///
+/// This class implements a REST Client, used
+/// by the various *_service.dart classes
+///
 class FishappRestClient {
   var _client = http.Client();
 
   Future<Map<String, String>> _addAuthToHeaders(
       Map<String, String> headers) async {
-    //todo: kan bli null fikse senere
     final token = AppState().jwtTokenData?.tokenString;
     headers ??= new Map<String, String>();
-    return headers..addAll({"Authorization": token});
+    return (token == null) ? headers : headers
+      ..addAll({"Authorization": token});
   }
 
   Map<String, String> _addContentType(

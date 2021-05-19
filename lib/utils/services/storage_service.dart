@@ -4,6 +4,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fishapp/entities/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+///
+/// This class is responsible for storing data
+/// to the normal (insecure) storage of a device.
+/// It exposes methods to read or write data
+///
 class SharedStorage {
   Future<SharedPreferences> _storage = SharedPreferences.getInstance();
 
@@ -43,6 +48,11 @@ class SharedStorage {
   }
 }
 
+///
+/// This class is responsible for storing data
+/// to the secure storage of a device.
+/// It exposes methods to read or write data, e.q. a JWT
+///
 class SecureStorage {
   final _secureStorage = FlutterSecureStorage();
 

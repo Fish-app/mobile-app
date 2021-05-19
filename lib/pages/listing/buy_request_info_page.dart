@@ -131,13 +131,6 @@ class BuyRequestInfoPage extends StatelessWidget {
                             ),
                           );
                         }),
-                        StandardButton(
-                          buttonText:
-                              S.of(context).takeBuyRequest.toUpperCase(),
-                          onPressed: () {
-                            print("Pressed2");
-                          }, //TODO: legg til direkte kjøp
-                        )
                       ],
                     ),
                   ))

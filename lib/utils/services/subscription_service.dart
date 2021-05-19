@@ -8,6 +8,10 @@ import 'package:string_validator/string_validator.dart';
 
 import 'fishapp_rest_client.dart';
 
+///
+/// This class exposes a REST Client for the
+/// authentication part of the app.
+///
 class SubscriptionService {
   final FishappRestClient _client = FishappRestClient();
 
