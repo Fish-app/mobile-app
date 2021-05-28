@@ -11,7 +11,7 @@ class Logo extends StatelessWidget {
           heightFactor: 1,
           alignment: FractionalOffset(0, 0),
           child: Text(
-            "Maoyi",
+            "Fishapp",
             style: TextStyle(
               fontFamily: "KaushanScript",
               fontSize: 80,
